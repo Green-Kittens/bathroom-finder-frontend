@@ -8,9 +8,6 @@ function TabLoginScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // navigation 
-  const navigation = useNavigation<ScreenNavigationProp>();
-
   const onLoginPress = () => {
     navigation.navigate('Main');
   };
@@ -27,6 +24,20 @@ function TabLoginScreen() {
 
   return (
     <View style={styles.container}>
+      <ImageBackground
+        source={boomerangimage}
+        style={{
+          width: 753,
+          height: 499,
+          position: "absolute",
+          top: 0,
+          left: -200,
+        }}
+        imageStyle={{
+          resizeMode: "cover",
+          alignSelf: "flex-end",
+        }}
+      ></ImageBackground>
       <SafeAreaView style={styles.safeArea}>
         <Image
           source={require("../../assets/images/logo-placeholder.png")}
@@ -39,7 +50,7 @@ function TabLoginScreen() {
           style={styles.input}
           onChangeText={setUsername}
           value={username}
-          placeholder="Username:"
+          placeholder="Username"
         />
         <TextInput
           style={styles.input}
@@ -56,9 +67,16 @@ function TabLoginScreen() {
         </TouchableOpacity>
 
         {/* Login button */}
-        <View style={styles.fixToText}>
-          <Button title="Login" color={"#000000"} onPress={onLoginPress} />
-        </View>
+        <LinearGradient
+          // Button Linear Gradient
+          colors={["#6da798", "#40a4a9"]}
+          end={{ x: 0.1, y: 0.2 }}
+          style={styles.button}
+        >
+          <Pressable style={styles.button} onPress={onLoginPress}>
+            <Text style={[styles.text, { fontWeight: "bold" }]}>{"Login"}</Text>
+          </Pressable>
+        </LinearGradient>
       </SafeAreaView>
 
       {/* Footer with Register Section */}
@@ -86,6 +104,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
+    backgroundColor: "#EEF8F7",
   },
   // Safe Area Section
   safeArea: {
@@ -107,6 +126,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     alignSelf: "center",
+    backgroundColor: "#FFFFFF",
+    minWidth: 200,
   },
   // Text Section
   text: {
@@ -122,12 +143,14 @@ const styles = StyleSheet.create({
   footer: {
     paddingBottom: 20,
     alignItems: "center",
+    backgroundColor: "none",
   },
   // Register Section
   registerContainer: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "none",
   },
   // Register Text
   registerText: {
@@ -140,5 +163,12 @@ const styles = StyleSheet.create({
     height: 100,
     alignSelf: "center",
     marginBottom: 5,
+  },
+  button: {
+    justifyContent: "center",
+    alignSelf: "center",
+    borderRadius: 4,
+    paddingHorizontal: 20,
+    margin: 10,
   },
 });

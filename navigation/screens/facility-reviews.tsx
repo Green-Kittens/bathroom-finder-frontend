@@ -1,100 +1,58 @@
 import React from "react";
-import { Button, Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import Review from "../../components/Review";
+import { View } from "../../components/Themed";
+import { ScrollView, ImageBackground, StyleSheet } from "react-native";
+
+const blobimage = { uri: "/assets/images/blob.png" };
 
 export default function FacilityReviewsScreen() {
   return (
     <ScrollView>
-      {exampleReview()}
-      {exampleReview()}
-      {exampleReview()}
-      {exampleReview()}
-    </ScrollView>
-  );
-}
-
-function exampleReview() {
-  return (
-    <View id="review" style={{ padding: 5 }}>
-      <View id="review-header" style={{ flexDirection: "row", width: "100%" }}>
-        <View id="photo">
-          <Image
-            style={styles.photo}
-            source={{
-              uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
-            }}
-          />
-        </View>
-        <View id="stars-and-title" style={{ width: "100%" }}>
-          <View
+      <View style={styles.container}>
+        <View style={styles.subcontainer}>
+          <ImageBackground
+            source={blobimage}
             style={{
-              flexDirection: "row",
-              justifyContent: "space-evenly",
-              width: "80%",
+              width: 953,
+              height: 1069,
+              position: "absolute",
+              top: 0,
+              left: -200,
             }}
-          >
-            {star()}
-            {star()}
-            {star()}
-            {star()}
-            {star()}
-          </View>
-          <Text style={{ fontSize: 24}}>Review Title</Text>
+            imageStyle={{
+              resizeMode: "cover",
+              alignSelf: "flex-end",
+            }}
+          ></ImageBackground>
+          <View style={styles.subcontainer}>{Review()}</View>
+          <View style={styles.subcontainer}>{Review()}</View>
+          <View style={styles.subcontainer}>{Review()}</View>
+          <View style={styles.subcontainer}>{Review()}</View>
+          <View style={styles.subcontainer}>{Review()}</View>
         </View>
       </View>
-      <View id="review-body">
-        <Text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis
-          luctus metus. Morbi semper sollicitudin efficitur. Curabitur placerat
-          ante maximus, posuere tortor vulputate, fermentum arcu. Sed sit amet
-          mi vitae erat lacinia congue. Donec euismod eros quis leo venenatis,
-          eu commodo leo ullamcorper. Maecenas in leo at dolor placerat
-          tincidunt vitae ut ipsum. Curabitur maximus ut metus vel convallis.
-          Aliquam ac molestie turpis. Mauris at leo pellentesque, aliquam purus
-          ac, dapibus nibh.
-        </Text>
-      </View>
-      <View id="review-actions" style={styles.buttonContainer}>
-        <Button onPress={() => {}} title="Like" />
-        <Button onPress={() => {}} title="Dislike" />
-        <Button onPress={() => {}} title="Reply" />
-      </View>
-    </View>
-  );
-}
-
-function star() {
-  return (
-    <Image
-      style={{ width: 50, height: 50 }}
-      source={{
-        uri: "https://t3.ftcdn.net/jpg/01/21/64/88/360_F_121648819_ZQ0tZ6tjLzxim1SG7CQ86raBw4sglCzB.jpg",
-      }}
-    />
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: "column",
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#EEF8F7",
   },
-  title: {
-    fontSize: 20,
-    fontFamily: 'EudoxusSans-Bold',
+  subcontainer: {
+    flexDirection: "column",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "none",
+    width: "90%",
+    marginVertical: 15,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    width: "100%",
-    justifyContent: "space-evenly",
-  },
-  photo: {
-    width: 100,
-    height: 100,
+  reviewContainer: {
+    marginVertical: 40,
   },
 });
