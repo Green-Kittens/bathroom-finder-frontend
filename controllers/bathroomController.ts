@@ -30,5 +30,39 @@ async function getSomeBathrooms(
   //Implementation goes here
 }
 
+/**
+ * Function for reporting a bathroom
+ * @param {string} bathroomID - The ID of the bathroom
+ * @param {string} userID - The ID of the user
+ * @param {string} report - The report of the user
+ * @return {Promise<string>} - Returns a promise with a success message upon successfully reporting a bathroom
+ */
+async function reportBathroom(
+  reviewID: string,
+  userID: string,
+  report: string
+): Promise<string> {
+  //Implemnentation goes here
+}
+
+/**
+ * Function for favoriting a bathroom
+ * @param {string} bathroomID - The ID of the bathroom
+ * @param {string} userID - The ID of the user
+ * @return {Promise<string>} - Returns a promise with a success message upon successfully favoriting a bathroom
+ */
+async function favoriteBathroom(
+  bathroomID: string,
+  userID: string
+): Promise<string> {
+  //Implemnentation goes here
+}
+
 // Exporting functions
-export { getAllBathrooms, getBathroomProfile, getSomeBathrooms };
+export {
+  getAllBathrooms,
+  getBathroomProfile,
+  getSomeBathrooms,
+  reportBathroom,
+  favoriteBathroom,
+};
