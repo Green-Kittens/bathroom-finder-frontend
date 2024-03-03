@@ -53,6 +53,7 @@ async function getUserProfile(email: string): Promise<UserProfile> {
  * @param {string} userID - The ID of the user
  * @param {string} opHours - The hours of operation of the bathroom (days and times)
  * @param {string} description - *Optional description of the bathroom
+ * @param {string[]} tags - List of tags to filter the bathroom by
  * @param {Image} images - *Optional images of the bathroom
  * @returns {Promise<string>} - Returns a promise with a success message upon successfully creating a new bathroom
  */
@@ -60,6 +61,7 @@ async function createBathroom(
   userID: string,
   opHours: string,
   description: string,
+  tags: string[],
   images: typeof Image
 ): Promise<string> {
   //Implementation goes here
@@ -68,6 +70,7 @@ async function createBathroom(
 /**
  * Function for creating a review
  * @param {string} userID - The ID of the user
+ * @param {string} bathroomID - The ID of the bathroom
  * @param {int} rating - The user's rating of the bathroom
  * @param {Date} time - The date and time the review was uploaded
  * @param {Image} images - *Optional images
@@ -75,6 +78,7 @@ async function createBathroom(
  */
 async function createReview(
   userID: string,
+  bathroomID: string,
   rating: Int16Array,
   time: Date,
   images: typeof Image
