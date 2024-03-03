@@ -29,5 +29,13 @@ async function loginUser(user: string, password: string): Promise<string> {
   // Implementation goes here
 }
 
+/**
+ * Function for forgot password
+ * @param {string} email = The email of the user
+ */
+async function forgotPassword(email: string): Promise<string> {
+  //Implementation goes here
+}
+
 // Exporting functions
 export { registerUser, loginUser };
