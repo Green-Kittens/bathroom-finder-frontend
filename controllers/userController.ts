@@ -67,25 +67,6 @@ async function createBathroom(
   //Implementation goes here
 }
 
-/**
- * Function for creating a review
- * @param {string} userID - The ID of the user
- * @param {string} bathroomID - The ID of the bathroom
- * @param {int} rating - The user's rating of the bathroom
- * @param {Date} time - The date and time the review was uploaded
- * @param {Image} images - *Optional images
- * @returns {Promise<string>} - Returns a promise with a success message upon successfully creating a new review
- */
-async function createReview(
-  userID: string,
-  bathroomID: string,
-  rating: Int16Array,
-  time: Date,
-  images: typeof Image
-): Promise<string> {
-  //Implementation goes here
-}
-
 // Exporting functions
 export {
   registerUser,
@@ -93,5 +74,4 @@ export {
   forgotPassword,
   getUserProfile,
   createBathroom,
-  createReview,
 };
