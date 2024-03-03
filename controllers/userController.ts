@@ -67,6 +67,24 @@ async function createBathroom(
   //Implementation goes here
 }
 
+/**
+ * Function for retrieving user's favorite bathrooms
+ * @param {string} userID - The ID of the user
+ * @returns {Promise<string>} - Returns a promise with a success message after retrieving all favorite bathrooms
+ */
+async function getFavorites(userID: string): Promise<string> {
+  //Implementation goes here
+}
+
+/**
+ * Function for retrieving user's reviews
+ * @param {string} userID - The ID of the user
+ * @returns {Promise<string>} - Returns a promise with a success message after retrieving all reviews user has left
+ */
+async function getUserReviews(userID: string): Promise<string> {
+  //Implementation goes here
+}
+
 // Exporting functions
 export {
   registerUser,
@@ -74,4 +92,6 @@ export {
   forgotPassword,
   getUserProfile,
   createBathroom,
+  getFavorites,
+  getUserReviews,
 };
