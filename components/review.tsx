@@ -1,11 +1,12 @@
 import React from "react";
-import { Button, Image, StyleSheet } from "react-native";
+import MainButton from "./main_button";
+import { Image, StyleSheet } from "react-native";
 
 import { Text, View } from "@/components/Themed";
 
 export default function Review() {
   return (
-    <View id="review" style={{ padding: 5, backgroundColor: "#EEF8F7" }}>
+    <View id="review" style={{ padding: 5, backgroundColor: "none" }}>
       <View
         id="review-header"
         style={{ flexDirection: "row", width: "100%", backgroundColor: "none" }}
@@ -39,8 +40,8 @@ export default function Review() {
           <Text style={{ fontSize: 24 }}>Review Title</Text>
         </View>
       </View>
-      <View id="review-body">
-        <Text style={[{ backgroundColor: "#EEF8F7" }]}>
+      <View id="review-body" style={{ backgroundColor: "none" }}>
+        <Text style={[{ backgroundColor: "none" }]}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis
           luctus metus. Morbi semper sollicitudin efficitur. Curabitur placerat
           ante maximus, posuere tortor vulputate, fermentum arcu. Sed sit amet
@@ -52,9 +53,9 @@ export default function Review() {
         </Text>
       </View>
       <View id="review-actions" style={styles.buttonContainer}>
-        <Button onPress={() => {}} title="Like" />
-        <Button onPress={() => {}} title="Dislike" />
-        <Button onPress={() => {}} title="Reply" />
+        {MainButton("Like", null)}
+        {MainButton("Dislike", null)}
+        {MainButton("Reply", null)}
       </View>
     </View>
   );
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#EEF8F7",
+    backgroundColor: "none",
   },
   title: {
     fontSize: 20,
@@ -94,5 +95,13 @@ const styles = StyleSheet.create({
   photo: {
     width: 100,
     height: 100,
+  },
+  button: {
+    justifyContent: "center",
+    alignSelf: "center",
+    borderRadius: 4,
+    fontWeight: "bold",
+    paddingHorizontal: 60,
+    paddingVertical: 10,
   },
 });
