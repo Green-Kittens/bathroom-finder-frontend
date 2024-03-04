@@ -1,5 +1,12 @@
 import React from "react";
 import { Image, ScrollView, StyleSheet, Button, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
+// types
+import { ScreenNavigationProp } from "../type";
+
+// navigation
+// const navigation = useNavigation<ScreenNavigationProp>();
 
 export default function UserProfileScreen() {
   return (
@@ -17,7 +24,12 @@ export default function UserProfileScreen() {
       {horizontalCards("Your Favorites")}
       <View>
         <View style={{ marginHorizontal: "40%", marginVertical: 5 }}>
-          <Button onPress={() => {}} title="Log Out" />
+          <Button
+            title="Log Out"
+            onPress={() => {
+                // go to login page
+            }} 
+            />
         </View>
       </View>
     </ScrollView>
