@@ -5,6 +5,7 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -19,7 +20,13 @@ export default function MainScreen() {
     const navigation = useNavigation<ScreenNavigationProp>();   
     return (
         <View style={styles.container}>
-            <Image source={map} style={styles.image} />
+            <TouchableWithoutFeedback
+                onPress={() => {
+                    navigation.navigate("FacilityProfile");
+                  }}
+            >
+                <Image source={map} style={styles.image} />
+            </TouchableWithoutFeedback>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button}>
                     <FontAwesome name="user" size={50} color="black" />
@@ -27,12 +34,7 @@ export default function MainScreen() {
                 <TouchableOpacity style={styles.button}>
                     <FontAwesome name="plus" size={50} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity 
-                    style={styles.button}
-                    onPress={() => {
-                        navigation.navigate("FacilityProfile");
-                      }}
-                >
+                <TouchableOpacity>
                     <FontAwesome name="search" size={40} color="black" />
                 </TouchableOpacity>
             </View>
