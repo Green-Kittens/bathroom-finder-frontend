@@ -11,6 +11,7 @@ async function getAllReviews(bathroomID: string): Promise<string> {
  * Function for creating a review
  * @param {string} username - The user
  * @param {string} bathroomID - The ID of the bathroom
+ * @param {string} description - The review
  * @param {int} rating - The user's rating of the bathroom
  * @param {Date} time - The date and time the review was uploaded
  * @param {Image} images - *Optional images
@@ -19,7 +20,8 @@ async function getAllReviews(bathroomID: string): Promise<string> {
 async function createReview(
   username: string,
   bathroomID: string,
-  rating: Int16Array,
+  description: string,
+  rating: int,
   time: Date,
   images: typeof Image
 ): Promise<string> {

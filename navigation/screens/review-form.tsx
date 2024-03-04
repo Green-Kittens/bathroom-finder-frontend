@@ -5,25 +5,41 @@ import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import { MaterialIcons } from "@expo/vector-icons";
 import StarRating from "react-native-star-rating-widget";
+import { createReview } from "@/controllers/reviewController";
 
 // screens
 import Main from "./home";
 import { useNavigation } from "@react-navigation/native";
 
 export default function TabReviewForm() {
+  /**getting info for new review*/
+  const [username, setUsername] = useState("");
+  const [bathroomID, setBathroomID] = useState("");
+  const [rating, setRating] = useState(0);
+  const [description, setDescription] = useState("");
+  const [time, setTime] = useState(Date);
+  const [images, setImages] = useState(Image);
+
+  const handleReview = async () => {
+    try {
+      const review = await createReview(
+        username,
+        bathroomID,
+        description,
+        rating,
+        time,
+        images
+      );
+    } catch (error) {
+      console.error("Error creating new review:", error);
+    }
+  };
+
   // location
   const [, setLocation] = useState("");
 
   // getting current date and time
   const currentDate = new Date();
-
-  // description
-  const [description, setDescription] = useState("");
-
-  // add photo
-
-  // rating
-  const [rating, setRating] = useState(0);
 
   // post rating (submit button)
   const navigation = useNavigation();
@@ -75,10 +91,11 @@ export default function TabReviewForm() {
         <Button
           title="Post Rating"
           color="RGA0000"
-          onPress={() => {
+          onPress={
+            handleReview
             // handle submit
             //navigation.navigate('/');
-          }}
+          }
         />
       </View>
     </View>
