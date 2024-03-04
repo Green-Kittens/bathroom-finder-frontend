@@ -1,25 +1,63 @@
-import React, { useState } from 'react';
-import { StyleSheet,Image, SafeAreaView, TextInput, Button, Alert, TouchableOpacity, Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Image,
+  SafeAreaView,
+  TextInput,
+  Button,
+  Alert,
+  TouchableOpacity,
+  Text,
+  View,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import {
+  loginUser,
+  registerUser,
+  forgotPassword,
+} from "@/controllers/userController";
 
 function TabLoginScreen() {
   // State management for text inputs
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [profile, setProfile] = useState(Image);
 
-  const onLoginPress = () => {
-    // Placeholder for navigation logic
-    Alert.alert("Login Pressed", "Navigate to home screen.");
+  const onLoginPress = async () => {
+    try {
+      const login = await loginUser(username, password);
+    } catch (error) {
+      console.error("Error logging in:", error);
+    }
+    // Alert.alert("Login Pressed", "Navigate to home screen.");
   };
 
-  const onRegisterPress = () => {
-    // Placeholder for navigation logic
-    Alert.alert("Register Pressed", "Navigate to registration screen.");
+  const onRegisterPress = async () => {
+    try {
+      const register = await registerUser(
+        firstname,
+        lastname,
+        username,
+        email,
+        password,
+        profile
+      );
+    } catch (error) {
+      console.error("Error registering:", error);
+    }
+    //Alert.alert("Register Pressed", "Navigate to registration screen.");
   };
 
-  const onForgotPress = () => {
-    // Placeholder for navigation logic
-    Alert.alert("Frogot Pressed", "Navigate to Frogot screen.");
+  const onForgotPress = async () => {
+    try {
+      const forgot = await forgotPassword(email);
+    } catch (error) {
+      console.error("Error forgetting password:", error);
+    }
+    //Alert.alert("Frogot Pressed", "Navigate to Frogot screen.");
   };
 
   return (
