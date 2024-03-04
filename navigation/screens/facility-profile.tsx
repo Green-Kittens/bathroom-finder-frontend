@@ -20,28 +20,30 @@ function Review() {
     <View style={styles.review}>
       <Image
         style={{ height: 60, width: 60, borderRadius: 40 }}
-        source={require("@/assets/images/icon.png")}
+        source={{
+          uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
+        }}
       />
       <Text style={[styles.paragraph, { fontWeight: "bold" }]}>Username</Text>
       <Image
         style={{ height: 15, width: 15, alignSelf: "center" }}
-        source={require("@/assets/images/star_unfilled.png")}
+        source={require("@/assets/images/star_filled.png")}
       />
       <Image
         style={{ height: 15, width: 15, alignSelf: "center" }}
-        source={require("@/assets/images/star_unfilled.png")}
+        source={require("@/assets/images/star_filled.png")}
       />
       <Image
         style={{ height: 15, width: 15, alignSelf: "center" }}
-        source={require("@/assets/images/star_unfilled.png")}
+        source={require("@/assets/images/star_filled.png")}
       />
       <Image
         style={{ height: 15, width: 15, alignSelf: "center" }}
-        source={require("@/assets/images/star_unfilled.png")}
+        source={require("@/assets/images/star_filled.png")}
       />
       <Image
         style={{ height: 15, width: 15, alignSelf: "center" }}
-        source={require("@/assets/images/star_unfilled.png")}
+        source={require("@/assets/images/star_filled.png")}
       />
       <Text style={styles.paragraph} numberOfLines={reviewMaxLines}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
@@ -124,7 +126,7 @@ function CollapseView() {
         end={{ x: 0.1, y: 0.2 }}
         style={styles.button}
       >
-        <Pressable style={styles.button} onPress={toggleCollapsed}>
+        <Pressable style={[]} onPress={toggleCollapsed}>
           <Text style={[styles.body, { fontWeight: "bold" }]}>
             {changeText()}
           </Text>
@@ -142,7 +144,7 @@ function CollapseView() {
         end={{ x: 0.1, y: 0.2 }}
         style={[styles.image, { padding: 20, borderRadius: 15 }]}
       >
-        <View style={styles.row}>
+        <View style={[styles.row, { padding: 10 }]}>
           <Review />
           <View
             style={[{ width: "10%", margin: 10, justifyContent: "flex-start" }]}
@@ -150,13 +152,12 @@ function CollapseView() {
             <LinearGradient
               colors={["#F9FEFD", "#DEF4EF"]}
               end={{ x: 0.1, y: 0.2 }}
-              style={styles.button}
+              style={[styles.button]}
             >
-              <Pressable style={styles.smallbutton}>
-                <Text style={[styles.body, { color: "#000000" }]}>
-                  {"See more"}
-                </Text>
+              <Pressable style={[styles.smallbutton]}>
+                <Text style={[{ color: "#000000" }]}>{"See more"}</Text>
               </Pressable>
+              <View style={styles.row}></View>
             </LinearGradient>
           </View>
         </View>
@@ -187,7 +188,9 @@ export default function TabFacilityProfileScreen() {
         ></ImageBackground>
         <Text style={styles.title}>Facility Name</Text>
         <Image
-          source={require("@/assets/images/icon.png")}
+          source={{
+            uri: "https://images.adsttc.com/media/images/6179/94c7/f91c/81a4/f700/00c2/newsletter/WMC-Expo-2---Architectural-Photographer-Michael-Tessler---11.jpg?1635357877",
+          }}
           style={{ height: 250, width: 250 }}
         />
         <View
@@ -203,23 +206,23 @@ export default function TabFacilityProfileScreen() {
         >
           <Image
             style={{ height: 30, width: 30 }}
-            source={require("@/assets/images/star_unfilled.png")}
+            source={require("@/assets/images/star_filled.png")}
           />
           <Image
             style={{ height: 30, width: 30 }}
-            source={require("@/assets/images/star_unfilled.png")}
+            source={require("@/assets/images/star_filled.png")}
           />
           <Image
             style={{ height: 30, width: 30 }}
-            source={require("@/assets/images/star_unfilled.png")}
+            source={require("@/assets/images/star_filled.png")}
           />
           <Image
             style={{ height: 30, width: 30 }}
-            source={require("@/assets/images/star_unfilled.png")}
+            source={require("@/assets/images/star_filled.png")}
           />
           <Image
             style={{ height: 30, width: 30 }}
-            source={require("@/assets/images/star_unfilled.png")}
+            source={require("@/assets/images/star_filled.png")}
           />
           <Text style={styles.body}> 5.0 stars</Text>
         </View>
@@ -293,9 +296,12 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: "center",
     alignSelf: "center",
+    alignContent: "center",
+    alignItems: "center",
     borderRadius: 4,
     paddingHorizontal: 60,
     paddingVertical: 10,
+    width: "80%",
   },
   smallbutton: {
     justifyContent: "center",
