@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, TextInput } from "react-native";
+import { StyleSheet, TextInput, ImageBackground } from "react-native";
 import MainButton from "@/components/main_button";
 
 import { useState } from "react";
@@ -26,10 +26,24 @@ export default function TabReviewForm() {
   const [rating, setRating] = useState(0);
 
   // post rating (submit button)
-  const navigation = useNavigation();
+  const circleimage = { uri: "/assets/images/circle.png" };
 
   return (
     <View style={styles.container}>
+      <ImageBackground
+        source={circleimage}
+        style={{
+          width: 1000,
+          height: 1000,
+          position: "absolute",
+          top: 500,
+          left: -200,
+        }}
+        imageStyle={{
+          resizeMode: "cover",
+          alignSelf: "flex-end",
+        }}
+      ></ImageBackground>
       <Text style={styles.title}>New Bathroom Rating</Text>
 
       <View style={styles.dropdown}>
