@@ -6,8 +6,8 @@ import RNPickerSelect from "react-native-picker-select";
 import { MaterialIcons } from "@expo/vector-icons";
 import StarRating from "react-native-star-rating-widget";
 
-// screens 
-import Main from './main';
+// screens
+import Main from "./home";
 import { useNavigation } from "@react-navigation/native";
 
 export default function TabReviewForm() {
@@ -84,7 +84,6 @@ export default function TabReviewForm() {
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
