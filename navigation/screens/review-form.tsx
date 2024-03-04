@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, StyleSheet, TextInput, Text, View } from "react-native";
+import { Button, StyleSheet, TextInput, Text, View, ScrollView } from "react-native";
 
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
@@ -29,7 +29,8 @@ export default function TabReviewForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
 
   return (
-    <View style={styles.container}>
+    <ScrollView>
+        <View style={styles.container}>
       <Text style={styles.title}>New Bathroom Rating</Text>
 
       <View style={styles.dropdown}>
@@ -82,6 +83,7 @@ export default function TabReviewForm() {
         />
       </View>
     </View>
+    </ScrollView>
   );
 }
 

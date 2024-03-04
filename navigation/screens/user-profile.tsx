@@ -5,35 +5,36 @@ import { useNavigation } from "@react-navigation/native";
 // types
 import { ScreenNavigationProp } from "../type";
 
-// navigation
-// const navigation = useNavigation<ScreenNavigationProp>();
-
 export default function UserProfileScreen() {
-  return (
-    <ScrollView>
-      <View style={styles.profilePictureContainer}>
-        <Image
-          style={styles.profilePicture}
-          source={{
-            uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
-          }}
-        />
-        <Text>Your Name</Text>
-      </View>
-      {horizontalCards("Your Reviews")}
-      {horizontalCards("Your Favorites")}
-      <View>
-        <View style={{ marginHorizontal: "40%", marginVertical: 5 }}>
-          <Button
-            title="Log Out"
-            onPress={() => {
-                // go to login page
-            }} 
+
+    // navigation
+    const navigation = useNavigation<ScreenNavigationProp>();
+    
+    return (
+        <ScrollView>
+          <View style={styles.profilePictureContainer}>
+            <Image
+              style={styles.profilePicture}
+              source={{
+                uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
+              }}
             />
-        </View>
-      </View>
-    </ScrollView>
-  );
+            <Text>Your Name</Text>
+          </View>
+          {horizontalCards("Your Reviews")}
+          {horizontalCards("Your Favorites")}
+          <View>
+            <View style={{ marginHorizontal: "40%", marginVertical: 5 }}>
+              <Button
+                title="Log Out"
+                onPress={() => {
+                    navigation.navigate('Login');
+                }} 
+                />
+            </View>
+          </View>
+        </ScrollView>
+      );
 }
 
 function horizontalCards(title: string) {

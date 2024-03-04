@@ -1,6 +1,8 @@
 import React from "react";
 import { StyleSheet, Button, Animated, Image, Text, View } from "react-native";
 import { useEffect, useState, useRef } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { ScreenNavigationProp } from "../type";
 
 const maxLineNumber = 5;
 
@@ -87,6 +89,9 @@ function CollapseView() {
     }
   };
 
+  // navigation
+  const navigation = useNavigation<ScreenNavigationProp>();
+
   return (
     <View style={{ overflow: "hidden" }}>
       <Animated.View style={{ maxHeight: animationHeight }}>
@@ -112,7 +117,11 @@ function CollapseView() {
         <View
           style={[{ width: "10%", margin: 10, justifyContent: "flex-start" }]}
         >
-          <Button title={"See more"} />
+          <Button 
+          title={"See more"}
+          onPress={() => {
+            navigation.navigate("FacilityReviews");
+          }} />
         </View>
       </View>
     </View>

@@ -1,13 +1,18 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { StyleSheet,Image, SafeAreaView, TextInput, Button, Alert, TouchableOpacity, Text, View } from 'react-native';
+import { ScreenNavigationProp } from '../type';
 
 function TabLoginScreen() {
   // State management for text inputs
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  // navigation 
+  const navigation = useNavigation<ScreenNavigationProp>();
+
   const onLoginPress = () => {
-    // Placeholder for navigation logic
+    navigation.navigate('Main');
     Alert.alert("Login Pressed", "Navigate to home screen.");
   };
 
