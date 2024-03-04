@@ -126,7 +126,10 @@ function CollapseView() {
         end={{ x: 0.1, y: 0.2 }}
         style={styles.button}
       >
-        <Pressable style={[]} onPress={toggleCollapsed}>
+        <Pressable
+          style={[{ width: "100%", alignItems: "center" }]}
+          onPress={toggleCollapsed}
+        >
           <Text style={[styles.body, { fontWeight: "bold" }]}>
             {changeText()}
           </Text>
