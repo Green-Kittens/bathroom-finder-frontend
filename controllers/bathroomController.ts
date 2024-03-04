@@ -33,13 +33,13 @@ async function getSomeBathrooms(
 /**
  * Function for reporting a bathroom
  * @param {string} bathroomID - The ID of the bathroom
- * @param {string} userID - The ID of the user
+ * @param {string} username - The user
  * @param {string} report - The report of the user
  * @return {Promise<string>} - Returns a promise with a success message upon successfully reporting a bathroom
  */
 async function reportBathroom(
   reviewID: string,
-  userID: string,
+  username: string,
   report: string
 ): Promise<string> {
   //Implemnentation goes here
@@ -48,12 +48,12 @@ async function reportBathroom(
 /**
  * Function for favoriting a bathroom
  * @param {string} bathroomID - The ID of the bathroom
- * @param {string} userID - The ID of the user
+ * @param {string} username - The user
  * @return {Promise<string>} - Returns a promise with a success message upon successfully favoriting a bathroom
  */
 async function favoriteBathroom(
   bathroomID: string,
-  userID: string
+  username: string
 ): Promise<string> {
   //Implemnentation goes here
 }

@@ -9,7 +9,7 @@ async function getAllReviews(bathroomID: string): Promise<string> {
 
 /**
  * Function for creating a review
- * @param {string} userID - The ID of the user
+ * @param {string} username - The user
  * @param {string} bathroomID - The ID of the bathroom
  * @param {int} rating - The user's rating of the bathroom
  * @param {Date} time - The date and time the review was uploaded
@@ -17,7 +17,7 @@ async function getAllReviews(bathroomID: string): Promise<string> {
  * @returns {Promise<string>} - Returns a promise with a success message upon successfully creating a new review
  */
 async function createReview(
-  userID: string,
+  username: string,
   bathroomID: string,
   rating: Int16Array,
   time: Date,
@@ -47,13 +47,13 @@ async function dislikeReview(reviewID: string): Promise<string> {
 /**
  * Function for replying to a review
  * @param {string} reviewID - The ID of the review
- * @param {string} userID - The ID of the user
+ * @param {string} username - The user
  * @param {string} reply - The reply of the user
  * @return {Promise<string>} - Returns a promise with a success message upon successfully replying to a review
  */
 async function replyReview(
   reviewID: string,
-  userID: string,
+  username: string,
   reply: string
 ): Promise<string> {
   //Implemnentation goes here
@@ -62,13 +62,13 @@ async function replyReview(
 /**
  * Function for reporting a review
  * @param {string} reviewID - The ID of the review
- * @param {string} userID - The ID of the user
+ * @param {string} username - The user
  * @param {string} report - The report of the user
  * @return {Promise<string>} - Returns a promise with a success message upon successfully reporting a review
  */
 async function reportReview(
   reviewID: string,
-  userID: string,
+  username: string,
   report: string
 ): Promise<string> {
   //Implemnentation goes here
