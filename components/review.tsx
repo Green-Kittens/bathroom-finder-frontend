@@ -40,7 +40,10 @@ export default function Review() {
           <Text style={{ fontSize: 24 }}>Review Title</Text>
         </View>
       </View>
-      <View id="review-body" style={{ backgroundColor: "none" }}>
+      <View
+        id="review-body"
+        style={{ backgroundColor: "none", marginVertical: 15 }}
+      >
         <Text style={[{ backgroundColor: "none" }]}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis
           luctus metus. Morbi semper sollicitudin efficitur. Curabitur placerat
