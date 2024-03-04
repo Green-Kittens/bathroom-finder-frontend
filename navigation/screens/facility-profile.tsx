@@ -1,6 +1,8 @@
 import React from "react";
 import { StyleSheet, Button, Animated, Image, Text, View } from "react-native";
 import { useEffect, useState, useRef } from "react";
+import { getAllReviews } from "@/controllers/reviewController";
+import { getBathroomProfile, favoriteBathroom, reportBathroom } from "@/controllers/bathroomController";
 
 const maxLineNumber = 5;
 

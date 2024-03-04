@@ -72,7 +72,7 @@ async function createBathroom(
  * @param {string}  username - The user
  * @returns {Promise<string>} - Returns a promise with a success message after retrieving all favorite bathrooms
  */
-async function getFavorites(username: string): Promise<string> {
+async function getFavorites(username: sing): Promise<string> {
   //Implementation goes here
 }
 

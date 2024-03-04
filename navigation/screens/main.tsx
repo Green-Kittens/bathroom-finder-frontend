@@ -7,23 +7,73 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { useState, useEffect } from "react";
+import {
+  getAllBathrooms,
+  getBathroomProfile,
+} from "@/controllers/bathroomController";
+import { getUserProfile } from "@/controllers/userController";
 
 /* eslint-disable */
 const map = require("../../assets/images/map.jpg");
 
 export default function MainScreen() {
+  /*gets bathroom profile information*/
+  const [bathroomID, setBathroomID] = useState(0);
+  const handleBathroomProfile = async () => {
+    try {
+      const bathroomProfile = await getBathroomProfile(bathroomID);
+    } catch (error) {
+      console.error("Error retrieving bathroom profile:", error);
+    }
+  };
+
+  /**gets user profile information*/
+  const [username, setUsername] = useState("");
+  const handleUserProfile = async () => {
+    useEffect(() => {
+      async function fetchUser() {
+        try {
+          /**use api to fetch actual username and setUsername before calling controller func */
+          const userProfile = await getUserProfile(username);
+        } catch (error) {
+          console.error("Error retrieving user profile:", error);
+        }
+      }
+    });
+  };
+
+  /**gets all bathrooms to filter through */
+  const handleSearch = async () => {
+    try {
+      const bathrooms = await getAllBathrooms();
+    } catch (error) {
+      console.error("Error retrieving all bathrooms:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Image source={map} style={styles.image} />
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button}>
-          <FontAwesome name="user" size={50} color="black" />
+          <FontAwesome
+            name="user"
+            size={50}
+            color="black"
+            onPress={handleUserProfile}
+          />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
           <FontAwesome name="plus" size={50} color="black" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
-          <FontAwesome name="search" size={40} color="black" />
+          <FontAwesome
+            name="search"
+            size={40}
+            color="black"
+            onPress={handleSearch}
+          />
         </TouchableOpacity>
       </View>
     </View>
