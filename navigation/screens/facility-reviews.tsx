@@ -1,18 +1,58 @@
 import React from "react";
-import { Button, Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import {
+  likeReview,
+  dislikeReview,
+  replyReview,
+} from "@/controllers/reviewController";
+import { useState } from "react";
 
 export default function FacilityReviewsScreen() {
+  /**like a review */
+  const [reviewID, setReviewID] = useState("");
+  const [username, setUsername] = useState("");
+  const [reply, setReply] = useState("");
+  const handleLike = async () => {
+    try {
+      const likes = await likeReview(reviewID);
+    } catch (error) {
+      console.error("Error liking review:", error);
+    }
+  };
+  /**dislike a review */
+  const handleDislike = async () => {
+    try {
+      const dislikes = await dislikeReview(reviewID);
+    } catch (error) {
+      console.error("Error disliking review:", error);
+    }
+  };
+  /**replay to a review */
+  const handleReply = async () => {
+    try {
+      const replies = await replyReview(reviewID, username, reply);
+    } catch (error) {
+      console.error("Error replying to review:", error);
+    }
+  };
   return (
     <ScrollView>
-      {exampleReview()}
-      {exampleReview()}
-      {exampleReview()}
-      {exampleReview()}
+      {exampleReview(handleLike, handleDislike, handleReply)}
+      {exampleReview(handleLike, handleDislike, handleReply)}
+      {exampleReview(handleLike, handleDislike, handleReply)}
+      {exampleReview(handleLike, handleDislike, handleReply)}
     </ScrollView>
   );
 }
 
-function exampleReview() {
+function exampleReview(handleLike, handleDislike, handleReply) {
   return (
     <View id="review" style={{ padding: 5 }}>
       <View id="review-header" style={{ flexDirection: "row", width: "100%" }}>
@@ -54,9 +94,9 @@ function exampleReview() {
         </Text>
       </View>
       <View id="review-actions" style={styles.buttonContainer}>
-        <Button onPress={() => {}} title="Like" />
-        <Button onPress={() => {}} title="Dislike" />
-        <Button onPress={() => {}} title="Reply" />
+        <Button onPress={handleLike} title="Like" />
+        <Button onPress={handleDislike} title="Dislike" />
+        <Button onPress={handleReply} title="Reply" />
       </View>
     </View>
   );
