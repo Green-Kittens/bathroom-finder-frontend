@@ -1,9 +1,9 @@
 import React from "react";
-import { Button, StyleSheet, TextInput, Text, View } from "react-native";
+import { StyleSheet, TextInput } from "react-native";
+import MainButton from "@/components/main_button";
 
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
-import { MaterialIcons } from "@expo/vector-icons";
 import StarRating from "react-native-star-rating-widget";
 
 // screens 
@@ -44,12 +44,6 @@ export default function TabReviewForm() {
             { label: "Location 2", value: "location2" },
           ]}
         />
-        <MaterialIcons
-          style={styles.icon}
-          name="keyboard-arrow-down"
-          size={17}
-          color="white"
-        />
       </View>
 
       <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
@@ -57,7 +51,7 @@ export default function TabReviewForm() {
       <TextInput
         style={styles.input}
         placeholder="write your description..."
-        placeholderTextColor="#344f33"
+        placeholderTextColor="#6da798"
         value={description}
         onChangeText={setDescription}
         multiline={true}
@@ -71,16 +65,7 @@ export default function TabReviewForm() {
         enableHalfStar={false}
       />
 
-      <View style={styles.button}>
-        <Button
-          title="Post Rating"
-          color="RGA0000"
-          onPress={() => {
-            // handle submit
-            //navigation.navigate('/');
-          }}
-        />
-      </View>
+      {MainButton("Post Rating", null)}
     </View>
   );
 }
@@ -91,13 +76,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#afd6ae",
-    color: "#344f33",
+    backgroundColor: "#EEF8F7",
   },
   title: {
     fontSize: 30,
-    fontFamily: 'EudoxusSans-Bold',
-    color: "#344f33",
+    fontWeight: "bold",
   },
   dropdown: {
     flexDirection: "row",
@@ -107,7 +90,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#344f33",
+    backgroundColor: "#CDEEEA",
     paddingVertical: 5,
     paddingHorizontal: 20,
     borderRadius: 8,
@@ -118,21 +101,19 @@ const styles = StyleSheet.create({
   subtext: {
     fontSize: 17,
     marginBottom: 20,
-    color: "#344f33",
+    color: "#6da798",
   },
   input: {
-    borderWidth: 1,
-    borderColor: "#344f33",
+    backgroundColor: "#CDEEEA",
     borderRadius: 20,
     padding: 10,
     width: "85%",
     minHeight: 150,
     marginBottom: 20,
-    color: "#344f33",
   },
   button: {
     fontSize: 17,
-    backgroundColor: "#344f33",
+    backgroundColor: "#6da798",
     paddingVertical: 5,
     paddingHorizontal: 20,
     borderRadius: 8,
