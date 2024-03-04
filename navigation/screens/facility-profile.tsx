@@ -125,7 +125,7 @@ function CollapseView() {
         style={styles.button}
       >
         <Pressable style={styles.button} onPress={toggleCollapsed}>
-          <Text style={[styles.body, { color: "#FFFFFF" }]}>
+          <Text style={[styles.body, { fontWeight: "bold" }]}>
             {changeText()}
           </Text>
         </Pressable>
