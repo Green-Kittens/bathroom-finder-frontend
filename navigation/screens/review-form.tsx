@@ -50,7 +50,7 @@ export default function TabReviewForm() {
         <RNPickerSelect
           placeholder={{
             label: "select a location",
-            value: null,
+            value: undefined,
           }}
           onValueChange={(newLocation) => setLocation(newLocation)}
           items={[
@@ -60,7 +60,15 @@ export default function TabReviewForm() {
         />
       </View>
 
-      <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
+      <Text style={styles.subtext}>
+        {currentDate.toLocaleString(navigator.language, {
+          month: "2-digit",
+          day: "2-digit",
+          year: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        })}
+      </Text>
 
       <TextInput
         style={styles.input}
@@ -71,15 +79,18 @@ export default function TabReviewForm() {
         multiline={true}
       />
 
-      <Text style={styles.subtext}>Rate Your Experience:</Text>
+      <Text style={[styles.subtext, { color: "black" }]}>
+        Rate Your Experience:
+      </Text>
       <StarRating
         style={styles.starRating}
         rating={rating}
         onChange={setRating}
         enableHalfStar={false}
+        color="FFFFFF"
       />
 
-      {MainButton("Post Rating", null)}
+      {MainButton("Post Rating", undefined)}
     </View>
   );
 }
