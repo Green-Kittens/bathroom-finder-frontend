@@ -24,11 +24,11 @@ export default function FacilityReviewsScreen() {
               alignSelf: "flex-end",
             }}
           ></ImageBackground>
-          {Review()}
-          {Review()}
-          {Review()}
-          {Review()}
-          {Review()}
+          <View style={styles.subcontainer}>{Review()}</View>
+          <View style={styles.subcontainer}>{Review()}</View>
+          <View style={styles.subcontainer}>{Review()}</View>
+          <View style={styles.subcontainer}>{Review()}</View>
+          <View style={styles.subcontainer}>{Review()}</View>
         </View>
       </View>
     </ScrollView>
@@ -48,8 +48,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#EEF8F7",
+    backgroundColor: "none",
     width: "90%",
     marginVertical: 15,
+  },
+  reviewContainer: {
+    marginVertical: 40,
   },
 });

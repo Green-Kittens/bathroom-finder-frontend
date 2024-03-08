@@ -11,14 +11,12 @@ export default function Review() {
         id="review-header"
         style={{ flexDirection: "row", width: "100%", backgroundColor: "none" }}
       >
-        <View id="photo">
-          <Image
-            style={styles.photo}
-            source={{
-              uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
-            }}
-          />
-        </View>
+        <Image
+          style={styles.photo}
+          source={{
+            uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
+          }}
+        />
         <View
           id="stars-and-title"
           style={{ width: "100%", backgroundColor: "none" }}
@@ -37,14 +35,18 @@ export default function Review() {
             {star()}
             {star()}
           </View>
-          <Text style={{ fontSize: 24 }}>Review Title</Text>
+          <Text
+            style={{ fontSize: 24, marginVertical: 10, marginHorizontal: 10 }}
+          >
+            Review Title
+          </Text>
         </View>
       </View>
       <View
         id="review-body"
         style={{ backgroundColor: "none", marginVertical: 15 }}
       >
-        <Text style={[{ backgroundColor: "none" }]}>
+        <Text style={[{ backgroundColor: "#CDEEEA", padding: 10 }]}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis
           luctus metus. Morbi semper sollicitudin efficitur. Curabitur placerat
           ante maximus, posuere tortor vulputate, fermentum arcu. Sed sit amet
@@ -98,6 +100,7 @@ const styles = StyleSheet.create({
   photo: {
     width: 100,
     height: 100,
+    borderRadius: 50,
   },
   button: {
     justifyContent: "center",
