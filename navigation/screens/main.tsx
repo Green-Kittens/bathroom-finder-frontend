@@ -27,17 +27,6 @@ export default function MainScreen() {
             >
                 <Image source={map} style={styles.image} />
             </TouchableWithoutFeedback>
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button}>
-                    <FontAwesome name="user" size={50} color="black" />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button}>
-                    <FontAwesome name="plus" size={50} color="black" />
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <FontAwesome name="search" size={40} color="black" />
-                </TouchableOpacity>
-            </View>
         </View>
       );
 }
