@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, StyleSheet, TextInput, Text, View, ScrollView } from "react-native";
+import { Button, StyleSheet, TextInput, Text, View, ScrollView, TouchableOpacity, Modal } from "react-native";
 
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
@@ -21,6 +21,43 @@ export default function TabReviewForm() {
   const [description, setDescription] = useState("");
 
   // add photo
+  const [modalVisible, setModalVisible] = useState(false);
+  const ImageUploader = ({ isVisible, onClose }) => {
+    return(
+    <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isVisible}
+        onRequestClose={onClose}
+    >
+        <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+                <View style={styles.button}>
+                    <Button
+                    title="Take Photo"
+                    color="RGA0000"
+                    />
+                </View>
+                <View style={styles.button}>
+                    <Button
+                    title="Choose from Gallery"
+                    color="RGA0000"
+                    />
+                </View>
+                <View style={styles.cancelButton}>
+                    <Button
+                    title="Cancel"
+                    color="RGA0000"
+                    onPress={() => {
+                        onClose();
+                    }}
+                    />
+                </View>
+            </View>
+        </View>
+    </Modal>
+    );
+  }
 
   // rating
   const [rating, setRating] = useState(0);
@@ -64,6 +101,20 @@ export default function TabReviewForm() {
         multiline={true}
       />
 
+      <View style={styles.button}>
+        <Button
+            title="Upload image"
+            color="RGA0000"
+            onPress={()=> {
+                setModalVisible(true);
+            }}
+        />
+      </View>
+      <ImageUploader
+        isVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+      />
+
       <Text style={styles.subtext}>Rate Your Experience:</Text>
       <StarRating
         style={styles.starRating}
@@ -77,7 +128,6 @@ export default function TabReviewForm() {
           title="Post Rating"
           color="RGA0000"
           onPress={() => {
-            // handle submit
             navigation.navigate("Main");
           }}
         />
@@ -139,7 +189,35 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 20,
   },
+  cancelButton: {
+    fontSize: 17,
+    backgroundColor: "#FF0000",
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginBottom: 20,
+  },
   starRating: {
     marginBottom: 20,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalView: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });
