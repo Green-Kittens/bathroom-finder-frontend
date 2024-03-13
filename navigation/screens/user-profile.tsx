@@ -1,9 +1,29 @@
 import React from "react";
-import { Image, ScrollView, StyleSheet, Button, Text, View } from "react-native";
+import horizontalCards from "@/components/HorizontalCards";
+import MainButton from "@/components/MainButton";
+import { Image, ImageBackground, StyleSheet } from "react-native";
+
+import { Text, View } from "@/components/Themed";
+
+const boomerangimage = { uri: "/assets/images/boomerang.png" };
 
 export default function UserProfileScreen() {
   return (
-    <ScrollView>
+    <View style={styles.container}>
+      <ImageBackground
+        source={boomerangimage}
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          top: 0,
+          left: 0,
+        }}
+        imageStyle={{
+          resizeMode: "cover",
+          alignSelf: "flex-end",
+        }}
+      ></ImageBackground>
       <View style={styles.profilePictureContainer}>
         <Image
           style={styles.profilePicture}
@@ -15,46 +35,31 @@ export default function UserProfileScreen() {
       </View>
       {horizontalCards("Your Reviews")}
       {horizontalCards("Your Favorites")}
-      <View>
-        <View style={{ marginHorizontal: "40%", marginVertical: 5 }}>
-          <Button onPress={() => {}} title="Log Out" />
+      <View style={[{ backgroundColor: "none" }]}>
+        <View
+          style={{
+            marginHorizontal: "50%",
+            marginVertical: 5,
+            backgroundColor: "none",
+          }}
+        >
+          {MainButton("Log Out", undefined)}
         </View>
       </View>
-    </ScrollView>
-  );
-}
-
-function horizontalCards(title: string) {
-  return (
-    <View>
-      <Text style={{ margin: 10 }}>{title}</Text>
-      <ScrollView horizontal={true} style={styles.horizontalScroll}>
-        {card()}
-        {card()}
-        {card()}
-        {card()}
-        {card()}
-        {card()}
-        {card()}
-        {card()}
-      </ScrollView>
     </View>
   );
-}
-
-function card() {
-  return <View style={styles.card} />;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#EEF8F7",
   },
   title: {
     fontSize: 20,
-    fontFamily: 'EudoxusSans-Bold',
+    fontWeight: "bold",
+    backgroundColor: "none",
   },
   separator: {
     marginVertical: 30,
@@ -69,13 +74,6 @@ const styles = StyleSheet.create({
   },
   profilePictureContainer: {
     alignItems: "center",
-  },
-  horizontalScroll: {},
-  card: {
-    width: 80,
-    height: 120,
-    borderRadius: 10,
-    backgroundColor: "grey",
-    marginHorizontal: 5,
+    backgroundColor: "none",
   },
 });
