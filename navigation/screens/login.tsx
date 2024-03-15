@@ -93,8 +93,8 @@ const styles = StyleSheet.create({
   // Title Section
   title: {
     fontSize: 20,
-    fontWeight: "bold",
     marginBottom: 50,
+    fontFamily: 'EudoxusSans-Bold',
   },
   // Input Section
   input: {
@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
   // Text Section
   text: {
     alignSelf: "center",
+    fontFamily: 'EudoxusSans-Regular',
   },
   // Button Section
   fixToText: {
@@ -129,7 +130,7 @@ const styles = StyleSheet.create({
   // Register Text
   registerText: {
     color: "black",
-    fontWeight: "bold",
+    fontFamily: 'EudoxusSans-Bold',
   },
   // Logo
   logo: {

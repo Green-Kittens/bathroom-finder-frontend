@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    fontWeight: "bold",
+    fontFamily: 'EudoxusSans-Bold',
     color: "#344f33",
   },
   dropdown: {
@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginBottom: 20,
     color: "#344f33",
+    fontFamily: 'EudoxusSans-Regular',
   },
   input: {
     borderWidth: 1,
@@ -137,6 +138,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 8,
     marginBottom: 20,
+    fontFamily: 'EudoxusSans-Regular',
   },
   starRating: {
     marginBottom: 20,

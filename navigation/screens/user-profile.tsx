@@ -11,7 +11,7 @@ export default function UserProfileScreen() {
             uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
           }}
         />
-        <Text>Your Name</Text>
+        <Text style={{fontFamily: 'EudoxusSans-Regular',}}>Your Name</Text>
       </View>
       {horizontalCards("Your Reviews")}
       {horizontalCards("Your Favorites")}
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: 'EudoxusSans-Bold',
   },
   separator: {
     marginVertical: 30,

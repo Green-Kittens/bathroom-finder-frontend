@@ -38,11 +38,11 @@ function exampleReview() {
             {star()}
             {star()}
           </View>
-          <Text style={{ fontSize: 24 }}>Review Title</Text>
+          <Text style={{ fontSize: 24, fontFamily: 'EudoxusSans-Regular',}}>Review Title</Text>
         </View>
       </View>
       <View id="review-body">
-        <Text>
+        <Text style={{ fontFamily: 'EudoxusSans-Regular',}}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis
           luctus metus. Morbi semper sollicitudin efficitur. Curabitur placerat
           ante maximus, posuere tortor vulputate, fermentum arcu. Sed sit amet
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: 'EudoxusSans-Bold',
   },
   separator: {
     marginVertical: 30,

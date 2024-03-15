@@ -11,7 +11,7 @@ function Review() {
         style={{ height: 60, width: 60 }}
         source={require("../../assets/images/icon.png")}
       />
-      <Text style={[styles.paragraph, { fontWeight: "bold" }]}>Username</Text>
+      <Text style={[styles.paragraph, { fontFamily: 'EudoxusSans-Bold', }]}>Username</Text>
       <Image
         style={{ height: 15, width: 15, alignSelf: "center" }}
         source={require("../../assets/images/star_unfilled.png")}
@@ -101,11 +101,9 @@ function CollapseView() {
           culpa qui officia deserunt mollit anim id est laborum.
         </Text>
       </Animated.View>
-      <Button title={changeText(collapsed)} onPress={toggleCollapsed} />
+      <Button title={changeText()} onPress={toggleCollapsed} />
       <View
         style={styles.separator}
-        lightColor="#aaa"
-        darkColor="rgba(255,255,255,0.1)"
       />
       <View style={styles.row}>
         <Review />
@@ -192,9 +190,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginVertical: 20,
+    fontFamily: 'EudoxusSans-Bold',
   },
   body: {
     fontSize: 15,
+    fontFamily: 'EudoxusSans-Regular',
   },
   separator: {
     marginVertical: 30,
@@ -205,6 +205,7 @@ const styles = StyleSheet.create({
   paragraph: {
     margin: 24,
     fontSize: 14,
+    fontFamily: 'EudoxusSans-Regular',
   },
   row: {
     flex: 0.1,
