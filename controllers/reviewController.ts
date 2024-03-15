@@ -1,10 +1,26 @@
 /**
  * Function for retrieving reviews of a bathroom
  * @param {string} bathroomID - ID of bathroom
- * @returns {Promise<string>} - Returns a promise with a success message after retrieving all reviews for specific bathroom
+ * @returns {Promise<List<BathroomReview>>} - Returns a promise with all reviews for specific bathroom after retrieving
  */
-async function getAllReviews(bathroomID: string): Promise<string> {
+export async function getAllReviews(bathroomID: string): Promise<Review[]> {
   //Implementation goes here
+  return new Promise<Review[]>((resolve) => {
+    const bathroomReviews: Review[] = [
+      {
+        id: "1",
+        name: "Review 1",
+      },
+      {
+        id: "2",
+        name: "Review 2",
+      },
+    ];
+
+    setTimeout(() => {
+      resolve(bathroomReviews);
+    }, 1000);
+  });
 }
 
 /**
@@ -14,10 +30,10 @@ async function getAllReviews(bathroomID: string): Promise<string> {
  * @param {string} description - The review
  * @param {int} rating - The user's rating of the bathroom
  * @param {Date} time - The date and time the review was uploaded
- * @param {Image} images - *Optional images
+ * @param {Optional<Image>} images - User's uploaded images
  * @returns {Promise<string>} - Returns a promise with a success message upon successfully creating a new review
  */
-async function createReview(
+export async function createReview(
   username: string,
   bathroomID: string,
   description: string,
@@ -26,6 +42,13 @@ async function createReview(
   images: typeof Image
 ): Promise<string> {
   //Implementation goes here
+  return new Promise<string>((resolve) => {
+    const successsMsg = "Review successfully created.";
+
+    setTimeout(() => {
+      resolve(successsMsg);
+    }, 1000);
+  });
 }
 
 /**
@@ -33,8 +56,15 @@ async function createReview(
  * @param {string} reviewID - The ID of the review
  * @return {Promise<string>} - Returns a promise with a success message upon successfully liking a review
  */
-async function likeReview(reviewID: string): Promise<string> {
+export async function likeReview(reviewID: string): Promise<string> {
   //Implemnentation goes here
+  return new Promise<string>((resolve) => {
+    const successsMsg = "Review successfully liked.";
+
+    setTimeout(() => {
+      resolve(successsMsg);
+    }, 1000);
+  });
 }
 
 /**
@@ -42,8 +72,15 @@ async function likeReview(reviewID: string): Promise<string> {
  * @param {string} reviewID - The ID of the review
  * @return {Promise<string>} - Returns a promise with a success message upon successfully disliking a review
  */
-async function dislikeReview(reviewID: string): Promise<string> {
+export async function dislikeReview(reviewID: string): Promise<string> {
   //Implemnentation goes here
+  return new Promise<string>((resolve) => {
+    const successsMsg = "Review successfully disliked.";
+
+    setTimeout(() => {
+      resolve(successsMsg);
+    }, 1000);
+  });
 }
 
 /**
@@ -53,12 +90,19 @@ async function dislikeReview(reviewID: string): Promise<string> {
  * @param {string} reply - The reply of the user
  * @return {Promise<string>} - Returns a promise with a success message upon successfully replying to a review
  */
-async function replyReview(
+export async function replyReview(
   reviewID: string,
   username: string,
   reply: string
 ): Promise<string> {
   //Implemnentation goes here
+  return new Promise<string>((resolve) => {
+    const successsMsg = "Reply successful.";
+
+    setTimeout(() => {
+      resolve(successsMsg);
+    }, 1000);
+  });
 }
 
 /**
@@ -68,20 +112,17 @@ async function replyReview(
  * @param {string} report - The report of the user
  * @return {Promise<string>} - Returns a promise with a success message upon successfully reporting a review
  */
-async function reportReview(
+export async function reportReview(
   reviewID: string,
   username: string,
   report: string
 ): Promise<string> {
   //Implemnentation goes here
-}
+  return new Promise<string>((resolve) => {
+    const successsMsg = "Review successfully reported.";
 
-// Exporting functions
-export {
-  getAllReviews,
-  createReview,
-  likeReview,
-  dislikeReview,
-  replyReview,
-  reportReview,
-};
+    setTimeout(() => {
+      resolve(successsMsg);
+    }, 1000);
+  });
+}
