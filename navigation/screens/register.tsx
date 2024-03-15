@@ -14,6 +14,8 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function RegisterScreen() {
   // State management for text inputs
+  const [firstName, setFirstName] = useState("");
+  const [lasttName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -33,14 +35,14 @@ export default function RegisterScreen() {
 
           <TextInput
             style={styles.input}
-            onChangeText={setUsername}
-            value={username}
+            onChangeText={setFirstName}
+            value={firstName}
             placeholder="First Name"
           />
           <TextInput
             style={styles.input}
-            onChangeText={setUsername}
-            value={username}
+            onChangeText={setLastName}
+            value={lasttName}
             placeholder="Last Name"
           />
           <TextInput
@@ -58,8 +60,8 @@ export default function RegisterScreen() {
           />
           <TextInput
             style={styles.input}
-            onChangeText={setUsername}
-            value={username}
+            //implemtation to check against initially entered password
+            value={password}
             placeholder="Confirm Password"
           />
           <View style={styles.fixToText}>
