@@ -63,7 +63,7 @@ export default function TabReviewForm() {
   }
 
   // images uploaded for review
-  const [image, setImage] = useState<string | null>(null);
+  const [images, setImages] = useState<Array<string>>(([]));
 
   // add photo from device gallery
   const addFromGallery = async () => {
@@ -76,7 +76,7 @@ export default function TabReviewForm() {
         }
     );
     if (!_image.canceled) {
-        setImage(_image.assets[0].uri);
+        images.push(_image.assets[0].uri);
         setModalVisible(false);
     }
   }
@@ -91,7 +91,7 @@ export default function TabReviewForm() {
         }
     );
     if (!_image.canceled) {
-        setImage(_image.assets[0].uri);
+        images.push(_image.assets[0].uri);
         setModalVisible(false);
     }
   }
@@ -106,81 +106,92 @@ export default function TabReviewForm() {
   return (
     <ScrollView>
         <View style={styles.container}>
-      <Text style={styles.title}>New Bathroom Rating</Text>
+            <Text style={styles.title}>New Bathroom Rating</Text>
 
-      <View style={styles.dropdown}>
-        <RNPickerSelect
-          placeholder={{
-            label: "select a location",
-            value: null,
-          }}
-          onValueChange={(newLocation) => setLocation(newLocation)}
-          items={[
-            { label: "Location 1", value: "location1" },
-            { label: "Location 2", value: "location2" },
-          ]}
-        />
-        <MaterialIcons
-          style={styles.icon}
-          name="keyboard-arrow-down"
-          size={17}
-          color="white"
-        />
-      </View>
+            <View style={styles.dropdown}>
+                <RNPickerSelect
+                placeholder={{
+                    label: "select a location",
+                    value: null,
+                }}
+                onValueChange={(newLocation) => setLocation(newLocation)}
+                items={[
+                    { label: "Location 1", value: "location1" },
+                    { label: "Location 2", value: "location2" },
+                ]}
+                />
+                <MaterialIcons
+                style={styles.icon}
+                name="keyboard-arrow-down"
+                size={17}
+                color="white"
+                />
+            </View>
 
-      <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
+            <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="write your description..."
-        placeholderTextColor="#344f33"
-        value={description}
-        onChangeText={setDescription}
-        multiline={true}
-      />
+            <TextInput
+                style={styles.input}
+                placeholder="write your description..."
+                placeholderTextColor="#344f33"
+                value={description}
+                onChangeText={setDescription}
+                multiline={true}
+            />
 
-      <View style={styles.button}>
-        <Button
-            title="Upload image"
-            color="RGA0000"
-            onPress={()=> {
-                setModalVisible(true);
-            }}
-        />
-      </View>
+            <View style={styles.button}>
+                {images.length === 3 && (
+                    <Text style={styles.errorText}>
+                        You can only upload a max of 3 photos.
+                    </Text>
+                )}
+                {images.length < 3 && (
+                    <Button
+                        title="Upload image"
+                        color="RGA0000"
+                        onPress={()=> {
+                            setModalVisible(true);
+                        }}
+                    />
+                )}
+            </View>
 
-      <ImageUploader
-        isVisible={modalVisible}
-        onClose={() => setModalVisible(false)}
-      />
-      
-      {image && (
-        <Image 
-            source={{ uri: image}}
-            style={{ width: 200, height: 200, marginBottom: 20 }}
-        />
-      )}
+            <ImageUploader
+                isVisible={modalVisible}
+                onClose={() => setModalVisible(false)}
+            />
+
+            {images.length !== 0 && (
+                images.map((imageUri, idx) => (
+                    <Image 
+                        key={idx}
+                        source={{uri : imageUri }}
+                        style={{ width: 200, height: 200, marginBottom: 20 }}
+                    />
+                    
+                ))
+            )}
 
 
-      <Text style={styles.subtext}>Rate Your Experience:</Text>
-      <StarRating
-        style={styles.starRating}
-        rating={rating}
-        onChange={setRating}
-        enableHalfStar={false}
-      />
+            <Text style={styles.subtext}>Rate Your Experience:</Text>
+            <StarRating
+                style={styles.starRating}
+                rating={rating}
+                onChange={setRating}
+                enableHalfStar={false}
+            />
 
-      <View style={styles.button}>
-        <Button
-          title="Post Rating"
-          color="RGA0000"
-          onPress={() => {
-            // make a check to make sure that all fields are filled out
-            navigation.navigate("Main");
-          }}
-        />
-      </View>
-    </View>
+            <View style={styles.button}>
+                <Button
+                title="Post Rating"
+                color="RGA0000"
+                onPress={() => {
+                    // make a check to make sure that all fields are filled out
+                    navigation.navigate("Main");
+                }}
+                />
+            </View>
+        </View>
     </ScrollView>
   );
 }
@@ -218,6 +229,11 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginBottom: 20,
     color: "#344f33",
+  },
+  errorText: {
+    fontSize: 17,
+    marginBottom: 20,
+    color: "red",
   },
   input: {
     borderWidth: 1,
