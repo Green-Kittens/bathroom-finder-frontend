@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Button, Animated, Image, Text, View } from "react-native";
 import { useEffect, useState, useRef } from "react";
+import { getAllReviews } from "@/controllers/reviewController";
 
 const maxLineNumber = 5;
 
@@ -49,6 +50,16 @@ function CollapseView() {
   const [collapsed, setCollapsed] = useState(true);
   const [maxLines, setMaxLines] = useState(2);
   const animationHeight = useRef(new Animated.Value(0)).current;
+  const [bathroomID, setBathroomID] = useState("");
+
+  /**get all reviews*/
+  const handleReviews = async () => {
+    try {
+      const reviews = await getAllReviews(bathroomID);
+    } catch (error) {
+      console.error("Error retrieving reviews:", error);
+    }
+  };
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -112,7 +123,7 @@ function CollapseView() {
         <View
           style={[{ width: "10%", margin: 10, justifyContent: "flex-start" }]}
         >
-          <Button title={"See more"} />
+          <Button title={"See more"} onPress={handleReviews} />
         </View>
       </View>
     </View>
