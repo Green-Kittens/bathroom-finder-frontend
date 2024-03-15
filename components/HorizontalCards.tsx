@@ -3,8 +3,10 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function horizontalCards(title: string) {
   return (
-    <View>
-      <Text style={{ margin: 10 }}>{title}</Text>
+    <View style={[{ justifyContent: "center", alignItems: "center" }]}>
+      <Text style={{ margin: 10, alignSelf: "flex-start", marginLeft: "5%" }}>
+        {title}
+      </Text>
       <ScrollView horizontal={true} style={styles.horizontalScroll}>
         {card()}
         {card()}
