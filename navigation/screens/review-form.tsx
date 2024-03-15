@@ -1,11 +1,12 @@
 import React from "react";
-import { Button, StyleSheet, TextInput, Text, View, ScrollView, TouchableOpacity, Modal } from "react-native";
+import { Button, StyleSheet, TextInput, Text, View, ScrollView, Modal, Image } from "react-native";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import { MaterialIcons } from "@expo/vector-icons";
 import StarRating from "react-native-star-rating-widget";
 import { useNavigation } from "@react-navigation/native";
+import * as ImagePicker from 'expo-image-picker';
 
 // type
 import { ScreenNavigationProp } from "../type";
@@ -20,7 +21,7 @@ export default function TabReviewForm() {
   // description
   const [description, setDescription] = useState("");
 
-  // add photo
+  // add photo modal
   const [modalVisible, setModalVisible] = useState(false);
   const ImageUploader = ({ isVisible, onClose }) => {
     return(
@@ -36,12 +37,14 @@ export default function TabReviewForm() {
                     <Button
                     title="Take Photo"
                     color="RGA0000"
+                    onPress={addUsingCamera}
                     />
                 </View>
                 <View style={styles.button}>
                     <Button
                     title="Choose from Gallery"
                     color="RGA0000"
+                    onPress={addFromGallery}
                     />
                 </View>
                 <View style={styles.cancelButton}>
@@ -58,6 +61,41 @@ export default function TabReviewForm() {
     </Modal>
     );
   }
+
+  // images uploaded for review
+  const [image, setImage] = useState<string | null>(null);
+
+  // add photo from device gallery
+  const addFromGallery = async () => {
+    let _image = await ImagePicker.launchImageLibraryAsync(
+        {
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4,3],
+            quality: 1,
+        }
+    );
+    if (!_image.canceled) {
+        setImage(_image.assets[0].uri);
+        setModalVisible(false);
+    }
+  }
+
+  // add photo using camera
+  const addUsingCamera = async () => {
+    let _image = await ImagePicker.launchCameraAsync(
+        {
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            base64: true,
+            quality: 1,
+        }
+    );
+    if (!_image.canceled) {
+        setImage(_image.assets[0].uri);
+        setModalVisible(false);
+    }
+  }
+  
 
   // rating
   const [rating, setRating] = useState(0);
@@ -110,10 +148,19 @@ export default function TabReviewForm() {
             }}
         />
       </View>
+
       <ImageUploader
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
       />
+      
+      {image && (
+        <Image 
+            source={{ uri: image}}
+            style={{ width: 200, height: 200, marginBottom: 20 }}
+        />
+      )}
+
 
       <Text style={styles.subtext}>Rate Your Experience:</Text>
       <StarRating
@@ -128,6 +175,7 @@ export default function TabReviewForm() {
           title="Post Rating"
           color="RGA0000"
           onPress={() => {
+            // make a check to make sure that all fields are filled out
             navigation.navigate("Main");
           }}
         />
