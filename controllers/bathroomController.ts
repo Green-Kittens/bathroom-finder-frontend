@@ -1,9 +1,16 @@
 /**
- * Function for retrieving a specific bathroom
+ * Function for retrieving all bathrooms
  * @returns {Promise<string>} - Returns a promise with a success message after retrieving all bathrooms
  */
-async function getAllBathrooms(): Promise<string> {
+export async function getAllBathrooms(): Promise<string> {
   //Implementation goes here
+  return new Promise<string>((resolve) => {
+    const successsMsg = "All bathrooms retrieved successfully.";
+
+    setTimeout(() => {
+      resolve(successsMsg);
+    }, 1000);
+  });
 }
 
 /**
@@ -11,23 +18,48 @@ async function getAllBathrooms(): Promise<string> {
  * @param {string} bathroomID - The ID of the bathroom
  * @returns {Promise<BathroomProfile>} - Returns a promise with bathroom profile information
  */
-async function getBathroomProfile(
+export async function getBathroomProfile(
   bathroomID: string
 ): Promise<BathroomProfile> {
   //Implementation goes here
+  return new Promise<BathroomProfile>((resolve) => {
+    const bathroomProfile: BathroomProfile = {
+      id: bathroomID,
+      name: "Placeholder Bathroom",
+    };
+    setTimeout(() => {
+      resolve(bathroomProfile);
+    }, 1000);
+  });
 }
 
 /**
  * Function for filtering bathrooms to look for specific type of bathrooms
- * @param {int} location - *Optional location of user
- * @param {string} tags - The tags used to filter bathroom types
- * @returns {Promise<string>} - Returns a promise with a success message after retrieving all bathrooms of certain type(s)
+ * @param {Optional<int>} location - Location of user
+ * @param {List<string>} tags - The tags used to filter bathroom types
+ * @returns {Promise<List<BathroomProfile>>} - Returns a promise with all bathrooms of certain type(s) after retrieving
  */
-async function getSomeBathrooms(
+export async function getSomeBathrooms(
   location: Int16Array,
   tags: string
-): Promise<string> {
+): Promise<BathroomProfile[]> {
   //Implementation goes here
+  return new Promise<BathroomProfile[]>((resolve) => {
+    const filteredBathrooms: BathroomProfile[] = [
+      {
+        id: "1",
+        name: "Bathroom 1",
+      },
+      {
+        id: "2",
+        name: "Bathroom 2",
+      },
+    ];
+
+    setTimeout(() => {
+      resolve(filteredBathrooms);
+    }, 1000);
+  });
 }
 
 /**
@@ -37,12 +69,19 @@ async function getSomeBathrooms(
  * @param {string} report - The report of the user
  * @return {Promise<string>} - Returns a promise with a success message upon successfully reporting a bathroom
  */
-async function reportBathroom(
+export async function reportBathroom(
   reviewID: string,
   username: string,
   report: string
 ): Promise<string> {
   //Implemnentation goes here
+  return new Promise<string>((resolve) => {
+    const successsMsg = "Bathroom successfully reported.";
+
+    setTimeout(() => {
+      resolve(successsMsg);
+    }, 1000);
+  });
 }
 
 /**
@@ -51,18 +90,16 @@ async function reportBathroom(
  * @param {string} username - The user
  * @return {Promise<string>} - Returns a promise with a success message upon successfully favoriting a bathroom
  */
-async function favoriteBathroom(
+export async function favoriteBathroom(
   bathroomID: string,
   username: string
 ): Promise<string> {
   //Implemnentation goes here
-}
+  return new Promise<string>((resolve) => {
+    const successsMsg = "Bathroom successfully favorited.";
 
-// Exporting functions
-export {
-  getAllBathrooms,
-  getBathroomProfile,
-  getSomeBathrooms,
-  reportBathroom,
-  favoriteBathroom,
-};
+    setTimeout(() => {
+      resolve(successsMsg);
+    }, 1000);
+  });
+}
