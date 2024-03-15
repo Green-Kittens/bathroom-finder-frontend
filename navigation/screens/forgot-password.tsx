@@ -1,21 +1,41 @@
 import React, { useState } from 'react';
-import { StyleSheet,Image, SafeAreaView, TextInput, Button, Alert, Text, View } from 'react-native';
+import { StyleSheet, Image, SafeAreaView, TextInput, Button, Alert, Text, View, Modal } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Modal from "react-native-modal";
 
-function TabLoginScreen() {
+
+function TabSubmitScreen() {
   // State management for text inputs
   const [email, setEmail] = useState("");
-
+  const [modalVisible, setModalVisible] = useState(false);
 
   const onSubmitPress = () => {
     // Placeholder for navigation logic
-    Alert.alert("Submit Pressed", "Navigate to Forgot-confirmation screen.");
+    setModalVisible(true);
   };
+
+  const onClosePress = () => {
+    // Placeholder for navigation logic
+    setModalVisible(false);
+  }
 
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        
+          <View style={styles.modalView}>
+            <Text style={styles.text}>Email has been sent to {email}</Text>
+            <Button title="Close" color={"#000000"} onPress={onClosePress} />
+          </View>
+        
+      </Modal>
         <Image
           source={require("../../assets/images/logo-placeholder.png")}
           style={styles.logo}
@@ -30,16 +50,16 @@ function TabLoginScreen() {
           placeholder="Email:"
         />
 
-        {/* Login button */}
+        {/* Submit button */}
         <View style={styles.fixToText}>
-          <Button title="Login" color={"#000000"} onPress={onSubmitPress} />
+          <Button title="Submit" color={"#000000"} onPress={onSubmitPress} />
         </View>
       </SafeAreaView>
     </View>
   );
 }
 
-export default TabLoginScreen;
+export default TabSubmitScreen;
 
 const styles = StyleSheet.create({
   // Main Container
@@ -71,6 +91,7 @@ const styles = StyleSheet.create({
   // Text Section
   text: {
     alignSelf: "center",
+    marginBottom: 10,
   },
   // Button Section
   fixToText: {
@@ -84,5 +105,21 @@ const styles = StyleSheet.create({
     height: 100,
     alignSelf: "center",
     marginBottom: 5,
+  },
+  modalView: {
+    marginTop: "10%",
+    alignSelf: "center",
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });
