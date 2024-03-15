@@ -194,7 +194,6 @@ const styles = StyleSheet.create({
   },
   body: {
     fontSize: 15,
-    fontFamily: 'EudoxusSans-Regular',
   },
   separator: {
     marginVertical: 30,
@@ -205,7 +204,6 @@ const styles = StyleSheet.create({
   paragraph: {
     margin: 24,
     fontSize: 14,
-    fontFamily: 'EudoxusSans-Regular',
   },
   row: {
     flex: 0.1,

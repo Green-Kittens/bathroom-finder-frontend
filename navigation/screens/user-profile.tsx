@@ -11,7 +11,7 @@ export default function UserProfileScreen() {
             uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
           }}
         />
-        <Text style={{fontFamily: 'EudoxusSans-Regular',}}>Your Name</Text>
+        <Text>Your Name</Text>
       </View>
       {horizontalCards("Your Reviews")}
       {horizontalCards("Your Favorites")}

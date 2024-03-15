@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
   // Text Section
   text: {
     alignSelf: "center",
-    fontFamily: 'EudoxusSans-Regular',
   },
   // Button Section
   fixToText: {
