@@ -13,7 +13,6 @@ function TabLoginScreen() {
 
   const onLoginPress = () => {
     navigation.navigate('Main');
-    Alert.alert("Login Pressed", "Navigate to home screen.");
   };
 
   const onRegisterPress = () => {
