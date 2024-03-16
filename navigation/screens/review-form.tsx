@@ -11,14 +11,15 @@ import { createReview } from "@/controllers/reviewController";
 import Main from "./home";
 import { useNavigation } from "@react-navigation/native";
 
-export default function TabReviewForm() {
+export default function TabReviewForm(
+  username: string,
+  bathroomID: string,
+  time: Date,
+  images: string[]
+) {
   /**getting info for new review*/
-  const [username, setUsername] = useState("");
-  const [bathroomID, setBathroomID] = useState("");
   const [rating, setRating] = useState(0);
   const [description, setDescription] = useState("");
-  const [time, setTime] = useState(Date);
-  const [images, setImages] = useState(Image);
 
   const handleReview = async () => {
     try {
