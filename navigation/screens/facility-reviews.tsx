@@ -14,10 +14,11 @@ import {
 } from "@/controllers/reviewController";
 import { useState } from "react";
 
-export default function FacilityReviewsScreen() {
+export default function FacilityReviewsScreen(
+  reviewID: string,
+  username: string
+) {
   /**like a review */
-  const [reviewID, setReviewID] = useState("");
-  const [username, setUsername] = useState("");
   const [reply, setReply] = useState("");
   const handleLike = async () => {
     try {

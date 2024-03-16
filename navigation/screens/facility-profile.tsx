@@ -46,11 +46,10 @@ function Review() {
   );
 }
 
-function CollapseView() {
+function CollapseView(bathroomID: string) {
   const [collapsed, setCollapsed] = useState(true);
   const [maxLines, setMaxLines] = useState(2);
   const animationHeight = useRef(new Animated.Value(0)).current;
-  const [bathroomID, setBathroomID] = useState("");
 
   /**get all reviews*/
   const handleReviews = async () => {
@@ -123,7 +122,7 @@ function CollapseView() {
         <View
           style={[{ width: "10%", margin: 10, justifyContent: "flex-start" }]}
         >
-          <Button title={"See more"} onPress={handleReviews} />
+          <Button title={"See more"} onPress={expandView} />
         </View>
       </View>
     </View>

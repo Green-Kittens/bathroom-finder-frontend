@@ -1,14 +1,23 @@
 /**
  * Function for retrieving all bathrooms
- * @returns {Promise<string>} - Returns a promise with a success message after retrieving all bathrooms
+ * @returns {Promise<string>} - Returns a promise with all bathrooms after retrieving
  */
 export async function getAllBathrooms(): Promise<string> {
   //Implementation goes here
-  return new Promise<string>((resolve) => {
-    const successsMsg = "All bathrooms retrieved successfully.";
+  return new Promise<BathroomProfile[]>((resolve) => {
+    const allBathrooms: BathroomProfile[] = [
+      {
+        id: "1",
+        name: "Bathroom 1",
+      },
+      {
+        id: "2",
+        name: "Bathroom 2",
+      },
+    ];
 
     setTimeout(() => {
-      resolve(successsMsg);
+      resolve(allBathrooms);
     }, 1000);
   });
 }
