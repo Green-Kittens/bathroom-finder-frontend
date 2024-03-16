@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, StyleSheet, TextInput, Text, View, ScrollView, Modal, Linking, Alert, TouchableOpacity } from "react-native";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import { MaterialIcons } from "@expo/vector-icons";
 import StarRating from "react-native-star-rating-widget";

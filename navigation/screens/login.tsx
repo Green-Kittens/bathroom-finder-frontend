@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { StyleSheet,Image, SafeAreaView, TextInput, Button, TouchableOpacity, Text, View } from 'react-native';
+import { StyleSheet,Image, SafeAreaView, TextInput, Button, TouchableOpacity, Text, View, Alert } from 'react-native';
 import { ScreenNavigationProp } from '../type';
 
 function TabLoginScreen() {
