@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { StyleSheet,Image, SafeAreaView, TextInput, Button, Alert, TouchableOpacity, Text, View } from 'react-native';
+import { StyleSheet,Image, SafeAreaView, TextInput, Button, TouchableOpacity, Text, View } from 'react-native';
 import { ScreenNavigationProp } from '../type';
 
 function TabLoginScreen() {
@@ -13,17 +13,14 @@ function TabLoginScreen() {
 
   const onLoginPress = () => {
     navigation.navigate('Main');
-    Alert.alert("Login Pressed", "Navigate to home screen.");
   };
 
   const onRegisterPress = () => {
     // Placeholder for navigation logic
-    Alert.alert("Register Pressed", "Navigate to registration screen.");
   };
 
   const onForgotPress = () => {
     // Placeholder for navigation logic
-    Alert.alert("Frogot Pressed", "Navigate to Frogot screen.");
   };
 
   return (
