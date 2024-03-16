@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, StyleSheet, TextInput, Text, View, ScrollView, Modal, Linking, TouchableOpacity } from "react-native";
+import { Button, StyleSheet, TextInput, Text, View, ScrollView, Modal, Linking, Alert, TouchableOpacity } from "react-native";
 
 import { useState, useEffect } from "react";
 import RNPickerSelect from "react-native-picker-select";
@@ -65,8 +65,19 @@ export default function TabReviewForm() {
   // images uploaded for review
   const [images, setImages] = useState<Array<string>>(([]));
 
+  // permissions 
+  const [cameraStatus, cameraPermissions] = ImagePicker.useCameraPermissions();
+  const [galleryAccessStatus, galleryPermissions] = ImagePicker.useMediaLibraryPermissions();
+
   // add photo from device gallery
   const addFromGallery = async () => {
+    if (galleryAccessStatus?.status !== 'granted') {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+            Alert.alert('gallery access permission denied');
+            return;
+        }
+    }
     let _image = await ImagePicker.launchImageLibraryAsync(
         {
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -83,6 +94,13 @@ export default function TabReviewForm() {
 
   // add photo using camera
   const addUsingCamera = async () => {
+    if (cameraStatus?.status !== 'granted') {
+        const { status } = await ImagePicker.requestCameraPermissionsAsync();
+        if (status !== 'granted') {
+            Alert.alert('camera permission denied');
+            return;
+        }
+    }
     let _image = await ImagePicker.launchCameraAsync(
         {
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
