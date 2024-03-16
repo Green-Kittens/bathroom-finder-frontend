@@ -63,7 +63,7 @@ export default function TabReviewForm() {
   }
 
   // images uploaded for review
-  const [images, setImages] = useState<Array<string>>(([]));
+  const [images, setImages] = useState<Array<ImagePicker.ImagePickerSuccessResult>>(([]));
 
   // permissions 
   const [cameraStatus, cameraPermissions] = ImagePicker.useCameraPermissions();
@@ -87,7 +87,7 @@ export default function TabReviewForm() {
         }
     );
     if (!_image.canceled) {
-        images.push(_image.assets[0].uri);
+        images.push(_image);
         setModalVisible(false);
     }
   }
@@ -109,7 +109,7 @@ export default function TabReviewForm() {
         }
     );
     if (!_image.canceled) {
-        images.push(_image.assets[0].uri);
+        images.push(_image);
         setModalVisible(false);
     }
   }
@@ -185,12 +185,12 @@ export default function TabReviewForm() {
             />
 
             {images.length !== 0 && (
-                images.map((imageUri, idx) => (
+                images.map((currImage, idx) => (
                     <View key={idx} style={styles.imageContainer}>
-                        <TouchableOpacity onPress={() => Linking.openURL(imageUri)}>
-                            <Text style={styles.imageLink}>View Image</Text>
+                        <TouchableOpacity onPress={() => Linking.openURL(currImage.assets[0].uri)}>
+                            <Text style={styles.imageLink}>{currImage.assets[0].fileName}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => deleteImage(imageUri)}>
+                        <TouchableOpacity onPress={() => deleteImage(currImage)}>
                             <MaterialIcons name="delete" size={20} color="gray" />
                         </TouchableOpacity>
                     </View>
