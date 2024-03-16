@@ -17,10 +17,12 @@ function TabLoginScreen() {
 
   const onRegisterPress = () => {
     // Placeholder for navigation logic
+    Alert.alert("Register Pressed", "Navigate to registration screen.");
   };
 
   const onForgotPress = () => {
     // Placeholder for navigation logic
+    Alert.alert("Forgot Pressed", "Navigate to Forgot screen");
   };
 
   return (
