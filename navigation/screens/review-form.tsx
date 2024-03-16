@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, StyleSheet, TextInput, Text, View, ScrollView, Modal, Image } from "react-native";
+import { Button, StyleSheet, TextInput, Text, View, ScrollView, Modal, Linking, TouchableOpacity } from "react-native";
 
 import { useState, useEffect } from "react";
 import RNPickerSelect from "react-native-picker-select";
@@ -95,7 +95,12 @@ export default function TabReviewForm() {
         setModalVisible(false);
     }
   }
-  
+
+  // delete uploaded image
+  const deleteImage = (toDelete) => {
+    const updatedImages = images.filter((curr) => curr !== toDelete);
+    setImages(updatedImages);
+  }
 
   // rating
   const [rating, setRating] = useState(0);
@@ -163,12 +168,14 @@ export default function TabReviewForm() {
 
             {images.length !== 0 && (
                 images.map((imageUri, idx) => (
-                    <Image 
-                        key={idx}
-                        source={{uri : imageUri }}
-                        style={{ width: 200, height: 200, marginBottom: 20 }}
-                    />
-                    
+                    <View key={idx} style={styles.imageContainer}>
+                        <TouchableOpacity onPress={() => Linking.openURL(imageUri)}>
+                            <Text style={styles.imageLink}>View Image</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => deleteImage(imageUri)}>
+                            <MaterialIcons name="delete" size={20} color="gray" />
+                        </TouchableOpacity>
+                    </View>
                 ))
             )}
 
@@ -227,6 +234,7 @@ const styles = StyleSheet.create({
   },
   subtext: {
     fontSize: 17,
+    marginTop: 20,
     marginBottom: 20,
     color: "#344f33",
   },
@@ -283,5 +291,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  imageContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  imageLink: {
+    marginRight: 10,
+    color: "blue",
   },
 });
