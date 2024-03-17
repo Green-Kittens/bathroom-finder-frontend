@@ -3,7 +3,7 @@ import { StyleSheet, Image, SafeAreaView, TextInput, Button, Alert, Text, View, 
 import { useNavigation } from '@react-navigation/native';
 
 
-function TabSubmitScreen() {
+export default function TabSubmitScreen() {
   // State management for text inputs
   const [email, setEmail] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
@@ -58,8 +58,6 @@ function TabSubmitScreen() {
     </View>
   );
 }
-
-export default TabSubmitScreen;
 
 const styles = StyleSheet.create({
   // Main Container
