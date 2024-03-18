@@ -38,7 +38,7 @@ function exampleReview() {
             {star()}
             {star()}
           </View>
-          <Text style={{ fontSize: 24 }}>Review Title</Text>
+          <Text style={{ fontSize: 24}}>Review Title</Text>
         </View>
       </View>
       <View id="review-body">
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: 'EudoxusSans-Bold',
   },
   separator: {
     marginVertical: 30,
