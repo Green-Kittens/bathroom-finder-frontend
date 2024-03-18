@@ -1,7 +1,7 @@
 import React from "react";
 import horizontalCards from "../../components/HorizontalCards";
 import MainButton from "../../components/MainButton";
-import { Text, View, Image, ImageBackground, StyleSheet } from "react-native";
+import { Text, View, Image, ImageBackground, StyleSheet, ScrollView } from "react-native";
 
 const boomerangimage = { uri: "/assets/images/boomerang.png" };
 
@@ -37,7 +37,7 @@ export default function UserProfileScreen() {
         <View
           style={{
             marginHorizontal: "50%",
-            marginVertical: 5,
+            marginVertical: 20,
             backgroundColor: "none",
           }}
         >

@@ -8,6 +8,7 @@ export default function horizontalCards(title: string) {
         {title}
       </Text>
       <ScrollView horizontal={true} style={styles.horizontalScroll}>
+        {bufferCard()}
         {card()}
         {card()}
         {card()}
@@ -16,6 +17,7 @@ export default function horizontalCards(title: string) {
         {card()}
         {card()}
         {card()}
+        {bufferCard()}
       </ScrollView>
     </View>
   );
@@ -24,14 +26,24 @@ export default function horizontalCards(title: string) {
 function card() {
   return <View style={styles.card} />;
 }
+function bufferCard() {
+  return <View style={styles.buffercard} />;
+}
 
 const styles = StyleSheet.create({
-  horizontalScroll: {},
+  horizontalScroll: {width: "100%"},
   card: {
     width: 120,
     height: 200,
     borderRadius: 10,
     backgroundColor: "grey",
+    marginHorizontal: 5,
+  },
+  buffercard: {
+    width: 30,
+    height: 200,
+    borderRadius: 10,
+    backgroundColor: "none",
     marginHorizontal: 5,
   },
 });
