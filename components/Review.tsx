@@ -19,13 +19,12 @@ export default function Review() {
         />
         <View
           id="stars-and-title"
-          style={{ width: "100%", backgroundColor: "none" }}
+          style={{ backgroundColor: "none" }}
         >
           <View
             style={{
               flexDirection: "row",
               justifyContent: "space-evenly",
-              width: "80%",
               backgroundColor: "none",
             }}
           >
@@ -69,7 +68,7 @@ export default function Review() {
 function star() {
   return (
     <Image
-      style={{ width: 50, height: 50, backgroundColor: "none" }}
+      style={{ width: 30, height: 30, backgroundColor: "none" }}
       source={require("../assets/images/star_filled.png")}
     />
   );

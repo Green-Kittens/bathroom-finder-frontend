@@ -145,10 +145,10 @@ function CollapseView() {
         end={{ x: 0.1, y: 0.2 }}
         style={[styles.image, { padding: 20, borderRadius: 15 }]}
       >
-        <View style={[styles.row, { padding: 10 }]}>
+        <View style={[{ padding: 10, alignItems: "center", backgroundColor: "none"}]}>
           <Review />
           <View
-            style={[{ width: "10%", margin: 10, justifyContent: "flex-start" }]}
+            style={[{ backgroundColor: "none", width: "10%"}]}
           >
             <LinearGradient
               colors={["#F9FEFD", "#DEF4EF"]}

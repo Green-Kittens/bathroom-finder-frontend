@@ -48,6 +48,8 @@ export default function Navigation() {
         <Tab.Screen name={mainName} component={Main} />
         <Tab.Screen name={reviewFormName} component={ReviewForm} />
         <Tab.Screen name={userProfileName} component={UserProfile} />
+        <Tab.Screen name={facilityProfileName} component={FacilityProfile} />
+        <Tab.Screen name={facilityReviewsName} component={FacilityReviews} />
 
       </Tab.Navigator> 
     </NavigationContainer>
