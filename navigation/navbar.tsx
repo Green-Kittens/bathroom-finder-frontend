@@ -25,7 +25,7 @@ export default function NavBar() {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-          let current = route.name;
+          const current = route.name;
 
           if (current === mainName) {
             iconName = focused ? "home" : "home-outline";

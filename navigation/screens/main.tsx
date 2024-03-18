@@ -4,10 +4,8 @@ import {
   Image,
   View,
   Dimensions,
-  TouchableOpacity,
   TouchableWithoutFeedback,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../type";
 
