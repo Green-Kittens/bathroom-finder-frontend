@@ -29,13 +29,13 @@ export default function TabReviewForm() {
 
   return (
     <View style={styles.container}>
-      <ImageBackground
+            <ImageBackground
         source={circleimage}
         style={{
-          width: 1000,
+          width: 1070,
           height: 1000,
           position: "absolute",
-          top: 500,
+          top: 550,
           left: -200,
         }}
         imageStyle={{
@@ -68,7 +68,7 @@ export default function TabReviewForm() {
           minute: "2-digit",
         })}
       </Text>
-
+      <View style={styles.input}>
       <TextInput
         style={styles.input}
         placeholder="write your description..."
@@ -77,6 +77,7 @@ export default function TabReviewForm() {
         onChangeText={setDescription}
         multiline={true}
       />
+      </View>
 
       <Text style={[styles.subtext, { color: "black" }]}>
         Rate Your Experience:
