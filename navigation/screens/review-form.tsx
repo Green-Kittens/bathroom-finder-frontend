@@ -1,13 +1,14 @@
 import React from "react";
 import { StyleSheet, TextInput, ImageBackground, Text, View } from "react-native";
 import MainButton from "../../components/Buttons";
-import { ScrollView, Modal, Linking, Alert, TouchableOpacity } from "react-native";
+import { Button, Modal, Linking, Alert, TouchableOpacity } from "react-native";
 
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import StarRating from "react-native-star-rating-widget";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from 'expo-image-picker';
+import { MaterialIcons } from "@expo/vector-icons";
 
 // type
 import { ScreenNavigationProp } from "../type";
@@ -24,7 +25,7 @@ export default function TabReviewForm() {
 
   // add photo modal
   const [modalVisible, setModalVisible] = useState(false);
-  const ImageUploader = ({ isVisible, onClose }) => {
+  const ImageUploader = ({ isVisible, onClose }:any) => {
     return(
     <Modal
         animationType="slide"
@@ -116,7 +117,7 @@ export default function TabReviewForm() {
   }
 
   // delete uploaded image
-  const deleteImage = (toDelete) => {
+  const deleteImage = (toDelete: { canceled: false; assets: ImagePicker.ImagePickerAsset[]; }) => {
     const updatedImages = images.filter((curr) => curr !== toDelete);
     setImages(updatedImages);
   }
@@ -125,6 +126,8 @@ export default function TabReviewForm() {
   const [rating, setRating] = useState(0);
 
   // post rating (submit button)
+  const navigation = useNavigation<ScreenNavigationProp>();
+
   const circleimage = { uri: "/assets/images/circle.png" };
 
   return (
@@ -263,6 +266,11 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginBottom: 20,
     color: "#6da798",
+  },
+  errorText: {
+    fontSize: 17,
+    marginBottom: 20,
+    color: "red",
   },
   input: {
     backgroundColor: "#CDEEEA",

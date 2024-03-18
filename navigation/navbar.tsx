@@ -41,7 +41,7 @@ export default function Navigation() {
             } else if (current === userProfileName) {
               iconName = focused ? 'person-circle' : 'person-circle-outline';
             }
-            return <Ionicons name={iconName} size={size} color={color} />;
+            return <Ionicons key={iconName} size={size} color={color} />;
           },
         })}> 
 

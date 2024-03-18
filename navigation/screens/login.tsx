@@ -1,13 +1,17 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { StyleSheet,Image, SafeAreaView, TextInput, Button, TouchableOpacity, Text, View, Alert } from 'react-native';
+import { StyleSheet,Image, SafeAreaView, TextInput, ImageBackground, TouchableOpacity, Text, View, Alert } from 'react-native';
 import { ScreenNavigationProp } from '../type';
+import MainButton from '../../components/Buttons';
 
 function TabLoginScreen() {
   // State management for text inputs
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  // navigation 
+  const navigation = useNavigation<ScreenNavigationProp>();
+  
   const onLoginPress = () => {
     navigation.navigate('Main');
   };
@@ -21,6 +25,8 @@ function TabLoginScreen() {
     // Placeholder for navigation logic
     Alert.alert("Forgot Pressed", "Navigate to Forgot screen");
   };
+
+  const boomerangimage = { uri: "/assets/images/boomerang.png" };
 
   return (
     <View style={styles.container}>
@@ -67,16 +73,7 @@ function TabLoginScreen() {
         </TouchableOpacity>
 
         {/* Login button */}
-        <LinearGradient
-          // Button Linear Gradient
-          colors={["#6da798", "#40a4a9"]}
-          end={{ x: 0.1, y: 0.2 }}
-          style={styles.button}
-        >
-          <Pressable style={styles.button} onPress={onLoginPress}>
-            <Text style={[styles.text, { fontWeight: "bold" }]}>{"Login"}</Text>
-          </Pressable>
-        </LinearGradient>
+        {MainButton("Login", onLoginPress)}
       </SafeAreaView>
 
       {/* Footer with Register Section */}
