@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, TextInput, ImageBackground, Text, View } from "react-native";
-import MainButton from "../../components/MainButton";
+import MainButton from "../../components/Buttons";
 
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";

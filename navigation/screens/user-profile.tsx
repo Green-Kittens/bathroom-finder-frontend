@@ -1,6 +1,6 @@
 import React from "react";
 import horizontalCards from "../../components/HorizontalCards";
-import MainButton from "../../components/MainButton";
+import MainButton from "../../components/Buttons";
 import { Text, View, Image, ImageBackground, StyleSheet, ScrollView } from "react-native";
 
 const boomerangimage = { uri: "/assets/images/boomerang.png" };

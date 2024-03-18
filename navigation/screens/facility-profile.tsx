@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useEffect, useState, useRef } from "react";
 import { LinearGradient } from "expo-linear-gradient";
+import { LightButton } from "../../components/Buttons";
 
 const maxLineNumber = 5;
 const reviewMaxLines = 2;
@@ -150,16 +151,7 @@ function CollapseView() {
           <View
             style={[{ backgroundColor: "none", width: "10%"}]}
           >
-            <LinearGradient
-              colors={["#F9FEFD", "#DEF4EF"]}
-              end={{ x: 0.1, y: 0.2 }}
-              style={[styles.button]}
-            >
-              <Pressable style={[styles.smallbutton]}>
-                <Text style={[{ color: "#000000" }]}>{"See more"}</Text>
-              </Pressable>
-              <View style={styles.row}></View>
-            </LinearGradient>
+          {LightButton("See more", undefined)}
           </View>
         </View>
       </LinearGradient>
