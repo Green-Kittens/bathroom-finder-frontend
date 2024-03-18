@@ -1,5 +1,12 @@
 import React from "react";
-import { Button, Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 export default function FacilityReviewsScreen() {
   return (
@@ -38,7 +45,7 @@ function exampleReview() {
             {star()}
             {star()}
           </View>
-          <Text style={{ fontSize: 24}}>Review Title</Text>
+          <Text style={{ fontSize: 24 }}>Review Title</Text>
         </View>
       </View>
       <View id="review-body">
@@ -81,7 +88,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontFamily: 'EudoxusSans-Bold',
+    fontFamily: "EudoxusSans-Bold",
   },
   separator: {
     marginVertical: 30,

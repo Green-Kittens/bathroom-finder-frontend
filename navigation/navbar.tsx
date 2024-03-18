@@ -38,9 +38,9 @@ export default function NavBar() {
         },
       })}
     >
-        <Tab.Screen name={reviewFormName} component={ReviewForm} />
-        <Tab.Screen name={mainName} component={Main} />
-        <Tab.Screen name={userProfileName} component={UserProfile} />
+      <Tab.Screen name={reviewFormName} component={ReviewForm} />
+      <Tab.Screen name={mainName} component={Main} />
+      <Tab.Screen name={userProfileName} component={UserProfile} />
     </Tab.Navigator>
   );
 }
