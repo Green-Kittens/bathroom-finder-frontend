@@ -1,14 +1,14 @@
 import React from "react";
-import { Button, StyleSheet, TextInput, Text, View } from "react-native";
+import { Button, StyleSheet, TextInput, Text, View, ScrollView } from "react-native";
 
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import { MaterialIcons } from "@expo/vector-icons";
 import StarRating from "react-native-star-rating-widget";
-
-// screens 
-import Main from './main';
 import { useNavigation } from "@react-navigation/native";
+
+// type
+import { ScreenNavigationProp } from "../type";
 
 export default function TabReviewForm() {
   // location
@@ -26,10 +26,11 @@ export default function TabReviewForm() {
   const [rating, setRating] = useState(0);
 
   // post rating (submit button)
-  const navigation = useNavigation();
+  const navigation = useNavigation<ScreenNavigationProp>();
 
   return (
-    <View style={styles.container}>
+    <ScrollView>
+        <View style={styles.container}>
       <Text style={styles.title}>New Bathroom Rating</Text>
 
       <View style={styles.dropdown}>
@@ -77,14 +78,14 @@ export default function TabReviewForm() {
           color="RGA0000"
           onPress={() => {
             // handle submit
-            //navigation.navigate('/');
+            navigation.navigate("Main");
           }}
         />
       </View>
     </View>
+    </ScrollView>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
