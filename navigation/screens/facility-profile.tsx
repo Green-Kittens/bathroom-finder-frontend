@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "@/components/Themed";
+import { Text, View } from "../../components/Themed";
 import {
   StyleSheet,
   Animated,
@@ -27,23 +27,23 @@ function Review() {
       <Text style={[styles.paragraph, { fontWeight: "bold" }]}>Username</Text>
       <Image
         style={{ height: 15, width: 15, alignSelf: "center" }}
-        source={require("@/assets/images/star_filled.png")}
+        source={require("../../assets/images/star_filled.png")}
       />
       <Image
         style={{ height: 15, width: 15, alignSelf: "center" }}
-        source={require("@/assets/images/star_filled.png")}
+        source={require("../../assets/images/star_filled.png")}
       />
       <Image
         style={{ height: 15, width: 15, alignSelf: "center" }}
-        source={require("@/assets/images/star_filled.png")}
+        source={require("../../assets/images/star_filled.png")}
       />
       <Image
         style={{ height: 15, width: 15, alignSelf: "center" }}
-        source={require("@/assets/images/star_filled.png")}
+        source={require("../../assets/images/star_filled.png")}
       />
       <Image
         style={{ height: 15, width: 15, alignSelf: "center" }}
-        source={require("@/assets/images/star_filled.png")}
+        source={require("../../assets/images/star_filled.png")}
       />
       <Text style={styles.paragraph} numberOfLines={reviewMaxLines}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
@@ -138,8 +138,6 @@ function CollapseView() {
 
       <View
         style={styles.separator}
-        lightColor="#aaa"
-        darkColor="rgba(255,255,255,0.1)"
       />
       <LinearGradient
         // Button Linear Gradient
@@ -209,23 +207,23 @@ export default function TabFacilityProfileScreen() {
         >
           <Image
             style={{ height: 30, width: 30 }}
-            source={require("@/assets/images/star_filled.png")}
+            source={require("../../assets/images/star_filled.png")}
           />
           <Image
             style={{ height: 30, width: 30 }}
-            source={require("@/assets/images/star_filled.png")}
+            source={require("../../assets/images/star_filled.png")}
           />
           <Image
             style={{ height: 30, width: 30 }}
-            source={require("@/assets/images/star_filled.png")}
+            source={require("../../assets/images/star_filled.png")}
           />
           <Image
             style={{ height: 30, width: 30 }}
-            source={require("@/assets/images/star_filled.png")}
+            source={require("../../assets/images/star_filled.png")}
           />
           <Image
             style={{ height: 30, width: 30 }}
-            source={require("@/assets/images/star_filled.png")}
+            source={require("../../assets/images/star_filled.png")}
           />
           <Text style={styles.body}> 5.0 stars</Text>
         </View>

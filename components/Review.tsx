@@ -2,7 +2,7 @@ import React from "react";
 import MainButton from "./MainButton";
 import { Image, StyleSheet } from "react-native";
 
-import { Text, View } from "@/components/Themed";
+import { Text, View } from "../components/Themed";
 
 export default function Review() {
   return (
@@ -70,7 +70,7 @@ function star() {
   return (
     <Image
       style={{ width: 50, height: 50, backgroundColor: "none" }}
-      source={require("@/assets/images/star_filled.png")}
+      source={require("../assets/images/star_filled.png")}
     />
   );
 }

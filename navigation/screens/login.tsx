@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
-import { Text, View } from "@/components/Themed";
+import { Text, View } from "../../components/Themed";
 import { LinearGradient } from "expo-linear-gradient";
 
 const boomerangimage = { uri: "/assets/images/boomerang.png" };

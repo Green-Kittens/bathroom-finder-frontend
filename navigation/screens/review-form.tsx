@@ -1,6 +1,6 @@
 import React from "react";
-import { StyleSheet, TextInput, ImageBackground } from "react-native";
-import MainButton from "@/components/MainButton";
+import { StyleSheet, TextInput, ImageBackground, Text, View } from "react-native";
+import MainButton from "../../components/MainButton";
 
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
@@ -8,7 +8,6 @@ import StarRating from "react-native-star-rating-widget";
 
 // screens 
 import Main from './main';
-import { useNavigation } from "@react-navigation/native";
 
 export default function TabReviewForm() {
   // location
