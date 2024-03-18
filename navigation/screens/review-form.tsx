@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    fontWeight: "bold",
+    fontFamily: 'EudoxusSans-Bold',
     color: "#344f33",
   },
   dropdown: {

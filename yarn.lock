@@ -2147,7 +2147,21 @@
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.11.tgz"
   integrity sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==
 
-"@types/react@~18.2.45":
+"@types/react-native-global-props@^1.1.6":
+  version "1.1.6"
+  resolved "https://registry.npmjs.org/@types/react-native-global-props/-/react-native-global-props-1.1.6.tgz"
+  integrity sha512-przgaq6W9n/LBE2h4aB0giHdlJ+k34qbpUxM9w/3OLVbFowI5rW3+JBsjhuRHpiGYRJkTUJKOzLi+pYZz7FfFw==
+  dependencies:
+    "@types/react-native" "^0.70"
+
+"@types/react-native@^0.70":
+  version "0.70.19"
+  resolved "https://registry.npmjs.org/@types/react-native/-/react-native-0.70.19.tgz"
+  integrity sha512-c6WbyCgWTBgKKMESj/8b4w+zWcZSsCforson7UdXtXMecG3MxCinYi6ihhrHVPyUrVzORsvEzK8zg32z4pK6Sg==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*", "@types/react@~18.2.45":
   version "18.2.61"
   resolved "https://registry.npmjs.org/@types/react/-/react-18.2.61.tgz"
   integrity sha512-NURTN0qNnJa7O/k4XUkEW2yfygA+NxS0V5h1+kp9jPwhzZy95q3ADoGMP0+JypMhrZBTTgjKAUlTctde1zzeQA==
