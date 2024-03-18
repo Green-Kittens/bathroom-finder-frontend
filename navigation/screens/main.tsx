@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: windowHeight * 0.68,
+    height: windowHeight,
     resizeMode: "cover",
     top: 0,
     position: "absolute",

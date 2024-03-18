@@ -73,7 +73,9 @@ function TabLoginScreen() {
         </TouchableOpacity>
 
         {/* Login button */}
+        <View style={[{margin: "10%"}]}>
         {MainButton("Login", onLoginPress)}
+        </View>
       </SafeAreaView>
 
       {/* Footer with Register Section */}

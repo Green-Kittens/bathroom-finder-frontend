@@ -1,15 +1,9 @@
 import React from "react";
-import { Text, View } from "../../components/Themed";
-import {
-  StyleSheet,
-  Animated,
-  Image,
-  ImageBackground,
-  Pressable,
-} from "react-native";
+import { StyleSheet, Button, Animated, Image, Text, View, ImageBackground, Pressable } from "react-native";
 import { useEffect, useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../type";
+
 import { LinearGradient } from "expo-linear-gradient";
 import { LightButton } from "../../components/Buttons";
 
@@ -22,7 +16,7 @@ function Review() {
   return (
     <View style={styles.review}>
       <Image
-        style={{ height: 60, width: 60, borderRadius: 40 }}
+        style={{ height: 60, width: 60 }}
         source={{
           uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
         }}
@@ -48,7 +42,7 @@ function Review() {
         style={{ height: 15, width: 15, alignSelf: "center" }}
         source={require("../../assets/images/star_filled.png")}
       />
-      <Text style={styles.paragraph} numberOfLines={reviewMaxLines}>
+      <Text style={styles.paragraph} numberOfLines={2}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
@@ -62,101 +56,52 @@ function Review() {
 }
 
 function CollapseView() {
-  const [collapsed, setCollapsed] = useState(true);
-  const [maxLines, setMaxLines] = useState(2);
-  const animationHeight = useRef(new Animated.Value(0)).current;
-
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
-
-  const collapseView = () => {
-    Animated.timing(animationHeight, {
-      duration: 100,
-      toValue: 80,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const expandView = () => {
-    setMaxLines(maxLineNumber);
-    Animated.timing(animationHeight, {
-      duration: 1000,
-      toValue: 1000,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  useEffect(() => {
-    if (collapsed) {
-      collapseView();
-    } else {
-      expandView();
-    }
-  }, [collapsed]);
-
-  const changeText = () => {
-    if (collapsed) {
-      return "Expand";
-    } else {
-      return "Collapse";
-    }
-  };
-
-  // navigation
-  const navigation = useNavigation<ScreenNavigationProp>();
+    const [collapsed, setCollapsed] = useState(true);
+    const [maxLines, setMaxLines] = useState(2);
+    const animationHeight = useRef(new Animated.Value(0)).current;
+  
+    const toggleCollapsed = () => {
+      setCollapsed(!collapsed);
+    };
+  
+    const collapseView = () => {
+      Animated.timing(animationHeight, {
+        duration: 100,
+        toValue: 80,
+        useNativeDriver: false,
+      }).start();
+    };
+  
+    const expandView = () => {
+      setMaxLines(maxLineNumber);
+      Animated.timing(animationHeight, {
+        duration: 1000,
+        toValue: 1000,
+        useNativeDriver: false,
+      }).start();
+    };
+  
+    useEffect(() => {
+      if (collapsed) {
+        collapseView();
+      } else {
+        expandView();
+      }
+    }, [collapsed]);
+  
+    const changeText = () => {
+      if (collapsed) {
+        return "Expand";
+      } else {
+        return "Collapse";
+      }
+    };
+  
+    // navigation
+    const navigation = useNavigation<ScreenNavigationProp>();
+  
 
   return (
-    <View style={{ overflow: "hidden", backgroundColor: "none" }}>
-      <Animated.View style={{ maxHeight: animationHeight }}>
-        <Text
-          style={[
-            styles.paragraph,
-            { backgroundColor: "#CDEEEA", padding: 20 },
-          ]}
-          numberOfLines={maxLines}
-        >
-          Hours: ##:## - ##:## {"\n"}
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </Text>
-      </Animated.View>
-      <LinearGradient
-        // Button Linear Gradient
-        colors={["#6da798", "#40a4a9"]}
-        end={{ x: 0.1, y: 0.2 }}
-        style={styles.button}
-      >
-        <Pressable
-          style={[{ width: "100%", alignItems: "center" }]}
-          onPress={toggleCollapsed}
-        >
-          <Text style={[styles.body, { fontWeight: "bold" }]}>
-            {changeText()}
-          </Text>
-        </Pressable>
-      </LinearGradient>
-
-      <View
-        style={styles.separator}
-      />
-      <LinearGradient
-        // Button Linear Gradient
-        colors={["#6da798", "#40a4a9"]}
-        end={{ x: 0.1, y: 0.2 }}
-        style={[styles.image, { padding: 20, borderRadius: 15 }]}
-      >
-        <View style={[{ padding: 10, alignItems: "center", backgroundColor: "none"}]}>
-          <Review />
-          <View
-            style={[{ backgroundColor: "none", width: "10%"}]}
-          >
-          return (
     <View style={{ overflow: "hidden", backgroundColor: "none" }}>
       <Animated.View style={{ maxHeight: animationHeight }}>
         <Text
@@ -212,12 +157,7 @@ function CollapseView() {
           </View>
         </View>
       </LinearGradient>
-    </View>
-  );
 
-          </View>
-        </View>
-      </LinearGradient>
     </View>
   );
 }
@@ -291,6 +231,7 @@ export default function TabFacilityProfileScreen() {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

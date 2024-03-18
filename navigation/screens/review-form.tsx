@@ -173,13 +173,15 @@ export default function TabReviewForm() {
       </Text>
       <View style={styles.input}>
       <TextInput
-        style={styles.input}
+        style={[styles.input, {width: "100%"}]}
         placeholder="write your description..."
         placeholderTextColor="#6da798"
         value={description}
         onChangeText={setDescription}
         multiline={true}
       />
+      </View>
+
       <View style={styles.button}>
                 {images.length === 3 && (
                     <Text style={styles.errorText}>
@@ -214,7 +216,6 @@ export default function TabReviewForm() {
                     </View>
                 ))
             )}
-      </View>
 
       <Text style={[styles.subtext, { color: "black" }]}>
         Rate Your Experience:
@@ -270,7 +271,7 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 17,
     marginBottom: 20,
-    color: "red",
+    color: "#540F00",
   },
   input: {
     backgroundColor: "#CDEEEA",
