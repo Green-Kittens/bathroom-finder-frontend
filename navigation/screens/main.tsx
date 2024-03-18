@@ -4,10 +4,8 @@ import {
   Image,
   View,
   Dimensions,
-  TouchableOpacity,
   TouchableWithoutFeedback,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../type";
 
@@ -15,20 +13,19 @@ import { ScreenNavigationProp } from "../type";
 const map = require("../../assets/images/map.jpg");
 
 export default function MainScreen() {
-
-    // navigation
-    const navigation = useNavigation<ScreenNavigationProp>();   
-    return (
-        <View style={styles.container}>
-            <TouchableWithoutFeedback
-                onPress={() => {
-                    navigation.navigate("FacilityProfile");
-                  }}
-            >
-                <Image source={map} style={styles.image} />
-            </TouchableWithoutFeedback>
-        </View>
-      );
+  // navigation
+  const navigation = useNavigation<ScreenNavigationProp>();
+  return (
+    <View style={styles.container}>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          navigation.navigate("FacilityProfile");
+        }}
+      >
+        <Image source={map} style={styles.image} />
+      </TouchableWithoutFeedback>
+    </View>
+  );
 }
 
 const windowHeight = Dimensions.get("window").height;

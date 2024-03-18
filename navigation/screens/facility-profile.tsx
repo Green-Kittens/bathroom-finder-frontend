@@ -13,7 +13,9 @@ function Review() {
         style={{ height: 60, width: 60 }}
         source={require("../../assets/images/icon.png")}
       />
-      <Text style={[styles.paragraph, { fontFamily: 'EudoxusSans-Bold', }]}>Username</Text>
+      <Text style={[styles.paragraph, { fontFamily: "EudoxusSans-Bold" }]}>
+        Username
+      </Text>
       <Image
         style={{ height: 15, width: 15, alignSelf: "center" }}
         source={require("../../assets/images/star_unfilled.png")}
@@ -107,19 +109,18 @@ function CollapseView() {
         </Text>
       </Animated.View>
       <Button title={changeText()} onPress={toggleCollapsed} />
-      <View
-        style={styles.separator}
-      />
+      <View style={styles.separator} />
       <View style={styles.row}>
         <Review />
         <View
           style={[{ width: "10%", margin: 10, justifyContent: "flex-start" }]}
         >
-          <Button 
-          title={"See more"}
-          onPress={() => {
-            navigation.navigate("FacilityReviews");
-          }} />
+          <Button
+            title={"See more"}
+            onPress={() => {
+              navigation.navigate("FacilityReviews");
+            }}
+          />
         </View>
       </View>
     </View>
@@ -199,7 +200,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginVertical: 20,
-    fontFamily: 'EudoxusSans-Bold',
+    fontFamily: "EudoxusSans-Bold",
   },
   body: {
     fontSize: 15,
