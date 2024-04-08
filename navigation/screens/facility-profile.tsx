@@ -7,6 +7,8 @@ import {
   View,
   ImageBackground,
   Pressable,
+  ScrollView,
+  Dimensions,
 } from "react-native";
 import { useEffect, useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -16,6 +18,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { LightButton } from "../../components/Buttons";
 
 const maxLineNumber = 5;
+const windowHeight = Dimensions.get("window").height;
 
 const blobimage = { uri: "/assets/images/blob.png" };
 
@@ -172,69 +175,71 @@ function CollapseView() {
 export default function TabFacilityProfileScreen() {
   return (
     <View style={styles.container}>
-      <View
-        style={[{ flex: 0.9, alignItems: "center", backgroundColor: "none" }]}
-      >
-        <ImageBackground
-          source={blobimage}
-          style={{
-            width: 953,
-            height: 1069,
-            position: "absolute",
-            top: 0,
-            left: -200,
-          }}
-          imageStyle={{
-            resizeMode: "cover",
-            alignSelf: "flex-end",
-          }}
-        ></ImageBackground>
-        <Text style={styles.title}>Facility Name</Text>
-        <Image
-          source={{
-            uri: "https://images.adsttc.com/media/images/6179/94c7/f91c/81a4/f700/00c2/newsletter/WMC-Expo-2---Architectural-Photographer-Michael-Tessler---11.jpg?1635357877",
-          }}
-          style={{ height: 250, width: 250 }}
-        />
+      <ScrollView>
         <View
-          style={[
-            {
-              flex: 1,
-              justifyContent: "center",
-              flexDirection: "row",
-              alignItems: "center",
-              backgroundColor: "none",
-            },
-          ]}
+          style={[{ flex: 0.9, alignItems: "center", backgroundColor: "none" }]}
         >
+          <ImageBackground
+            source={blobimage}
+            style={{
+              width: 953,
+              height: windowHeight,
+              position: "absolute",
+              top: 0,
+              left: -200,
+            }}
+            imageStyle={{
+              resizeMode: "cover",
+              alignSelf: "flex-end",
+            }}
+          ></ImageBackground>
+          <Text style={styles.title}>Facility Name</Text>
           <Image
-            style={{ height: 30, width: 30 }}
-            source={require("../../assets/images/star_filled.png")}
+            source={{
+              uri: "https://images.adsttc.com/media/images/6179/94c7/f91c/81a4/f700/00c2/newsletter/WMC-Expo-2---Architectural-Photographer-Michael-Tessler---11.jpg?1635357877",
+            }}
+            style={{ height: 250, width: 250 }}
           />
-          <Image
-            style={{ height: 30, width: 30 }}
-            source={require("../../assets/images/star_filled.png")}
-          />
-          <Image
-            style={{ height: 30, width: 30 }}
-            source={require("../../assets/images/star_filled.png")}
-          />
-          <Image
-            style={{ height: 30, width: 30 }}
-            source={require("../../assets/images/star_filled.png")}
-          />
-          <Image
-            style={{ height: 30, width: 30 }}
-            source={require("../../assets/images/star_filled.png")}
-          />
-          <Text style={styles.body}> 5.0 stars</Text>
+          <View
+            style={[
+              {
+                flex: 1,
+                justifyContent: "center",
+                flexDirection: "row",
+                alignItems: "center",
+                backgroundColor: "none",
+              },
+            ]}
+          >
+            <Image
+              style={{ height: 30, width: 30 }}
+              source={require("../../assets/images/star_filled.png")}
+            />
+            <Image
+              style={{ height: 30, width: 30 }}
+              source={require("../../assets/images/star_filled.png")}
+            />
+            <Image
+              style={{ height: 30, width: 30 }}
+              source={require("../../assets/images/star_filled.png")}
+            />
+            <Image
+              style={{ height: 30, width: 30 }}
+              source={require("../../assets/images/star_filled.png")}
+            />
+            <Image
+              style={{ height: 30, width: 30 }}
+              source={require("../../assets/images/star_filled.png")}
+            />
+            <Text style={styles.body}> 5.0 stars</Text>
+          </View>
         </View>
-      </View>
-      <View
-        style={[{ flex: 1, marginHorizontal: 40, backgroundColor: "none" }]}
-      >
-        <CollapseView />
-      </View>
+        <View
+          style={[{ flex: 1, marginHorizontal: 40, backgroundColor: "none" }]}
+        >
+          <CollapseView />
+        </View>
+      </ScrollView>
     </View>
   );
 }
