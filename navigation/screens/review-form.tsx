@@ -15,7 +15,6 @@ export default function TabReviewForm(
   username: string,
   bathroomID: string,
   time: Date,
-  images: string[]
 ) {
   /**getting info for new review*/
   const [rating, setRating] = useState(0);
@@ -28,8 +27,7 @@ export default function TabReviewForm(
         bathroomID,
         description,
         rating,
-        time,
-        images
+        time
       );
     } catch (error) {
       console.error("Error creating new review:", error);
