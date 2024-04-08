@@ -2,6 +2,8 @@ import React from "react";
 import { StyleSheet, Button, Animated, Image, Text, View } from "react-native";
 import { useEffect, useState, useRef } from "react";
 import { getAllReviews } from "@/controllers/reviewController";
+import { useNavigation } from "@react-navigation/native";
+import { ScreenNavigationProp } from "../type";
 
 const maxLineNumber = 5;
 
@@ -12,7 +14,9 @@ function Review() {
         style={{ height: 60, width: 60 }}
         source={require("../../assets/images/icon.png")}
       />
-      <Text style={[styles.paragraph, { fontWeight: "bold" }]}>Username</Text>
+      <Text style={[styles.paragraph, { fontFamily: "EudoxusSans-Bold" }]}>
+        Username
+      </Text>
       <Image
         style={{ height: 15, width: 15, alignSelf: "center" }}
         source={require("../../assets/images/star_unfilled.png")}
@@ -97,6 +101,9 @@ function CollapseView(bathroomID: string) {
     }
   };
 
+  // navigation
+  const navigation = useNavigation<ScreenNavigationProp>();
+
   return (
     <View style={{ overflow: "hidden" }}>
       <Animated.View style={{ maxHeight: animationHeight }}>
@@ -111,18 +118,23 @@ function CollapseView(bathroomID: string) {
           culpa qui officia deserunt mollit anim id est laborum.
         </Text>
       </Animated.View>
-      <Button title={changeText(collapsed)} onPress={toggleCollapsed} />
-      <View
-        style={styles.separator}
-        lightColor="#aaa"
-        darkColor="rgba(255,255,255,0.1)"
-      />
+      <Button title={changeText()} onPress={toggleCollapsed} />
+      <View style={styles.separator} />
       <View style={styles.row}>
         <Review />
         <View
           style={[{ width: "10%", margin: 10, justifyContent: "flex-start" }]}
         >
+<<<<<<< HEAD
           <Button title={"See more"} onPress={expandView} />
+=======
+          <Button
+            title={"See more"}
+            onPress={() => {
+              navigation.navigate("FacilityReviews");
+            }}
+          />
+>>>>>>> main
         </View>
       </View>
     </View>
@@ -202,6 +214,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginVertical: 20,
+    fontFamily: "EudoxusSans-Bold",
   },
   body: {
     fontSize: 15,
