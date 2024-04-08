@@ -10,6 +10,7 @@ import {
   Text,
   View,
 } from "react-native";
+import { ScreenNavigationProp } from "../type";
 import { useNavigation } from "@react-navigation/native";
 import {
   loginUser,
@@ -24,6 +25,9 @@ function TabLoginScreen() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  // navigation
+  const navigation = useNavigation<ScreenNavigationProp>();
   const [profile, setProfile] = useState(Image);
 
   const onLoginPress = async () => {
@@ -33,6 +37,7 @@ function TabLoginScreen() {
       console.error("Error logging in:", error);
     }
     // Alert.alert("Login Pressed", "Navigate to home screen.");
+    navigation.navigate("Main");
   };
 
   const onRegisterPress = async () => {
@@ -57,7 +62,7 @@ function TabLoginScreen() {
     } catch (error) {
       console.error("Error forgetting password:", error);
     }
-    //Alert.alert("Frogot Pressed", "Navigate to Frogot screen.");
+    Alert.alert("Forgot Pressed", "Navigate to Forgot screen");
   };
 
   return (
@@ -131,8 +136,8 @@ const styles = StyleSheet.create({
   // Title Section
   title: {
     fontSize: 20,
-    fontWeight: "bold",
     marginBottom: 50,
+    fontFamily: "EudoxusSans-Bold",
   },
   // Input Section
   input: {
@@ -167,7 +172,7 @@ const styles = StyleSheet.create({
   // Register Text
   registerText: {
     color: "black",
-    fontWeight: "bold",
+    fontFamily: "EudoxusSans-Bold",
   },
   // Logo
   logo: {

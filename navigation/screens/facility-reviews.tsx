@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState }  from "react";
 import {
   Button,
   Image,
@@ -12,7 +12,6 @@ import {
   dislikeReview,
   replyReview,
 } from "@/controllers/reviewController";
-import { useState } from "react";
 
 export default function FacilityReviewsScreen(
   reviewID: string,
@@ -122,7 +121,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: "EudoxusSans-Bold",
   },
   separator: {
     marginVertical: 30,
