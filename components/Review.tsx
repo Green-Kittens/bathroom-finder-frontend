@@ -17,10 +17,7 @@ export default function Review() {
             uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
           }}
         />
-        <View
-          id="stars-and-title"
-          style={{ backgroundColor: "none" }}
-        >
+        <View id="stars-and-title" style={{ backgroundColor: "none" }}>
           <View
             style={{
               flexDirection: "row",

@@ -31,7 +31,7 @@ function bufferCard() {
 }
 
 const styles = StyleSheet.create({
-  horizontalScroll: {width: "100%"},
+  horizontalScroll: { width: "100%" },
   card: {
     width: 120,
     height: 200,

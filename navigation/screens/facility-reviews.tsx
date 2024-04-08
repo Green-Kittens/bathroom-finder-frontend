@@ -7,7 +7,7 @@ const blobimage = { uri: "/assets/images/blob.png" };
 
 export default function FacilityReviewsScreen() {
   return (
-    <ScrollView style={{width: "100%", height: 100}}>
+    <ScrollView style={{ width: "100%", height: 100 }}>
       <View style={styles.container}>
         <View style={styles.subcontainer}>
           <ImageBackground

@@ -1,7 +1,7 @@
 import React from "react";
 import horizontalCards from "../../components/HorizontalCards";
 import MainButton from "../../components/Buttons";
-import { Text, View, Image, ImageBackground, StyleSheet, ScrollView } from "react-native";
+import { Text, View, Image, ImageBackground, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 // types
@@ -12,7 +12,7 @@ const boomerangimage = { uri: "/assets/images/boomerang.png" };
 export default function UserProfileScreen() {
   // navigation
   const navigation = useNavigation<ScreenNavigationProp>();
-    
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -49,8 +49,8 @@ export default function UserProfileScreen() {
           }}
         >
           {MainButton("Log Out", () => {
-                    navigation.navigate('Login');
-                })}
+            navigation.navigate("Login");
+          })}
         </View>
       </View>
     </View>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     backgroundColor: "none",
-    fontFamily: 'EudoxusSans-Bold',
+    fontFamily: "EudoxusSans-Bold",
   },
   separator: {
     marginVertical: 30,

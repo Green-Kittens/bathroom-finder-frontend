@@ -1,5 +1,13 @@
 import React from "react";
-import { StyleSheet, Button, Animated, Image, Text, View, ImageBackground, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Animated,
+  Image,
+  Text,
+  View,
+  ImageBackground,
+  Pressable,
+} from "react-native";
 import { useEffect, useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../type";
@@ -8,7 +16,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { LightButton } from "../../components/Buttons";
 
 const maxLineNumber = 5;
-const reviewMaxLines = 2;
 
 const blobimage = { uri: "/assets/images/blob.png" };
 
@@ -21,7 +28,9 @@ function Review() {
           uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
         }}
       />
-      <Text style={[styles.paragraph, { fontFamily: 'EudoxusSans-Bold', }]}>Username</Text>
+      <Text style={[styles.paragraph, { fontFamily: "EudoxusSans-Bold" }]}>
+        Username
+      </Text>
       <Image
         style={{ height: 15, width: 15, alignSelf: "center" }}
         source={require("../../assets/images/star_filled.png")}
@@ -56,50 +65,49 @@ function Review() {
 }
 
 function CollapseView() {
-    const [collapsed, setCollapsed] = useState(true);
-    const [maxLines, setMaxLines] = useState(2);
-    const animationHeight = useRef(new Animated.Value(0)).current;
-  
-    const toggleCollapsed = () => {
-      setCollapsed(!collapsed);
-    };
-  
-    const collapseView = () => {
-      Animated.timing(animationHeight, {
-        duration: 100,
-        toValue: 80,
-        useNativeDriver: false,
-      }).start();
-    };
-  
-    const expandView = () => {
-      setMaxLines(maxLineNumber);
-      Animated.timing(animationHeight, {
-        duration: 1000,
-        toValue: 1000,
-        useNativeDriver: false,
-      }).start();
-    };
-  
-    useEffect(() => {
-      if (collapsed) {
-        collapseView();
-      } else {
-        expandView();
-      }
-    }, [collapsed]);
-  
-    const changeText = () => {
-      if (collapsed) {
-        return "Expand";
-      } else {
-        return "Collapse";
-      }
-    };
-  
-    // navigation
-    const navigation = useNavigation<ScreenNavigationProp>();
-  
+  const [collapsed, setCollapsed] = useState(true);
+  const [maxLines, setMaxLines] = useState(2);
+  const animationHeight = useRef(new Animated.Value(0)).current;
+
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
+
+  const collapseView = () => {
+    Animated.timing(animationHeight, {
+      duration: 100,
+      toValue: 80,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const expandView = () => {
+    setMaxLines(maxLineNumber);
+    Animated.timing(animationHeight, {
+      duration: 1000,
+      toValue: 1000,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  useEffect(() => {
+    if (collapsed) {
+      collapseView();
+    } else {
+      expandView();
+    }
+  }, [collapsed]);
+
+  const changeText = () => {
+    if (collapsed) {
+      return "Expand";
+    } else {
+      return "Collapse";
+    }
+  };
+
+  // navigation
+  const navigation = useNavigation<ScreenNavigationProp>();
 
   return (
     <View style={{ overflow: "hidden", backgroundColor: "none" }}>
@@ -137,27 +145,26 @@ function CollapseView() {
         </Pressable>
       </LinearGradient>
 
-      <View
-        style={styles.separator}
-      />
+      <View style={styles.separator} />
       <LinearGradient
         // Button Linear Gradient
         colors={["#6da798", "#40a4a9"]}
         end={{ x: 0.1, y: 0.2 }}
         style={[styles.image, { padding: 20, borderRadius: 15 }]}
       >
-        <View style={[{ padding: 10, alignItems: "center", backgroundColor: "none"}]}>
+        <View
+          style={[
+            { padding: 10, alignItems: "center", backgroundColor: "none" },
+          ]}
+        >
           <Review />
-          <View
-            style={[{ backgroundColor: "none", width: "10%"}]}
-          >
-          {LightButton("See more", (() => {
-            navigation.navigate("FacilityReviews");
-          }))}
+          <View style={[{ backgroundColor: "none", width: "10%" }]}>
+            {LightButton("See more", () => {
+              navigation.navigate("FacilityReviews");
+            })}
           </View>
         </View>
       </LinearGradient>
-
     </View>
   );
 }
@@ -232,7 +239,6 @@ export default function TabFacilityProfileScreen() {
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
@@ -261,7 +267,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginVertical: 20,
-    fontFamily: 'EudoxusSans-Bold',
+    fontFamily: "EudoxusSans-Bold",
   },
   body: {
     fontSize: 15,
