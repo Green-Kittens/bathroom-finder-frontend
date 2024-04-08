@@ -9,7 +9,7 @@ import {
   Modal,
   Linking,
   Alert,
-  TouchableOpacity, 
+  TouchableOpacity,
   Platform,
 } from "react-native";
 import { useState } from "react";
@@ -23,10 +23,17 @@ import * as ImagePicker from "expo-image-picker";
 import { ScreenNavigationProp } from "../type";
 
 //Button component
-export function Button(props: { onPress: () => void, title?: string, color?: string }) {
-  const { onPress, title = 'Title', color = "#344f33" } = props;
+export function Button(props: {
+  onPress: () => void;
+  title?: string;
+  color?: string;
+}) {
+  const { onPress, title = "Title", color = "#344f33" } = props;
   return (
-    <Pressable style={[styles.button, { backgroundColor: color }]} onPress={onPress}>
+    <Pressable
+      style={[styles.button, { backgroundColor: color }]}
+      onPress={onPress}
+    >
       <Text style={styles.buttontext}>{title}</Text>
     </Pressable>
   );
@@ -44,7 +51,13 @@ export default function TabReviewForm() {
 
   // add photo modal
   const [modalVisible, setModalVisible] = useState(false);
-  const ImageUploader = ({ isVisible, onClose }: { isVisible: boolean, onClose: () => void }) => {
+  const ImageUploader = ({
+    isVisible,
+    onClose,
+  }: {
+    isVisible: boolean;
+    onClose: () => void;
+  }) => {
     return (
       <Modal
         animationType="slide"
@@ -53,26 +66,25 @@ export default function TabReviewForm() {
         onRequestClose={onClose}
       >
         <View style={styles.centeredView}>
-            <View style={styles.modalView}> 
-                    <Button
-                    title="Take Photo"
-                    color="#344f33"
-                    onPress={addUsingCamera}
-                    />
-                    <Button
-                    title="Choose from Gallery"
-                    color="#344f33"
-                    onPress={addFromGallery}
-                    />
-                    <Button
-                    title="Cancel"
-                    color="red"
-                    onPress={() => {
-                        onClose();
-                    }}
-                    />
-                
-            </View>
+          <View style={styles.modalView}>
+            <Button
+              title="Take Photo"
+              color="#344f33"
+              onPress={addUsingCamera}
+            />
+            <Button
+              title="Choose from Gallery"
+              color="#344f33"
+              onPress={addFromGallery}
+            />
+            <Button
+              title="Cancel"
+              color="red"
+              onPress={() => {
+                onClose();
+              }}
+            />
+          </View>
         </View>
       </Modal>
     );
@@ -177,20 +189,20 @@ export default function TabReviewForm() {
           multiline={true}
         />
 
-                {images.length === 3 && (
-                    <Text style={styles.errorText}>
-                        You can only upload a max of 3 photos.
-                    </Text>
-                )}
-                {images.length < 3 && (
-                    <Button
-                        title="Upload image"
-                        color="#344f33"
-                        onPress={()=> {
-                            setModalVisible(true);
-                        }}
-                    />
-                )}
+        {images.length === 3 && (
+          <Text style={styles.errorText}>
+            You can only upload a max of 3 photos.
+          </Text>
+        )}
+        {images.length < 3 && (
+          <Button
+            title="Upload image"
+            color="#344f33"
+            onPress={() => {
+              setModalVisible(true);
+            }}
+          />
+        )}
 
         <ImageUploader
           isVisible={modalVisible}
@@ -221,16 +233,15 @@ export default function TabReviewForm() {
           enableHalfStar={false}
         />
 
-            
-                <Button
-                title="Post Rating"
-                color="#344f33"
-                onPress={() => {
-                    // make a check to make sure that all fields are filled out
-                    navigation.navigate("Main");
-                }}
-                />
-        </View>
+        <Button
+          title="Post Rating"
+          color="#344f33"
+          onPress={() => {
+            // make a check to make sure that all fields are filled out
+            navigation.navigate("Main");
+          }}
+        />
+      </View>
     </ScrollView>
   );
 }
@@ -250,46 +261,45 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     ...Platform.select({
-        ios: {
-          flexDirection: "row",
-          color: "white",
-          fontSize: 17,
-          marginTop: 20,
-          marginBottom: 20,
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "#344f33",
-          paddingVertical: 5,
-          paddingHorizontal: 20,
-          borderRadius: 8,
-        },
-        android: {
-          flexDirection: "row",
-          color: "white",
-          fontSize: 17,
-          marginTop: 20,
-          marginBottom: 20,
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "#344f33",
-          paddingVertical: 5,
-          paddingHorizontal: 20,
-          borderRadius: 8,
-        },
-        web: {
-          flexDirection: "row",
-          fontSize: 17,
-          marginTop: 20,
-          marginBottom: 20,
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "transparent",
-          paddingVertical: 5,
-          paddingHorizontal: 20,
-          borderRadius: 8,
-        },
-    })
-    
+      ios: {
+        flexDirection: "row",
+        color: "white",
+        fontSize: 17,
+        marginTop: 20,
+        marginBottom: 20,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#344f33",
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+      },
+      android: {
+        flexDirection: "row",
+        color: "white",
+        fontSize: 17,
+        marginTop: 20,
+        marginBottom: 20,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#344f33",
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+      },
+      web: {
+        flexDirection: "row",
+        fontSize: 17,
+        marginTop: 20,
+        marginBottom: 20,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "transparent",
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+      },
+    }),
   },
   icon: {
     marginLeft: "auto",
@@ -343,33 +353,33 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         marginBottom: 20,
       },
-  }),
-},
+    }),
+  },
 
   buttontext: {
     ...Platform.select({
       ios: {
         fontSize: 16,
         lineHeight: 21,
-        fontWeight: 'bold',
+        fontWeight: "bold",
         letterSpacing: 0.25,
-        color: 'white',
+        color: "white",
       },
       android: {
         fontSize: 16,
         lineHeight: 21,
-        fontWeight: 'bold',
+        fontWeight: "bold",
         letterSpacing: 0.25,
-        color: 'white',
+        color: "white",
       },
       web: {
         fontSize: 16,
         lineHeight: 21,
-        fontWeight: 'bold',
+        fontWeight: "bold",
         letterSpacing: 0.25,
-        color: 'white',
+        color: "white",
       },
-  })
+    }),
   },
   starRating: {
     marginBottom: 20,
