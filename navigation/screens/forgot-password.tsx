@@ -1,7 +1,15 @@
-import React, { useState } from 'react';
-import { StyleSheet, Image, SafeAreaView, TextInput, Button, Alert, Text, View, Modal } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Image,
+  SafeAreaView,
+  TextInput,
+  Button,
+  Alert,
+  Text,
+  View,
+  Modal,
+} from "react-native";
 
 export default function TabSubmitScreen() {
   // State management for text inputs
@@ -16,26 +24,25 @@ export default function TabSubmitScreen() {
   const onClosePress = () => {
     // Placeholder for navigation logic
     setModalVisible(false);
-  }
+  };
 
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
-        
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}
+        >
           <View style={styles.modalView}>
             <Text style={styles.text}>Email has been sent to {email}</Text>
             <Button title="Close" color={"#000000"} onPress={onClosePress} />
           </View>
-        
-      </Modal>
+        </Modal>
         <Image
           source={require("../../assets/images/logo-placeholder.png")}
           style={styles.logo}
@@ -107,11 +114,11 @@ const styles = StyleSheet.create({
   modalView: {
     marginTop: "10%",
     alignSelf: "center",
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,

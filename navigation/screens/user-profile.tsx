@@ -1,40 +1,46 @@
 import React from "react";
-import { Image, ScrollView, StyleSheet, Button, Text, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Button,
+  Text,
+  View,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 // types
 import { ScreenNavigationProp } from "../type";
 
 export default function UserProfileScreen() {
+  // navigation
+  const navigation = useNavigation<ScreenNavigationProp>();
 
-    // navigation
-    const navigation = useNavigation<ScreenNavigationProp>();
-    
-    return (
-        <ScrollView>
-          <View style={styles.profilePictureContainer}>
-            <Image
-              style={styles.profilePicture}
-              source={{
-                uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
-              }}
-            />
-            <Text>Your Name</Text>
-          </View>
-          {horizontalCards("Your Reviews")}
-          {horizontalCards("Your Favorites")}
-          <View>
-            <View style={{ marginHorizontal: "40%", marginVertical: 5 }}>
-              <Button
-                title="Log Out"
-                onPress={() => {
-                    navigation.navigate('Login');
-                }} 
-                />
-            </View>
-          </View>
-        </ScrollView>
-      );
+  return (
+    <ScrollView>
+      <View style={styles.profilePictureContainer}>
+        <Image
+          style={styles.profilePicture}
+          source={{
+            uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
+          }}
+        />
+        <Text>Your Name</Text>
+      </View>
+      {horizontalCards("Your Reviews")}
+      {horizontalCards("Your Favorites")}
+      <View>
+        <View style={{ marginHorizontal: "40%", marginVertical: 5 }}>
+          <Button
+            title="Log Out"
+            onPress={() => {
+              navigation.navigate("Login");
+            }}
+          />
+        </View>
+      </View>
+    </ScrollView>
+  );
 }
 
 function horizontalCards(title: string) {
@@ -67,7 +73,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontFamily: 'EudoxusSans-Bold',
+    fontFamily: "EudoxusSans-Bold",
   },
   separator: {
     marginVertical: 30,

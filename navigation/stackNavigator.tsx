@@ -1,6 +1,5 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Ionicons } from "@expo/vector-icons";
 import NavBar from "./navbar";
 
 // types
@@ -23,10 +22,14 @@ const Stack = createStackNavigator<ScreensParamList>();
 export default function StackNavigator() {
   return (
     <Stack.Navigator>
-        <Stack.Screen name={headName} component={NavBar} options={{ headerShown: false }} /> 
-        <Stack.Screen name={facilityProfileName} component={FacilityProfile} />
-        <Stack.Screen name={facilityReviewsName} component={FacilityReviews} />
-        <Stack.Screen name={loginName} component={Login} />
+      <Stack.Screen
+        name={headName}
+        component={NavBar}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name={facilityProfileName} component={FacilityProfile} />
+      <Stack.Screen name={facilityReviewsName} component={FacilityReviews} />
+      <Stack.Screen name={loginName} component={Login} />
     </Stack.Navigator>
   );
 }
