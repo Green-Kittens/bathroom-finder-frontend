@@ -47,21 +47,21 @@ export default function TabReviewForm() {
             <View style={styles.button}>
               <Button
                 title="Take Photo"
-                color="RGA0000"
+                color="#ffff"
                 onPress={addUsingCamera}
               />
             </View>
             <View style={styles.button}>
               <Button
                 title="Choose from Gallery"
-                color="RGA0000"
+                color="#ffff"
                 onPress={addFromGallery}
               />
             </View>
             <View style={styles.cancelButton}>
               <Button
                 title="Cancel"
-                color="RGA0000"
+                color="#ffff"
                 onPress={() => {
                   onClose();
                 }}
@@ -181,7 +181,7 @@ export default function TabReviewForm() {
           {images.length < 3 && (
             <Button
               title="Upload image"
-              color="RGA0000"
+              color="#ffff"
               onPress={() => {
                 setModalVisible(true);
               }}
@@ -221,7 +221,7 @@ export default function TabReviewForm() {
         <View style={styles.button}>
           <Button
             title="Post Rating"
-            color="RGA0000"
+            color="#ffff"
             onPress={() => {
               // make a check to make sure that all fields are filled out
               navigation.navigate("Main");
