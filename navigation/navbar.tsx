@@ -4,11 +4,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
+// types
+import { ScreensParamList } from "./type";
+
 // screens
-import FacilityProfile from "./screens/facility-profile";
-import FacilityReviews from "./screens/facility-reviews";
-import Login from "./screens/login";
-import Main from "./screens/home";
+import Main from "./screens/main";
 import ReviewForm from "./screens/review-form";
 import UserProfile from "./screens/user-profile";
 
@@ -17,36 +17,35 @@ const facilityProfileName = "Facility Profile";
 const facilityReviewsName = "Facility Reviews";
 const loginName = "Login";
 const mainName = "Main";
-const reviewFormName = "Review Form";
-const userProfileName = "User Profile";
+const reviewFormName = "ReviewForm";
+const userProfileName = "UserProfile";
 
-const Tab = createBottomTabNavigator();
+// navigation
+const Tab = createBottomTabNavigator<ScreensParamList>();
 
-export default function Navigation() {
+export default function NavBar() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName={mainName}
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            let current = route.name;
+    <Tab.Navigator
+      initialRouteName={mainName} // ask about implementing login as initial page display
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          const current = route.name;
 
-            if (current === mainName) {
-              iconName = focused ? "home" : "home-outline";
-            } else if (current === reviewFormName) {
-              iconName = focused ? "add-circle" : "add-circle-outline";
-            } else if (current === userProfileName) {
-              iconName = focused ? "person-circle" : "person-circle-outline";
-            }
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-        })}
-      >
-        <Tab.Screen name={mainName} component={Main} />
-        <Tab.Screen name={reviewFormName} component={ReviewForm} />
-        <Tab.Screen name={userProfileName} component={UserProfile} />
-      </Tab.Navigator>
-    </NavigationContainer>
+          if (current === mainName) {
+            iconName = focused ? "home" : "home-outline";
+          } else if (current === reviewFormName) {
+            iconName = focused ? "add-circle" : "add-circle-outline";
+          } else if (current === userProfileName) {
+            iconName = focused ? "person-circle" : "person-circle-outline";
+          }
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
+    >
+      <Tab.Screen name={reviewFormName} component={ReviewForm} />
+      <Tab.Screen name={mainName} component={Main} />
+      <Tab.Screen name={userProfileName} component={UserProfile} />
+    </Tab.Navigator>
   );
 }

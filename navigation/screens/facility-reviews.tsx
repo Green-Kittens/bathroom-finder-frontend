@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: "EudoxusSans-Bold",
   },
   separator: {
     marginVertical: 30,
