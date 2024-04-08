@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, StyleSheet, TextInput, Text, View, ScrollView, Modal, Linking, Alert, TouchableOpacity } from "react-native";
-
+import { Pressable, StyleSheet, TextInput, Text, View, ScrollView, Modal, Linking, Alert, TouchableOpacity, Platform } from "react-native";
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -10,6 +9,16 @@ import * as ImagePicker from 'expo-image-picker';
 
 // type
 import { ScreenNavigationProp } from "../type";
+
+//Button component
+export function Button(props: { onPress: () => void, title?: string, color?: string }) {
+  const { onPress, title = 'Title', color = "#344f33" } = props;
+  return (
+    <Pressable style={[styles.button, { backgroundColor: color }]} onPress={onPress}>
+      <Text style={styles.buttontext}>{title}</Text>
+    </Pressable>
+  );
+}
 
 export default function TabReviewForm() {
   // location
@@ -23,7 +32,7 @@ export default function TabReviewForm() {
 
   // add photo modal
   const [modalVisible, setModalVisible] = useState(false);
-  const ImageUploader = ({ isVisible, onClose }) => {
+  const ImageUploader = ({ isVisible, onClose }: { isVisible: boolean, onClose: () => void }) => {
     return(
     <Modal
         animationType="slide"
@@ -32,30 +41,25 @@ export default function TabReviewForm() {
         onRequestClose={onClose}
     >
         <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-                <View style={styles.button}>
+            <View style={styles.modalView}> 
                     <Button
                     title="Take Photo"
-                    color="RGA0000"
+                    color="#344f33"
                     onPress={addUsingCamera}
                     />
-                </View>
-                <View style={styles.button}>
                     <Button
                     title="Choose from Gallery"
-                    color="RGA0000"
+                    color="#344f33"
                     onPress={addFromGallery}
                     />
-                </View>
-                <View style={styles.cancelButton}>
                     <Button
                     title="Cancel"
-                    color="RGA0000"
+                    color="red"
                     onPress={() => {
                         onClose();
                     }}
                     />
-                </View>
+                
             </View>
         </View>
     </Modal>
@@ -115,7 +119,7 @@ export default function TabReviewForm() {
   }
 
   // delete uploaded image
-  const deleteImage = (toDelete) => {
+  const deleteImage = (toDelete: ImagePicker.ImagePickerSuccessResult) => {
     const updatedImages = images.filter((curr) => curr !== toDelete);
     setImages(updatedImages);
   }
@@ -130,9 +134,8 @@ export default function TabReviewForm() {
     <ScrollView>
         <View style={styles.container}>
             <Text style={styles.title}>New Bathroom Rating</Text>
-
             <View style={styles.dropdown}>
-                <RNPickerSelect
+                <RNPickerSelect style={styles.dropdown}
                 placeholder={{
                     label: "select a location",
                     value: null,
@@ -142,12 +145,6 @@ export default function TabReviewForm() {
                     { label: "Location 1", value: "location1" },
                     { label: "Location 2", value: "location2" },
                 ]}
-                />
-                <MaterialIcons
-                style={styles.icon}
-                name="keyboard-arrow-down"
-                size={17}
-                color="white"
                 />
             </View>
 
@@ -162,7 +159,6 @@ export default function TabReviewForm() {
                 multiline={true}
             />
 
-            <View style={styles.button}>
                 {images.length === 3 && (
                     <Text style={styles.errorText}>
                         You can only upload a max of 3 photos.
@@ -171,13 +167,12 @@ export default function TabReviewForm() {
                 {images.length < 3 && (
                     <Button
                         title="Upload image"
-                        color="RGA0000"
+                        color="#344f33"
                         onPress={()=> {
                             setModalVisible(true);
                         }}
                     />
                 )}
-            </View>
 
             <ImageUploader
                 isVisible={modalVisible}
@@ -206,16 +201,15 @@ export default function TabReviewForm() {
                 enableHalfStar={false}
             />
 
-            <View style={styles.button}>
+            
                 <Button
                 title="Post Rating"
-                color="RGA0000"
+                color="#344f33"
                 onPress={() => {
                     // make a check to make sure that all fields are filled out
                     navigation.navigate("Main");
                 }}
                 />
-            </View>
         </View>
     </ScrollView>
   );
@@ -235,17 +229,47 @@ const styles = StyleSheet.create({
     color: "#344f33",
   },
   dropdown: {
-    flexDirection: "row",
-    color: "white",
-    fontSize: 17,
-    marginTop: 20,
-    marginBottom: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#344f33",
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-    borderRadius: 8,
+    ...Platform.select({
+        ios: {
+          flexDirection: "row",
+          color: "white",
+          fontSize: 17,
+          marginTop: 20,
+          marginBottom: 20,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#344f33",
+          paddingVertical: 5,
+          paddingHorizontal: 20,
+          borderRadius: 8,
+        },
+        android: {
+          flexDirection: "row",
+          color: "white",
+          fontSize: 17,
+          marginTop: 20,
+          marginBottom: 20,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#344f33",
+          paddingVertical: 5,
+          paddingHorizontal: 20,
+          borderRadius: 8,
+        },
+        web: {
+          flexDirection: "row",
+          fontSize: 17,
+          marginTop: 20,
+          marginBottom: 20,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "transparent",
+          paddingVertical: 5,
+          paddingHorizontal: 20,
+          borderRadius: 8,
+        },
+    })
+    
   },
   icon: {
     marginLeft: "auto",
@@ -272,20 +296,60 @@ const styles = StyleSheet.create({
     color: "#344f33",
   },
   button: {
-    fontSize: 17,
-    backgroundColor: "#344f33",
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    marginBottom: 20,
-  },
-  cancelButton: {
-    fontSize: 17,
-    backgroundColor: "#FF0000",
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    marginBottom: 20,
+    ...Platform.select({
+      ios: {
+        fontSize: 17,
+        color: "white",
+        backgroundColor: "#344f33",
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        marginBottom: 20,
+      },
+      android: {
+        fontSize: 17,
+        backgroundColor: "#344f33",
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        marginBottom: 20,
+      },
+      web: {
+        fontSize: 17,
+        color: "black",
+        backgroundColor: "#344f33",
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        marginBottom: 20,
+      },
+  }),
+},
+
+  buttontext: {
+    ...Platform.select({
+      ios: {
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: 'white',
+      },
+      android: {
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: 'white',
+      },
+      web: {
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: 'white',
+      },
+  })
   },
   starRating: {
     marginBottom: 20,
