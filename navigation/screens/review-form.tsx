@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, StyleSheet, TextInput, Text, View } from "react-native";
-
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -15,9 +14,7 @@ export default function TabReviewForm(
   username: string,
   bathroomID: string,
   time: Date,
-  images: string[]
 ) {
-  /**getting info for new review*/
   const [rating, setRating] = useState(0);
   const [description, setDescription] = useState("");
 
@@ -28,8 +25,7 @@ export default function TabReviewForm(
         bathroomID,
         description,
         rating,
-        time,
-        images
+        time
       );
     } catch (error) {
       console.error("Error creating new review:", error);

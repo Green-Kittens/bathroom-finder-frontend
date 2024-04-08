@@ -39,7 +39,6 @@ export async function createReview(
   description: string,
   rating: int,
   time: Date,
-  images: typeof Image
 ): Promise<string> {
   //Implementation goes here
   return new Promise<string>((resolve) => {
