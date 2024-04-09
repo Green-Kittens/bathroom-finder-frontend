@@ -5,12 +5,10 @@ import {
   SafeAreaView,
   TextInput,
   Button,
-  TouchableOpacity,
   Text,
   View,
   ScrollView,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 
 export default function RegisterScreen() {
   // State management for text inputs

@@ -12,7 +12,6 @@ import UserProfile from "./screens/user-profile";
 
 // screen names
 const mainName = "Main";
-const registerUser = "Register";
 const reviewFormName = "ReviewForm";
 const userProfileName = "UserProfile";
 
