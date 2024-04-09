@@ -33,6 +33,8 @@ function TabLoginScreen() {
   const onLoginPress = async () => {
     try {
       const login = await loginUser(username, password);
+      const navigation = useNavigation<ScreenNavigationProp>();
+      navigation.navigate("Main");
     } catch (error) {
       console.error("Error logging in:", error);
     }
