@@ -1,15 +1,28 @@
-import React, { useState } from 'react';
-import { StyleSheet,Image, SafeAreaView, TextInput, Button, Alert, TouchableOpacity, Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Image,
+  SafeAreaView,
+  TextInput,
+  Button,
+  TouchableOpacity,
+  Text,
+  View,
+  Alert,
+} from "react-native";
+import { ScreenNavigationProp } from "../type";
 
 function TabLoginScreen() {
   // State management for text inputs
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  // navigation
+  const navigation = useNavigation<ScreenNavigationProp>();
+
   const onLoginPress = () => {
-    // Placeholder for navigation logic
-    Alert.alert("Login Pressed", "Navigate to home screen.");
+    navigation.navigate("Main");
   };
 
   const onRegisterPress = () => {
@@ -19,7 +32,7 @@ function TabLoginScreen() {
 
   const onForgotPress = () => {
     // Placeholder for navigation logic
-    Alert.alert("Frogot Pressed", "Navigate to Frogot screen.");
+    Alert.alert("Forgot Pressed", "Navigate to Forgot screen");
   };
 
   return (
@@ -93,8 +106,8 @@ const styles = StyleSheet.create({
   // Title Section
   title: {
     fontSize: 20,
-    fontWeight: "bold",
     marginBottom: 50,
+    fontFamily: "EudoxusSans-Bold",
   },
   // Input Section
   input: {
@@ -129,7 +142,7 @@ const styles = StyleSheet.create({
   // Register Text
   registerText: {
     color: "black",
-    fontWeight: "bold",
+    fontFamily: "EudoxusSans-Bold",
   },
   // Logo
   logo: {

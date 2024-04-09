@@ -1,5 +1,12 @@
 import React from "react";
-import { Button, Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 export default function FacilityReviewsScreen() {
   return (
@@ -81,7 +88,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: "EudoxusSans-Bold",
   },
   separator: {
     marginVertical: 30,
