@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
+import register from "./register";
 import {
   StyleSheet,
   Image,

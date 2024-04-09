@@ -16,6 +16,7 @@ export default function RegisterScreen() {
   const [lasttName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const onRegisterPress = () => {
     // Placeholder for navigation logic
@@ -59,8 +60,10 @@ export default function RegisterScreen() {
           <TextInput
             style={styles.input}
             //implemtation to check against initially entered password
-            value={password}
+            onChangeText={setConfirmPassword}
+            value={confirmPassword}
             placeholder="Confirm Password"
+            secureTextEntry={true}
           />
           <View style={styles.fixToText}>
             <Button
