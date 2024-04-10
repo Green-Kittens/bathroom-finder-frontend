@@ -45,20 +45,4 @@ const styles = StyleSheet.create({
     position: "absolute",
     marginBottom: 20,
   },
-  buttonContainer: {
-    flexDirection: "row",
-    position: "absolute",
-    bottom: 15,
-    alignSelf: "center",
-  },
-  button: {
-    backgroundColor: "#d6d6d6",
-    padding: 1,
-    borderRadius: 30,
-    marginHorizontal: 30,
-    height: 60,
-    aspectRatio: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
 });

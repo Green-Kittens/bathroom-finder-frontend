@@ -152,7 +152,6 @@ function CollapseView() {
 
       <View style={styles.separator} />
       <LinearGradient
-        // Button Linear Gradient
         colors={["#6da798", "#40a4a9"]}
         end={{ x: 0.1, y: 0.2 }}
         style={[styles.image, { padding: 20, borderRadius: 15 }]}

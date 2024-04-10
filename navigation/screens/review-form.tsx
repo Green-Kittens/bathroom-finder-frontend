@@ -1,7 +1,7 @@
 import React from "react";
 import MainButton from "../../components/Buttons";
+import { CancelButton } from "../../components/Buttons";
 import {
-  Button,
   StyleSheet,
   TextInput,
   Text,
@@ -45,29 +45,11 @@ export default function TabReviewForm() {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <View style={styles.button}>
-              <Button
-                title="Take Photo"
-                color="#0000"
-                onPress={addUsingCamera}
-              />
-            </View>
-            <View style={styles.button}>
-              <Button
-                title="Choose from Gallery"
-                color="#0000"
-                onPress={addFromGallery}
-              />
-            </View>
-            <View style={styles.cancelButton}>
-              <Button
-                title="Cancel"
-                color="#0000"
-                onPress={() => {
+            {MainButton("Take Photo", addUsingCamera)}
+            {MainButton("Choose from Gallery", addFromGallery)}
+            {CancelButton("Cancel", () => {
                   onClose();
-                }}
-              />
-            </View>
+                })}
           </View>
         </View>
       </Modal>
@@ -190,22 +172,16 @@ export default function TabReviewForm() {
         />
       </View>
 
-      <View style={styles.button}>
         {images.length === 3 && (
           <Text style={styles.errorText}>
             You can only upload a max of 3 photos.
           </Text>
         )}
         {images.length < 3 && (
-          <Button
-            title="Upload image"
-            color="#0000"
-            onPress={() => {
-              setModalVisible(true);
-            }}
-          />
+          MainButton("Upload Image", () => {
+            setModalVisible(true);
+          })
         )}
-      </View>
 
       <ImageUploader
         isVisible={modalVisible}
@@ -290,22 +266,6 @@ const styles = StyleSheet.create({
     padding: 10,
     width: "85%",
     minHeight: 150,
-    marginBottom: 20,
-  },
-  button: {
-    fontSize: 17,
-    backgroundColor: "#6da798",
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    marginBottom: 20,
-  },
-  cancelButton: {
-    fontSize: 17,
-    backgroundColor: "#FF0000",
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-    borderRadius: 8,
     marginBottom: 20,
   },
   starRating: {

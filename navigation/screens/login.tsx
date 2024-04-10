@@ -173,11 +173,4 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginBottom: 5,
   },
-  button: {
-    justifyContent: "center",
-    alignSelf: "center",
-    borderRadius: 4,
-    paddingHorizontal: 20,
-    margin: 10,
-  },
 });
