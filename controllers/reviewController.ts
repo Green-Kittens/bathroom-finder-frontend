@@ -8,11 +8,11 @@ export async function getAllReviews(bathroomID: string): Promise<Review[]> {
   return new Promise<Review[]>((resolve) => {
     const bathroomReviews: Review[] = [
       {
-        id: "1",
+        id: bathroomID,
         name: "Review 1",
       },
       {
-        id: "2",
+        id: bathroomID,
         name: "Review 2",
       },
     ];
@@ -42,7 +42,7 @@ export async function createReview(
 ): Promise<string> {
   //Implementation goes here
   return new Promise<string>((resolve) => {
-    const successsMsg = "Review successfully created.";
+    const successsMsg = `${username} created a review successfully for ${bathroomID} at ${time}: ${description} with a overall rating of ${rating}.`;
 
     setTimeout(() => {
       resolve(successsMsg);
@@ -58,7 +58,7 @@ export async function createReview(
 export async function likeReview(reviewID: string[]): Promise<string> {
   //Implemnentation goes here
   return new Promise<string>((resolve) => {
-    const successsMsg = "Review successfully liked.";
+    const successsMsg = `Review (${reviewID}) successfully liked.`;
 
     setTimeout(() => {
       resolve(successsMsg);
@@ -74,7 +74,7 @@ export async function likeReview(reviewID: string[]): Promise<string> {
 export async function dislikeReview(reviewID: string[]): Promise<string> {
   //Implemnentation goes here
   return new Promise<string>((resolve) => {
-    const successsMsg = "Review successfully disliked.";
+    const successsMsg = `Review (${reviewID}) successfully disliked.`;
 
     setTimeout(() => {
       resolve(successsMsg);
@@ -92,11 +92,11 @@ export async function dislikeReview(reviewID: string[]): Promise<string> {
 export async function replyReview(
   reviewID: string[],
   username: string,
-  reply: string
+  reply: string,
 ): Promise<string> {
   //Implemnentation goes here
   return new Promise<string>((resolve) => {
-    const successsMsg = "Reply successful.";
+    const successsMsg = `${username} replied to a review (${reviewID})successfully: ${reply}`;
 
     setTimeout(() => {
       resolve(successsMsg);
@@ -114,11 +114,11 @@ export async function replyReview(
 export async function reportReview(
   reviewID: string,
   username: string,
-  report: string
+  report: string,
 ): Promise<string> {
   //Implemnentation goes here
   return new Promise<string>((resolve) => {
-    const successsMsg = "Review successfully reported.";
+    const successsMsg = `${username} successfully reported a review (${reviewID}): ${report}`;
 
     setTimeout(() => {
       resolve(successsMsg);

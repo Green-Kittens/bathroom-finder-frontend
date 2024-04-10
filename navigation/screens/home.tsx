@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import {
   getAllBathrooms,
   getBathroomProfile,

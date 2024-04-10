@@ -12,27 +12,19 @@ import {
 } from "react-native";
 import { ScreenNavigationProp } from "../type";
 import { useNavigation } from "@react-navigation/native";
-import {
-  loginUser,
-  registerUser,
-  forgotPassword,
-} from "@/controllers/userController";
+import { loginUser } from "@/controllers/userController";
 
 function TabLoginScreen() {
   // State management for text inputs
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   // navigation
   const navigation = useNavigation<ScreenNavigationProp>();
-  const [profile, setProfile] = useState(Image);
 
   const onLoginPress = async () => {
     try {
-      const login = await loginUser(username, password);
+      await loginUser(username, password);
       const navigation = useNavigation<ScreenNavigationProp>();
       navigation.navigate("Main");
     } catch (error) {
@@ -43,27 +35,10 @@ function TabLoginScreen() {
   };
 
   const onRegisterPress = async () => {
-    try {
-      const register = await registerUser(
-        firstname,
-        lastname,
-        username,
-        email,
-        password,
-        profile
-      );
-    } catch (error) {
-      console.error("Error registering:", error);
-    }
     //Alert.alert("Register Pressed", "Navigate to registration screen.");
   };
 
   const onForgotPress = async () => {
-    try {
-      const forgot = await forgotPassword(email);
-    } catch (error) {
-      console.error("Error forgetting password:", error);
-    }
     Alert.alert("Forgot Pressed", "Navigate to Forgot screen");
   };
 

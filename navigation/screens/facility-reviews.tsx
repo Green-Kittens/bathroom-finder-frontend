@@ -1,4 +1,4 @@
-import React, { useState }  from "react";
+import React, { useState } from "react";
 import {
   Button,
   Image,
@@ -15,7 +15,7 @@ import {
 
 export default function FacilityReviewsScreen(
   reviewID: string[],
-  username: string
+  username: string,
 ) {
   /**like a review */
   const [reply, setReply] = useState("");

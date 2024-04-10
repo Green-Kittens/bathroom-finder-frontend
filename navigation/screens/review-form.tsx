@@ -19,7 +19,6 @@ import StarRating from "react-native-star-rating-widget";
 import { createReview } from "@/controllers/reviewController";
 
 // screens
-import Main from "./home";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 
@@ -43,13 +42,7 @@ export function Button(props: {
   );
 }
 
-
-
-export default function TabReviewForm(
-  username: string,
-  bathroomID: string,
-) {
-
+export default function TabReviewForm(username: string, bathroomID: string) {
   const handleReview = async () => {
     try {
       const review = await createReview(
@@ -57,7 +50,7 @@ export default function TabReviewForm(
         bathroomID,
         description,
         rating,
-        time
+        time,
       );
     } catch (error) {
       console.error("Error creating new review:", error);

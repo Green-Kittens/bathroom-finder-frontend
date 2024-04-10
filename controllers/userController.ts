@@ -14,12 +14,12 @@ export async function registerUser(
   username: string,
   email: string,
   password: string,
-  profile: typeof Image
+  profile: typeof Image,
 ): Promise<string> {
   // Implementation goes here
   //must create ID for user
   return new Promise<string>((resolve) => {
-    const successsMsg = "User successfully created.";
+    const successsMsg = `${username} (${firstname},${lastname}) successfully created with email (${email}), password (${password}), and profile ${profile}.`;
 
     setTimeout(() => {
       resolve(successsMsg);
@@ -35,11 +35,11 @@ export async function registerUser(
  */
 export async function loginUser(
   user: string,
-  password: string
+  password: string,
 ): Promise<string> {
   // Implementation goes here
   return new Promise<string>((resolve) => {
-    const successsMsg = "User successfully logged in.";
+    const successsMsg = `${user} successfully logged in: ${password}`;
 
     setTimeout(() => {
       resolve(successsMsg);
@@ -55,8 +55,7 @@ export async function loginUser(
 export async function forgotPassword(email: string): Promise<string> {
   //Implementation goes here
   return new Promise<string>((resolve) => {
-    const successsMsg =
-      "Forgot password link successfully sent to user's email.";
+    const successsMsg = `Forgot password link successfully sent to user's email (${email}).`;
 
     setTimeout(() => {
       resolve(successsMsg);
@@ -96,11 +95,11 @@ export async function createBathroom(
   opHours: string,
   description: string,
   tags: string[],
-  images: typeof Image
+  images: typeof Image,
 ): Promise<string> {
   //Implementation goes here
   return new Promise<string>((resolve) => {
-    const successsMsg = "Bathroom successfully created.";
+    const successsMsg = `Bathroom successfully created by ${username}: hours of operation (${opHours}), description (${description}), tags (${tags}), images (${images})`;
 
     setTimeout(() => {
       resolve(successsMsg);
@@ -114,17 +113,19 @@ export async function createBathroom(
  * @returns {Promise<BathroomProfile[]>} - Returns a promise with all favorite bathrooms after retrieving
  */
 export async function getFavorites(
-  username: string
+  username: string,
 ): Promise<BathroomProfile[]> {
   //Implementation goes here
   return new Promise<BathroomProfile[]>((resolve) => {
     const favoritedBathrooms: BathroomProfile[] = [
       {
         id: "1",
+        user: username,
         name: "Bathroom 1",
       },
       {
         id: "2",
+        user: username,
         name: "Bathroom 2",
       },
     ];
@@ -146,10 +147,12 @@ export async function getUserReviews(username: string): Promise<Review[]> {
     const bathroomReviews: Review[] = [
       {
         id: "1",
+        user: username,
         name: "Review 1",
       },
       {
         id: "2",
+        user: username,
         name: "Review 2",
       },
     ];

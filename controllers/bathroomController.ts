@@ -28,7 +28,7 @@ export async function getAllBathrooms(): Promise<BathroomProfile[]> {
  * @returns {Promise<BathroomProfile>} - Returns a promise with bathroom profile information
  */
 export async function getBathroomProfile(
-  bathroomID: string
+  bathroomID: string,
 ): Promise<BathroomProfile> {
   //Implementation goes here
   return new Promise<BathroomProfile>((resolve) => {
@@ -50,7 +50,7 @@ export async function getBathroomProfile(
  */
 export async function getSomeBathrooms(
   location: Int16Array,
-  tags: string
+  tags: string,
 ): Promise<BathroomProfile[]> {
   //Implementation goes here
   return new Promise<BathroomProfile[]>((resolve) => {
@@ -58,10 +58,14 @@ export async function getSomeBathrooms(
       {
         id: "1",
         name: "Bathroom 1",
+        location: location,
+        tags: tags,
       },
       {
         id: "2",
         name: "Bathroom 2",
+        location: location,
+        tags: tags,
       },
     ];
 
@@ -79,13 +83,13 @@ export async function getSomeBathrooms(
  * @return {Promise<string>} - Returns a promise with a success message upon successfully reporting a bathroom
  */
 export async function reportBathroom(
-  reviewID: string,
+  bathroomID: string,
   username: string,
-  report: string
+  report: string,
 ): Promise<string> {
   //Implemnentation goes here
   return new Promise<string>((resolve) => {
-    const successsMsg = "Bathroom successfully reported.";
+    const successsMsg = `Bathroom (${bathroomID}) successfully reported by ${username}: ${report}`;
 
     setTimeout(() => {
       resolve(successsMsg);
@@ -101,11 +105,11 @@ export async function reportBathroom(
  */
 export async function favoriteBathroom(
   bathroomID: string,
-  username: string
+  username: string,
 ): Promise<string> {
   //Implemnentation goes here
   return new Promise<string>((resolve) => {
-    const successsMsg = "Bathroom successfully favorited.";
+    const successsMsg = `Bathroom (${bathroomID})successfully favorited by ${username}`;
 
     setTimeout(() => {
       resolve(successsMsg);
