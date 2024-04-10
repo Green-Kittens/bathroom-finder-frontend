@@ -1,7 +1,7 @@
 import React from "react";
 import horizontalCards from "../../components/HorizontalCards";
 import MainButton from "../../components/Buttons";
-import { Text, View, Image, ImageBackground, StyleSheet } from "react-native";
+import { Text, View, Image, ImageBackground, StyleSheet, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 // types
@@ -29,30 +29,32 @@ export default function UserProfileScreen() {
           alignSelf: "flex-end",
         }}
       ></ImageBackground>
-      <View style={styles.profilePictureContainer}>
-        <Image
-          style={styles.profilePicture}
-          source={{
-            uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
-          }}
-        />
-        <Text>Your Name</Text>
-      </View>
-      {horizontalCards("Your Reviews")}
-      {horizontalCards("Your Favorites")}
-      <View style={[{ backgroundColor: "none" }]}>
-        <View
-          style={{
-            marginHorizontal: "50%",
-            marginVertical: 20,
-            backgroundColor: "none",
-          }}
-        >
-          {MainButton("Log Out", () => {
-            navigation.navigate("Login");
-          })}
+      <ScrollView>
+        <View style={styles.profilePictureContainer}>
+          <Image
+            style={styles.profilePicture}
+            source={{
+              uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
+            }}
+          />
+          <Text>Your Name</Text>
         </View>
-      </View>
+        {horizontalCards("Your Reviews")}
+        {horizontalCards("Your Favorites")}
+        <View style={[{ backgroundColor: "none" }]}>
+          <View
+            style={{
+              marginHorizontal: "50%",
+              marginVertical: 20,
+              backgroundColor: "none",
+            }}
+          >
+            {MainButton("Log Out", () => {
+              navigation.navigate("Login");
+            })}
+          </View>
+        </View>
+      </ScrollView>
     </View>
   );
 }

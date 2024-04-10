@@ -11,6 +11,7 @@ import {
   Alert,
   TouchableOpacity,
   ImageBackground,
+  ScrollView,
 } from "react-native";
 
 import { useState } from "react";
@@ -136,89 +137,93 @@ export default function TabReviewForm() {
           alignSelf: "flex-end",
         }}
       ></ImageBackground>
-      <Text style={styles.title}>New Bathroom Rating</Text>
+      <ScrollView>
+        <View style={{justifyContent: "center", alignItems: "center", alignContent:"center"}}>
+          <Text style={styles.title}>New Bathroom Rating</Text>
 
-      <View style={styles.dropdown}>
-        <RNPickerSelect
-          placeholder={{
-            label: "select a location",
-            value: null,
-          }}
-          onValueChange={(newLocation) => setLocation(newLocation)}
-          items={[
-            { label: "Location 1", value: "location1" },
-            { label: "Location 2", value: "location2" },
-          ]}
-        />
-      </View>
-
-      <Text style={styles.subtext}>
-        {currentDate.toLocaleString(navigator.language, {
-          month: "2-digit",
-          day: "2-digit",
-          year: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit",
-        })}
-      </Text>
-      <View style={styles.input}>
-        <TextInput
-          style={[styles.input, { width: "100%" }]}
-          placeholder="write your description..."
-          placeholderTextColor="#6da798"
-          value={description}
-          onChangeText={setDescription}
-          multiline={true}
-        />
-      </View>
-
-        {images.length === 3 && (
-          <Text style={styles.errorText}>
-            You can only upload a max of 3 photos.
-          </Text>
-        )}
-        {images.length < 3 && (
-          MainButton("Upload Image", () => {
-            setModalVisible(true);
-          })
-        )}
-
-      <ImageUploader
-        isVisible={modalVisible}
-        onClose={() => setModalVisible(false)}
-      />
-
-      {images.length !== 0 &&
-        images.map((currImage, idx) => (
-          <View key={idx} style={styles.imageContainer}>
-            <TouchableOpacity
-              onPress={() => Linking.openURL(currImage.assets[0].uri)}
-            >
-              <Text style={styles.imageLink}>
-                {currImage.assets[0].fileName}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => deleteImage(currImage)}>
-              <MaterialIcons name="delete" size={20} color="gray" />
-            </TouchableOpacity>
+          <View style={styles.dropdown}>
+            <RNPickerSelect
+              placeholder={{
+                label: "select a location",
+                value: null,
+              }}
+              onValueChange={(newLocation) => setLocation(newLocation)}
+              items={[
+                { label: "Location 1", value: "location1" },
+                { label: "Location 2", value: "location2" },
+              ]}
+            />
           </View>
-        ))}
 
-      <Text style={[styles.subtext, { color: "black" }]}>
-        Rate Your Experience:
-      </Text>
-      <StarRating
-        style={styles.starRating}
-        rating={rating}
-        onChange={setRating}
-        enableHalfStar={false}
-        color="black"
-      />
+          <Text style={styles.subtext}>
+            {currentDate.toLocaleString(navigator.language, {
+              month: "2-digit",
+              day: "2-digit",
+              year: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </Text>
+          <View style={styles.input}>
+            <TextInput
+              style={[styles.input, { width: "100%" }]}
+              placeholder="write your description..."
+              placeholderTextColor="#6da798"
+              value={description}
+              onChangeText={setDescription}
+              multiline={true}
+            />
+          </View>
 
-      {MainButton("Post Rating", () => {
-        // make a check to make sure that all fields are filled out
-        navigation.navigate("Main");
-      })}
+            {images.length === 3 && (
+              <Text style={styles.errorText}>
+                You can only upload a max of 3 photos.
+              </Text>
+            )}
+            {images.length < 3 && (
+              MainButton("Upload Image", () => {
+                setModalVisible(true);
+              })
+            )}
+
+          <ImageUploader
+            isVisible={modalVisible}
+            onClose={() => setModalVisible(false)}
+          />
+
+          {images.length !== 0 &&
+            images.map((currImage, idx) => (
+              <View key={idx} style={styles.imageContainer}>
+                <TouchableOpacity
+                  onPress={() => Linking.openURL(currImage.assets[0].uri)}
+                >
+                  <Text style={styles.imageLink}>
+                    {currImage.assets[0].fileName}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => deleteImage(currImage)}>
+                  <MaterialIcons name="delete" size={20} color="gray" />
+                </TouchableOpacity>
+              </View>
+            ))}
+
+          <Text style={[styles.subtext, { color: "black" }]}>
+            Rate Your Experience:
+          </Text>
+          <StarRating
+            style={styles.starRating}
+            rating={rating}
+            onChange={setRating}
+            enableHalfStar={false}
+            color="black"
+          />
+
+          {MainButton("Post Rating", () => {
+            // make a check to make sure that all fields are filled out
+            navigation.navigate("Main");
+          })}
+        </View>
+      </ScrollView>
     </View>
   );
 }
