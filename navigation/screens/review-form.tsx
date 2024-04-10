@@ -48,21 +48,21 @@ export default function TabReviewForm() {
             <View style={styles.button}>
               <Button
                 title="Take Photo"
-                color="RGA0000"
+                color="#0000"
                 onPress={addUsingCamera}
               />
             </View>
             <View style={styles.button}>
               <Button
                 title="Choose from Gallery"
-                color="RGA0000"
+                color="#0000"
                 onPress={addFromGallery}
               />
             </View>
             <View style={styles.cancelButton}>
               <Button
                 title="Cancel"
-                color="RGA0000"
+                color="#0000"
                 onPress={() => {
                   onClose();
                 }}
@@ -199,7 +199,7 @@ export default function TabReviewForm() {
         {images.length < 3 && (
           <Button
             title="Upload image"
-            color="RGA0000"
+            color="#0000"
             onPress={() => {
               setModalVisible(true);
             }}
@@ -236,7 +236,7 @@ export default function TabReviewForm() {
         rating={rating}
         onChange={setRating}
         enableHalfStar={false}
-        color="FFFFFF"
+        color="black"
       />
 
       {MainButton("Post Rating", () => {

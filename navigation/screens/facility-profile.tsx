@@ -25,35 +25,37 @@ const blobimage = { uri: "/assets/images/blob.png" };
 function Review() {
   return (
     <View style={styles.review}>
-      <Image
-        style={{ height: 60, width: 60 }}
-        source={{
-          uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
-        }}
-      />
-      <Text style={[styles.paragraph, { fontFamily: "EudoxusSans-Bold" }]}>
-        Username
-      </Text>
-      <Image
-        style={{ height: 15, width: 15, alignSelf: "center" }}
-        source={require("../../assets/images/star_filled.png")}
-      />
-      <Image
-        style={{ height: 15, width: 15, alignSelf: "center" }}
-        source={require("../../assets/images/star_filled.png")}
-      />
-      <Image
-        style={{ height: 15, width: 15, alignSelf: "center" }}
-        source={require("../../assets/images/star_filled.png")}
-      />
-      <Image
-        style={{ height: 15, width: 15, alignSelf: "center" }}
-        source={require("../../assets/images/star_filled.png")}
-      />
-      <Image
-        style={{ height: 15, width: 15, alignSelf: "center" }}
-        source={require("../../assets/images/star_filled.png")}
-      />
+      <View style={styles.toprow}>
+        <Image
+          style={{ height: 60, width: 60 }}
+          source={{
+            uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
+          }}
+        />
+        <Text style={[styles.paragraph, { fontFamily: "EudoxusSans-Bold" }]}>
+          Username
+        </Text>
+        <Image
+          style={{ height: 15, width: 15, alignSelf: "center" }}
+          source={require("../../assets/images/star_filled.png")}
+        />
+        <Image
+          style={{ height: 15, width: 15, alignSelf: "center" }}
+          source={require("../../assets/images/star_filled.png")}
+        />
+        <Image
+          style={{ height: 15, width: 15, alignSelf: "center" }}
+          source={require("../../assets/images/star_filled.png")}
+        />
+        <Image
+          style={{ height: 15, width: 15, alignSelf: "center" }}
+          source={require("../../assets/images/star_filled.png")}
+        />
+        <Image
+          style={{ height: 15, width: 15, alignSelf: "center" }}
+          source={require("../../assets/images/star_filled.png")}
+        />
+      </View>
       <Text style={styles.paragraph} numberOfLines={2}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -208,6 +210,7 @@ export default function TabFacilityProfileScreen() {
                 flexDirection: "row",
                 alignItems: "center",
                 backgroundColor: "none",
+                paddingVertical: 10
               },
             ]}
           >
@@ -297,6 +300,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    backgroundColor: "none",
+  },
+  toprow: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "nowrap",
     alignItems: "flex-start",
     justifyContent: "flex-start",
     backgroundColor: "none",
