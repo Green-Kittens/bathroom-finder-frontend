@@ -111,7 +111,7 @@ export async function createBathroom(
 /**
  * Function for retrieving user's favorite bathrooms
  * @param {string}  username - The user
- * @returns {Promise<List<BathroomProfile>>} - Returns a promise with all favorite bathrooms after retrieving
+ * @returns {Promise<BathroomProfile[]>} - Returns a promise with all favorite bathrooms after retrieving
  */
 export async function getFavorites(
   username: string
@@ -138,7 +138,7 @@ export async function getFavorites(
 /**
  * Function for retrieving user's reviews
  * @param {string} username - The user
- * @returns {Promise<List<Review>>} - Returns a promise with all reviews user has left after retrieving
+ * @returns {Promise<Review[]>} - Returns a promise with all reviews user has left after retrieving
  */
 export async function getUserReviews(username: string): Promise<Review[]> {
   //Implementation goes here

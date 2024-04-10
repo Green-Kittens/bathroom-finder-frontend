@@ -1,7 +1,7 @@
 /**
  * Function for retrieving reviews of a bathroom
  * @param {string} bathroomID - ID of bathroom
- * @returns {Promise<List<BathroomReview>>} - Returns a promise with all reviews for specific bathroom after retrieving
+ * @returns {Promise<Review[]>} - Returns a promise with all reviews for specific bathroom after retrieving
  */
 export async function getAllReviews(bathroomID: string): Promise<Review[]> {
   //Implementation goes here
@@ -52,10 +52,10 @@ export async function createReview(
 
 /**
  * Function for liking a review
- * @param {string} reviewID - The ID of the review
+ * @param {string[]} reviewID - The ID of the review
  * @return {Promise<string>} - Returns a promise with a success message upon successfully liking a review
  */
-export async function likeReview(reviewID: string): Promise<string> {
+export async function likeReview(reviewID: string[]): Promise<string> {
   //Implemnentation goes here
   return new Promise<string>((resolve) => {
     const successsMsg = "Review successfully liked.";
@@ -68,10 +68,10 @@ export async function likeReview(reviewID: string): Promise<string> {
 
 /**
  * Function for disliking a review
- * @param {string} reviewID - The ID of the review
+ * @param {string[]} reviewID - The ID of the review
  * @return {Promise<string>} - Returns a promise with a success message upon successfully disliking a review
  */
-export async function dislikeReview(reviewID: string): Promise<string> {
+export async function dislikeReview(reviewID: string[]): Promise<string> {
   //Implemnentation goes here
   return new Promise<string>((resolve) => {
     const successsMsg = "Review successfully disliked.";
@@ -84,13 +84,13 @@ export async function dislikeReview(reviewID: string): Promise<string> {
 
 /**
  * Function for replying to a review
- * @param {string} reviewID - The ID of the review
+ * @param {string[]} reviewID - The ID of the review
  * @param {string} username - The user
  * @param {string} reply - The reply of the user
  * @return {Promise<string>} - Returns a promise with a success message upon successfully replying to a review
  */
 export async function replyReview(
-  reviewID: string,
+  reviewID: string[],
   username: string,
   reply: string
 ): Promise<string> {

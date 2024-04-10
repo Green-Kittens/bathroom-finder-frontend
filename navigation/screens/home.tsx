@@ -17,9 +17,9 @@ import { getUserProfile } from "@/controllers/userController";
 /* eslint-disable */
 const map = require("../../assets/images/map.jpg");
 
-export default function MainScreen(bathroomID: string, username: string) {
+export default function MainScreen() {
   /*gets bathroom profile information*/
-  const handleBathroomProfile = async () => {
+  const handleBathroomProfile = async (bathroomID: string) => {
     try {
       const bathroomProfile = await getBathroomProfile(bathroomID);
     } catch (error) {
@@ -28,7 +28,7 @@ export default function MainScreen(bathroomID: string, username: string) {
   };
 
   /**gets user profile information*/
-  const handleUserProfile = async () => {
+  const handleUserProfile = async (username: string) => {
     useEffect(() => {
       async function fetchUser() {
         try {

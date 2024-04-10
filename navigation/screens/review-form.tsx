@@ -48,7 +48,6 @@ export function Button(props: {
 export default function TabReviewForm(
   username: string,
   bathroomID: string,
-  time: Date,
 ) {
 
   const handleReview = async () => {
@@ -262,9 +261,8 @@ export default function TabReviewForm(
           title="Post Rating"
           color="#344f33"
           onPress={
-            handleReview
             // make a check to make sure that all fields are filled out
-            navigation.navigate("Main");
+            navigation.navigate("Main")
           }
         />
       </View>

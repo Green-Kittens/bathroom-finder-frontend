@@ -14,7 +14,7 @@ import {
 } from "@/controllers/reviewController";
 
 export default function FacilityReviewsScreen(
-  reviewID: string,
+  reviewID: string[],
   username: string
 ) {
   /**like a review */

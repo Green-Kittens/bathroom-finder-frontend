@@ -1,8 +1,8 @@
 /**
  * Function for retrieving all bathrooms
- * @returns {Promise<string>} - Returns a promise with all bathrooms after retrieving
+ * @returns {Promise<BathroomProfile[]>} - Returns a promise with all bathrooms after retrieving
  */
-export async function getAllBathrooms(): Promise<string> {
+export async function getAllBathrooms(): Promise<BathroomProfile[]> {
   //Implementation goes here
   return new Promise<BathroomProfile[]>((resolve) => {
     const allBathrooms: BathroomProfile[] = [
