@@ -65,7 +65,7 @@ export default function Review() {
 function star() {
   return (
     <Image
-      style={{ width: 30, height: 30, backgroundColor: "none" }}
+      style={{ width: 30, height: 30 }}
       source={require("../assets/images/star_filled.png")}
     />
   );
