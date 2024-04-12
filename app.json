@@ -31,6 +31,10 @@
           "fonts": ["./assets/fonts/EudoxusSans-Regular.ttf"]
         }
       ]
-    ]
+    ],
+    "platforms": [
+      "ios",
+      "android"
+    ],
   }
 }
