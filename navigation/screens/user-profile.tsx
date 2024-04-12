@@ -54,6 +54,7 @@ export default function UserProfileScreen() {
               marginHorizontal: "50%",
               marginVertical: 20,
               backgroundColor: "none",
+              minWidth: 200,
             }}
           >
             {MainButton("Log Out", () => {

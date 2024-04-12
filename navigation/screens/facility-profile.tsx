@@ -27,7 +27,7 @@ function Review() {
     <View style={styles.review}>
       <View style={styles.toprow}>
         <Image
-          style={{ height: 60, width: 60 }}
+          style={{ height: 60, width: 60, borderRadius: 50 }}
           source={{
             uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
           }}
@@ -154,15 +154,20 @@ function CollapseView() {
       <LinearGradient
         colors={["#6da798", "#40a4a9"]}
         end={{ x: 0.1, y: 0.2 }}
-        style={[styles.image, { padding: 20, borderRadius: 15 }]}
+        style={[{ padding: 20, borderRadius: 15 }]}
       >
         <View
           style={[
-            { padding: 10, alignItems: "center", backgroundColor: "none" },
+            {
+              flex: 1,
+              padding: 10,
+              alignItems: "center",
+              backgroundColor: "none",
+            },
           ]}
         >
           <Review />
-          <View style={[{ backgroundColor: "none", width: "10%" }]}>
+          <View style={[{ flex: 0.5, backgroundColor: "none", minWidth: 200 }]}>
             {LightButton("See more", () => {
               navigation.navigate("FacilityReviews");
             })}
