@@ -32,9 +32,6 @@
         }
       ]
     ],
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"]
   }
 }
