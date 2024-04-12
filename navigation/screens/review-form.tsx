@@ -49,8 +49,8 @@ export default function TabReviewForm() {
             {MainButton("Take Photo", addUsingCamera)}
             {MainButton("Choose from Gallery", addFromGallery)}
             {CancelButton("Cancel", () => {
-                  onClose();
-                })}
+              onClose();
+            })}
           </View>
         </View>
       </Modal>
@@ -138,7 +138,13 @@ export default function TabReviewForm() {
         }}
       ></ImageBackground>
       <ScrollView>
-        <View style={{justifyContent: "center", alignItems: "center", alignContent:"center"}}>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            alignContent: "center",
+          }}
+        >
           <Text style={styles.title}>New Bathroom Rating</Text>
 
           <View style={styles.dropdown}>
@@ -175,16 +181,15 @@ export default function TabReviewForm() {
             />
           </View>
 
-            {images.length === 3 && (
-              <Text style={styles.errorText}>
-                You can only upload a max of 3 photos.
-              </Text>
-            )}
-            {images.length < 3 && (
-              MainButton("Upload Image", () => {
-                setModalVisible(true);
-              })
-            )}
+          {images.length === 3 && (
+            <Text style={styles.errorText}>
+              You can only upload a max of 3 photos.
+            </Text>
+          )}
+          {images.length < 3 &&
+            MainButton("Upload Image", () => {
+              setModalVisible(true);
+            })}
 
           <ImageUploader
             isVisible={modalVisible}

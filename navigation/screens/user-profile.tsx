@@ -1,7 +1,14 @@
 import React from "react";
 import horizontalCards from "../../components/HorizontalCards";
 import MainButton from "../../components/Buttons";
-import { Text, View, Image, ImageBackground, StyleSheet, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 // types

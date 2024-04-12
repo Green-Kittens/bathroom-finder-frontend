@@ -2,31 +2,31 @@ import { GestureResponderEvent } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet } from "react-native";
 import React from "react";
-import { Button } from '@rneui/themed';
+import { Button } from "@rneui/themed";
 
 export default function MainButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
 ) {
   return (
-  <Button
+    <Button
       title={words}
       titleStyle={styles.text}
       ViewComponent={LinearGradient}
       linearGradientProps={{
-        colors: ['#6da798', '#5CA59E'],
+        colors: ["#6da798", "#5CA59E"],
         start: [1, 0],
         end: [0.2, 0],
       }}
       buttonStyle={{
         borderWidth: 0,
-        borderColor: 'transparent',
+        borderColor: "transparent",
         borderRadius: 5,
       }}
       containerStyle={styles.container}
       onPress={onpress}
-      />
-  )
+    />
+  );
 }
 
 export function LightButton(
@@ -35,19 +35,19 @@ export function LightButton(
 ) {
   return (
     <Button
-        title={words}
-        titleStyle={styles.text}
-        ViewComponent={LinearGradient}
-        linearGradientProps={{
-          colors: ['#F9FEFD', '#DEF4EF'],
-          start: [1, 0],
-          end: [0.2, 0],
-        }}
-        buttonStyle={styles.button}
-        containerStyle={styles.container}
-        onPress={onpress}
-        />
-  )
+      title={words}
+      titleStyle={styles.text}
+      ViewComponent={LinearGradient}
+      linearGradientProps={{
+        colors: ["#F9FEFD", "#DEF4EF"],
+        start: [1, 0],
+        end: [0.2, 0],
+      }}
+      buttonStyle={styles.button}
+      containerStyle={styles.container}
+      onPress={onpress}
+    />
+  );
 }
 
 export function CancelButton(
@@ -56,14 +56,14 @@ export function CancelButton(
 ) {
   return (
     <Button
-        title={words}
-        titleStyle={styles.text}
-        color={"#FC6769"}
-        buttonStyle={styles.button}
-        containerStyle={styles.container}
-        onPress={onpress}
-        />
-  )
+      title={words}
+      titleStyle={styles.text}
+      color={"#FC6769"}
+      buttonStyle={styles.button}
+      containerStyle={styles.container}
+      onPress={onpress}
+    />
+  );
 }
 
 const styles = StyleSheet.create({
@@ -85,5 +85,5 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 17,
     padding: 20,
-  }
+  },
 });

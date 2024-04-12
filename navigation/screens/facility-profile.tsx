@@ -209,7 +209,7 @@ export default function TabFacilityProfileScreen() {
                 flexDirection: "row",
                 alignItems: "center",
                 backgroundColor: "none",
-                paddingVertical: 10
+                paddingVertical: 10,
               },
             ]}
           >
