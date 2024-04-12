@@ -56,6 +56,7 @@ function Review() {
           source={require("../../assets/images/star_filled.png")}
         />
       </View>
+      <View style={{flex: 1, }}>
       <Text style={styles.paragraph} numberOfLines={2}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -65,6 +66,7 @@ function Review() {
         occaecat cupidatat non proident, sunt in culpa qui officia deserunt
         mollit anim id est laborum.
       </Text>
+    </View>
     </View>
   );
 }
@@ -167,7 +169,7 @@ function CollapseView() {
           ]}
         >
           <Review />
-          <View style={[{ flex: 0.5, backgroundColor: "none", minWidth: 200 }]}>
+          <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
             {LightButton("See more", () => {
               navigation.navigate("FacilityReviews");
             })}
@@ -309,7 +311,6 @@ const styles = StyleSheet.create({
     backgroundColor: "none",
   },
   toprow: {
-    flex: 1,
     flexDirection: "row",
     flexWrap: "nowrap",
     alignItems: "flex-start",

@@ -51,7 +51,6 @@ export default function UserProfileScreen() {
         <View style={[{ backgroundColor: "none" }]}>
           <View
             style={{
-              marginHorizontal: "50%",
               marginVertical: 20,
               backgroundColor: "none",
               minWidth: 200,
