@@ -5,7 +5,7 @@ import RNPickerSelect from "react-native-picker-select";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from 'expo-image-picker';
-
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 // type
 import { ScreenNavigationProp } from "../type";
@@ -26,10 +26,32 @@ export default function TabReviewForm() {
  // location
  const [, setLocation] = useState("");
 
-
  //facility hours
- const [, setOpen] = useState("");
- const [, setClosed] = useState("");
+ const [openTime, setOpenTime] = useState(null);
+ const [isOpenPickerVisible, setOpenPickerVisibility] = useState(false);
+ const showOpenPicker = () => {
+    setOpenPickerVisibility(true);
+ };
+ const hideOpenPicker = () => {
+    setOpenPickerVisibility(false);
+ }
+ const handleOpenConfirm = (time) => {
+    setOpenTime(time);
+    hideOpenPicker();
+ }
+
+ const [closedTime, setClosedTime] = useState(null);
+ const [isClosedPickerVisible, setClosedPickerVisibility] = useState(false);
+ const showClosedPicker = () => {
+    setClosedPickerVisibility(true);
+ };
+ const hideClosedPicker = () => {
+    setClosedPickerVisibility(false);
+ }
+ const handleClosedConfirm = (time) => {
+    setClosedTime(time);
+    hideClosedPicker();
+ }
 
 
  // description
@@ -160,6 +182,30 @@ export default function TabReviewForm() {
 
 
            <Text style={styles.subtext}>Facility Hours:</Text>
+           <View style={styles.timeSelect}>
+           <TouchableOpacity onPress={showOpenPicker}>
+            <Text style={styles.timeSelectButton}>{openTime ? openTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'}) : 'Choose Time'}</Text>
+           </TouchableOpacity>
+           <DateTimePickerModal 
+                isVisible={isOpenPickerVisible}
+                mode="time"
+                onConfirm={handleOpenConfirm}
+                onCancel={hideOpenPicker}
+           />
+           <TouchableOpacity>
+            <Text>   to   </Text>
+           </TouchableOpacity>
+           <TouchableOpacity onPress={showClosedPicker}>
+            <Text style={styles.timeSelectButton}>{closedTime ? closedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'}) : 'Choose Time'}</Text>
+           </TouchableOpacity>
+           <DateTimePickerModal 
+                isVisible={isClosedPickerVisible}
+                mode="time"
+                onConfirm={handleClosedConfirm}
+                onCancel={hideClosedPicker}
+           />
+           </View>
+
        
            <TextInput
                style={styles.input}
@@ -302,6 +348,24 @@ const styles = StyleSheet.create({
    marginBottom: 20,
    color: "#344f33",
  },
+ timeSelect: {
+    fontSize: 17,
+    marginBottom: 20,
+    color: "#344f33",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  timeSelectButton: {
+    fontSize: 17,
+    marginTop: 10,
+    marginBottom: 20,
+    color: "#344f33",
+    borderWidth: 1,
+    borderColor: "#344f33",
+    borderRadius: 20,
+    padding: 10
+  },
  button: {
    ...Platform.select({
      ios: {
@@ -332,8 +396,6 @@ const styles = StyleSheet.create({
      },
  }),
 },
-
-
  buttontext: {
    ...Platform.select({
      ios: {

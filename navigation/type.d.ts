@@ -3,6 +3,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 /// <reference types="nativewind/types" />
 
 export type ScreensParamList = {
+  FacilityForm: undefined;
   FacilityProfile: undefined;
   FacilityReviews: undefined;
   Login: undefined;
@@ -14,6 +15,7 @@ export type ScreensParamList = {
 
 export type ScreenNavigationProp = NativeStackScreenProps<
   ScreensParamList,
+  FacilityForm,
   FacilityProfile,
   FacilityReviews,
   Login,
