@@ -113,6 +113,7 @@ function CollapseView() {
         <Button
           title={"Add Review"}
           onPress={() => {
+            // figure out how to make it so that dropdown renders current facility as location
             navigation.navigate("ReviewForm")
           }}
         />
