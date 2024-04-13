@@ -109,6 +109,14 @@ function CollapseView() {
         </Text>
       </Animated.View>
       <Button title={changeText()} onPress={toggleCollapsed} />
+      <View style={{marginTop: 10}}>
+        <Button
+          title={"Add Review"}
+          onPress={() => {
+            navigation.navigate("ReviewForm")
+          }}
+        />
+      </View>
       <View style={styles.separator} />
       <View style={styles.row}>
         <Review />
