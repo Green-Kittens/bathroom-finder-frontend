@@ -79,7 +79,7 @@ export default function TabReviewForm() {
             />
             <Button
               title="Cancel"
-              color="#344f33"
+              color="red"
               onPress={() => {
                 onClose();
               }}
