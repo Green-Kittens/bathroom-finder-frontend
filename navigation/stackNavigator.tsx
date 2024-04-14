@@ -9,12 +9,14 @@ import { ScreensParamList } from "./type";
 import FacilityProfile from "./screens/facility-profile";
 import FacilityReviews from "./screens/facility-reviews";
 import Login from "./screens/login";
+import Register from "./screens/register";
 
 // screen names
 const headName = "Head";
 const facilityProfileName = "FacilityProfile";
 const facilityReviewsName = "FacilityReviews";
 const loginName = "Login";
+const registerName = "Register";
 
 // navigation
 const Stack = createStackNavigator<ScreensParamList>();
@@ -30,6 +32,7 @@ export default function StackNavigator() {
       <Stack.Screen name={facilityProfileName} component={FacilityProfile} />
       <Stack.Screen name={facilityReviewsName} component={FacilityReviews} />
       <Stack.Screen name={loginName} component={Login} />
+      <Stack.Screen name={registerName} component={Register} />
     </Stack.Navigator>
   );
 }
