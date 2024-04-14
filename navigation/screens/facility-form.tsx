@@ -154,7 +154,7 @@ export default function TabReviewForm() {
         return;
       }
     }
-    let _image = await ImagePicker.launchCameraAsync({
+    const _image = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       base64: true,
       quality: 1,
