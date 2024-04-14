@@ -120,9 +120,8 @@ export default function TabReviewForm() {
   >([]);
 
   // permissions
-  const [cameraStatus, cameraPermissions] = ImagePicker.useCameraPermissions();
-  const [galleryAccessStatus, galleryPermissions] =
-    ImagePicker.useMediaLibraryPermissions();
+  const [cameraStatus] = ImagePicker.useCameraPermissions();
+  const [galleryAccessStatus] = ImagePicker.useMediaLibraryPermissions();
 
   // add photo from device gallery
   const addFromGallery = async () => {
@@ -134,7 +133,7 @@ export default function TabReviewForm() {
         return;
       }
     }
-    let _image = await ImagePicker.launchImageLibraryAsync({
+    const _image = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
