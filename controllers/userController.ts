@@ -1,3 +1,10 @@
+import axios from "axios";
+import { User as UserProfile } from "@/types/user";
+import { Facility as BathroomProfile } from "@/types/facility";
+import { Review } from "@/types/review";
+
+const port = process.env.PORT || 8081;
+
 /**
  * Function to register a new user
  * @param {string} firstname - The first name of the user
@@ -16,15 +23,15 @@ export async function registerUser(
   password: string,
   profile: typeof Image,
 ): Promise<string> {
-  // Implementation goes here
   //must create ID for user
-  return new Promise<string>((resolve) => {
+  try {
+    await axios.post<UserProfile>(`http://localhost:${port}/`);
     const successsMsg = `${username} (${firstname},${lastname}) successfully created with email (${email}), password (${password}), and profile ${profile}.`;
-
-    setTimeout(() => {
-      resolve(successsMsg);
-    }, 1000);
-  });
+    return successsMsg;
+  } catch (error) {
+    console.error("Error creating user:", error);
+    throw error;
+  }
 }
 
 /**
@@ -69,16 +76,15 @@ export async function forgotPassword(email: string): Promise<string> {
  * @returns {Promise<UserProfile>} - Returns a promise with user profile information
  */
 export async function getUserProfile(username: string): Promise<UserProfile> {
-  //Implementation goes here
-  return new Promise<UserProfile>((resolve) => {
-    const userProfile: UserProfile = {
-      user: username,
-      name: "Placeholder User",
-    };
-    setTimeout(() => {
-      resolve(userProfile);
-    }, 1000);
-  });
+  try {
+    const response = await axios.get<UserProfile>(
+      `http://localhost:${port}/${username}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error(`Error retrieving user profile ${username}:`, error);
+    throw error;
+  }
 }
 
 /**
@@ -95,16 +101,16 @@ export async function createBathroom(
   opHours: string,
   description: string,
   tags: string[],
-  images: typeof Image,
+  images: string[],
 ): Promise<string> {
-  //Implementation goes here
-  return new Promise<string>((resolve) => {
-    const successsMsg = `Bathroom successfully created by ${username}: hours of operation (${opHours}), description (${description}), tags (${tags}), images (${images})`;
-
-    setTimeout(() => {
-      resolve(successsMsg);
-    }, 1000);
-  });
+  try {
+    await axios.post<BathroomProfile>(`http://localhost:${port}/`);
+    const successMsg = `Bathroom successfully created by ${username}: hours of operation (${opHours}), description (${description}), tags (${tags}), images (${images})`;
+    return successMsg;
+  } catch (error) {
+    console.error("Error creating bathroom:", error);
+    throw error;
+  }
 }
 
 /**
@@ -119,14 +125,19 @@ export async function getFavorites(
   return new Promise<BathroomProfile[]>((resolve) => {
     const favoritedBathrooms: BathroomProfile[] = [
       {
-        id: "1",
-        user: username,
-        name: "Bathroom 1",
-      },
-      {
-        id: "2",
-        user: username,
-        name: "Bathroom 2",
+        id: "",
+        name: "",
+        location: {
+          coordinates: [1],
+          type: "",
+        },
+        category: "",
+        tags: [""],
+        operations: "",
+        date: "",
+        ratingAVG: 5,
+        favorites: 3,
+        reports: 0,
       },
     ];
 
@@ -146,14 +157,14 @@ export async function getUserReviews(username: string): Promise<Review[]> {
   return new Promise<Review[]>((resolve) => {
     const bathroomReviews: Review[] = [
       {
-        id: "1",
-        user: username,
-        name: "Review 1",
-      },
-      {
-        id: "2",
-        user: username,
-        name: "Review 2",
+        id: "",
+        rating: 4,
+        likes: 5,
+        dislikes: 5,
+        facilityId: "",
+        userId: username,
+        date: Date(),
+        description: "",
       },
     ];
 

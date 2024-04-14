@@ -32,7 +32,7 @@ export async function createReview(
   username: string,
   bathroomID: string,
   description: string,
-  rating: int,
+  rating: number,
   time: Date,
 ): Promise<string> {
   try {

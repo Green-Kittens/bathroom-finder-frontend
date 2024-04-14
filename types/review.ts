@@ -6,6 +6,6 @@ export type Review = {
   pictureURL?: string;
   facilityId: string;
   userId: string;
-  date: Date;
+  date: string;
   description: string;
 };
