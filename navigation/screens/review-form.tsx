@@ -67,29 +67,23 @@ export default function TabReviewForm() {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <View style={styles.button}>
-              <Button
-                title="Take Photo"
-                color="#ffff"
-                onPress={addUsingCamera}
-              />
-            </View>
-            <View style={styles.button}>
-              <Button
-                title="Choose from Gallery"
-                color="#ffff"
-                onPress={addFromGallery}
-              />
-            </View>
-            <View style={styles.cancelButton}>
-              <Button
-                title="Cancel"
-                color="#ffff"
-                onPress={() => {
-                  onClose();
-                }}
-              />
-            </View>
+            <Button
+              title="Take Photo"
+              color="#344f33"
+              onPress={addUsingCamera}
+            />
+            <Button
+              title="Choose from Gallery"
+              color="#344f33"
+              onPress={addFromGallery}
+            />
+            <Button
+              title="Cancel"
+              color="#344f33"
+              onPress={() => {
+                onClose();
+              }}
+            />
           </View>
         </View>
       </Modal>
@@ -195,22 +189,20 @@ export default function TabReviewForm() {
           multiline={true}
         />
 
-        <View style={styles.button}>
-          {images.length === 3 && (
-            <Text style={styles.errorText}>
-              You can only upload a max of 3 photos.
-            </Text>
-          )}
-          {images.length < 3 && (
-            <Button
-              title="Upload image"
-              color="#ffff"
-              onPress={() => {
-                setModalVisible(true);
-              }}
-            />
-          )}
-        </View>
+        {images.length === 3 && (
+          <Text style={styles.errorText}>
+            You can only upload a max of 3 photos.
+          </Text>
+        )}
+        {images.length < 3 && (
+          <Button
+            title="Upload image"
+            color="#344f33"
+            onPress={() => {
+              setModalVisible(true);
+            }}
+          />
+        )}
 
         <ImageUploader
           isVisible={modalVisible}
@@ -241,16 +233,14 @@ export default function TabReviewForm() {
           enableHalfStar={false}
         />
 
-        <View style={styles.button}>
-          <Button
-            title="Post Rating"
-            color="#ffff"
-            onPress={() => {
-              // make a check to make sure that all fields are filled out
-              navigation.navigate("Main");
-            }}
-          />
-        </View>
+        <Button
+          title="Post Rating"
+          color="#344f33"
+          onPress={() => {
+            // make a check to make sure that all fields are filled out
+            navigation.navigate("Main");
+          }}
+        />
       </View>
     </ScrollView>
   );
