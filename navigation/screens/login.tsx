@@ -27,7 +27,7 @@ function TabLoginScreen() {
 
   const onRegisterPress = () => {
     // Placeholder for navigation logic
-    Alert.alert("Register Pressed", "Navigate to registration screen.");
+    navigation.navigate("Register");
   };
 
   const onForgotPress = () => {
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   // Input Section
   input: {
     height: 40,
-    width: "30%", // Control the width of the input size
+    width: "30%", 
     margin: 12,
     borderWidth: 1,
     padding: 10,
