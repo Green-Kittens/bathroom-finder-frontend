@@ -1,26 +1,21 @@
+import axios from "axios";
+import { Review } from "@/types/review";
+
+const port = process.env.PORT || 8081;
+
 /**
  * Function for retrieving reviews of a bathroom
  * @param {string} bathroomID - ID of bathroom
  * @returns {Promise<Review[]>} - Returns a promise with all reviews for specific bathroom after retrieving
  */
 export async function getAllReviews(bathroomID: string): Promise<Review[]> {
-  //Implementation goes here
-  return new Promise<Review[]>((resolve) => {
-    const bathroomReviews: Review[] = [
-      {
-        id: bathroomID,
-        name: "Review 1",
-      },
-      {
-        id: bathroomID,
-        name: "Review 2",
-      },
-    ];
-
-    setTimeout(() => {
-      resolve(bathroomReviews);
-    }, 1000);
-  });
+  try {
+    const response = await axios.get<Review[]>(`http://localhost:${port}/`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all reviews:", error);
+    throw error;
+  }
 }
 
 /**
@@ -40,14 +35,14 @@ export async function createReview(
   rating: int,
   time: Date,
 ): Promise<string> {
-  //Implementation goes here
-  return new Promise<string>((resolve) => {
-    const successsMsg = `${username} created a review successfully for ${bathroomID} at ${time}: ${description} with a overall rating of ${rating}.`;
-
-    setTimeout(() => {
-      resolve(successsMsg);
-    }, 1000);
-  });
+  try {
+    await axios.post<Review>(`http://localhost:${port}/`);
+    const successMsg = `Review for bathroom (${bathroomID}) successfully created by ${username}: ${description}, ${rating}, ${time}`;
+    return successMsg;
+  } catch (error) {
+    console.error("Error creating review:", error);
+    throw error;
+  }
 }
 
 /**

@@ -10,7 +10,7 @@ const port = process.env.PORT || 8081;
 export async function getAllBathrooms(): Promise<BathroomProfile[]> {
   try {
     const response = await axios.get<BathroomProfile[]>(
-      `http:localhost:${port}`,
+      `http://localhost:${port}/`,
     );
     return response.data;
   } catch (error) {
@@ -29,11 +29,11 @@ export async function getBathroomProfile(
 ): Promise<BathroomProfile> {
   try {
     const response = await axios.get<BathroomProfile>(
-      `http:localhost:${port}/${bathroomID}`,
+      `http://localhost:${port}/${bathroomID}`,
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching all bathrooms:", error);
+    console.error("Error fetching specific bathroom:", error);
     throw error;
   }
 }
