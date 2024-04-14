@@ -1,25 +1,22 @@
+import axios from "axios";
+import { Facility as BathroomProfile } from "@/types/facility";
+
+const port = process.env.PORT || 8081;
+
 /**
  * Function for retrieving all bathrooms
  * @returns {Promise<BathroomProfile[]>} - Returns a promise with all bathrooms after retrieving
  */
 export async function getAllBathrooms(): Promise<BathroomProfile[]> {
-  //Implementation goes here
-  return new Promise<BathroomProfile[]>((resolve) => {
-    const allBathrooms: BathroomProfile[] = [
-      {
-        id: "1",
-        name: "Bathroom 1",
-      },
-      {
-        id: "2",
-        name: "Bathroom 2",
-      },
-    ];
-
-    setTimeout(() => {
-      resolve(allBathrooms);
-    }, 1000);
-  });
+  try {
+    const response = await axios.get<BathroomProfile[]>(
+      `http:localhost:${port}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all bathrooms:", error);
+    throw error;
+  }
 }
 
 /**
@@ -30,16 +27,15 @@ export async function getAllBathrooms(): Promise<BathroomProfile[]> {
 export async function getBathroomProfile(
   bathroomID: string,
 ): Promise<BathroomProfile> {
-  //Implementation goes here
-  return new Promise<BathroomProfile>((resolve) => {
-    const bathroomProfile: BathroomProfile = {
-      id: bathroomID,
-      name: "Placeholder Bathroom",
-    };
-    setTimeout(() => {
-      resolve(bathroomProfile);
-    }, 1000);
-  });
+  try {
+    const response = await axios.get<BathroomProfile>(
+      `http:localhost:${port}/${bathroomID}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all bathrooms:", error);
+    throw error;
+  }
 }
 
 /**
@@ -49,8 +45,8 @@ export async function getBathroomProfile(
  * @returns {Promise<List<BathroomProfile>>} - Returns a promise with all bathrooms of certain type(s) after retrieving
  */
 export async function getSomeBathrooms(
-  location: Int16Array,
-  tags: string,
+  location: { coordinates: [1]; type: "" },
+  tags: string[],
 ): Promise<BathroomProfile[]> {
   //Implementation goes here
   return new Promise<BathroomProfile[]>((resolve) => {
@@ -59,13 +55,13 @@ export async function getSomeBathrooms(
         id: "1",
         name: "Bathroom 1",
         location: location,
+        category: "",
         tags: tags,
-      },
-      {
-        id: "2",
-        name: "Bathroom 2",
-        location: location,
-        tags: tags,
+        operations: "",
+        date: "",
+        ratingAVG: 4,
+        favorites: 1,
+        reports: 0,
       },
     ];
 
