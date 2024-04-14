@@ -9,7 +9,7 @@ import { ScreensParamList } from "./type";
 import Main from "./screens/main";
 import ReviewForm from "./screens/review-form";
 import UserProfile from "./screens/user-profile";
-import FacilityForm from "./screens/facility-form"
+import FacilityForm from "./screens/facility-form";
 
 // screen names
 const mainName = "Main";

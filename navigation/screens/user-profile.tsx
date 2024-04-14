@@ -67,7 +67,9 @@ export default function UserProfileScreen() {
   };
 
   // images uploaded for review
-  const [pfp, setImage] = useState("https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg");
+  const [pfp, setImage] = useState(
+    "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
+  );
 
   // permissions
   const [cameraStatus] = ImagePicker.useCameraPermissions();
@@ -117,14 +119,15 @@ export default function UserProfileScreen() {
 
   // delete uploaded image
   const deleteImage = () => {
-    setImage("https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg");
+    setImage(
+      "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
+    );
     setModalVisible(false);
   };
 
   return (
     <ScrollView>
-
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.profilePictureContainer}
         onPress={() => {
           setModalVisible(true);
@@ -139,11 +142,11 @@ export default function UserProfileScreen() {
         <Text>Your Name</Text>
       </TouchableOpacity>
 
-      <ImageUploader 
+      <ImageUploader
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
       />
-      
+
       {horizontalCards("Your Reviews")}
       {horizontalCards("Your Favorites")}
       <View>

@@ -109,12 +109,12 @@ function CollapseView() {
         </Text>
       </Animated.View>
       <Button title={changeText()} onPress={toggleCollapsed} />
-      <View style={{marginTop: 10}}>
+      <View style={{ marginTop: 10 }}>
         <Button
           title={"Add Review"}
           onPress={() => {
             // figure out how to make it so that dropdown renders current facility as location
-            navigation.navigate("ReviewForm")
+            navigation.navigate("ReviewForm");
           }}
         />
       </View>
