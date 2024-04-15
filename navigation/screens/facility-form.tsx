@@ -306,11 +306,9 @@ export default function TabReviewForm() {
                 onPress={() => {
                   setImageToDisplay(currImage.assets[0].uri);
                   setDisplayImageVisible(true);
-                }} 
+                }}
               >
-                <Text style={styles.imageLink}>
-                    {"Image #" + (idx + 1)}
-                </Text>
+                <Text style={styles.imageLink}>{"Image #" + (idx + 1)}</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => deleteImage(currImage)}>
                 <MaterialIcons name="delete" size={20} color="gray" />
