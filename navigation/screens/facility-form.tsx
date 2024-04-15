@@ -15,12 +15,9 @@ import {
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import { MaterialIcons } from "@expo/vector-icons";
-import StarRating from "react-native-star-rating-widget";
-import { createReview } from "@/controllers/reviewController";
-
-// screens
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 // type
 import { ScreenNavigationProp } from "../type";
@@ -42,29 +39,36 @@ export function Button(props: {
   );
 }
 
-//username: string, bathroomID: string
-//^need to be passed as params in tabreview form
-
 export default function TabReviewForm() {
-  // const handleReview = async () => {
-  //   try {
-  //     const review = await createReview(
-  //       username,
-  //       bathroomID,
-  //       description,
-  //       rating,
-  //       time,
-  //     );
-  //   } catch (error) {
-  //     console.error("Error creating new review:", error);
-  //   }
-  // };
-
   // location
   const [, setLocation] = useState("");
 
-  // getting current date and time
-  const currentDate = new Date();
+  //facility hours
+  const [openTime, setOpenTime] = useState(null);
+  const [isOpenPickerVisible, setOpenPickerVisibility] = useState(false);
+  const showOpenPicker = () => {
+    setOpenPickerVisibility(true);
+  };
+  const hideOpenPicker = () => {
+    setOpenPickerVisibility(false);
+  };
+  const handleOpenConfirm = (time) => {
+    setOpenTime(time);
+    hideOpenPicker();
+  };
+
+  const [closedTime, setClosedTime] = useState(null);
+  const [isClosedPickerVisible, setClosedPickerVisibility] = useState(false);
+  const showClosedPicker = () => {
+    setClosedPickerVisibility(true);
+  };
+  const hideClosedPicker = () => {
+    setClosedPickerVisibility(false);
+  };
+  const handleClosedConfirm = (time) => {
+    setClosedTime(time);
+    hideClosedPicker();
+  };
 
   // description
   const [description, setDescription] = useState("");
@@ -200,19 +204,16 @@ export default function TabReviewForm() {
     setImages(updatedImages);
   };
 
-  // rating
-  const [rating, setRating] = useState(0);
-
-  // post rating (submit button)
+  // add facility (submit button)
   const navigation = useNavigation<ScreenNavigationProp>();
 
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.title}>New Bathroom Rating</Text>
-
+        <Text style={styles.title}>Add a New Facility</Text>
         <View style={styles.dropdown}>
           <RNPickerSelect
+            style={styles.dropdown}
             placeholder={{
               label: "select a location",
               value: null,
@@ -223,15 +224,46 @@ export default function TabReviewForm() {
               { label: "Location 2", value: "location2" },
             ]}
           />
-          <MaterialIcons
-            style={styles.icon}
-            name="keyboard-arrow-down"
-            size={17}
-            color="white"
-          />
         </View>
 
-        <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
+        <Text style={styles.subtext}>Facility Hours:</Text>
+        <View style={styles.timeSelect}>
+          <TouchableOpacity onPress={showOpenPicker}>
+            <Text style={styles.timeSelectButton}>
+              {openTime
+                ? openTime.toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })
+                : "Choose Time"}
+            </Text>
+          </TouchableOpacity>
+          <DateTimePickerModal
+            isVisible={isOpenPickerVisible}
+            mode="time"
+            onConfirm={handleOpenConfirm}
+            onCancel={hideOpenPicker}
+          />
+          <TouchableOpacity>
+            <Text> to </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={showClosedPicker}>
+            <Text style={styles.timeSelectButton}>
+              {closedTime
+                ? closedTime.toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })
+                : "Choose Time"}
+            </Text>
+          </TouchableOpacity>
+          <DateTimePickerModal
+            isVisible={isClosedPickerVisible}
+            mode="time"
+            onConfirm={handleClosedConfirm}
+            onCancel={hideClosedPicker}
+          />
+        </View>
 
         <TextInput
           style={styles.input}
@@ -274,7 +306,7 @@ export default function TabReviewForm() {
                 onPress={() => {
                   setImageToDisplay(currImage.assets[0].uri);
                   setDisplayImageVisible(true);
-                }}
+                }} /*Linking.openURL(currImage.assets[0].uri)}*/
               >
                 <Text style={styles.imageLink}>
                   {currImage.assets[0].fileName}
@@ -286,21 +318,13 @@ export default function TabReviewForm() {
             </View>
           ))}
 
-        <Text style={styles.subtext}>Rate Your Experience:</Text>
-        <StarRating
-          style={styles.starRating}
-          rating={rating}
-          onChange={setRating}
-          enableHalfStar={false}
-        />
-
         <Button
-          title="Post Rating"
+          title="Add Facility"
           color="#344f33"
-          onPress={
+          onPress={() => {
             // make a check to make sure that all fields are filled out
-            navigation.navigate("Main")
-          }
+            navigation.navigate("Main");
+          }}
         />
       </View>
     </ScrollView>
@@ -386,6 +410,24 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: "#344f33",
   },
+  timeSelect: {
+    fontSize: 17,
+    marginBottom: 20,
+    color: "#344f33",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  timeSelectButton: {
+    fontSize: 17,
+    marginTop: 10,
+    marginBottom: 20,
+    color: "#344f33",
+    borderWidth: 1,
+    borderColor: "#344f33",
+    borderRadius: 20,
+    padding: 10,
+  },
   button: {
     ...Platform.select({
       ios: {
@@ -416,7 +458,6 @@ const styles = StyleSheet.create({
       },
     }),
   },
-
   buttontext: {
     ...Platform.select({
       ios: {
