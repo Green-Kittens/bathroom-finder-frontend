@@ -256,6 +256,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 20,
     borderRadius: 8,
+    minWidth: 200,
   },
   icon: {
     marginLeft: "auto",

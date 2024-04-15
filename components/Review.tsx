@@ -4,45 +4,36 @@ import { Image, StyleSheet } from "react-native";
 
 import { Text, View } from "../components/Themed";
 
-export default function Review() {
+export function notReview() {
   return (
-    <View id="review" style={{ padding: 5, backgroundColor: "none" }}>
-      <View
-        id="review-header"
-        style={{ flexDirection: "row", width: "100%", backgroundColor: "none" }}
-      >
+    <View style={styles.review}>
+      <View style={[styles.toprow, { flexWrap: "wrap", alignItems: "center" }]}>
         <Image
-          style={styles.photo}
+          style={{ height: 60, width: 60, borderRadius: 50 }}
           source={{
             uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
           }}
         />
-        <View id="stars-and-title" style={{ backgroundColor: "none" }}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-evenly",
-              backgroundColor: "none",
-            }}
-          >
-            {star()}
-            {star()}
-            {star()}
-            {star()}
-            {star()}
-          </View>
-          <Text
-            style={{ fontSize: 24, marginVertical: 10, marginHorizontal: 10 }}
-          >
-            Review Title
-          </Text>
+        <Text style={[styles.paragraph, { fontFamily: "EudoxusSans-Bold" }]}>
+          Username
+        </Text>
+        <View style={[styles.toprow]}>
+          {star()}
+          {star()}
+          {star()}
+          {star()}
+          {star()}
         </View>
       </View>
+      
       <View
         id="review-body"
-        style={{ backgroundColor: "none", marginVertical: 15 }}
+        style={{ backgroundColor: "#CDEEEA", marginVertical: 15, width: "100%" }}
       >
-        <Text style={[{ backgroundColor: "#CDEEEA", padding: 10 }]}>
+        <Text style={{ fontSize: 24, marginVertical: 10, marginHorizontal: 10 }}>
+        Review Title
+      </Text>
+        <Text style={[{ backgroundColor: "none", padding: 10 }]}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis
           luctus metus. Morbi semper sollicitudin efficitur. Curabitur placerat
           ante maximus, posuere tortor vulputate, fermentum arcu. Sed sit amet
@@ -53,13 +44,12 @@ export default function Review() {
           ac, dapibus nibh.
         </Text>
       </View>
-      <View id="review-actions" style={styles.buttonContainer}>
-        {MainButton("Like", null)}
-        {MainButton("Dislike", null)}
-        {MainButton("Reply", null)}
-      </View>
     </View>
   );
+}
+
+export default function Review() {
+  return notReview();
 }
 
 function star() {
@@ -89,14 +79,17 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    width: "100%",
-    justifyContent: "space-evenly",
     backgroundColor: "none",
+    width: "80%",
   },
   photo: {
     width: 100,
     height: 100,
     borderRadius: 50,
+  },
+  paragraph: {
+    margin: 24,
+    fontSize: 14,
   },
   button: {
     justifyContent: "center",
@@ -105,5 +98,25 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingHorizontal: 60,
     paddingVertical: 10,
+  },
+  row: {
+    flex: 0.1,
+    flexDirection: "row",
+    justifyContent: "center",
+    backgroundColor: "none",
+  },
+  review: {
+    flex: 1,
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    backgroundColor: "none",
+  },
+  toprow: {
+    flexDirection: "row",
+    flexWrap: "nowrap",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    backgroundColor: "none",
   },
 });

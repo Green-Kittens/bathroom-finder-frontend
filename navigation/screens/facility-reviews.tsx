@@ -1,7 +1,7 @@
 import React from "react";
-import Review from "../../components/Review";
 import { View } from "../../components/Themed";
 import { ScrollView, ImageBackground, StyleSheet } from "react-native";
+import ReviewButtons from "../../components/ReviewButtons";
 
 const blobimage = { uri: "/assets/images/blob.png" };
 
@@ -24,11 +24,11 @@ export default function FacilityReviewsScreen() {
               alignSelf: "flex-end",
             }}
           ></ImageBackground>
-          <View style={styles.subcontainer}>{Review()}</View>
-          <View style={styles.subcontainer}>{Review()}</View>
-          <View style={styles.subcontainer}>{Review()}</View>
-          <View style={styles.subcontainer}>{Review()}</View>
-          <View style={styles.subcontainer}>{Review()}</View>
+          <View style={[{ backgroundColor: "none" }]}>{ReviewButtons()}</View>
+          <View style={[{ backgroundColor: "none" }]}>{ReviewButtons()}</View>
+          <View style={[{ backgroundColor: "none" }]}>{ReviewButtons()}</View>
+          <View style={[{ backgroundColor: "none" }]}>{ReviewButtons()}</View>
+          <View style={[{ backgroundColor: "none" }]}>{ReviewButtons()}</View>
         </View>
       </View>
     </ScrollView>
@@ -49,10 +49,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "none",
-    width: "90%",
+    width: "100%",
     marginVertical: 15,
-  },
-  reviewContainer: {
-    marginVertical: 40,
+    paddingHorizontal: 10,
   },
 });

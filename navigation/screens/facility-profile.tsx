@@ -13,6 +13,7 @@ import {
 import { useEffect, useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../type";
+import Review from "../../components/Review";
 
 import { LinearGradient } from "expo-linear-gradient";
 import { LightButton } from "../../components/Buttons";
@@ -21,55 +22,6 @@ const maxLineNumber = 5;
 const windowHeight = Dimensions.get("window").height;
 
 const blobimage = { uri: "/assets/images/blob.png" };
-
-function Review() {
-  return (
-    <View style={styles.review}>
-      <View style={styles.toprow}>
-        <Image
-          style={{ height: 60, width: 60, borderRadius: 50 }}
-          source={{
-            uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
-          }}
-        />
-        <Text style={[styles.paragraph, { fontFamily: "EudoxusSans-Bold" }]}>
-          Username
-        </Text>
-        <Image
-          style={{ height: 15, width: 15, alignSelf: "center" }}
-          source={require("../../assets/images/star_filled.png")}
-        />
-        <Image
-          style={{ height: 15, width: 15, alignSelf: "center" }}
-          source={require("../../assets/images/star_filled.png")}
-        />
-        <Image
-          style={{ height: 15, width: 15, alignSelf: "center" }}
-          source={require("../../assets/images/star_filled.png")}
-        />
-        <Image
-          style={{ height: 15, width: 15, alignSelf: "center" }}
-          source={require("../../assets/images/star_filled.png")}
-        />
-        <Image
-          style={{ height: 15, width: 15, alignSelf: "center" }}
-          source={require("../../assets/images/star_filled.png")}
-        />
-      </View>
-      <View style={{flex: 1, }}>
-      <Text style={styles.paragraph} numberOfLines={2}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </Text>
-    </View>
-    </View>
-  );
-}
 
 function CollapseView() {
   const [collapsed, setCollapsed] = useState(true);
@@ -168,7 +120,7 @@ function CollapseView() {
             },
           ]}
         >
-          <Review />
+          {Review()}
           <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
             {LightButton("See more", () => {
               navigation.navigate("FacilityReviews");
