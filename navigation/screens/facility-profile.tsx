@@ -3,7 +3,7 @@ import { StyleSheet, Button, Animated, Image, Text, View } from "react-native";
 import { useEffect, useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../type";
-import { getAllReviews } from "@/controllers/reviewController";
+// import { getAllReviews } from "@/controllers/reviewController";
 
 const maxLineNumber = 5;
 
@@ -49,20 +49,20 @@ function Review() {
     </View>
   );
 }
-
-function CollapseView(bathroomID: string) {
+//bathroomID: string -- goes as param in collapse view
+function CollapseView() {
   const [collapsed, setCollapsed] = useState(true);
   const [maxLines, setMaxLines] = useState(2);
   const animationHeight = useRef(new Animated.Value(0)).current;
 
   /**get all reviews*/
-  const handleReviews = async () => {
-    try {
-      const reviews = await getAllReviews(bathroomID);
-    } catch (error) {
-      console.error("Error retrieving reviews:", error);
-    }
-  };
+  // const handleReviews = async () => {
+  //   try {
+  //     const reviews = await getAllReviews(bathroomID);
+  //   } catch (error) {
+  //     console.error("Error retrieving reviews:", error);
+  //   }
+  // };
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);

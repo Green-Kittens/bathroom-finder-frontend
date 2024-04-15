@@ -16,7 +16,7 @@ import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import { MaterialIcons } from "@expo/vector-icons";
 import StarRating from "react-native-star-rating-widget";
-import { createReview } from "@/controllers/reviewController";
+// import { createReview } from "@/controllers/reviewController";
 
 // screens
 import { useNavigation } from "@react-navigation/native";
@@ -42,20 +42,22 @@ export function Button(props: {
   );
 }
 
-export default function TabReviewForm(username: string, bathroomID: string) {
-  const handleReview = async () => {
-    try {
-      const review = await createReview(
-        username,
-        bathroomID,
-        description,
-        rating,
-        time,
-      );
-    } catch (error) {
-      console.error("Error creating new review:", error);
-    }
-  };
+//username: string, bathroomID: string --goes as param in tab review form
+
+export default function TabReviewForm() {
+  // const handleReview = async () => {
+  //   try {
+  //     const review = await createReview(
+  //       username,
+  //       bathroomID,
+  //       description,
+  //       rating,
+  //       time,
+  //     );
+  //   } catch (error) {
+  //     console.error("Error creating new review:", error);
+  //   }
+  // };
 
   // location
   const [, setLocation] = useState("");

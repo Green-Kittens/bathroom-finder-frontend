@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
+//{ useState }
+
 import {
   Button,
   Image,
@@ -18,10 +20,10 @@ export default function FacilityReviewsScreen(
   username: string,
 ) {
   /**like a review */
-  const [reply, setReply] = useState("");
+  // const [reply, setReply] = useState("");
   const handleLike = async () => {
     try {
-      const likes = await likeReview(reviewID);
+      await likeReview(reviewID);
     } catch (error) {
       console.error("Error liking review:", error);
     }
@@ -29,7 +31,7 @@ export default function FacilityReviewsScreen(
   /**dislike a review */
   const handleDislike = async () => {
     try {
-      const dislikes = await dislikeReview(reviewID);
+      await dislikeReview(reviewID);
     } catch (error) {
       console.error("Error disliking review:", error);
     }
@@ -37,7 +39,7 @@ export default function FacilityReviewsScreen(
   /**replay to a review */
   const handleReply = async () => {
     try {
-      const replies = await replyReview(reviewID, username, reply);
+      await replyReview(reviewID, username, "");
     } catch (error) {
       console.error("Error replying to review:", error);
     }
