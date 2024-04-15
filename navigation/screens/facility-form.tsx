@@ -18,8 +18,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-
-// type
+import tempImage from "../../assets/images/tempimage.png";
 import { ScreenNavigationProp } from "../type";
 
 //Button component
@@ -38,7 +37,39 @@ export function Button(props: {
     </Pressable>
   );
 }
+// Updated card function to display images
+function card(imageSource: string) {
+  return (
+    <View style={styles.card}>
+      <Image source={{ uri: imageSource }} style={styles.cardImage} />
+    </View>
+  );
+}
 
+function horizontalCards(images: Array<ImagePicker.ImagePickerSuccessResult>) {
+  const tempImagesCount = 5 - images.length;
+  const tempImages = Array(tempImagesCount).fill(tempImage);
+
+  return (
+    <View style={styles.container}>
+      <Text style={{ margin: 10 }}>Uploaded Images</Text>
+      <ScrollView horizontal={true} style={styles.horizontalScroll}>
+        {images.map((img, index) => {
+          // Check if img.assets exists and has at least one item
+          if (img.assets && img.assets.length > 0 && img.assets[0].uri) {
+            return card(img.assets[0].uri);
+          }
+          return null; // Return null if no uri is found
+        })}
+        {tempImages.map(
+          (src, index) => card(src), // Use the temp image for empty slots
+        )}
+      </ScrollView>
+    </View>
+  );
+}
+
+//TabReviewForm component
 export default function TabReviewForm() {
   // location
   const [, setLocation] = useState("");
@@ -172,8 +203,8 @@ export default function TabReviewForm() {
       aspect: [4, 3],
       quality: 1,
     });
-    if (!_image.canceled) {
-      images.push(_image);
+    if (!_image.canceled && _image.assets && _image.assets.length > 0) {
+      setImages((prevImages) => [...prevImages, _image]); // Use spread to create a new array
       setModalVisible(false);
     }
   };
@@ -192,8 +223,8 @@ export default function TabReviewForm() {
       base64: true,
       quality: 1,
     });
-    if (!_image.canceled) {
-      images.push(_image);
+    if (!_image.canceled && _image.assets && _image.assets.length > 0) {
+      setImages((prevImages) => [...prevImages, _image]); // Use spread to create a new array
       setModalVisible(false);
     }
   };
@@ -208,7 +239,10 @@ export default function TabReviewForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
 
   return (
-    <ScrollView>
+    <ScrollView
+      contentContainerStyle={styles.scrollViewContent}
+      style={styles.scrollView}
+    >
       <View style={styles.container}>
         <Text style={styles.title}>Add a New Facility</Text>
         <View style={styles.dropdown}>
@@ -264,7 +298,7 @@ export default function TabReviewForm() {
             onCancel={hideClosedPicker}
           />
         </View>
-
+        {horizontalCards(images)}
         <TextInput
           style={styles.input}
           placeholder="write your description..."
@@ -288,7 +322,14 @@ export default function TabReviewForm() {
             }}
           />
         )}
-
+        <Button
+          title="Add Facility"
+          color="#344f33"
+          onPress={() => {
+            // make a check to make sure that all fields are filled out
+            navigation.navigate("Main");
+          }}
+        />
         <ImageUploader
           isVisible={modalVisible}
           onClose={() => setModalVisible(false)}
@@ -317,15 +358,6 @@ export default function TabReviewForm() {
               </TouchableOpacity>
             </View>
           ))}
-
-        <Button
-          title="Add Facility"
-          color="#344f33"
-          onPress={() => {
-            // make a check to make sure that all fields are filled out
-            navigation.navigate("Main");
-          }}
-        />
       </View>
     </ScrollView>
   );
@@ -335,9 +367,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     backgroundColor: "#afd6ae",
     color: "#344f33",
+  },
+  scrollView: {
+    flex: 1,
+    backgroundColor: "#afd6ae",
   },
   title: {
     fontSize: 30,
@@ -409,6 +445,7 @@ const styles = StyleSheet.create({
     minHeight: 150,
     marginBottom: 20,
     color: "#344f33",
+    alignContent: "center",
   },
   timeSelect: {
     fontSize: 17,
@@ -518,5 +555,22 @@ const styles = StyleSheet.create({
   imageLink: {
     marginRight: 10,
     color: "blue",
+  },
+  card: {
+    width: 100,
+    height: 150,
+    borderRadius: 10,
+    backgroundColor: "grey",
+    marginHorizontal: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardImage: {
+    width: 100,
+    height: 150,
+    borderRadius: 10, // If you want rounded corners for the images
+  },
+  horizontalScroll: {
+    marginVertical: 10,
   },
 });
