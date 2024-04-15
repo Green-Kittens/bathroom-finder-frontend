@@ -11,6 +11,7 @@ import {
   Alert,
   TouchableOpacity,
   Platform,
+  Image,
 } from "react-native";
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
@@ -90,7 +91,40 @@ export default function TabReviewForm() {
     );
   };
 
-  // images uploaded for review
+  // modal to display image
+  const [displayImageVisible, setDisplayImageVisible] = useState(false);
+  const [imageToDisplay, setImageToDisplay] = useState("");
+  const DisplayImage = ({
+    isVisible,
+    onClose,
+  }: {
+    isVisible: boolean;
+    onClose: () => void;
+  }) => {
+    return (
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isVisible}
+        onRequestClose={onClose}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Image style={styles.modalImage} source={{ uri: imageToDisplay }}/>
+            <Button
+              title="Cancel"
+              color="red"
+              onPress={() => {
+                onClose();
+              }}
+            />
+          </View>
+        </View>
+      </Modal>
+    );
+  };
+
+  // images uploaded 
   const [images, setImages] = useState<
     Array<ImagePicker.ImagePickerSuccessResult>
   >([]);
@@ -209,11 +243,19 @@ export default function TabReviewForm() {
           onClose={() => setModalVisible(false)}
         />
 
+        <DisplayImage
+            isVisible={displayImageVisible}
+            onClose={() => setDisplayImageVisible(false)}
+        />
+
         {images.length !== 0 &&
           images.map((currImage, idx) => (
             <View key={idx} style={styles.imageContainer}>
               <TouchableOpacity
-                onPress={() => Linking.openURL(currImage.assets[0].uri)}
+                onPress={() => {
+                  setImageToDisplay(currImage.assets[0].uri);
+                  setDisplayImageVisible(true);
+                }}
               >
                 <Text style={styles.imageLink}>
                   {currImage.assets[0].fileName}
@@ -403,6 +445,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  modalImage: {
+    width: 300, 
+    height: 300,
+    resizeMode: "contain",
   },
   imageContainer: {
     flexDirection: "row",
