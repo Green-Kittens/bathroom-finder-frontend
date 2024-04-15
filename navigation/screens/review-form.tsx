@@ -110,7 +110,7 @@ export default function TabReviewForm() {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Image style={styles.modalImage} source={{ uri: imageToDisplay }}/>
+            <Image style={styles.modalImage} source={{ uri: imageToDisplay }} />
             <Button
               title="Cancel"
               color="red"
@@ -124,7 +124,7 @@ export default function TabReviewForm() {
     );
   };
 
-  // images uploaded 
+  // images uploaded
   const [images, setImages] = useState<
     Array<ImagePicker.ImagePickerSuccessResult>
   >([]);
@@ -244,8 +244,8 @@ export default function TabReviewForm() {
         />
 
         <DisplayImage
-            isVisible={displayImageVisible}
-            onClose={() => setDisplayImageVisible(false)}
+          isVisible={displayImageVisible}
+          onClose={() => setDisplayImageVisible(false)}
         />
 
         {images.length !== 0 &&
@@ -447,7 +447,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalImage: {
-    width: 300, 
+    width: 300,
     height: 300,
     resizeMode: "contain",
   },
