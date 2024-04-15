@@ -42,20 +42,23 @@ export function Button(props: {
   );
 }
 
-export default function TabReviewForm(username: string, bathroomID: string) {
-  const handleReview = async () => {
-    try {
-      const review = await createReview(
-        username,
-        bathroomID,
-        description,
-        rating,
-        time,
-      );
-    } catch (error) {
-      console.error("Error creating new review:", error);
-    }
-  };
+//username: string, bathroomID: string
+//^need to be passed as params in tabreview form
+
+export default function TabReviewForm() {
+  // const handleReview = async () => {
+  //   try {
+  //     const review = await createReview(
+  //       username,
+  //       bathroomID,
+  //       description,
+  //       rating,
+  //       time,
+  //     );
+  //   } catch (error) {
+  //     console.error("Error creating new review:", error);
+  //   }
+  // };
 
   // location
   const [, setLocation] = useState("");

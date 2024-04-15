@@ -126,7 +126,7 @@ export async function getFavorites(
     const favoritedBathrooms: BathroomProfile[] = [
       {
         id: "",
-        name: "",
+        name: username,
         location: {
           coordinates: [1],
           type: "",

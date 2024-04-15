@@ -13,7 +13,10 @@ export async function getAllReviews(bathroomID: string): Promise<Review[]> {
     const response = await axios.get<Review[]>(`http://localhost:${port}/`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching all reviews:", error);
+    console.error(
+      `Error fetching all reviews for bathroom ${bathroomID}:`,
+      error,
+    );
     throw error;
   }
 }
