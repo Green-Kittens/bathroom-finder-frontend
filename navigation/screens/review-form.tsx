@@ -257,7 +257,7 @@ export default function TabReviewForm() {
                 }}
               >
                 <Text style={styles.imageLink}>
-                  {currImage.assets[0].fileName}
+                  {"Image #" + (idx + 1)}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => deleteImage(currImage)}>

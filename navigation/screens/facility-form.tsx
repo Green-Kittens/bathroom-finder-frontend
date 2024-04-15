@@ -306,10 +306,10 @@ export default function TabReviewForm() {
                 onPress={() => {
                   setImageToDisplay(currImage.assets[0].uri);
                   setDisplayImageVisible(true);
-                }} /*Linking.openURL(currImage.assets[0].uri)}*/
+                }} 
               >
                 <Text style={styles.imageLink}>
-                  {currImage.assets[0].fileName}
+                    {"Image #" + (idx + 1)}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => deleteImage(currImage)}>
