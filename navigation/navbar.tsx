@@ -9,11 +9,13 @@ import { ScreensParamList } from "./type";
 import Main from "./screens/main";
 import ReviewForm from "./screens/review-form";
 import UserProfile from "./screens/user-profile";
+import FacilityForm from "./screens/facility-form";
 
 // screen names
 const mainName = "Main";
 const reviewFormName = "ReviewForm";
 const userProfileName = "UserProfile";
+const facilityFormName = "FacilityForm";
 
 // navigation
 const Tab = createBottomTabNavigator<ScreensParamList>();
@@ -33,12 +35,15 @@ export default function NavBar() {
             iconName = focused ? "add-circle" : "add-circle-outline";
           } else if (current === userProfileName) {
             iconName = focused ? "person-circle" : "person-circle-outline";
+          } else if (current === facilityFormName) {
+            iconName = focused ? "pin" : "pin-outline";
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
     >
       <Tab.Screen name={reviewFormName} component={ReviewForm} />
+      <Tab.Screen name={facilityFormName} component={FacilityForm} />
       <Tab.Screen name={mainName} component={Main} />
       <Tab.Screen name={userProfileName} component={UserProfile} />
     </Tab.Navigator>
