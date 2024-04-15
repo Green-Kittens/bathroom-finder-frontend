@@ -16,7 +16,7 @@ import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import { MaterialIcons } from "@expo/vector-icons";
 import StarRating from "react-native-star-rating-widget";
-import { createReview } from "@/controllers/reviewController";
+// import { createReview } from "@/controllers/reviewController";
 
 // screens
 import { useNavigation } from "@react-navigation/native";
