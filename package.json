@@ -39,7 +39,7 @@
     "react-native-star-rating-widget": "^1.7.3",
     "react-native-svg": "14.1.0",
     "react-native-web": "~0.19.6",
-    "react-time-picker": "^6.6.0"
+    "react-time-picker": "^6.6.0",
     "yarn": "^1.22.22"
   },
   "devDependencies": {
