@@ -7,7 +7,6 @@ import {
   View,
   ScrollView,
   Modal,
-  Linking,
   Alert,
   TouchableOpacity,
   Platform,
