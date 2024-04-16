@@ -18,7 +18,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import StarRating from "react-native-star-rating-widget";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
-import tempImage from "../../assets/images/tempimage.png";
 
 // type
 import { ScreenNavigationProp } from "../type";
@@ -51,7 +50,7 @@ function card(imageSource: string) {
 //image carousel
 function horizontalCards(images: Array<ImagePicker.ImagePickerSuccessResult>) {
   const tempImagesCount = 5 - images.length;
-  const tempImages = Array(tempImagesCount).fill(tempImage);
+  const tempImages = Array(tempImagesCount)
 
   return (
     <View style={styles.container}>
@@ -245,7 +244,7 @@ export default function TabReviewForm() {
         </View>
 
         <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
-
+        {horizontalCards(images)}
         <TextInput
           style={styles.input}
           placeholder="write your description..."

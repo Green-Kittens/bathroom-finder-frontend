@@ -14,69 +14,20 @@ import {
 } from "react-native";
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
-import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import tempImage from "../../assets/images/tempimage.png";
 import { ScreenNavigationProp } from "../type";
-
-//Button component
-export function Button(props: {
-  onPress: () => void;
-  title?: string;
-  color?: string;
-}) {
-  const { onPress, title = "Title", color = "#344f33" } = props;
-  return (
-    <Pressable
-      style={[styles.button, { backgroundColor: color }]}
-      onPress={onPress}
-    >
-      <Text style={styles.buttontext}>{title}</Text>
-    </Pressable>
-  );
-}
-// Updated card function to display images
-function card(imageSource: string) {
-  return (
-    <View style={styles.card}>
-      <Image source={{ uri: imageSource }} style={styles.cardImage} />
-    </View>
-  );
-}
-
-//image carousel
-function horizontalCards(images: Array<ImagePicker.ImagePickerSuccessResult>) {
-  const tempImagesCount = 5 - images.length;
-  const tempImages = Array(tempImagesCount).fill(tempImage);
-
-  return (
-    <View style={styles.container}>
-      <Text style={{ margin: 10 }}>Uploaded Images</Text>
-      <ScrollView horizontal={true} style={styles.horizontalScroll}>
-        {images.map((img, index) => {
-          // Check if img.assets exists and has at least one item
-          if (img.assets && img.assets.length > 0 && img.assets[0].uri) {
-            return card(img.assets[0].uri);
-          }
-          return null; // Return null if no uri is found
-        })}
-        {tempImages.map(
-          (src, index) => card(src), // Use the temp image for empty slots
-        )}
-      </ScrollView>
-    </View>
-  );
-}
+import { Button } from "../../components/Button";
+import { HorizontalCards } from "../../components/Carousel";
 
 //TabReviewForm component
 export default function TabReviewForm() {
+  const [openTime, setOpenTime] = useState<Date | null>(null);
+  const [closedTime, setClosedTime] = useState<Date | null>(null);
+
   // location
   const [, setLocation] = useState("");
-
-  //facility hours
-  const [openTime, setOpenTime] = useState(null);
   const [isOpenPickerVisible, setOpenPickerVisibility] = useState(false);
   const showOpenPicker = () => {
     setOpenPickerVisibility(true);
@@ -84,12 +35,10 @@ export default function TabReviewForm() {
   const hideOpenPicker = () => {
     setOpenPickerVisibility(false);
   };
-  const handleOpenConfirm = (time) => {
-    setOpenTime(time);
+  const handleOpenConfirm = (date: Date) => {
+    setOpenTime(date);
     hideOpenPicker();
   };
-
-  const [closedTime, setClosedTime] = useState(null);
   const [isClosedPickerVisible, setClosedPickerVisibility] = useState(false);
   const showClosedPicker = () => {
     setClosedPickerVisibility(true);
@@ -97,11 +46,15 @@ export default function TabReviewForm() {
   const hideClosedPicker = () => {
     setClosedPickerVisibility(false);
   };
-  const handleClosedConfirm = (time) => {
-    setClosedTime(time);
+  const handleClosedConfirm = (date: Date) => {
+    setClosedTime(date);
     hideClosedPicker();
   };
-
+    const deleteImage = (uriToDelete: string) => {
+    setImages((prevImages) =>
+    prevImages.filter((img) => img.assets[0].uri !== uriToDelete),
+  );
+};
   // description
   const [description, setDescription] = useState("");
 
@@ -146,43 +99,13 @@ export default function TabReviewForm() {
     );
   };
 
-  // modal to display image
-  const [displayImageVisible, setDisplayImageVisible] = useState(false);
-  const [imageToDisplay, setImageToDisplay] = useState("");
-  const DisplayImage = ({
-    isVisible,
-    onClose,
-  }: {
-    isVisible: boolean;
-    onClose: () => void;
-  }) => {
-    return (
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isVisible}
-        onRequestClose={onClose}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Image style={styles.modalImage} source={{ uri: imageToDisplay }} />
-            <Button
-              title="Cancel"
-              color="red"
-              onPress={() => {
-                onClose();
-              }}
-            />
-          </View>
-        </View>
-      </Modal>
-    );
-  };
 
   // images uploaded
   const [images, setImages] = useState<
     Array<ImagePicker.ImagePickerSuccessResult>
   >([]);
+
+  const imageUris = images.map((img) => img.assets[0].uri);
 
   // permissions
   const [cameraStatus] = ImagePicker.useCameraPermissions();
@@ -201,7 +124,7 @@ export default function TabReviewForm() {
     const _image = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [1, 1],
       quality: 1,
     });
     if (!_image.canceled && _image.assets && _image.assets.length > 0) {
@@ -230,20 +153,11 @@ export default function TabReviewForm() {
     }
   };
 
-  // delete uploaded image
-  const deleteImage = (toDelete: ImagePicker.ImagePickerSuccessResult) => {
-    const updatedImages = images.filter((curr) => curr !== toDelete);
-    setImages(updatedImages);
-  };
-
   // add facility (submit button)
   const navigation = useNavigation<ScreenNavigationProp>();
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.scrollViewContent}
-      style={styles.scrollView}
-    >
+    <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <Text style={styles.title}>Add a New Facility</Text>
         <View style={styles.dropdown}>
@@ -299,7 +213,7 @@ export default function TabReviewForm() {
             onCancel={hideClosedPicker}
           />
         </View>
-        {horizontalCards(images)}
+        <HorizontalCards images={imageUris} onDelete={deleteImage} />
         <TextInput
           style={styles.input}
           placeholder="write your description..."
@@ -335,30 +249,6 @@ export default function TabReviewForm() {
           isVisible={modalVisible}
           onClose={() => setModalVisible(false)}
         />
-
-        <DisplayImage
-          isVisible={displayImageVisible}
-          onClose={() => setDisplayImageVisible(false)}
-        />
-
-        {images.length !== 0 &&
-          images.map((currImage, idx) => (
-            <View key={idx} style={styles.imageContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  setImageToDisplay(currImage.assets[0].uri);
-                  setDisplayImageVisible(true);
-                }} /*Linking.openURL(currImage.assets[0].uri)}*/
-              >
-                <Text style={styles.imageLink}>
-                  {currImage.assets[0].fileName}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => deleteImage(currImage)}>
-                <MaterialIcons name="delete" size={20} color="gray" />
-              </TouchableOpacity>
-            </View>
-          ))}
       </View>
     </ScrollView>
   );
@@ -556,22 +446,5 @@ const styles = StyleSheet.create({
   imageLink: {
     marginRight: 10,
     color: "blue",
-  },
-  card: {
-    width: 100,
-    height: 150,
-    borderRadius: 10,
-    backgroundColor: "grey",
-    marginHorizontal: 5,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  cardImage: {
-    width: 100,
-    height: 150,
-    borderRadius: 10, // If you want rounded corners for the images
-  },
-  horizontalScroll: {
-    marginVertical: 10,
   },
 });
