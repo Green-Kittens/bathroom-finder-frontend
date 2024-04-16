@@ -46,6 +46,7 @@ function card(imageSource: string) {
   );
 }
 
+//image carousel
 function horizontalCards(images: Array<ImagePicker.ImagePickerSuccessResult>) {
   const tempImagesCount = 5 - images.length;
   const tempImages = Array(tempImagesCount).fill(tempImage);
@@ -308,12 +309,12 @@ export default function TabReviewForm() {
           multiline={true}
         />
 
-        {images.length === 3 && (
+        {images.length === 5 && (
           <Text style={styles.errorText}>
             You can only upload a max of 3 photos.
           </Text>
         )}
-        {images.length < 3 && (
+        {images.length < 5 && (
           <Button
             title="Upload image"
             color="#344f33"
