@@ -1,6 +1,9 @@
+// DisplayImage.tsx
+
 import React from "react";
 import { Modal, View, Image, StyleSheet } from "react-native";
 import { Button } from "./Button"; // Adjust the import path as needed
+import { useImages } from "../contexts/ImageContext"; // Ensure the correct import path
 
 interface DisplayImageProps {
   isVisible: boolean;
@@ -13,8 +16,10 @@ const DisplayImage: React.FC<DisplayImageProps> = ({
   isVisible,
   imageUri,
   onClose,
-  onDelete
+  onDelete,
 }) => {
+  const { deleteImage } = useImages();
+
   return (
     <Modal
       animationType="fade"
@@ -26,7 +31,11 @@ const DisplayImage: React.FC<DisplayImageProps> = ({
         <View style={styles.modalView}>
           <Image style={styles.modalImage} source={{ uri: imageUri }} />
           <Button title="Cancel" color="red" onPress={onClose} />
-          <Button title="Delete" onPress={onDelete} />
+          <Button
+            title="Delete"
+            onPress={onDelete}
+            color="red"
+          />
         </View>
       </View>
     </Modal>

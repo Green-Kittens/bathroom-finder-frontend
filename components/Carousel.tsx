@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState} from "react";
 import {
   View,
   Image,
@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import DisplayImage from "./DisplayImage";
-
+import { useImages } from "../contexts/ImageContext";
 interface CardProps {
   imageSource: string;
   onPress: () => void;
@@ -25,27 +25,21 @@ const Card: React.FC<CardProps> = ({ imageSource, onPress }) => {
   );
 };
 
-interface HorizontalCardsProps {
-  images: string[];
-  onDelete: (uri: string) => void;
-}
 
-const HorizontalCards: React.FC<HorizontalCardsProps> = ({ images, onDelete }) => {
-
-  // Get the screen width from Dimensions
-  const screenWidth = Dimensions.get("window").width;
-
-  // Each card width plus some margin, adjust margin as needed
-  const cardWidth = 100; // width of each card
-  const margin = 10; // total horizontal margin around each card
-  const totalCardWidth = images.length * (cardWidth + margin);
-
-  // Determine if scrolling is necessary
-  const shouldScroll = totalCardWidth > screenWidth;
-
+const HorizontalCards: React.FC = () => {
+  const { images, deleteImage } = useImages();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedImageUri, setSelectedImageUri] = useState("");
 
+
+  // Get the screen width from Dimensions 
+  const screenWidth = Dimensions.get("window").width;
+  const cardWidth = 100; // width of each card
+  const margin = 10; // total horizontal margin around each card
+  const totalCardWidth = images.length * (cardWidth + margin);
+  const shouldScroll = totalCardWidth > screenWidth;
+
+  
   const openImageModal = (uri: string) => {
     setSelectedImageUri(uri);
     setModalVisible(true);
@@ -62,13 +56,13 @@ const HorizontalCards: React.FC<HorizontalCardsProps> = ({ images, onDelete }) =
         horizontal={true}
         style={styles.horizontalScroll}
         scrollEnabled={shouldScroll} // Enable or disable scrolling based on the width of images
-        showsHorizontalScrollIndicator={shouldScroll}
+        showsHorizontalScrollIndicator={false}
       >
-        {images.map((imageSource, index) => (
+        {images.map((img, index) => (
           <Card
             key={index.toString()}
-            imageSource={imageSource}
-            onPress={() => openImageModal(imageSource)}
+            imageSource={img.assets[0].uri}
+            onPress={() => openImageModal(img.assets[0].uri)}
           />
         ))}
       </ScrollView>
@@ -76,7 +70,10 @@ const HorizontalCards: React.FC<HorizontalCardsProps> = ({ images, onDelete }) =
         isVisible={modalVisible}
         imageUri={selectedImageUri}
         onClose={closeImageModal}
-        onDelete={() => onDelete(selectedImageUri)}
+        onDelete={() => {
+          deleteImage(selectedImageUri);
+          closeImageModal();
+        }}
       />
     </View>
   );
