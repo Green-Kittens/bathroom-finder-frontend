@@ -17,9 +17,9 @@ import { useImages } from "../../contexts/ImageContext"; // Ensure the import pa
 import { ScreenNavigationProp } from "../type";
 import MainButton, { CancelButton } from "../../components/Buttons";
 
-export default function facilityForm() {
+export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
-  const { addImage } = useImages();
+  const { addImage } = useImages("facilityForm");
   const [description, setDescription] = useState("");
   const [openTime, setOpenTime] = useState<Date | null>(null);
   const [closedTime, setClosedTime] = useState<Date | null>(null);
@@ -96,7 +96,7 @@ export default function facilityForm() {
             onCancel={() => setClosedPickerVisibility(false)}
           />
         </View>
-        <HorizontalCards />
+        <HorizontalCards componentId="facilityForm" />
         <TextInput
           style={styles.input}
           placeholder="Write your description..."

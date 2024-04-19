@@ -25,8 +25,12 @@ const Card: React.FC<CardProps> = ({ imageSource, onPress }) => {
   );
 };
 
-const HorizontalCards: React.FC = () => {
-  const { images, deleteImage } = useImages();
+interface HorizontalCardsProps {
+  componentId: string; // Accept componentId as a prop
+}
+
+const HorizontalCards: React.FC<HorizontalCardsProps> = ({ componentId }) => {
+  const { images, deleteImage } = useImages(componentId);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedImageUri, setSelectedImageUri] = useState("");
 

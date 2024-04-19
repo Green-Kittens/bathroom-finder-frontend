@@ -39,7 +39,7 @@ function TabLoginScreen() {
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         <Image
-          source={require("../../assets/images/logo-placeholder.png")}
+          source={require("../../assets/images/icon.png")}
           style={styles.logo}
         />
         <Text style={styles.title}>Login</Text>
