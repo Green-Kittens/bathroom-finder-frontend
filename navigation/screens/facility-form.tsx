@@ -8,17 +8,15 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  Platform,
   Modal,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import RNPickerSelect from "react-native-picker-select";
-import { Button } from "../../components/Button";
 import { HorizontalCards } from "../../components/Carousel";
 import { useImages } from "../../contexts/ImageContext"; // Ensure the import path is correct
 import { ScreenNavigationProp } from "../type";
+import MainButton, { CancelButton } from "../../components/Buttons";
 
 export default function TabReviewForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
@@ -70,8 +68,6 @@ export default function TabReviewForm() {
     }
   };
 
-  
-
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
@@ -109,7 +105,7 @@ export default function TabReviewForm() {
           value={description}
           onChangeText={setDescription}
         />
-        <Button title="Add Photo" onPress={() => setModalVisible(true)} />
+        {MainButton("Add Photo", () => setModalVisible(true))}
         {modalVisible && (
           <Modal
             animationType="slide"
@@ -119,27 +115,16 @@ export default function TabReviewForm() {
           >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                <Button
-                  title="Take Photo"
-                  onPress={() => handleAddImage("camera")}
-                />
-                <Button
-                  title="Choose from Gallery"
-                  onPress={() => handleAddImage("gallery")}
-                />
-                <Button title="Cancel" color='red' onPress={() => setModalVisible(false)} />
+                {MainButton("Take Photo", () => handleAddImage("camera"))}
+                {MainButton("Choose from Gallery", () =>
+                  handleAddImage("gallery"),
+                )}
+                {CancelButton("Close", () => setModalVisible(false))}
               </View>
             </View>
           </Modal>
         )}
-        <Button
-          title="Submit Facility"
-          color="#344f33"
-          onPress={() => {
-            // make a check to make sure that all fields are filled out
-            navigation.navigate("Main");
-          }}
-        />
+        {MainButton("Submit Facility", () => navigation.navigate("Main"))}
       </View>
     </ScrollView>
   );

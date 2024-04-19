@@ -2,8 +2,8 @@
 
 import React from "react";
 import { Modal, View, Image, StyleSheet } from "react-native";
-import { Button } from "./Button"; // Adjust the import path as needed
 import { useImages } from "../contexts/ImageContext"; // Ensure the correct import path
+import { CancelButton } from "./Buttons"; // Adjust the import path as needed
 
 interface DisplayImageProps {
   isVisible: boolean;
@@ -30,12 +30,8 @@ const DisplayImage: React.FC<DisplayImageProps> = ({
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Image style={styles.modalImage} source={{ uri: imageUri }} />
-          <Button title="Cancel" color="red" onPress={onClose} />
-          <Button
-            title="Delete"
-            onPress={onDelete}
-            color="red"
-          />
+          {CancelButton("Cancel", onClose)}
+          {CancelButton("Delete", onDelete)}
         </View>
       </View>
     </Modal>
@@ -66,7 +62,7 @@ const styles = StyleSheet.create({
   },
   modalImage: {
     width: 300,
-    height: 600,
+    height: 300,
     resizeMode: "center",
   },
 });
