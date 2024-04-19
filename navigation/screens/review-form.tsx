@@ -39,7 +39,7 @@ function horizontalCards(images: Array<ImagePicker.ImagePickerSuccessResult>) {
     <View style={styles.container}>
       <Text style={{ margin: 10 }}>Uploaded Images</Text>
       <ScrollView horizontal={true} style={styles.horizontalScroll}>
-        {images.map((img, index) => {
+        {images.map((img) => {
           // Check if img.assets exists and has at least one item
           if (img.assets && img.assets.length > 0 && img.assets[0].uri) {
             return card(img.assets[0].uri);
@@ -47,7 +47,7 @@ function horizontalCards(images: Array<ImagePicker.ImagePickerSuccessResult>) {
           return null; // Return null if no uri is found
         })}
         {tempImages.map(
-          (src, index) => card(src), // Use the temp image for empty slots
+          (src) => card(src), // Use the temp image for empty slots
         )}
       </ScrollView>
     </View>

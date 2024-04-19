@@ -43,7 +43,7 @@ interface Props {
 }
 
 export const ImageProvider: React.FC<Props> = ({ children }) => {
-  const [stores, setStores] = useState<ImageContextType>({});
+  const [stores] = useState<ImageContextType>({});
 
   return (
     <ImageContext.Provider value={stores}>{children}</ImageContext.Provider>
