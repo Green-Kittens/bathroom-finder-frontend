@@ -24,11 +24,15 @@ export default function FacilityReviewsScreen() {
               alignSelf: "flex-end",
             }}
           ></ImageBackground>
-          <View style={[{ backgroundColor: "none" }]}>{ReviewButtons()}</View>
-          <View style={[{ backgroundColor: "none" }]}>{ReviewButtons()}</View>
-          <View style={[{ backgroundColor: "none" }]}>{ReviewButtons()}</View>
-          <View style={[{ backgroundColor: "none" }]}>{ReviewButtons()}</View>
-          <View style={[{ backgroundColor: "none" }]}>{ReviewButtons()}</View>
+          <View
+            style={{ justifyContent: "space-evenly", backgroundColor: "none" }}
+          >
+            {ReviewButtons()}
+            {ReviewButtons()}
+            {ReviewButtons()}
+            {ReviewButtons()}
+            {ReviewButtons()}
+          </View>
         </View>
       </View>
     </ScrollView>

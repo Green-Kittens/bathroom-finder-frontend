@@ -1,5 +1,4 @@
 import React from "react";
-import MainButton from "./Buttons";
 import { Image, StyleSheet } from "react-native";
 
 import { Text, View } from "../components/Themed";
@@ -25,15 +24,21 @@ export function notReview() {
           {star()}
         </View>
       </View>
-      
+
       <View
         id="review-body"
-        style={{ backgroundColor: "#CDEEEA", marginVertical: 15, width: "100%" }}
+        style={{
+          backgroundColor: "#CDEEEA",
+          marginVertical: 15,
+          width: "100%",
+        }}
       >
-        <Text style={{ fontSize: 24, marginVertical: 10, marginHorizontal: 10 }}>
-        Review Title
-      </Text>
-        <Text style={[{ backgroundColor: "none", padding: 10 }]}>
+        <Text
+          style={{ fontSize: 24, marginVertical: 10, marginHorizontal: 10 }}
+        >
+          Review Title
+        </Text>
+        <Text style={[{ padding: 10 }]}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis
           luctus metus. Morbi semper sollicitudin efficitur. Curabitur placerat
           ante maximus, posuere tortor vulputate, fermentum arcu. Sed sit amet

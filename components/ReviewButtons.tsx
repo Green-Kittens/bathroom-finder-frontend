@@ -1,30 +1,22 @@
 import React from "react";
-import { Image, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import MainButton from "./Buttons";
 import Review from "./Review";
-import { Text, View } from "../components/Themed";
+import { View } from "../components/Themed";
 
 export default function ReviewButtons() {
   return (
-    <View style={[{ backgroundColor: "none", justifyContent: "center" }]}>
-      <View style={styles.subcontainer}>{Review()}</View>
-      <View
-        style={[
-          {
-            flexDirection: "row",
-            backgroundColor: "none",
-            justifyContent: "center",
-          },
-        ]}
-      >
+    <View style={styles.subcontainer}>
+      {Review()}
+      <View style={{ justifyContent: "center", backgroundColor: "none" }}>
         <View
           id="review-actions"
           style={[
             {
               flexDirection: "row",
-              width: "75%",
-              justifyContent: "center",
               backgroundColor: "none",
+              justifyContent: "space-around",
+              padding: 10,
             },
           ]}
         >
@@ -42,6 +34,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     alignItems: "center",
+    alignContent: "center",
     justifyContent: "center",
     backgroundColor: "none",
     width: "100%",
