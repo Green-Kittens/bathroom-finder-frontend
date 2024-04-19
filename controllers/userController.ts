@@ -109,7 +109,7 @@ export async function createBathroom(
     await axios.post<BathroomProfile>(`http://${host}:${port}/facilities/`, {
       params: { username, openHr, closeHr, description, tags, image },
     });
-    const successMsg = `Bathroom successfully created by ${username}: hours of operation (${opHours}), description (${description}), tags (${tags}), images (${images})`;
+    const successMsg = `Bathroom successfully created by ${username}: hours of operation (${openHr} to ${closeHr}), description (${description}), tags (${tags}), images (${images})`;
     return successMsg;
   } catch (error) {
     console.error("Error creating bathroom:", error);
