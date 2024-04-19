@@ -1,6 +1,6 @@
 import axios from "axios";
-import { User as UserProfile } from "@/types/user";
-import { Facility as BathroomProfile } from "@/types/facility";
+import { User as UserProfile } from "../types/user";
+import { Facility as BathroomProfile } from "../types/facility";
 
 const port = process.env.PORT || 8081;
 const host = process.env.HOST || "localhost";

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Facility as BathroomProfile } from "@/types/facility";
+import { Facility as BathroomProfile } from "../types/facility";
 
 const port = process.env.PORT || 3000;
 const host = process.env.HOST || "localhost";
