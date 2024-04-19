@@ -1,5 +1,4 @@
-// TabReviewForm.tsx
-
+//facility-form.tsx
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -18,7 +17,7 @@ import { useImages } from "../../contexts/ImageContext"; // Ensure the import pa
 import { ScreenNavigationProp } from "../type";
 import MainButton, { CancelButton } from "../../components/Buttons";
 
-export default function TabReviewForm() {
+export default function facilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
   const { addImage } = useImages();
   const [description, setDescription] = useState("");
@@ -111,14 +110,11 @@ export default function TabReviewForm() {
             animationType="slide"
             transparent={true}
             visible={modalVisible}
-            onRequestClose={() => setModalVisible(false)}
-          >
+            onRequestClose={() => setModalVisible(false)}>
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 {MainButton("Take Photo", () => handleAddImage("camera"))}
-                {MainButton("Choose from Gallery", () =>
-                  handleAddImage("gallery"),
-                )}
+                {MainButton("Choose from Gallery", () => handleAddImage("gallery"))}
                 {CancelButton("Close", () => setModalVisible(false))}
               </View>
             </View>

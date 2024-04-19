@@ -18,26 +18,11 @@ import { MaterialIcons } from "@expo/vector-icons";
 import StarRating from "react-native-star-rating-widget";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
-
+import { Button } from "../../components/Button";
 // type
 import { ScreenNavigationProp } from "../type";
 
-//Button component
-export function Button(props: {
-  onPress: () => void;
-  title?: string;
-  color?: string;
-}) {
-  const { onPress, title = "Title", color = "#344f33" } = props;
-  return (
-    <Pressable
-      style={[styles.button, { backgroundColor: color }]}
-      onPress={onPress}
-    >
-      <Text style={styles.buttontext}>{title}</Text>
-    </Pressable>
-  );
-}
+
 // Updated card function to display images
 function card(imageSource: string) {
   return (
@@ -71,7 +56,7 @@ function horizontalCards(images: Array<ImagePicker.ImagePickerSuccessResult>) {
   );
 }
 
-export default function TabReviewForm() {
+export default function ReviewForm() {
   // location
   const [, setLocation] = useState("");
 
