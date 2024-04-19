@@ -18,28 +18,45 @@ import { MaterialIcons } from "@expo/vector-icons";
 import StarRating from "react-native-star-rating-widget";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
-
+import { Button } from "../../components/Button";
 // type
 import { ScreenNavigationProp } from "../type";
 
-//Button component
-export function Button(props: {
-  onPress: () => void;
-  title?: string;
-  color?: string;
-}) {
-  const { onPress, title = "Title", color = "#344f33" } = props;
+
+// Updated card function to display images
+function card(imageSource: string) {
   return (
-    <Pressable
-      style={[styles.button, { backgroundColor: color }]}
-      onPress={onPress}
-    >
-      <Text style={styles.buttontext}>{title}</Text>
-    </Pressable>
+    <View style={styles.card}>
+      <Image source={{ uri: imageSource }} style={styles.cardImage} />
+    </View>
   );
 }
 
-export default function TabReviewForm() {
+//image carousel
+function horizontalCards(images: Array<ImagePicker.ImagePickerSuccessResult>) {
+  const tempImagesCount = 5 - images.length;
+  const tempImages = Array(tempImagesCount)
+
+  return (
+    <View style={styles.container}>
+      <Text style={{ margin: 10 }}>Uploaded Images</Text>
+      <ScrollView horizontal={true} style={styles.horizontalScroll}>
+        {images.map((img, index) => {
+          // Check if img.assets exists and has at least one item
+          if (img.assets && img.assets.length > 0 && img.assets[0].uri) {
+            return card(img.assets[0].uri);
+          }
+          return null; // Return null if no uri is found
+        })}
+        {tempImages.map(
+          (src, index) => card(src), // Use the temp image for empty slots
+        )}
+      </ScrollView>
+    </View>
+  );
+}
+
+export default function ReviewForm() {
   // location
   const [, setLocation] = useState("");
 
@@ -212,7 +229,7 @@ export default function TabReviewForm() {
         </View>
 
         <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
-
+        {horizontalCards(images)}
         <TextInput
           style={styles.input}
           placeholder="write your description..."
@@ -222,12 +239,12 @@ export default function TabReviewForm() {
           multiline={true}
         />
 
-        {images.length === 3 && (
+        {images.length === 5 && (
           <Text style={styles.errorText}>
             You can only upload a max of 3 photos.
           </Text>
         )}
-        {images.length < 3 && (
+        {images.length < 5 && (
           <Button
             title="Upload image"
             color="#344f33"
@@ -455,5 +472,22 @@ const styles = StyleSheet.create({
   imageLink: {
     marginRight: 10,
     color: "blue",
+  },
+  card: {
+    width: 100,
+    height: 150,
+    borderRadius: 10,
+    backgroundColor: "grey",
+    marginHorizontal: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardImage: {
+    width: 100,
+    height: 150,
+    borderRadius: 10, // If you want rounded corners for the images
+  },
+  horizontalScroll: {
+    marginVertical: 10,
   },
 });
