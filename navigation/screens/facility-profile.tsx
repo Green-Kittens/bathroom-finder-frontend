@@ -16,12 +16,15 @@ import { ScreenNavigationProp } from "../type";
 import Review from "../../components/Review";
 
 import { LinearGradient } from "expo-linear-gradient";
-import { LightButton } from "../../components/Buttons";
+import MainButton, { LightButton } from "../../components/Buttons";
 
 const maxLineNumber = 5;
 const windowHeight = Dimensions.get("window").height;
 
 const blobimage = { uri: "/assets/images/blob.png" };
+
+// navigation
+const navigation = useNavigation<ScreenNavigationProp>();
 
 function CollapseView() {
   const [collapsed, setCollapsed] = useState(true);
@@ -64,9 +67,6 @@ function CollapseView() {
       return "Collapse";
     }
   };
-
-  // navigation
-  const navigation = useNavigation<ScreenNavigationProp>();
 
   return (
     <View style={{ overflow: "hidden", backgroundColor: "none" }}>
@@ -198,6 +198,12 @@ export default function TabFacilityProfileScreen() {
         <View
           style={[{ flex: 1, marginHorizontal: 40, backgroundColor: "none" }]}
         >
+          <View style={{ marginTop: 10 }}>
+            {MainButton("Add Review", () => {
+            // figure out how to make it so that dropdown renders current facility as location
+            navigation.navigate("ReviewForm");
+          })}
+      </View>
           <CollapseView />
         </View>
       </ScrollView>

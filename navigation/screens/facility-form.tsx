@@ -1,35 +1,74 @@
 import React from "react";
-import MainButton from "../../components/Buttons";
-import { CancelButton } from "../../components/Buttons";
 import {
+  Pressable,
   StyleSheet,
   TextInput,
   Text,
   View,
+  ScrollView,
   Modal,
   Alert,
   TouchableOpacity,
-  ImageBackground,
-  ScrollView,
+  Platform,
   Image,
 } from "react-native";
-
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import { MaterialIcons } from "@expo/vector-icons";
-import StarRating from "react-native-star-rating-widget";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 // type
 import { ScreenNavigationProp } from "../type";
+
+//Button component
+export function Button(props: {
+  onPress: () => void;
+  title?: string;
+  color?: string;
+}) {
+  const { onPress, title = "Title", color = "#344f33" } = props;
+  return (
+    <Pressable
+      style={[styles.button, { backgroundColor: color }]}
+      onPress={onPress}
+    >
+      <Text style={styles.buttontext}>{title}</Text>
+    </Pressable>
+  );
+}
 
 export default function TabReviewForm() {
   // location
   const [, setLocation] = useState("");
 
-  // getting current date and time
-  const currentDate = new Date();
+  //facility hours
+  const [openTime, setOpenTime] = useState(null);
+  const [isOpenPickerVisible, setOpenPickerVisibility] = useState(false);
+  const showOpenPicker = () => {
+    setOpenPickerVisibility(true);
+  };
+  const hideOpenPicker = () => {
+    setOpenPickerVisibility(false);
+  };
+  const handleOpenConfirm = (time) => {
+    setOpenTime(time);
+    hideOpenPicker();
+  };
+
+  const [closedTime, setClosedTime] = useState(null);
+  const [isClosedPickerVisible, setClosedPickerVisibility] = useState(false);
+  const showClosedPicker = () => {
+    setClosedPickerVisibility(true);
+  };
+  const hideClosedPicker = () => {
+    setClosedPickerVisibility(false);
+  };
+  const handleClosedConfirm = (time) => {
+    setClosedTime(time);
+    hideClosedPicker();
+  };
 
   // description
   const [description, setDescription] = useState("");
@@ -52,11 +91,23 @@ export default function TabReviewForm() {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            {MainButton("Take Photo", addUsingCamera)}
-            {MainButton("Choose from Gallery", addFromGallery)}
-            {CancelButton("Cancel", () => {
-              onClose();
-            })}
+            <Button
+              title="Take Photo"
+              color="#344f33"
+              onPress={addUsingCamera}
+            />
+            <Button
+              title="Choose from Gallery"
+              color="#344f33"
+              onPress={addFromGallery}
+            />
+            <Button
+              title="Cancel"
+              color="red"
+              onPress={() => {
+                onClose();
+              }}
+            />
           </View>
         </View>
       </Modal>
@@ -83,9 +134,13 @@ export default function TabReviewForm() {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Image style={styles.modalImage} source={{ uri: imageToDisplay }} />
-              {CancelButton("Cancel", () => {
+            <Button
+              title="Cancel"
+              color="red"
+              onPress={() => {
                 onClose();
-              })}
+              }}
+            />
           </View>
         </View>
       </Modal>
@@ -149,41 +204,16 @@ export default function TabReviewForm() {
     setImages(updatedImages);
   };
 
-  // rating
-  const [rating, setRating] = useState(0);
-
-  // post rating (submit button)
+  // add facility (submit button)
   const navigation = useNavigation<ScreenNavigationProp>();
-const circleimage = { uri: "/assets/images/circle.png" };
 
   return (
+    <ScrollView>
       <View style={styles.container}>
-      <ImageBackground
-        source={circleimage}
-        style={{
-          width: 1070,
-          height: 1000,
-          position: "absolute",
-          top: 550,
-          left: -200,
-        }}
-        imageStyle={{
-          resizeMode: "cover",
-          alignSelf: "flex-end",
-        }}
-      ></ImageBackground>
-      <ScrollView>
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            alignContent: "center",
-          }}
-        >
-        <Text style={styles.title}>New Bathroom Rating</Text>
-
+        <Text style={styles.title}>Add a New Facility</Text>
         <View style={styles.dropdown}>
           <RNPickerSelect
+            style={styles.dropdown}
             placeholder={{
               label: "select a location",
               value: null,
@@ -196,35 +226,68 @@ const circleimage = { uri: "/assets/images/circle.png" };
           />
         </View>
 
-        <Text style={styles.subtext}>
-            {currentDate.toLocaleString(navigator.language, {
-              month: "2-digit",
-              day: "2-digit",
-              year: "2-digit",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </Text>
-<View style={styles.input}>
+        <Text style={styles.subtext}>Facility Hours:</Text>
+        <View style={styles.timeSelect}>
+          <TouchableOpacity onPress={showOpenPicker}>
+            <Text style={styles.timeSelectButton}>
+              {openTime
+                ? openTime.toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })
+                : "Choose Time"}
+            </Text>
+          </TouchableOpacity>
+          <DateTimePickerModal
+            isVisible={isOpenPickerVisible}
+            mode="time"
+            onConfirm={handleOpenConfirm}
+            onCancel={hideOpenPicker}
+          />
+          <TouchableOpacity>
+            <Text> to </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={showClosedPicker}>
+            <Text style={styles.timeSelectButton}>
+              {closedTime
+                ? closedTime.toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })
+                : "Choose Time"}
+            </Text>
+          </TouchableOpacity>
+          <DateTimePickerModal
+            isVisible={isClosedPickerVisible}
+            mode="time"
+            onConfirm={handleClosedConfirm}
+            onCancel={hideClosedPicker}
+          />
+        </View>
+
         <TextInput
-          style={[styles.input, { width: "100%" }]}
+          style={styles.input}
           placeholder="write your description..."
-          placeholderTextColor="#6da798"
+          placeholderTextColor="#344f33"
           value={description}
           onChangeText={setDescription}
           multiline={true}
         />
-</View>
 
         {images.length === 3 && (
           <Text style={styles.errorText}>
             You can only upload a max of 3 photos.
           </Text>
         )}
-        {images.length < 3 &&
-            MainButton("Upload Image", () => {
+        {images.length < 3 && (
+          <Button
+            title="Upload image"
+            color="#344f33"
+            onPress={() => {
               setModalVisible(true);
-            })}
+            }}
+          />
+        )}
 
         <ImageUploader
           isVisible={modalVisible}
@@ -243,7 +306,7 @@ const circleimage = { uri: "/assets/images/circle.png" };
                 onPress={() => {
                   setImageToDisplay(currImage.assets[0].uri);
                   setDisplayImageVisible(true);
-                }}
+                }} /*Linking.openURL(currImage.assets[0].uri)}*/
               >
                 <Text style={styles.imageLink}>
                   {currImage.assets[0].fileName}
@@ -255,24 +318,16 @@ const circleimage = { uri: "/assets/images/circle.png" };
             </View>
           ))}
 
-        <Text style={[styles.subtext, { color: "black" }]}>
-            Rate Your Experience:
-          </Text>
-        <StarRating
-          style={styles.starRating}
-          rating={rating}
-          onChange={setRating}
-          enableHalfStar={false}
-color="black"
-        />
-
-        {MainButton("Post Rating", () => {
+        <Button
+          title="Add Facility"
+          color="#344f33"
+          onPress={() => {
             // make a check to make sure that all fields are filled out
             navigation.navigate("Main");
-          })}
+          }}
+        />
       </View>
     </ScrollView>
-</View>
   );
 }
 
@@ -281,46 +336,152 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#EEF8F7",
+    backgroundColor: "#afd6ae",
+    color: "#344f33",
   },
   title: {
     fontSize: 30,
-    fontWeight: "bold",
+    fontFamily: "EudoxusSans-Bold",
+    color: "#344f33",
   },
   dropdown: {
-    flexDirection: "row",
-    color: "white",
-    fontSize: 17,
-    marginTop: 20,
-    marginBottom: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#CDEEEA",
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    minWidth: 200,
+    ...Platform.select({
+      ios: {
+        flexDirection: "row",
+        color: "white",
+        fontSize: 17,
+        marginTop: 20,
+        marginBottom: 20,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#344f33",
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+      },
+      android: {
+        flexDirection: "row",
+        color: "white",
+        fontSize: 17,
+        marginTop: 20,
+        marginBottom: 20,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#344f33",
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+      },
+      web: {
+        flexDirection: "row",
+        fontSize: 17,
+        marginTop: 20,
+        marginBottom: 20,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "transparent",
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+      },
+    }),
   },
   icon: {
     marginLeft: "auto",
   },
   subtext: {
     fontSize: 17,
+    marginTop: 20,
     marginBottom: 20,
-    color: "#6da798",
+    color: "#344f33",
   },
   errorText: {
     fontSize: 17,
     marginBottom: 20,
-    color: "#540F00",
+    color: "red",
   },
   input: {
-    backgroundColor: "#CDEEEA",
+    borderWidth: 1,
+    borderColor: "#344f33",
     borderRadius: 20,
     padding: 10,
     width: "85%",
     minHeight: 150,
     marginBottom: 20,
+    color: "#344f33",
+  },
+  timeSelect: {
+    fontSize: 17,
+    marginBottom: 20,
+    color: "#344f33",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  timeSelectButton: {
+    fontSize: 17,
+    marginTop: 10,
+    marginBottom: 20,
+    color: "#344f33",
+    borderWidth: 1,
+    borderColor: "#344f33",
+    borderRadius: 20,
+    padding: 10,
+  },
+  button: {
+    ...Platform.select({
+      ios: {
+        fontSize: 17,
+        color: "white",
+        backgroundColor: "#344f33",
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        marginBottom: 20,
+      },
+      android: {
+        fontSize: 17,
+        backgroundColor: "#344f33",
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        marginBottom: 20,
+      },
+      web: {
+        fontSize: 17,
+        color: "black",
+        backgroundColor: "#344f33",
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        marginBottom: 20,
+      },
+    }),
+  },
+  buttontext: {
+    ...Platform.select({
+      ios: {
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: "bold",
+        letterSpacing: 0.25,
+        color: "white",
+      },
+      android: {
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: "bold",
+        letterSpacing: 0.25,
+        color: "white",
+      },
+      web: {
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: "bold",
+        letterSpacing: 0.25,
+        color: "white",
+      },
+    }),
   },
   starRating: {
     marginBottom: 20,
