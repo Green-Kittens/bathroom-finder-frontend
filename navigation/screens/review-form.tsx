@@ -42,7 +42,6 @@ export function Button(props: {
 }
 
 export default function TabReviewForm() {
-
   // location
   const [, setLocation] = useState("");
 
@@ -282,7 +281,7 @@ export default function TabReviewForm() {
           color="#344f33"
           onPress={() => {
             // make a check to make sure that all fields are filled out
-            navigation.navigate("Main")
+            navigation.navigate("Main");
           }}
         />
       </View>

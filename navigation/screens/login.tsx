@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import { ScreenNavigationProp } from "../type";
 import { useNavigation } from "@react-navigation/native";
-import { loginUser } from "@/controllers/userController";
 
 function TabLoginScreen() {
   // State management for text inputs
