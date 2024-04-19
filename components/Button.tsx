@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Pressable, StyleSheet, Platform } from "react-native";
+import { Text, Pressable, StyleSheet } from "react-native";
 
 interface ButtonProps {
   onPress: () => void;
