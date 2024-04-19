@@ -23,19 +23,12 @@ function TabLoginScreen() {
   const navigation = useNavigation<ScreenNavigationProp>();
 
   const onLoginPress = async () => {
-    try {
-      await loginUser(username, password);
-      const navigation = useNavigation<ScreenNavigationProp>();
-      navigation.navigate("Main");
-    } catch (error) {
-      console.error("Error logging in:", error);
-    }
-    // Alert.alert("Login Pressed", "Navigate to home screen.");
     navigation.navigate("Main");
+    Alert.alert("Login Pressed", "Navigate to home screen.");
   };
 
   const onRegisterPress = async () => {
-    //Alert.alert("Register Pressed", "Navigate to registration screen.");
+    Alert.alert("Register Pressed", "Navigate to registration screen.");
   };
 
   const onForgotPress = async () => {

@@ -1,9 +1,9 @@
 import axios from "axios";
 import { User as UserProfile } from "@/types/user";
 import { Facility as BathroomProfile } from "@/types/facility";
-import { Review } from "@/types/review";
 
 const port = process.env.PORT || 8081;
+const host = process.env.HOST || "localhost";
 
 /**
  * Function to register a new user
@@ -21,11 +21,12 @@ export async function registerUser(
   username: string,
   email: string,
   password: string,
-  profile: typeof Image,
+  profile: string,
 ): Promise<string> {
-  //must create ID for user
   try {
-    await axios.post<UserProfile>(`http://localhost:${port}/`);
+    await axios.post<UserProfile>(`http://${host}:${port}/users/`, {
+      params: { firstname, lastname, username, email, password, profile },
+    });
     const successsMsg = `${username} (${firstname},${lastname}) successfully created with email (${email}), password (${password}), and profile ${profile}.`;
     return successsMsg;
   } catch (error) {
@@ -78,7 +79,7 @@ export async function forgotPassword(email: string): Promise<string> {
 export async function getUserProfile(username: string): Promise<UserProfile> {
   try {
     const response = await axios.get<UserProfile>(
-      `http://localhost:${port}/${username}`,
+      `http://${host}:${port}/users/${username}`,
     );
     return response.data;
   } catch (error) {
@@ -98,78 +99,20 @@ export async function getUserProfile(username: string): Promise<UserProfile> {
  */
 export async function createBathroom(
   username: string,
-  opHours: string,
+  openHr: Date,
+  closeHr: Date,
   description: string,
   tags: string[],
-  images: string[],
+  image: string,
 ): Promise<string> {
   try {
-    await axios.post<BathroomProfile>(`http://localhost:${port}/`);
+    await axios.post<BathroomProfile>(`http://${host}:${port}/facilities/`, {
+      params: { username, openHr, closeHr, description, tags, image },
+    });
     const successMsg = `Bathroom successfully created by ${username}: hours of operation (${opHours}), description (${description}), tags (${tags}), images (${images})`;
     return successMsg;
   } catch (error) {
     console.error("Error creating bathroom:", error);
     throw error;
   }
-}
-
-/**
- * Function for retrieving user's favorite bathrooms
- * @param {string}  username - The user
- * @returns {Promise<BathroomProfile[]>} - Returns a promise with all favorite bathrooms after retrieving
- */
-export async function getFavorites(
-  username: string,
-): Promise<BathroomProfile[]> {
-  //Implementation goes here
-  return new Promise<BathroomProfile[]>((resolve) => {
-    const favoritedBathrooms: BathroomProfile[] = [
-      {
-        id: "",
-        name: username,
-        location: {
-          coordinates: [1],
-          type: "",
-        },
-        category: "",
-        tags: [""],
-        operations: "",
-        date: "",
-        ratingAVG: 5,
-        favorites: 3,
-        reports: 0,
-      },
-    ];
-
-    setTimeout(() => {
-      resolve(favoritedBathrooms);
-    }, 1000);
-  });
-}
-
-/**
- * Function for retrieving user's reviews
- * @param {string} username - The user
- * @returns {Promise<Review[]>} - Returns a promise with all reviews user has left after retrieving
- */
-export async function getUserReviews(username: string): Promise<Review[]> {
-  //Implementation goes here
-  return new Promise<Review[]>((resolve) => {
-    const bathroomReviews: Review[] = [
-      {
-        id: "",
-        rating: 4,
-        likes: 5,
-        dislikes: 5,
-        facilityId: "",
-        userId: username,
-        date: Date(),
-        description: "",
-      },
-    ];
-
-    setTimeout(() => {
-      resolve(bathroomReviews);
-    }, 1000);
-  });
 }

@@ -1,5 +1,4 @@
 import React from "react";
-//{ useState }
 
 import {
   Button,
@@ -9,52 +8,19 @@ import {
   Text,
   View,
 } from "react-native";
-import {
-  likeReview,
-  dislikeReview,
-  replyReview,
-} from "@/controllers/reviewController";
 
-export default function FacilityReviewsScreen(
-  reviewID: string[],
-  username: string,
-) {
-  /**like a review */
-  // const [reply, setReply] = useState("");
-  const handleLike = async () => {
-    try {
-      await likeReview(reviewID);
-    } catch (error) {
-      console.error("Error liking review:", error);
-    }
-  };
-  /**dislike a review */
-  const handleDislike = async () => {
-    try {
-      await dislikeReview(reviewID);
-    } catch (error) {
-      console.error("Error disliking review:", error);
-    }
-  };
-  /**replay to a review */
-  const handleReply = async () => {
-    try {
-      await replyReview(reviewID, username, "");
-    } catch (error) {
-      console.error("Error replying to review:", error);
-    }
-  };
+export default function FacilityReviewsScreen() {
   return (
     <ScrollView>
-      {exampleReview(handleLike, handleDislike, handleReply)}
-      {exampleReview(handleLike, handleDislike, handleReply)}
-      {exampleReview(handleLike, handleDislike, handleReply)}
-      {exampleReview(handleLike, handleDislike, handleReply)}
+      {exampleReview()}
+      {exampleReview()}
+      {exampleReview()}
+      {exampleReview()}
     </ScrollView>
   );
 }
 
-function exampleReview(handleLike, handleDislike, handleReply) {
+function exampleReview() {
   return (
     <View id="review" style={{ padding: 5 }}>
       <View id="review-header" style={{ flexDirection: "row", width: "100%" }}>
@@ -96,9 +62,9 @@ function exampleReview(handleLike, handleDislike, handleReply) {
         </Text>
       </View>
       <View id="review-actions" style={styles.buttonContainer}>
-        <Button onPress={handleLike} title="Like" />
-        <Button onPress={handleDislike} title="Dislike" />
-        <Button onPress={handleReply} title="Reply" />
+        <Button title="Like" />
+        <Button title="Dislike" />
+        <Button title="Reply" />
       </View>
     </View>
   );

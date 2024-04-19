@@ -16,7 +16,6 @@ import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import { MaterialIcons } from "@expo/vector-icons";
 import StarRating from "react-native-star-rating-widget";
-// import { createReview } from "@/controllers/reviewController";
 
 // screens
 import { useNavigation } from "@react-navigation/native";
@@ -42,23 +41,7 @@ export function Button(props: {
   );
 }
 
-//username: string, bathroomID: string
-//^need to be passed as params in tabreview form
-
 export default function TabReviewForm() {
-  // const handleReview = async () => {
-  //   try {
-  //     const review = await createReview(
-  //       username,
-  //       bathroomID,
-  //       description,
-  //       rating,
-  //       time,
-  //     );
-  //   } catch (error) {
-  //     console.error("Error creating new review:", error);
-  //   }
-  // };
 
   // location
   const [, setLocation] = useState("");
@@ -297,10 +280,10 @@ export default function TabReviewForm() {
         <Button
           title="Post Rating"
           color="#344f33"
-          onPress={
+          onPress={() => {
             // make a check to make sure that all fields are filled out
             navigation.navigate("Main")
-          }
+          }}
         />
       </View>
     </ScrollView>
