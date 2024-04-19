@@ -110,11 +110,14 @@ export default function facilityForm() {
             animationType="slide"
             transparent={true}
             visible={modalVisible}
-            onRequestClose={() => setModalVisible(false)}>
+            onRequestClose={() => setModalVisible(false)}
+          >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 {MainButton("Take Photo", () => handleAddImage("camera"))}
-                {MainButton("Choose from Gallery", () => handleAddImage("gallery"))}
+                {MainButton("Choose from Gallery", () =>
+                  handleAddImage("gallery"),
+                )}
                 {CancelButton("Close", () => setModalVisible(false))}
               </View>
             </View>
