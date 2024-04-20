@@ -172,7 +172,7 @@ export default function TabReviewForm() {
           alignSelf: "flex-end",
         }}
       ></ImageBackground>
-      <ScrollView style={{width: "100%"}}>
+      <ScrollView style={{ width: "100%" }}>
         <View
           style={{
             justifyContent: "center",

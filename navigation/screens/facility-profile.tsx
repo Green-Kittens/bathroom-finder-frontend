@@ -105,33 +105,32 @@ function CollapseView() {
       </LinearGradient>
 
       <View style={{}}>
-      <View style={styles.separator} />
-      <LinearGradient
-        colors={["#6da798", "#40a4a9"]}
-        end={{ x: 0.1, y: 0.2 }}
-        style={[{ padding: 20, borderRadius: 15 }]}
-      >
-        <View
-          style={[
-            {
-              flex: 1,
-              padding: 10,
-              alignItems: "center",
-              backgroundColor: "none",
-            },
-          ]}
+        <View style={styles.separator} />
+        <LinearGradient
+          colors={["#6da798", "#40a4a9"]}
+          end={{ x: 0.1, y: 0.2 }}
+          style={[{ padding: 20, borderRadius: 15 }]}
         >
-          {Review()}
-          <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
-            {LightButton("See more", () => {
-              navigation.navigate("FacilityReviews");
-            })}
+          <View
+            style={[
+              {
+                flex: 1,
+                padding: 10,
+                alignItems: "center",
+                backgroundColor: "none",
+              },
+            ]}
+          >
+            {Review()}
+            <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
+              {LightButton("See more", () => {
+                navigation.navigate("FacilityReviews");
+              })}
+            </View>
           </View>
-        </View>
-      </LinearGradient>
+        </LinearGradient>
+      </View>
     </View>
-    </View>
-
   );
 }
 
