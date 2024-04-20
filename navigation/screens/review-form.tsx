@@ -83,9 +83,9 @@ export default function TabReviewForm() {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Image style={styles.modalImage} source={{ uri: imageToDisplay }} />
-              {CancelButton("Cancel", () => {
-                onClose();
-              })}
+            {CancelButton("Cancel", () => {
+              onClose();
+            })}
           </View>
         </View>
       </Modal>
@@ -154,10 +154,10 @@ export default function TabReviewForm() {
 
   // post rating (submit button)
   const navigation = useNavigation<ScreenNavigationProp>();
-const circleimage = { uri: "/assets/images/circle.png" };
+  const circleimage = { uri: "/assets/images/circle.png" };
 
   return (
-      <View style={styles.container}>
+    <View style={styles.container}>
       <ImageBackground
         source={circleimage}
         style={{
@@ -172,7 +172,7 @@ const circleimage = { uri: "/assets/images/circle.png" };
           alignSelf: "flex-end",
         }}
       ></ImageBackground>
-      <ScrollView>
+      <ScrollView style={{width: "100%"}}>
         <View
           style={{
             justifyContent: "center",
@@ -180,23 +180,23 @@ const circleimage = { uri: "/assets/images/circle.png" };
             alignContent: "center",
           }}
         >
-        <Text style={styles.title}>New Bathroom Rating</Text>
+          <Text style={styles.title}>New Bathroom Rating</Text>
 
-        <View style={styles.dropdown}>
-          <RNPickerSelect
-            placeholder={{
-              label: "select a location",
-              value: null,
-            }}
-            onValueChange={(newLocation) => setLocation(newLocation)}
-            items={[
-              { label: "Location 1", value: "location1" },
-              { label: "Location 2", value: "location2" },
-            ]}
-          />
-        </View>
+          <View style={styles.dropdown}>
+            <RNPickerSelect
+              placeholder={{
+                label: "select a location",
+                value: null,
+              }}
+              onValueChange={(newLocation) => setLocation(newLocation)}
+              items={[
+                { label: "Location 1", value: "location1" },
+                { label: "Location 2", value: "location2" },
+              ]}
+            />
+          </View>
 
-        <Text style={styles.subtext}>
+          <Text style={styles.subtext}>
             {currentDate.toLocaleString(navigator.language, {
               month: "2-digit",
               day: "2-digit",
@@ -205,74 +205,74 @@ const circleimage = { uri: "/assets/images/circle.png" };
               minute: "2-digit",
             })}
           </Text>
-<View style={styles.input}>
-        <TextInput
-          style={[styles.input, { width: "100%" }]}
-          placeholder="write your description..."
-          placeholderTextColor="#6da798"
-          value={description}
-          onChangeText={setDescription}
-          multiline={true}
-        />
-</View>
+          <View style={styles.input}>
+            <TextInput
+              style={[styles.input, { width: "100%" }]}
+              placeholder="write your description..."
+              placeholderTextColor="#6da798"
+              value={description}
+              onChangeText={setDescription}
+              multiline={true}
+            />
+          </View>
 
-        {images.length === 3 && (
-          <Text style={styles.errorText}>
-            You can only upload a max of 3 photos.
-          </Text>
-        )}
-        {images.length < 3 &&
+          {images.length === 3 && (
+            <Text style={styles.errorText}>
+              You can only upload a max of 3 photos.
+            </Text>
+          )}
+          {images.length < 3 &&
             MainButton("Upload Image", () => {
               setModalVisible(true);
             })}
 
-        <ImageUploader
-          isVisible={modalVisible}
-          onClose={() => setModalVisible(false)}
-        />
+          <ImageUploader
+            isVisible={modalVisible}
+            onClose={() => setModalVisible(false)}
+          />
 
-        <DisplayImage
-          isVisible={displayImageVisible}
-          onClose={() => setDisplayImageVisible(false)}
-        />
+          <DisplayImage
+            isVisible={displayImageVisible}
+            onClose={() => setDisplayImageVisible(false)}
+          />
 
-        {images.length !== 0 &&
-          images.map((currImage, idx) => (
-            <View key={idx} style={styles.imageContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  setImageToDisplay(currImage.assets[0].uri);
-                  setDisplayImageVisible(true);
-                }}
-              >
-                <Text style={styles.imageLink}>
-                  {currImage.assets[0].fileName}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => deleteImage(currImage)}>
-                <MaterialIcons name="delete" size={20} color="gray" />
-              </TouchableOpacity>
-            </View>
-          ))}
+          {images.length !== 0 &&
+            images.map((currImage, idx) => (
+              <View key={idx} style={styles.imageContainer}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setImageToDisplay(currImage.assets[0].uri);
+                    setDisplayImageVisible(true);
+                  }}
+                >
+                  <Text style={styles.imageLink}>
+                    {currImage.assets[0].fileName}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => deleteImage(currImage)}>
+                  <MaterialIcons name="delete" size={20} color="gray" />
+                </TouchableOpacity>
+              </View>
+            ))}
 
-        <Text style={[styles.subtext, { color: "black" }]}>
+          <Text style={[styles.subtext, { color: "black" }]}>
             Rate Your Experience:
           </Text>
-        <StarRating
-          style={styles.starRating}
-          rating={rating}
-          onChange={setRating}
-          enableHalfStar={false}
-color="black"
-        />
+          <StarRating
+            style={styles.starRating}
+            rating={rating}
+            onChange={setRating}
+            enableHalfStar={false}
+            color="black"
+          />
 
-        {MainButton("Post Rating", () => {
+          {MainButton("Post Rating", () => {
             // make a check to make sure that all fields are filled out
             navigation.navigate("Main");
           })}
-      </View>
-    </ScrollView>
-</View>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 

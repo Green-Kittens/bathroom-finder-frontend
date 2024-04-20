@@ -47,8 +47,8 @@ export default function UserProfileScreen() {
             {MainButton("Choose from Gallery", addFromGallery)}
             {MainButton("Remove Current Image", deleteImage)}
             {CancelButton("Cancel", () => {
-                onClose();
-              })}
+              onClose();
+            })}
           </View>
         </View>
       </Modal>
@@ -116,54 +116,55 @@ export default function UserProfileScreen() {
 
   return (
     <View style={styles.container}>
-    <ImageBackground
-      source={boomerangimage}
-      style={{
-        width: "100%",
-        height: "100%",
-        position: "absolute",
-        top: 0,
-        left: 0,
-      }}
-      imageStyle={{
-        resizeMode: "cover",
-        alignSelf: "flex-end",
-      }}
-    ></ImageBackground>
-    <ScrollView>
-    <TouchableOpacity
-        style={styles.profilePictureContainer}
-        onPress={() => {
-          setModalVisible(true);
+      <ImageBackground
+        source={boomerangimage}
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          top: 0,
+          left: 0,
         }}
-      >
-        <Image
-          style={styles.profilePicture}
-          source={{
-            uri: pfp,
+        imageStyle={{
+          resizeMode: "cover",
+          alignSelf: "flex-end",
+        }}
+      ></ImageBackground>
+      <ScrollView>
+        <TouchableOpacity
+          style={styles.profilePictureContainer}
+          onPress={() => {
+            setModalVisible(true);
           }}
-        />
-        <Text>Your Name</Text>
-      </TouchableOpacity>
-
-      <ImageUploader
-        isVisible={modalVisible}
-        onClose={() => setModalVisible(false)}
-      />
-      {horizontalCards("Your Reviews")}
-      {horizontalCards("Your Favorites")}
-      <View>
-      <View style={[{ backgroundColor: "none" }]}>
-          <View
-            style={{
-              marginVertical: 20,
-              backgroundColor: "none",
-              minWidth: 200,
+        >
+          <Image
+            style={styles.profilePicture}
+            source={{
+              uri: pfp,
             }}
-          >
-            {MainButton("Log Out", () => {
-              navigation.navigate("Login");
-            })}
+          />
+          <Text>Your Name</Text>
+        </TouchableOpacity>
+
+        <ImageUploader
+          isVisible={modalVisible}
+          onClose={() => setModalVisible(false)}
+        />
+        {horizontalCards("Your Reviews")}
+        {horizontalCards("Your Favorites")}
+        <View>
+          <View style={[{ backgroundColor: "none" }]}>
+            <View
+              style={{
+                marginVertical: 20,
+                backgroundColor: "none",
+                minWidth: 200,
+              }}
+            >
+              {MainButton("Log Out", () => {
+                navigation.navigate("Login");
+              })}
+            </View>
           </View>
         </View>
       </ScrollView>

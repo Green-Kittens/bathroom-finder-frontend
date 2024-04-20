@@ -23,9 +23,6 @@ const windowHeight = Dimensions.get("window").height;
 
 const blobimage = { uri: "/assets/images/blob.png" };
 
-// navigation
-const navigation = useNavigation<ScreenNavigationProp>();
-
 function CollapseView() {
   const [collapsed, setCollapsed] = useState(true);
   const [maxLines, setMaxLines] = useState(2);
@@ -68,6 +65,9 @@ function CollapseView() {
     }
   };
 
+  // navigation
+  const navigation = useNavigation<ScreenNavigationProp>();
+
   return (
     <View style={{ overflow: "hidden", backgroundColor: "none" }}>
       <Animated.View style={{ maxHeight: animationHeight }}>
@@ -104,6 +104,7 @@ function CollapseView() {
         </Pressable>
       </LinearGradient>
 
+      <View style={{}}>
       <View style={styles.separator} />
       <LinearGradient
         colors={["#6da798", "#40a4a9"]}
@@ -129,10 +130,14 @@ function CollapseView() {
         </View>
       </LinearGradient>
     </View>
+    </View>
+
   );
 }
 
 export default function TabFacilityProfileScreen() {
+  // navigation
+  const navigation = useNavigation<ScreenNavigationProp>();
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -200,12 +205,12 @@ export default function TabFacilityProfileScreen() {
         >
           <View style={{ marginTop: 10 }}>
             {MainButton("Add Review", () => {
-            // figure out how to make it so that dropdown renders current facility as location
-            navigation.navigate("ReviewForm");
-          })}
-      </View>
-          <CollapseView />
+              // figure out how to make it so that dropdown renders current facility as location
+              navigation.navigate("ReviewForm");
+            })}
+          </View>
         </View>
+        <CollapseView />
       </ScrollView>
     </View>
   );
@@ -247,7 +252,6 @@ const styles = StyleSheet.create({
   separator: {
     marginVertical: 30,
     height: 1,
-    width: "100%",
     alignSelf: "center",
   },
   paragraph: {
