@@ -8,6 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
+  ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
@@ -19,6 +20,9 @@ import MainButton, { CancelButton } from "../../components/Buttons";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 
+//const API_KEY = "AIzaSyAJJwYOdMB-0C4MJlLUdYkw0c8RUDzXKaQ";
+
+
 export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
   const { addImage } = useImages();
@@ -29,6 +33,7 @@ export default function FacilityForm() {
   const [isClosedPickerVisible, setClosedPickerVisibility] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [currentLocation, setCurrentLocation] = useState<Location.LocationObject | null>(null);
+  //const [address, setAddress] = useState<string>("");
 
   const handleOpenConfirm = (date: Date) => {
     setOpenTime(date);
@@ -70,12 +75,38 @@ export default function FacilityForm() {
     }
   };
 
+//   const getAddress = async (latitude: number, longitude: number) => {
+//     try {
+//         const response = await fetch(
+//             'https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}'
+//         );
+//         if (!response.ok) {
+//             throw new Error('Failed to fetch address');
+//         }
+//         const data = await response.json();
+//         setAddress(data.results[0]?.formatted_address ||
+//             "Address not found");
+//     } catch (error) {
+//         console.error("Error fetching address: ", error);
+//         setAddress("Error fetching address");
+//     }
+//   };
+
+//   if (!currentLocation) {
+//     return (
+//         <View style={styles.loadingContainer}>
+//             <ActivityIndicator />
+//         </View>
+//     )
+//   }
+
   useEffect(() => {
     const getLocation = async () => {
         const { status } = await Location.requestForegroundPermissionsAsync();
         if (status === "granted") {
             const location = await Location.getCurrentPositionAsync();
             setCurrentLocation(location);
+            //getAddress(currentLocation.coords.latitude, currentLocation.coords.longitude);
         }
     };
     getLocation();
@@ -97,15 +128,21 @@ export default function FacilityForm() {
                 }}
             >
                 <Marker 
+                    draggable // enables user to drag to desired location
                     coordinate={{
                         latitude: currentLocation.coords.latitude + 0.001,
                         longitude: currentLocation.coords.longitude + 0.001,
+                    }}
+                    onDragEnd={(e) => {
+                        // getAddress(e.nativeEvent.coordinate.latitude,
+                        //     e.nativeEvent.coordinate.longitude);
                     }}
                 />
             </MapView>
         ) : (
             <Text style={styles.subtext}>Fetching current location...</Text>
         )}
+        {/* <Text style={styles.subtext}>{address}</Text> */}
         <View style={styles.timeSelect}>
           <TouchableOpacity onPress={() => setOpenPickerVisibility(true)}>
             <Text style={styles.timeSelectButton}>
@@ -264,5 +301,10 @@ const styles = StyleSheet.create({
     height: "25%",
     marginTop: 20,
     marginBottom: 20,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
