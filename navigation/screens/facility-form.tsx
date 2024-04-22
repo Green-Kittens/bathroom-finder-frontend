@@ -20,7 +20,7 @@ import MainButton, { CancelButton } from "../../components/Buttons";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 
-//const API_KEY = "AIzaSyAJJwYOdMB-0C4MJlLUdYkw0c8RUDzXKaQ";
+//const API_KEY = "replace with key";
 
 
 export default function FacilityForm() {
