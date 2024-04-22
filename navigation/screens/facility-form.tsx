@@ -17,6 +17,7 @@ import { useImages } from "../../contexts/ImageContext"; // Ensure the import pa
 import { ScreenNavigationProp } from "../type";
 import MainButton, { CancelButton } from "../../components/Buttons";
 import * as Location from "expo-location";
+import MapView, { Marker } from "react-native-maps";
 
 export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
@@ -84,12 +85,27 @@ export default function FacilityForm() {
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <Text style={styles.title}>Add a New Facility</Text>
-        <Text style={styles.subtext}>
-            {currentLocation ?
-             `Latitude: ${currentLocation.coords.latitude}, 
-             Longitude: ${currentLocation.coords.longitude}` :
-               "Fetching current location..."}
-        </Text>
+        {currentLocation ? (
+            <MapView
+                style={styles.mapContainer}
+                showsUserLocation={true}
+                initialRegion={{
+                    latitude: currentLocation.coords.latitude,
+                    longitude: currentLocation.coords.longitude,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                }}
+            >
+                <Marker 
+                    coordinate={{
+                        latitude: currentLocation.coords.latitude + 0.001,
+                        longitude: currentLocation.coords.longitude + 0.001,
+                    }}
+                />
+            </MapView>
+        ) : (
+            <Text style={styles.subtext}>Fetching current location...</Text>
+        )}
         <View style={styles.timeSelect}>
           <TouchableOpacity onPress={() => setOpenPickerVisibility(true)}>
             <Text style={styles.timeSelectButton}>
@@ -242,5 +258,11 @@ const styles = StyleSheet.create({
   imageLink: {
     marginRight: 10,
     color: "blue",
+  },
+  mapContainer: {
+    width: "100%",
+    height: "25%",
+    marginTop: 20,
+    marginBottom: 20,
   },
 });
