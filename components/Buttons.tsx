@@ -1,12 +1,14 @@
-import { GestureResponderEvent } from "react-native";
+import { GestureResponderEvent, StyleProp } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet } from "react-native";
 import React from "react";
 import { Button } from "@rneui/themed";
+import { ViewStyle } from "react-native";
 
 export default function MainButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
+  styling?: StyleProp<ViewStyle>
 ) {
   return (
     <Button
@@ -14,15 +16,11 @@ export default function MainButton(
       titleStyle={styles.text}
       ViewComponent={LinearGradient}
       linearGradientProps={{
-        colors: ["#6da798", "#5CA59E"],
+        colors: ["#7FC6B3", "#74C9C0"],
         start: [1, 0],
         end: [0.2, 0],
       }}
-      buttonStyle={{
-        borderWidth: 0,
-        borderColor: "transparent",
-        borderRadius: 5,
-      }}
+      buttonStyle={[styles.button, styling]}
       containerStyle={styles.container}
       onPress={onpress}
     />
@@ -32,6 +30,7 @@ export default function MainButton(
 export function LightButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
+  styling?: StyleProp<ViewStyle>
 ) {
   return (
     <Button
@@ -43,7 +42,7 @@ export function LightButton(
         start: [1, 0],
         end: [0.2, 0],
       }}
-      buttonStyle={styles.button}
+      buttonStyle={[styles.button, styling]}
       containerStyle={styles.container}
       onPress={onpress}
     />
@@ -53,13 +52,14 @@ export function LightButton(
 export function CancelButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
+  styling?: StyleProp<ViewStyle>
 ) {
   return (
     <Button
       title={words}
       titleStyle={styles.text}
       color={"#FC6769"}
-      buttonStyle={styles.button}
+      buttonStyle={[styles.button, styling]}
       containerStyle={styles.container}
       onPress={onpress}
     />
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "black",
-    fontSize: 17,
+   fontSize: 17,
     padding: 20,
   },
 });
