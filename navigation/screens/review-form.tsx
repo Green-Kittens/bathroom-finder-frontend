@@ -1,17 +1,19 @@
 import React from "react";
+import MainButton from "../../components/Buttons";
+import { CancelButton } from "../../components/Buttons";
 import {
-  Pressable,
   StyleSheet,
   TextInput,
   Text,
   View,
-  ScrollView,
   Modal,
   Alert,
   TouchableOpacity,
-  Platform,
+  ImageBackground,
+  ScrollView,
   Image,
 } from "react-native";
+
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -21,23 +23,6 @@ import * as ImagePicker from "expo-image-picker";
 
 // type
 import { ScreenNavigationProp } from "../type";
-
-//Button component
-export function Button(props: {
-  onPress: () => void;
-  title?: string;
-  color?: string;
-}) {
-  const { onPress, title = "Title", color = "#344f33" } = props;
-  return (
-    <Pressable
-      style={[styles.button, { backgroundColor: color }]}
-      onPress={onPress}
-    >
-      <Text style={styles.buttontext}>{title}</Text>
-    </Pressable>
-  );
-}
 
 export default function TabReviewForm() {
   // location
@@ -67,23 +52,11 @@ export default function TabReviewForm() {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Button
-              title="Take Photo"
-              color="#344f33"
-              onPress={addUsingCamera}
-            />
-            <Button
-              title="Choose from Gallery"
-              color="#344f33"
-              onPress={addFromGallery}
-            />
-            <Button
-              title="Cancel"
-              color="red"
-              onPress={() => {
-                onClose();
-              }}
-            />
+            {MainButton("Take Photo", addUsingCamera)}
+            {MainButton("Choose from Gallery", addFromGallery)}
+            {CancelButton("Cancel", () => {
+              onClose();
+            })}
           </View>
         </View>
       </Modal>
@@ -110,13 +83,9 @@ export default function TabReviewForm() {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Image style={styles.modalImage} source={{ uri: imageToDisplay }} />
-            <Button
-              title="Cancel"
-              color="red"
-              onPress={() => {
-                onClose();
-              }}
-            />
+            {CancelButton("Cancel", () => {
+              onClose();
+            })}
           </View>
         </View>
       </Modal>
@@ -185,105 +154,125 @@ export default function TabReviewForm() {
 
   // post rating (submit button)
   const navigation = useNavigation<ScreenNavigationProp>();
+  const circleimage = { uri: "/assets/images/circle.png" };
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Text style={styles.title}>New Bathroom Rating</Text>
+    <View style={styles.container}>
+      <ImageBackground
+        source={circleimage}
+        style={{
+          width: 1070,
+          height: 1000,
+          position: "absolute",
+          top: 550,
+          left: -200,
+        }}
+        imageStyle={{
+          resizeMode: "cover",
+          alignSelf: "flex-end",
+        }}
+      ></ImageBackground>
+      <ScrollView style={{ width: "100%" }}>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            alignContent: "center",
+          }}
+        >
+          <Text style={styles.title}>New Bathroom Rating</Text>
 
-        <View style={styles.dropdown}>
-          <RNPickerSelect
-            placeholder={{
-              label: "select a location",
-              value: null,
-            }}
-            onValueChange={(newLocation) => setLocation(newLocation)}
-            items={[
-              { label: "Location 1", value: "location1" },
-              { label: "Location 2", value: "location2" },
-            ]}
-          />
-          <MaterialIcons
-            style={styles.icon}
-            name="keyboard-arrow-down"
-            size={17}
-            color="white"
-          />
-        </View>
+          <View style={styles.dropdown}>
+            <RNPickerSelect
+              placeholder={{
+                label: "select a location",
+                value: null,
+              }}
+              onValueChange={(newLocation) => setLocation(newLocation)}
+              items={[
+                { label: "Location 1", value: "location1" },
+                { label: "Location 2", value: "location2" },
+              ]}
+            />
+          </View>
 
-        <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
-
-        <TextInput
-          style={styles.input}
-          placeholder="write your description..."
-          placeholderTextColor="#344f33"
-          value={description}
-          onChangeText={setDescription}
-          multiline={true}
-        />
-
-        {images.length === 3 && (
-          <Text style={styles.errorText}>
-            You can only upload a max of 3 photos.
+          <Text style={styles.subtext}>
+            {currentDate.toLocaleString(navigator.language, {
+              month: "2-digit",
+              day: "2-digit",
+              year: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
           </Text>
-        )}
-        {images.length < 3 && (
-          <Button
-            title="Upload image"
-            color="#344f33"
-            onPress={() => {
+          <View style={styles.input}>
+            <TextInput
+              style={[styles.input, { width: "100%" }]}
+              placeholder="write your description..."
+              placeholderTextColor="#6da798"
+              value={description}
+              onChangeText={setDescription}
+              multiline={true}
+            />
+          </View>
+
+          {images.length === 3 && (
+            <Text style={styles.errorText}>
+              You can only upload a max of 3 photos.
+            </Text>
+          )}
+          {images.length < 3 &&
+            MainButton("Upload Image", () => {
               setModalVisible(true);
-            }}
+            })}
+
+          <ImageUploader
+            isVisible={modalVisible}
+            onClose={() => setModalVisible(false)}
           />
-        )}
 
-        <ImageUploader
-          isVisible={modalVisible}
-          onClose={() => setModalVisible(false)}
-        />
+          <DisplayImage
+            isVisible={displayImageVisible}
+            onClose={() => setDisplayImageVisible(false)}
+          />
 
-        <DisplayImage
-          isVisible={displayImageVisible}
-          onClose={() => setDisplayImageVisible(false)}
-        />
+          {images.length !== 0 &&
+            images.map((currImage, idx) => (
+              <View key={idx} style={styles.imageContainer}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setImageToDisplay(currImage.assets[0].uri);
+                    setDisplayImageVisible(true);
+                  }}
+                >
+                  <Text style={styles.imageLink}>
+                    {currImage.assets[0].fileName}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => deleteImage(currImage)}>
+                  <MaterialIcons name="delete" size={20} color="gray" />
+                </TouchableOpacity>
+              </View>
+            ))}
 
-        {images.length !== 0 &&
-          images.map((currImage, idx) => (
-            <View key={idx} style={styles.imageContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  setImageToDisplay(currImage.assets[0].uri);
-                  setDisplayImageVisible(true);
-                }}
-              >
-                <Text style={styles.imageLink}>
-                  {currImage.assets[0].fileName}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => deleteImage(currImage)}>
-                <MaterialIcons name="delete" size={20} color="gray" />
-              </TouchableOpacity>
-            </View>
-          ))}
+          <Text style={[styles.subtext, { color: "black" }]}>
+            Rate Your Experience:
+          </Text>
+          <StarRating
+            style={styles.starRating}
+            rating={rating}
+            onChange={setRating}
+            enableHalfStar={false}
+            color="black"
+          />
 
-        <Text style={styles.subtext}>Rate Your Experience:</Text>
-        <StarRating
-          style={styles.starRating}
-          rating={rating}
-          onChange={setRating}
-          enableHalfStar={false}
-        />
-
-        <Button
-          title="Post Rating"
-          color="#344f33"
-          onPress={() => {
+          {MainButton("Post Rating", () => {
             // make a check to make sure that all fields are filled out
             navigation.navigate("Main");
-          }}
-        />
-      </View>
-    </ScrollView>
+          })}
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -292,135 +281,46 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#afd6ae",
-    color: "#344f33",
+    backgroundColor: "#EEF8F7",
   },
   title: {
     fontSize: 30,
-    fontFamily: "EudoxusSans-Bold",
-    color: "#344f33",
+    fontWeight: "bold",
   },
   dropdown: {
-    ...Platform.select({
-      ios: {
-        flexDirection: "row",
-        color: "white",
-        fontSize: 17,
-        marginTop: 20,
-        marginBottom: 20,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#344f33",
-        paddingVertical: 5,
-        paddingHorizontal: 20,
-        borderRadius: 8,
-      },
-      android: {
-        flexDirection: "row",
-        color: "white",
-        fontSize: 17,
-        marginTop: 20,
-        marginBottom: 20,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#344f33",
-        paddingVertical: 5,
-        paddingHorizontal: 20,
-        borderRadius: 8,
-      },
-      web: {
-        flexDirection: "row",
-        fontSize: 17,
-        marginTop: 20,
-        marginBottom: 20,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "transparent",
-        paddingVertical: 5,
-        paddingHorizontal: 20,
-        borderRadius: 8,
-      },
-    }),
+    flexDirection: "row",
+    color: "white",
+    fontSize: 17,
+    marginTop: 20,
+    marginBottom: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#CDEEEA",
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    minWidth: 200,
   },
   icon: {
     marginLeft: "auto",
   },
   subtext: {
     fontSize: 17,
-    marginTop: 20,
     marginBottom: 20,
-    color: "#344f33",
+    color: "#6da798",
   },
   errorText: {
     fontSize: 17,
     marginBottom: 20,
-    color: "red",
+    color: "#540F00",
   },
   input: {
-    borderWidth: 1,
-    borderColor: "#344f33",
+    backgroundColor: "#CDEEEA",
     borderRadius: 20,
     padding: 10,
     width: "85%",
     minHeight: 150,
     marginBottom: 20,
-    color: "#344f33",
-  },
-  button: {
-    ...Platform.select({
-      ios: {
-        fontSize: 17,
-        color: "white",
-        backgroundColor: "#344f33",
-        paddingVertical: 5,
-        paddingHorizontal: 20,
-        borderRadius: 8,
-        marginBottom: 20,
-      },
-      android: {
-        fontSize: 17,
-        backgroundColor: "#344f33",
-        paddingVertical: 5,
-        paddingHorizontal: 20,
-        borderRadius: 8,
-        marginBottom: 20,
-      },
-      web: {
-        fontSize: 17,
-        color: "black",
-        backgroundColor: "#344f33",
-        paddingVertical: 5,
-        paddingHorizontal: 20,
-        borderRadius: 8,
-        marginBottom: 20,
-      },
-    }),
-  },
-
-  buttontext: {
-    ...Platform.select({
-      ios: {
-        fontSize: 16,
-        lineHeight: 21,
-        fontWeight: "bold",
-        letterSpacing: 0.25,
-        color: "white",
-      },
-      android: {
-        fontSize: 16,
-        lineHeight: 21,
-        fontWeight: "bold",
-        letterSpacing: 0.25,
-        color: "white",
-      },
-      web: {
-        fontSize: 16,
-        lineHeight: 21,
-        fontWeight: "bold",
-        letterSpacing: 0.25,
-        color: "white",
-      },
-    }),
   },
   starRating: {
     marginBottom: 20,

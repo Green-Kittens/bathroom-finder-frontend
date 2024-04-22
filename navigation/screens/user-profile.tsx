@@ -1,20 +1,25 @@
 import React, { useState } from "react";
+import horizontalCards from "../../components/HorizontalCards";
+import MainButton from "../../components/Buttons";
+import { CancelButton } from "../../components/Buttons";
 import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Button,
   Text,
   View,
   TouchableOpacity,
   Modal,
   Alert,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 
 // types
 import { ScreenNavigationProp } from "../type";
+
+const boomerangimage = { uri: "/assets/images/boomerang.png" };
 
 export default function UserProfileScreen() {
   // navigation
@@ -38,28 +43,12 @@ export default function UserProfileScreen() {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Button
-              title="Take Photo"
-              color="#344f33"
-              onPress={addUsingCamera}
-            />
-            <Button
-              title="Choose from Gallery"
-              color="#344f33"
-              onPress={addFromGallery}
-            />
-            <Button
-              title="Remove Current Image"
-              color="#344f33"
-              onPress={deleteImage}
-            />
-            <Button
-              title="Cancel"
-              color="red"
-              onPress={() => {
-                onClose();
-              }}
-            />
+            {MainButton("Take Photo", addUsingCamera)}
+            {MainButton("Choose from Gallery", addFromGallery)}
+            {MainButton("Remove Current Image", deleteImage)}
+            {CancelButton("Cancel", () => {
+              onClose();
+            })}
           </View>
         </View>
       </Modal>
@@ -126,73 +115,73 @@ export default function UserProfileScreen() {
   };
 
   return (
-    <ScrollView>
-      <TouchableOpacity
-        style={styles.profilePictureContainer}
-        onPress={() => {
-          setModalVisible(true);
+    <View style={styles.container}>
+      <ImageBackground
+        source={boomerangimage}
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          top: 0,
+          left: 0,
         }}
-      >
-        <Image
-          style={styles.profilePicture}
-          source={{
-            uri: pfp,
+        imageStyle={{
+          resizeMode: "cover",
+          alignSelf: "flex-end",
+        }}
+      ></ImageBackground>
+      <ScrollView>
+        <TouchableOpacity
+          style={styles.profilePictureContainer}
+          onPress={() => {
+            setModalVisible(true);
           }}
-        />
-        <Text>Your Name</Text>
-      </TouchableOpacity>
-
-      <ImageUploader
-        isVisible={modalVisible}
-        onClose={() => setModalVisible(false)}
-      />
-
-      {horizontalCards("Your Reviews")}
-      {horizontalCards("Your Favorites")}
-      <View>
-        <View style={{ marginHorizontal: "40%", marginVertical: 5 }}>
-          <Button
-            title="Log Out"
-            onPress={() => {
-              navigation.navigate("Login");
+        >
+          <Image
+            style={styles.profilePicture}
+            source={{
+              uri: pfp,
             }}
           />
-        </View>
-      </View>
-    </ScrollView>
-  );
-}
+          <Text>Your Name</Text>
+        </TouchableOpacity>
 
-function horizontalCards(title: string) {
-  return (
-    <View>
-      <Text style={{ margin: 10 }}>{title}</Text>
-      <ScrollView horizontal={true} style={styles.horizontalScroll}>
-        {card()}
-        {card()}
-        {card()}
-        {card()}
-        {card()}
-        {card()}
-        {card()}
-        {card()}
+        <ImageUploader
+          isVisible={modalVisible}
+          onClose={() => setModalVisible(false)}
+        />
+        {horizontalCards("Your Reviews")}
+        {horizontalCards("Your Favorites")}
+        <View>
+          <View style={[{ backgroundColor: "none" }]}>
+            <View
+              style={{
+                marginVertical: 20,
+                backgroundColor: "none",
+                minWidth: 200,
+              }}
+            >
+              {MainButton("Log Out", () => {
+                navigation.navigate("Login");
+              })}
+            </View>
+          </View>
+        </View>
       </ScrollView>
     </View>
   );
 }
 
-function card() {
-  return <View style={styles.card} />;
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#EEF8F7",
   },
   title: {
     fontSize: 20,
+    fontWeight: "bold",
+    backgroundColor: "none",
     fontFamily: "EudoxusSans-Bold",
   },
   separator: {
