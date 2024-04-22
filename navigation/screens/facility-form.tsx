@@ -1,5 +1,5 @@
 //facility-form.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -16,8 +16,9 @@ import { HorizontalCards } from "../../components/Carousel";
 import { useImages } from "../../contexts/ImageContext"; // Ensure the import path is correct
 import { ScreenNavigationProp } from "../type";
 import MainButton, { CancelButton } from "../../components/Buttons";
+import * as Location from "expo-location";
 
-export default function facilityForm() {
+export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
   const { addImage } = useImages();
   const [description, setDescription] = useState("");
@@ -26,6 +27,7 @@ export default function facilityForm() {
   const [isOpenPickerVisible, setOpenPickerVisibility] = useState(false);
   const [isClosedPickerVisible, setClosedPickerVisibility] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [currentLocation, setCurrentLocation] = useState<Location.LocationObject | null>(null);
 
   const handleOpenConfirm = (date: Date) => {
     setOpenTime(date);
@@ -67,10 +69,27 @@ export default function facilityForm() {
     }
   };
 
+  useEffect(() => {
+    const getLocation = async () => {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status === "granted") {
+            const location = await Location.getCurrentPositionAsync();
+            setCurrentLocation(location);
+        }
+    };
+    getLocation();
+  }, []);
+
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <Text style={styles.title}>Add a New Facility</Text>
+        <Text style={styles.subtext}>
+            {currentLocation ?
+             `Latitude: ${currentLocation.coords.latitude}, 
+             Longitude: ${currentLocation.coords.longitude}` :
+               "Fetching current location..."}
+        </Text>
         <View style={styles.timeSelect}>
           <TouchableOpacity onPress={() => setOpenPickerVisibility(true)}>
             <Text style={styles.timeSelectButton}>
@@ -96,7 +115,6 @@ export default function facilityForm() {
             onCancel={() => setClosedPickerVisibility(false)}
           />
         </View>
-        <HorizontalCards />
         <TextInput
           style={styles.input}
           placeholder="Write your description..."
@@ -120,6 +138,7 @@ export default function facilityForm() {
             </View>
           </Modal>
         )}
+        <HorizontalCards />
         {MainButton("Submit Facility", () => navigation.navigate("Main"))}
       </View>
     </ScrollView>
@@ -152,6 +171,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     color: "#344f33",
+    textAlign: "center",
   },
   errorText: {
     fontSize: 17,
