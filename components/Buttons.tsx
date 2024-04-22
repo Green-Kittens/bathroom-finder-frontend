@@ -8,7 +8,7 @@ import { ViewStyle } from "react-native";
 export default function MainButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
-  styling?: StyleProp<ViewStyle>
+  styling?: StyleProp<ViewStyle>,
 ) {
   return (
     <Button
@@ -30,7 +30,7 @@ export default function MainButton(
 export function LightButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
-  styling?: StyleProp<ViewStyle>
+  styling?: StyleProp<ViewStyle>,
 ) {
   return (
     <Button
@@ -49,10 +49,32 @@ export function LightButton(
   );
 }
 
+export function SecordaryButton(
+  words: string,
+  onpress: ((event: GestureResponderEvent) => void) | undefined,
+  styling?: StyleProp<ViewStyle>,
+) {
+  return (
+    <Button
+      title={words}
+      titleStyle={[styles.text, { color: "white" }]}
+      ViewComponent={LinearGradient}
+      linearGradientProps={{
+        colors: ["#044962", "#254A5E"],
+        start: [1, 0],
+        end: [0.2, 0],
+      }}
+      buttonStyle={[styles.button, styling]}
+      containerStyle={styles.container}
+      onPress={onpress}
+    />
+  );
+}
+
 export function CancelButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
-  styling?: StyleProp<ViewStyle>
+  styling?: StyleProp<ViewStyle>,
 ) {
   return (
     <Button
@@ -83,7 +105,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "black",
-   fontSize: 17,
+    fontSize: 17,
     padding: 20,
   },
 });
