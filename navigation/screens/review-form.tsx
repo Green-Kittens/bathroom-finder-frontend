@@ -229,29 +229,31 @@ export default function ReviewForm() {
             />
           </View>
 
-        <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
-        {horizontalCards(images)}
-        <TextInput
-          style={styles.input}
-          placeholder="write your description..."
-          placeholderTextColor="#344f33"
-          value={description}
-          onChangeText={setDescription}
-          multiline={true}
-        />
+          <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
+          {horizontalCards(images)}
+          <TextInput
+            style={styles.input}
+            placeholder="write your description..."
+            placeholderTextColor="#344f33"
+            value={description}
+            onChangeText={setDescription}
+            multiline={true}
+          />
 
-        {images.length === 5 && (
-          <Text style={styles.errorText}>
-            You can only upload a max of 3 photos.
-          </Text>
-        )}
-        {images.length < 5 && (
-          <Button
-            title="Upload image"
-            color="#344f33"
-            onPress={() => {
-              setModalVisible(true);
-            })}
+          {images.length === 5 && (
+            <Text style={styles.errorText}>
+              You can only upload a max of 3 photos.
+            </Text>
+          )}
+          {images.length < 5 && (
+            <Button
+              title="Upload image"
+              color="#344f33"
+              onPress={() => {
+                setModalVisible(true);
+              }}
+            />
+          )}
 
           <ImageUploader
             isVisible={modalVisible}
