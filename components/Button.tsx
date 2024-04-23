@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 8,
-    marginTop:10,
+    marginTop: 10,
     marginBottom: 10,
   },
   buttonText: {

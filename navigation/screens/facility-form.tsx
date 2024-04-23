@@ -22,7 +22,6 @@ import MapView, { Marker } from "react-native-maps";
 
 //const API_KEY = "replace with key";
 
-
 export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
   const { addImage } = useImages();
@@ -32,7 +31,8 @@ export default function FacilityForm() {
   const [isOpenPickerVisible, setOpenPickerVisibility] = useState(false);
   const [isClosedPickerVisible, setClosedPickerVisibility] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [currentLocation, setCurrentLocation] = useState<Location.LocationObject | null>(null);
+  const [currentLocation, setCurrentLocation] =
+    useState<Location.LocationObject | null>(null);
   //const [address, setAddress] = useState<string>("");
 
   const handleOpenConfirm = (date: Date) => {
@@ -75,39 +75,39 @@ export default function FacilityForm() {
     }
   };
 
-//   const getAddress = async (latitude: number, longitude: number) => {
-//     try {
-//         const response = await fetch(
-//             'https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}'
-//         );
-//         if (!response.ok) {
-//             throw new Error('Failed to fetch address');
-//         }
-//         const data = await response.json();
-//         setAddress(data.results[0]?.formatted_address ||
-//             "Address not found");
-//     } catch (error) {
-//         console.error("Error fetching address: ", error);
-//         setAddress("Error fetching address");
-//     }
-//   };
+  //   const getAddress = async (latitude: number, longitude: number) => {
+  //     try {
+  //         const response = await fetch(
+  //             'https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}'
+  //         );
+  //         if (!response.ok) {
+  //             throw new Error('Failed to fetch address');
+  //         }
+  //         const data = await response.json();
+  //         setAddress(data.results[0]?.formatted_address ||
+  //             "Address not found");
+  //     } catch (error) {
+  //         console.error("Error fetching address: ", error);
+  //         setAddress("Error fetching address");
+  //     }
+  //   };
 
-//   if (!currentLocation) {
-//     return (
-//         <View style={styles.loadingContainer}>
-//             <ActivityIndicator />
-//         </View>
-//     )
-//   }
+  //   if (!currentLocation) {
+  //     return (
+  //         <View style={styles.loadingContainer}>
+  //             <ActivityIndicator />
+  //         </View>
+  //     )
+  //   }
 
   useEffect(() => {
     const getLocation = async () => {
-        const { status } = await Location.requestForegroundPermissionsAsync();
-        if (status === "granted") {
-            const location = await Location.getCurrentPositionAsync();
-            setCurrentLocation(location);
-            //getAddress(currentLocation.coords.latitude, currentLocation.coords.longitude);
-        }
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status === "granted") {
+        const location = await Location.getCurrentPositionAsync();
+        setCurrentLocation(location);
+        //getAddress(currentLocation.coords.latitude, currentLocation.coords.longitude);
+      }
     };
     getLocation();
   }, []);
@@ -117,30 +117,30 @@ export default function FacilityForm() {
       <View style={styles.container}>
         <Text style={styles.title}>Add a New Facility</Text>
         {currentLocation ? (
-            <MapView
-                style={styles.mapContainer}
-                showsUserLocation={true}
-                initialRegion={{
-                    latitude: currentLocation.coords.latitude,
-                    longitude: currentLocation.coords.longitude,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                }}
-            >
-                <Marker 
-                    draggable // enables user to drag to desired location
-                    coordinate={{
-                        latitude: currentLocation.coords.latitude + 0.001,
-                        longitude: currentLocation.coords.longitude + 0.001,
-                    }}
-                    onDragEnd={(e) => {
-                        // getAddress(e.nativeEvent.coordinate.latitude,
-                        //     e.nativeEvent.coordinate.longitude);
-                    }}
-                />
-            </MapView>
+          <MapView
+            style={styles.mapContainer}
+            showsUserLocation={true}
+            initialRegion={{
+              latitude: currentLocation.coords.latitude,
+              longitude: currentLocation.coords.longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          >
+            <Marker
+              draggable // enables user to drag to desired location
+              coordinate={{
+                latitude: currentLocation.coords.latitude + 0.001,
+                longitude: currentLocation.coords.longitude + 0.001,
+              }}
+              onDragEnd={(e) => {
+                // getAddress(e.nativeEvent.coordinate.latitude,
+                //     e.nativeEvent.coordinate.longitude);
+              }}
+            />
+          </MapView>
         ) : (
-            <Text style={styles.subtext}>Fetching current location...</Text>
+          <Text style={styles.subtext}>Fetching current location...</Text>
         )}
         {/* <Text style={styles.subtext}>{address}</Text> */}
         <View style={styles.timeSelect}>
@@ -181,11 +181,14 @@ export default function FacilityForm() {
             animationType="slide"
             transparent={true}
             visible={modalVisible}
-            onRequestClose={() => setModalVisible(false)}>
+            onRequestClose={() => setModalVisible(false)}
+          >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 {MainButton("Take Photo", () => handleAddImage("camera"))}
-                {MainButton("Choose from Gallery", () => handleAddImage("gallery"))}
+                {MainButton("Choose from Gallery", () =>
+                  handleAddImage("gallery"),
+                )}
                 {CancelButton("Close", () => setModalVisible(false))}
               </View>
             </View>

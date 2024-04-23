@@ -19,7 +19,7 @@ import StarRating from "react-native-star-rating-widget";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { Button } from "../../components/Button";
-import { useImages } from "../../contexts/ImageContext"; 
+import { useImages } from "../../contexts/ImageContext";
 import MainButton, { CancelButton } from "../../components/Buttons";
 import { HorizontalCards } from "../../components/Carousel";
 
@@ -27,7 +27,6 @@ import { HorizontalCards } from "../../components/Carousel";
 import { ScreenNavigationProp } from "../type";
 
 export default function ReviewForm() {
-
   // location
   const [, setLocation] = useState("");
 
@@ -118,11 +117,14 @@ export default function ReviewForm() {
             animationType="slide"
             transparent={true}
             visible={modalVisible}
-            onRequestClose={() => setModalVisible(false)}>
+            onRequestClose={() => setModalVisible(false)}
+          >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 {MainButton("Take Photo", () => handleAddImage("camera"))}
-                {MainButton("Choose from Gallery", () => handleAddImage("gallery"))}
+                {MainButton("Choose from Gallery", () =>
+                  handleAddImage("gallery"),
+                )}
                 {CancelButton("Close", () => setModalVisible(false))}
               </View>
             </View>
