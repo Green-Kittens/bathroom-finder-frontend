@@ -22,36 +22,36 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 // image card for carousel
 function card(imageSource: string) {
-    return (
-      <View style={styles.card}>
-        <Image source={{ uri: imageSource }} style={styles.cardImage} />
-      </View>
-    );
-  }
-  
-  //image carousel
-  function horizontalCards(images: Array<ImagePicker.ImagePickerSuccessResult>) {
-    const tempImagesCount = 5 - images.length;
-    const tempImages = Array(tempImagesCount)
-  
-    return (
-      <View style={styles.container}>
-        <Text style={{ margin: 10 }}>Uploaded Images</Text>
-        <ScrollView horizontal={true} style={styles.horizontalScroll}>
-          {images.map((img, index) => {
-            // Check if img.assets exists and has at least one item
-            if (img.assets && img.assets.length > 0 && img.assets[0].uri) {
-              return card(img.assets[0].uri);
-            }
-            return null; // Return null if no uri is found
-          })}
-          {tempImages.map(
-            (src, index) => card(src), // Use the temp image for empty slots
-          )}
-        </ScrollView>
-      </View>
-    );
-  }
+  return (
+    <View style={styles.card}>
+      <Image source={{ uri: imageSource }} style={styles.cardImage} />
+    </View>
+  );
+}
+
+//image carousel
+function horizontalCards(images: Array<ImagePicker.ImagePickerSuccessResult>) {
+  const tempImagesCount = 5 - images.length;
+  const tempImages = Array(tempImagesCount);
+
+  return (
+    <View style={styles.container}>
+      <Text style={{ margin: 10 }}>Uploaded Images</Text>
+      <ScrollView horizontal={true} style={styles.horizontalScroll}>
+        {images.map((img, index) => {
+          // Check if img.assets exists and has at least one item
+          if (img.assets && img.assets.length > 0 && img.assets[0].uri) {
+            return card(img.assets[0].uri);
+          }
+          return null; // Return null if no uri is found
+        })}
+        {tempImages.map(
+          (src, index) => card(src), // Use the temp image for empty slots
+        )}
+      </ScrollView>
+    </View>
+  );
+}
 
 export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
@@ -276,9 +276,7 @@ export default function FacilityForm() {
                   setDisplayImageVisible(true);
                 }}
               >
-                <Text style={styles.imageLink}>
-                  {"Image #" + (idx + 1)}
-                </Text>
+                <Text style={styles.imageLink}>{"Image #" + (idx + 1)}</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => deleteImage(currImage)}>
                 <MaterialIcons name="delete" size={20} color="gray" />

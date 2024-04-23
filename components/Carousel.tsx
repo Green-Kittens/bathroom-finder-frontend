@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   View,
   Image,
@@ -25,21 +25,18 @@ const Card: React.FC<CardProps> = ({ imageSource, onPress }) => {
   );
 };
 
-
 const HorizontalCards: React.FC = () => {
   const { images, deleteImage } = useImages();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedImageUri, setSelectedImageUri] = useState("");
 
-
-  // Get the screen width from Dimensions 
+  // Get the screen width from Dimensions
   const screenWidth = Dimensions.get("window").width;
   const cardWidth = 100; // width of each card
   const margin = 10; // total horizontal margin around each card
   const totalCardWidth = images.length * (cardWidth + margin);
   const shouldScroll = totalCardWidth > screenWidth;
 
-  
   const openImageModal = (uri: string) => {
     setSelectedImageUri(uri);
     setModalVisible(true);

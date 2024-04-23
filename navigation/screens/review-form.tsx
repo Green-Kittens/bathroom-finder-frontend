@@ -21,7 +21,6 @@ import { Button } from "../../components/Button";
 // type
 import { ScreenNavigationProp } from "../type";
 
-
 // Updated card function to display images
 function card(imageSource: string) {
   return (
@@ -34,7 +33,7 @@ function card(imageSource: string) {
 //image carousel
 function horizontalCards(images: Array<ImagePicker.ImagePickerSuccessResult>) {
   const tempImagesCount = 5 - images.length;
-  const tempImages = Array(tempImagesCount)
+  const tempImages = Array(tempImagesCount);
 
   return (
     <View style={styles.container}>
@@ -272,9 +271,7 @@ export default function ReviewForm() {
                   setDisplayImageVisible(true);
                 }}
               >
-                <Text style={styles.imageLink}>
-                  {"Image #" + (idx + 1)}
-                </Text>
+                <Text style={styles.imageLink}>{"Image #" + (idx + 1)}</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => deleteImage(currImage)}>
                 <MaterialIcons name="delete" size={20} color="gray" />
