@@ -102,7 +102,7 @@ export default function FacilityForm() {
           >
             <Marker
               draggable // enables user to drag to desired location
-              tappable // enables user to tap the marker
+              tappable // enables user to tap the marker and trigger modal
               coordinate={{
                 latitude: currentLocation.coords.latitude + 0.001,
                 longitude: currentLocation.coords.longitude + 0.001,
