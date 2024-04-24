@@ -12,7 +12,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { HorizontalCards } from "../../components/Carousel";
+import { ImageCarousel } from "../../components/Carousel";
 import { useImages } from "../../contexts/ImageContext"; // Ensure the import path is correct
 import { ScreenNavigationProp } from "../type";
 import MainButton, { CancelButton } from "../../components/Buttons";
@@ -96,7 +96,7 @@ export default function FacilityForm() {
             onCancel={() => setClosedPickerVisibility(false)}
           />
         </View>
-        <HorizontalCards componentId="facilityForm" />
+        <ImageCarousel componentId="facilityForm" />
         <TextInput
           style={styles.input}
           placeholder="Write your description..."
@@ -107,7 +107,7 @@ export default function FacilityForm() {
         {MainButton("Add Photo", () => setModalVisible(true))}
         {modalVisible && (
           <Modal
-            animationType="slide"
+            animationType="fade"
             transparent={true}
             visible={modalVisible}
             onRequestClose={() => setModalVisible(false)}

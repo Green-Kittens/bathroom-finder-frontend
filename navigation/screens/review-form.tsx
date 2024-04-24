@@ -15,7 +15,7 @@ import StarRating from "react-native-star-rating-widget";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { useImages } from "../../contexts/ImageContext";
-import { HorizontalCards } from "../../components/Carousel";
+import { ImageCarousel } from "../../components/Carousel";
 import { ScreenNavigationProp } from "../type";
 
 export default function ReviewForm() {
@@ -110,7 +110,7 @@ export default function ReviewForm() {
 
           <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
 
-          <HorizontalCards componentId="reviewForm" />
+          <ImageCarousel componentId="reviewForm" />
 
           <TextInput
             style={styles.input}
@@ -124,7 +124,7 @@ export default function ReviewForm() {
           {MainButton("Add Photo", () => setModalVisible(true))}
           {modalVisible && (
             <Modal
-              animationType="slide"
+              animationType="fade"
               transparent={true}
               visible={modalVisible}
               onRequestClose={() => setModalVisible(false)}
