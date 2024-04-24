@@ -24,38 +24,6 @@ import { Button } from "../../components/Button";
 // type
 import { ScreenNavigationProp } from "../type";
 
-// Updated card function to display images
-function card(imageSource: string) {
-  return (
-    <View style={styles.card}>
-      <Image source={{ uri: imageSource }} style={styles.cardImage} />
-    </View>
-  );
-}
-
-//image carousel
-function horizontalCards(images: Array<ImagePicker.ImagePickerSuccessResult>) {
-  const tempImagesCount = 5 - images.length;
-  const tempImages = Array(tempImagesCount);
-
-  return (
-    <View style={styles.container}>
-      <Text style={{ margin: 10 }}>Uploaded Images</Text>
-      <ScrollView horizontal={true} style={styles.horizontalScroll}>
-        {images.map((img) => {
-          // Check if img.assets exists and has at least one item
-          if (img.assets && img.assets.length > 0 && img.assets[0].uri) {
-            return card(img.assets[0].uri);
-          }
-          return null; // Return null if no uri is found
-        })}
-        {tempImages.map(
-          (src) => card(src), // Use the temp image for empty slots
-        )}
-      </ScrollView>
-    </View>
-  );
-}
 
 export default function ReviewForm() {
   // location
@@ -230,7 +198,6 @@ export default function ReviewForm() {
           </View>
 
           <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
-          {horizontalCards(images)}
           <TextInput
             style={styles.input}
             placeholder="write your description..."
