@@ -1,27 +1,21 @@
 import React from "react";
-import MainButton from "../../components/Buttons";
-import { CancelButton } from "../../components/Buttons";
+import MainButton, { CancelButton } from "../../components/Buttons";
 import {
   StyleSheet,
   TextInput,
   Text,
   View,
-  Modal,
-  Alert,
-  TouchableOpacity,
   ImageBackground,
   ScrollView,
-  Image,
+  Modal
 } from "react-native";
-
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
-import { MaterialIcons } from "@expo/vector-icons";
 import StarRating from "react-native-star-rating-widget";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
-import { Button } from "../../components/Button";
-// type
+import { useImages } from "../../contexts/ImageContext";
+import { HorizontalCards } from "../../components/Carousel";
 import { ScreenNavigationProp } from "../type";
 
 export default function ReviewForm() {
@@ -34,119 +28,37 @@ export default function ReviewForm() {
   // description
   const [description, setDescription] = useState("");
 
-  // add photo modal
+  // image uploader and carousel
+  const { addImage } = useImages("reviewForm");
   const [modalVisible, setModalVisible] = useState(false);
-  const ImageUploader = ({
-    isVisible,
-    onClose,
-  }: {
-    isVisible: boolean;
-    onClose: () => void;
-  }) => {
-    return (
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isVisible}
-        onRequestClose={onClose}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            {MainButton("Take Photo", addUsingCamera)}
-            {MainButton("Choose from Gallery", addFromGallery)}
-            {CancelButton("Cancel", () => {
-              onClose();
-            })}
-          </View>
-        </View>
-      </Modal>
-    );
-  };
-
-  // modal to display image
-  const [displayImageVisible, setDisplayImageVisible] = useState(false);
-  const [imageToDisplay, setImageToDisplay] = useState("");
-  const DisplayImage = ({
-    isVisible,
-    onClose,
-  }: {
-    isVisible: boolean;
-    onClose: () => void;
-  }) => {
-    return (
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isVisible}
-        onRequestClose={onClose}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Image style={styles.modalImage} source={{ uri: imageToDisplay }} />
-            {CancelButton("Cancel", () => {
-              onClose();
-            })}
-          </View>
-        </View>
-      </Modal>
-    );
-  };
-
-  // images uploaded
-  const [images, setImages] = useState<
-    Array<ImagePicker.ImagePickerSuccessResult>
-  >([]);
-
-  // permissions
-  const [cameraStatus] = ImagePicker.useCameraPermissions();
-  const [galleryAccessStatus] = ImagePicker.useMediaLibraryPermissions();
-
-  // add photo from device gallery
-  const addFromGallery = async () => {
-    if (galleryAccessStatus?.status !== "granted") {
-      const { status } =
+  const handleAddImage = async (source: "camera" | "gallery") => {
+    let pickerResult;
+    if (source === "camera") {
+      const cameraPerm = await ImagePicker.requestCameraPermissionsAsync();
+      if (cameraPerm.granted) {
+        pickerResult = await ImagePicker.launchCameraAsync({
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+      }
+    } else {
+      const galleryPerm =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== "granted") {
-        Alert.alert("gallery access permission denied");
-        return;
+      if (galleryPerm.granted) {
+        pickerResult = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
       }
     }
-    const _image = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    if (!_image.canceled) {
-      images.push(_image);
-      setModalVisible(false);
-    }
-  };
 
-  // add photo using camera
-  const addUsingCamera = async () => {
-    if (cameraStatus?.status !== "granted") {
-      const { status } = await ImagePicker.requestCameraPermissionsAsync();
-      if (status !== "granted") {
-        Alert.alert("camera permission denied");
-        return;
-      }
+    if (pickerResult && !pickerResult.canceled) {
+      addImage(pickerResult);
+      setModalVisible(false); // Hide modal after adding image
     }
-    const _image = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      base64: true,
-      quality: 1,
-    });
-    if (!_image.canceled) {
-      images.push(_image);
-      setModalVisible(false);
-    }
-  };
-
-  // delete uploaded image
-  const deleteImage = (toDelete: ImagePicker.ImagePickerSuccessResult) => {
-    const updatedImages = images.filter((curr) => curr !== toDelete);
-    setImages(updatedImages);
   };
 
   // rating
@@ -197,6 +109,9 @@ export default function ReviewForm() {
           </View>
 
           <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
+
+          <HorizontalCards componentId="reviewForm" />
+
           <TextInput
             style={styles.input}
             placeholder="write your description..."
@@ -206,49 +121,25 @@ export default function ReviewForm() {
             multiline={true}
           />
 
-          {images.length === 5 && (
-            <Text style={styles.errorText}>
-              You can only upload a max of 3 photos.
-            </Text>
-          )}
-          {images.length < 5 && (
-            <Button
-              title="Upload image"
-              color="#344f33"
-              onPress={() => {
-                setModalVisible(true);
-              }}
-            />
-          )}
-
-          <ImageUploader
-            isVisible={modalVisible}
-            onClose={() => setModalVisible(false)}
-          />
-
-          <DisplayImage
-            isVisible={displayImageVisible}
-            onClose={() => setDisplayImageVisible(false)}
-          />
-
-          {images.length !== 0 &&
-            images.map((currImage, idx) => (
-              <View key={idx} style={styles.imageContainer}>
-                <TouchableOpacity
-                  onPress={() => {
-                    setImageToDisplay(currImage.assets[0].uri);
-                    setDisplayImageVisible(true);
-                  }}
-                >
-                  <Text style={styles.imageLink}>
-                    {currImage.assets[0].fileName}
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => deleteImage(currImage)}>
-                  <MaterialIcons name="delete" size={20} color="gray" />
-                </TouchableOpacity>
+          {MainButton("Add Photo", () => setModalVisible(true))}
+          {modalVisible && (
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => setModalVisible(false)}
+            >
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  {MainButton("Take Photo", () => handleAddImage("camera"))}
+                  {MainButton("Choose from Gallery", () =>
+                    handleAddImage("gallery"),
+                  )}
+                  {CancelButton("Close", () => setModalVisible(false))}
+                </View>
               </View>
-            ))}
+            </Modal>
+          )}
 
           <Text style={[styles.subtext, { color: "black" }]}>
             Rate Your Experience:
