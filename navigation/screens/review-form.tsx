@@ -24,7 +24,6 @@ import { Button } from "../../components/Button";
 // type
 import { ScreenNavigationProp } from "../type";
 
-
 export default function ReviewForm() {
   // location
   const [, setLocation] = useState("");
