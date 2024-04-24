@@ -2,7 +2,7 @@ import axios from "axios";
 import { User as UserProfile } from "../types/user";
 import { Facility as BathroomProfile } from "../types/facility";
 
-const port = process.env.PORT || 8081;
+const port = process.env.PORT || 3000;
 const host = process.env.HOST || "localhost";
 
 /**
@@ -12,7 +12,7 @@ const host = process.env.HOST || "localhost";
  * @param {string} username - The username of the user
  * @param {string} email - The email address of the user
  * @param {string} password - The password of the user *encrypted
- * @param {Optional<Image>} profile - Profile display image
+ * @param {string} profile - Profile display image
  * @returns {Promise<string>} - Returns a promise with a success message upon successful registration
  */
 export async function registerUser(
@@ -94,7 +94,7 @@ export async function getUserProfile(username: string): Promise<UserProfile> {
  * @param {string} opHours - The hours of operation of the bathroom (days and times)
  * @param {Optional<string>} description - Description of the bathroom
  * @param {string[]} tags - List of tags to filter the bathroom by
- * @param {Optional<Image>} images - Uploaded images of the bathroom
+ * @param {string} image - Uploaded images of the bathroom
  * @returns {Promise<string>} - Returns a promise with a success message upon successfully creating a new bathroom
  */
 export async function createBathroom(
