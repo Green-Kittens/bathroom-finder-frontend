@@ -8,7 +8,6 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
-  ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
@@ -19,8 +18,7 @@ import { ScreenNavigationProp } from "../type";
 import MainButton, { CancelButton } from "../../components/Buttons";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
-
-//const API_KEY = "replace with key";
+import axios from 'axios'; 
 
 export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
@@ -31,9 +29,10 @@ export default function FacilityForm() {
   const [isOpenPickerVisible, setOpenPickerVisibility] = useState(false);
   const [isClosedPickerVisible, setClosedPickerVisibility] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [mapModal, setMapModal] = useState(false);
+  const [markerAddress, setMarkerAddress] = useState("");
   const [currentLocation, setCurrentLocation] =
     useState<Location.LocationObject | null>(null);
-  //const [address, setAddress] = useState<string>("");
 
   const handleOpenConfirm = (date: Date) => {
     setOpenTime(date);
@@ -75,38 +74,12 @@ export default function FacilityForm() {
     }
   };
 
-  //   const getAddress = async (latitude: number, longitude: number) => {
-  //     try {
-  //         const response = await fetch(
-  //             'https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}'
-  //         );
-  //         if (!response.ok) {
-  //             throw new Error('Failed to fetch address');
-  //         }
-  //         const data = await response.json();
-  //         setAddress(data.results[0]?.formatted_address ||
-  //             "Address not found");
-  //     } catch (error) {
-  //         console.error("Error fetching address: ", error);
-  //         setAddress("Error fetching address");
-  //     }
-  //   };
-
-  //   if (!currentLocation) {
-  //     return (
-  //         <View style={styles.loadingContainer}>
-  //             <ActivityIndicator />
-  //         </View>
-  //     )
-  //   }
-
   useEffect(() => {
     const getLocation = async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status === "granted") {
         const location = await Location.getCurrentPositionAsync();
         setCurrentLocation(location);
-        //getAddress(currentLocation.coords.latitude, currentLocation.coords.longitude);
       }
     };
     getLocation();
@@ -129,20 +102,46 @@ export default function FacilityForm() {
           >
             <Marker
               draggable // enables user to drag to desired location
+              tappable // enables user to tap the marker
               coordinate={{
                 latitude: currentLocation.coords.latitude + 0.001,
                 longitude: currentLocation.coords.longitude + 0.001,
               }}
-              onDragEnd={(e) => {
-                // getAddress(e.nativeEvent.coordinate.latitude,
-                //     e.nativeEvent.coordinate.longitude);
+              onPress={ async (e) => {
+                const { latitude, longitude } = e.nativeEvent.coordinate;
+                try {
+                    const response = await axios.get(
+                        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+                    );
+                    setMarkerAddress(response.data.display_name);
+                    setMapModal(true);
+                } catch (error) {
+                    console.error("Error fetching address:", error);
+                }
               }}
             />
           </MapView>
         ) : (
           <Text style={styles.subtext}>Fetching current location...</Text>
         )}
-        {/* <Text style={styles.subtext}>{address}</Text> */}
+
+        <Text>Drag and click pin marker to change and see address</Text>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={mapModal}
+          onRequestClose={() => setMapModal(false)}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.markerModalTitle}>Marker Location</Text>
+              <Text>{markerAddress}</Text>
+              {CancelButton("Close", () => setMapModal(false))}
+            </View>
+          </View>
+        </Modal>
+
         <View style={styles.timeSelect}>
           <TouchableOpacity onPress={() => setOpenPickerVisibility(true)}>
             <Text style={styles.timeSelectButton}>
@@ -247,6 +246,7 @@ const styles = StyleSheet.create({
   },
   timeSelect: {
     fontSize: 17,
+    marginTop: 20,
     marginBottom: 20,
     color: "#344f33",
     flexDirection: "row",
@@ -309,5 +309,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  markerModalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });
