@@ -7,7 +7,7 @@ import {
   View,
   ImageBackground,
   ScrollView,
-  Modal
+  Modal,
 } from "react-native";
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
