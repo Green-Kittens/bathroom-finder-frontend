@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 
 import * as Location from "expo-location";
+import { useNavigation } from "@react-navigation/native";
+import { ScreenNavigationProp } from "../type";
 
 const LAT_DELT = 0.0922;
 const LON_DELT = 0.0421;
@@ -18,6 +20,8 @@ export default function MainScreen() {
       }
     })();
   }, []);
+
+  const nav = useNavigation<ScreenNavigationProp>();
 
   if (location === undefined) {
     return (
@@ -42,7 +46,17 @@ export default function MainScreen() {
           latitudeDelta: LAT_DELT,
           longitudeDelta: LON_DELT,
         }}
-      />
+      >
+        <Marker
+          coordinate={{
+            latitude: location.coords.latitude + 0.001,
+            longitude: location.coords.longitude + 0.001,
+          }}
+          onPress={() => {
+            nav.navigate("FacilityProfile");
+          }}
+        />
+      </MapView>
     );
   }
 }

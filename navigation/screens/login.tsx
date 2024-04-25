@@ -4,13 +4,14 @@ import {
   Image,
   SafeAreaView,
   TextInput,
-  Button,
+  ImageBackground,
   Alert,
   TouchableOpacity,
   Text,
   View,
 } from "react-native";
 import { ScreenNavigationProp } from "../type";
+import MainButton from "../../components/Buttons";
 import { useNavigation } from "@react-navigation/native";
 
 function TabLoginScreen() {
@@ -34,8 +35,24 @@ function TabLoginScreen() {
     Alert.alert("Forgot Pressed", "Navigate to Forgot screen");
   };
 
+  const boomerangimage = { uri: "/assets/images/boomerang.png" };
+
   return (
     <View style={styles.container}>
+      <ImageBackground
+        source={boomerangimage}
+        style={{
+          width: 753,
+          height: 499,
+          position: "absolute",
+          top: 0,
+          left: -200,
+        }}
+        imageStyle={{
+          resizeMode: "cover",
+          alignSelf: "flex-end",
+        }}
+      ></ImageBackground>
       <SafeAreaView style={styles.safeArea}>
         <Image
           source={require("../../assets/images/logo-placeholder.png")}
@@ -48,7 +65,7 @@ function TabLoginScreen() {
           style={styles.input}
           onChangeText={setUsername}
           value={username}
-          placeholder="Username:"
+          placeholder="Username"
         />
         <TextInput
           style={styles.input}
@@ -65,8 +82,8 @@ function TabLoginScreen() {
         </TouchableOpacity>
 
         {/* Login button */}
-        <View style={styles.fixToText}>
-          <Button title="Login" color={"#000000"} onPress={onLoginPress} />
+        <View style={[{ margin: "10%" }]}>
+          {MainButton("Login", onLoginPress)}
         </View>
       </SafeAreaView>
 
@@ -95,6 +112,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
+    backgroundColor: "#EEF8F7",
   },
   // Safe Area Section
   safeArea: {
@@ -116,6 +134,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     alignSelf: "center",
+    backgroundColor: "#FFFFFF",
+    minWidth: 200,
   },
   // Text Section
   text: {
@@ -131,12 +151,14 @@ const styles = StyleSheet.create({
   footer: {
     paddingBottom: 20,
     alignItems: "center",
+    backgroundColor: "none",
   },
   // Register Section
   registerContainer: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "none",
   },
   // Register Text
   registerText: {
