@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Review } from "../types/review";
-import {port, host} from "./porthost";
+import { port, host } from "./porthost";
 
 /**
  * Function for retrieving reviews of a bathroom

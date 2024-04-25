@@ -1,7 +1,7 @@
 import axios from "axios";
 import { User as UserProfile } from "../types/user";
 import { Facility as BathroomProfile } from "../types/facility";
-import {port, host} from "./porthost";
+import { port, host } from "./porthost";
 
 /**
  * Function to register a new user
@@ -97,17 +97,16 @@ export async function getUserProfile(username: string): Promise<UserProfile> {
  */
 export async function createBathroom(
   username: string,
-  openHr: Date,
-  closeHr: Date,
+  opHr: string,
   description: string,
   tags: string[],
   image: string,
 ): Promise<string> {
   try {
     await axios.post<BathroomProfile>(`http://${host}:${port}/facilities/`, {
-      params: { username, openHr, closeHr, description, tags, image },
+      params: { username, opHr, description, tags, image },
     });
-    const successMsg = `Bathroom successfully created by ${username}: hours of operation (${openHr} to ${closeHr}), description (${description}), tags (${tags}), images (${images})`;
+    const successMsg = `Bathroom successfully created by ${username}: hours of operation (${opHr}), tags (${tags})).`;
     return successMsg;
   } catch (error) {
     console.error("Error creating bathroom:", error);

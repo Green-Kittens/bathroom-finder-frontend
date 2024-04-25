@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Facility as BathroomProfile } from "../types/facility";
-import {port, host} from "./porthost";
+import { port, host } from "./porthost";
 
 /**
  * Function for retrieving all bathrooms
