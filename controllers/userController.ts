@@ -1,9 +1,7 @@
 import axios from "axios";
 import { User as UserProfile } from "../types/user";
 import { Facility as BathroomProfile } from "../types/facility";
-
-const port = process.env.PORT || 3000;
-const host = process.env.HOST || "localhost";
+import {port, host} from "./porthost";
 
 /**
  * Function to register a new user
@@ -27,7 +25,7 @@ export async function registerUser(
     await axios.post<UserProfile>(`http://${host}:${port}/users/`, {
       params: { firstname, lastname, username, email, password, profile },
     });
-    const successsMsg = `${username} (${firstname},${lastname}) successfully created with email (${email}), password (${password}), and profile ${profile}.`;
+    const successsMsg = `${username} (${firstname},${lastname}) successfully created with email (${email}), password (${password}).`;
     return successsMsg;
   } catch (error) {
     console.error("Error creating user:", error);

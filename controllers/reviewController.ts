@@ -1,8 +1,6 @@
 import axios from "axios";
 import { Review } from "../types/review";
-
-const port = process.env.PORT || 3000;
-const host = process.env.HOST || "localhost";
+import {port, host} from "./porthost";
 
 /**
  * Function for retrieving reviews of a bathroom
