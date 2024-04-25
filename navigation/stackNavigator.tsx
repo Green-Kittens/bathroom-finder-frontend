@@ -6,9 +6,9 @@ import NavBar from "./navbar";
 import { ScreensParamList } from "./type";
 
 // screens
-import FacilityProfile from "./screens/facility-profile";
-import FacilityReviews from "./screens/facility-reviews";
-import Login from "./screens/login";
+import FacilityProfile from "../screens/facility-profile";
+import FacilityReviews from "../screens/facility-reviews";
+import Login from "../screens/login";
 
 // screen names
 const headName = "Head";

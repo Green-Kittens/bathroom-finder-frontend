@@ -6,10 +6,10 @@ import { Ionicons } from "@expo/vector-icons";
 import { ScreensParamList } from "./type";
 
 // screens
-import Main from "./screens/main";
-import ReviewForm from "./screens/review-form";
-import UserProfile from "./screens/user-profile";
-import FacilityForm from "./screens/facility-form";
+import Main from "../screens/main";
+import ReviewForm from "../screens/review-form";
+import UserProfile from "../screens/user-profile";
+import FacilityForm from "../screens/facility-form";
 
 // screen names
 const mainName = "Main";

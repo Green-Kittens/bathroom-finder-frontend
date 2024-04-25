@@ -20,7 +20,7 @@ import * as ImagePicker from "expo-image-picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 // type
-import { ScreenNavigationProp } from "../type";
+import { ScreenNavigationProp } from "../navigation/type";
 
 //Button component
 export function Button(props: {

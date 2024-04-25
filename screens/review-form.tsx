@@ -1,6 +1,6 @@
 import React from "react";
-import MainButton from "../../components/Buttons";
-import { CancelButton } from "../../components/Buttons";
+import MainButton from "../components/Buttons";
+import { CancelButton } from "../components/Buttons";
 import {
   StyleSheet,
   TextInput,
@@ -22,7 +22,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 
 // type
-import { ScreenNavigationProp } from "../type";
+import { ScreenNavigationProp } from "../navigation/type";
 
 export default function TabReviewForm() {
   // location

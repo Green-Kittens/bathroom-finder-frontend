@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import horizontalCards from "../../components/HorizontalCards";
-import MainButton from "../../components/Buttons";
-import { CancelButton } from "../../components/Buttons";
+import horizontalCards from "../components/HorizontalCards";
+import MainButton from "../components/Buttons";
+import { CancelButton } from "../components/Buttons";
 import {
   Text,
   View,
@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 
 // types
-import { ScreenNavigationProp } from "../type";
+import { ScreenNavigationProp } from "../navigation/type";
 
 const boomerangimage = { uri: "/assets/images/boomerang.png" };
 

@@ -12,11 +12,12 @@ import {
 } from "react-native";
 import { useEffect, useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { ScreenNavigationProp } from "../type";
-import Review from "../../components/Review";
+import { ScreenNavigationProp } from "../navigation/type";
+import Review from "../components/Review";
+import { SignedIn, SignedOut } from "@clerk/clerk-expo";
 
 import { LinearGradient } from "expo-linear-gradient";
-import MainButton, { LightButton } from "../../components/Buttons";
+import MainButton, { LightButton } from "../components/Buttons";
 
 const maxLineNumber = 5;
 const windowHeight = Dimensions.get("window").height;
@@ -178,23 +179,23 @@ export default function TabFacilityProfileScreen() {
           >
             <Image
               style={{ height: 30, width: 30 }}
-              source={require("../../assets/images/star_filled.png")}
+              source={require("../assets/images/star_filled.png")}
             />
             <Image
               style={{ height: 30, width: 30 }}
-              source={require("../../assets/images/star_filled.png")}
+              source={require("../assets/images/star_filled.png")}
             />
             <Image
               style={{ height: 30, width: 30 }}
-              source={require("../../assets/images/star_filled.png")}
+              source={require("../assets/images/star_filled.png")}
             />
             <Image
               style={{ height: 30, width: 30 }}
-              source={require("../../assets/images/star_filled.png")}
+              source={require("../assets/images/star_filled.png")}
             />
             <Image
               style={{ height: 30, width: 30 }}
-              source={require("../../assets/images/star_filled.png")}
+              source={require("../assets/images/star_filled.png")}
             />
             <Text style={styles.body}> 5.0 stars</Text>
           </View>
@@ -202,12 +203,14 @@ export default function TabFacilityProfileScreen() {
         <View
           style={[{ flex: 1, marginHorizontal: 40, backgroundColor: "none" }]}
         >
+          <SignedIn>
           <View style={{ marginTop: 10 }}>
             {MainButton("Add Review", () => {
               // figure out how to make it so that dropdown renders current facility as location
               navigation.navigate("ReviewForm");
             })}
           </View>
+          </SignedIn>
         </View>
         <CollapseView />
       </ScrollView>

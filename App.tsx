@@ -2,6 +2,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import StackNavigator from "./navigation/stackNavigator";
 import { useFonts } from "expo-font";
 import { setCustomText } from "react-native-global-props";
+import { ClerkProvider } from "@clerk/clerk-expo";
+import Constants from "expo-constants"
+import * as SecureStore from "expo-secure-store";
+
+
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -26,10 +31,33 @@ export default function App() {
   };
 
   setCustomText(customTextProps);
+  const tokenCache = {
+    async getToken(key: string) {
+      try {
+        return SecureStore.getItemAsync(key);
+      } catch (err) {
+        return null;
+      }
+    },
+    async saveToken(key: string, value: string) {
+      try {
+        return SecureStore.setItemAsync(key, value);
+      } catch (err) {
+        return;
+      }
+    },
+  };
+
+  const clerkPublishableKey = Constants.manifest2.extra.clerkPublishableKey;
+
 
   return (
-    <NavigationContainer>
-      <StackNavigator />
-    </NavigationContainer>
+    <ClerkProvider
+    tokenCache={tokenCache} 
+    publishableKey={clerkPublishableKey}>
+      <NavigationContainer>
+        <StackNavigator />
+      </NavigationContainer>
+    </ClerkProvider>
   );
 }

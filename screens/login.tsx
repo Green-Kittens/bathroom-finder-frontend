@@ -11,8 +11,8 @@ import {
   View,
   Alert,
 } from "react-native";
-import { ScreenNavigationProp } from "../type";
-import MainButton from "../../components/Buttons";
+import { ScreenNavigationProp } from "../navigation/type";
+import MainButton from "../components/Buttons";
 
 function TabLoginScreen() {
   // State management for text inputs
@@ -36,7 +36,7 @@ function TabLoginScreen() {
     Alert.alert("Forgot Pressed", "Navigate to Forgot screen");
   };
 
-  const boomerangimage = { uri: "/assets/images/boomerang.png" };
+  const boomerangimage = { uri: "../assets/images/boomerang.png" };
 
   return (
     <View style={styles.container}>
@@ -56,7 +56,7 @@ function TabLoginScreen() {
       ></ImageBackground>
       <SafeAreaView style={styles.safeArea}>
         <Image
-          source={require("../../assets/images/logo-placeholder.png")}
+          source={require("../assets/images/logo-placeholder.png")}
           style={styles.logo}
         />
         <Text style={styles.title}>Login</Text>

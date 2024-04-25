@@ -1,7 +1,7 @@
 import React from "react";
-import { View } from "../../components/Themed";
+import { View } from "../components/Themed";
 import { ScrollView, ImageBackground, StyleSheet } from "react-native";
-import ReviewButtons from "../../components/ReviewButtons";
+import ReviewButtons from "../components/ReviewButtons";
 
 const blobimage = { uri: "/assets/images/blob.png" };
 
