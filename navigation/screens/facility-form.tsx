@@ -17,7 +17,7 @@ import { useImages } from "../../contexts/ImageContext"; // Ensure the import pa
 import { ScreenNavigationProp } from "../type";
 import MainButton, { CancelButton } from "../../components/Buttons";
 import * as Location from "expo-location";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Callout, Marker } from "react-native-maps";
 import axios from 'axios'; 
 
 export default function FacilityForm() {
@@ -113,22 +113,28 @@ export default function FacilityForm() {
                     const response = await axios.get(
                         `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
                     );
-                    setMarkerAddress(response.data.display_name);
+                    const addressDetails = response.data.address;
+                    let buildingName = '';
+                    if (addressDetails && addressDetails.building) {
+                        buildingName = addressDetails.building;
+                    }
+                    setMarkerAddress(buildingName || response.data.display_name);
                     setMapModal(true);
                 } catch (error) {
                     console.error("Error fetching address:", error);
                 }
               }}
-            />
+            >
+            </Marker>
           </MapView>
         ) : (
           <Text style={styles.subtext}>Fetching current location...</Text>
         )}
 
-        <Text>Drag and click pin marker to change and see address</Text>
+        <Text>press and drag pin marker to see address and relocate</Text>
 
         <Modal
-          animationType="slide"
+          animationType="fade"
           transparent={true}
           visible={mapModal}
           onRequestClose={() => setMapModal(false)}
@@ -313,5 +319,11 @@ const styles = StyleSheet.create({
   markerModalTitle: {
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  calloutText: {
+    alignContent: "center",
+    margin: 10,
+    flexShrink: 1,
+    flex: 1,
   },
 });
