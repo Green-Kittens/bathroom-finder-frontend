@@ -1,10 +1,9 @@
 import React from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Text, TextInput, TouchableOpacity, View, StyleSheet } from "react-native";
 import { useSignIn } from "@clerk/clerk-expo";
  
 export default function SignInScreen() {
   const { signIn, setActive, isLoaded } = useSignIn();
- 
   const [emailAddress, setEmailAddress] = React.useState("");
   const [password, setPassword] = React.useState("");
  
@@ -25,11 +24,13 @@ export default function SignInScreen() {
       console.log(err);
     }
   };
+
   return (
     <View>
       <View>
         <TextInput
           autoCapitalize="none"
+          style={styles.textInput}
           value={emailAddress}
           placeholder="Email..."
           onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
@@ -39,6 +40,7 @@ export default function SignInScreen() {
       <View>
         <TextInput
           value={password}
+          style={styles.textInput}
           placeholder="Password..."
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
@@ -51,3 +53,14 @@ export default function SignInScreen() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  textInput: {
+    borderColor: "gray",
+    borderWidth: 1,
+    padding: 10,
+    margin: 10,
+    color: "black",
+  },
+
+});

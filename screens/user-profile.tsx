@@ -11,10 +11,14 @@ import {
   Image,
   ImageBackground,
   StyleSheet,
-  ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
+import { SignedIn, SignedOut} from "@clerk/clerk-expo";
+import SignUpScreen from "../components/SignUpScreen";
+import SignInScreen from "../components/SignInScreen";
+import SignInWithOAuth from "../components/SignInWithAuth";
+import { useSignOut } from "../hooks/useSignOut";
 
 // types
 import { ScreenNavigationProp } from "../navigation/type";
@@ -24,6 +28,7 @@ const boomerangimage = { uri: "/assets/images/boomerang.png" };
 export default function UserProfileScreen() {
   // navigation
   const navigation = useNavigation<ScreenNavigationProp>();
+  const signOut = useSignOut();
 
   // add photo modal
   const [modalVisible, setModalVisible] = useState(false);
@@ -36,7 +41,7 @@ export default function UserProfileScreen() {
   }) => {
     return (
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={isVisible}
         onRequestClose={onClose}
@@ -57,7 +62,7 @@ export default function UserProfileScreen() {
 
   // images uploaded for review
   const [pfp, setImage] = useState(
-    "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
+    "https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png",
   );
 
   // permissions
@@ -109,12 +114,15 @@ export default function UserProfileScreen() {
   // delete uploaded image
   const deleteImage = () => {
     setImage(
-      "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
+      "https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png",
     );
     setModalVisible(false);
   };
 
+
+
   return (
+    
     <View style={styles.container}>
       <ImageBackground
         source={boomerangimage}
@@ -130,49 +138,62 @@ export default function UserProfileScreen() {
           alignSelf: "flex-end",
         }}
       ></ImageBackground>
-      <ScrollView>
-        <TouchableOpacity
-          style={styles.profilePictureContainer}
-          onPress={() => {
-            setModalVisible(true);
-          }}
-        >
-          <Image
-            style={styles.profilePicture}
-            source={{
-              uri: pfp,
-            }}
-          />
-          <Text>Your Name</Text>
-        </TouchableOpacity>
-
-        <ImageUploader
-          isVisible={modalVisible}
-          onClose={() => setModalVisible(false)}
-        />
-        {horizontalCards("Your Reviews")}
-        {horizontalCards("Your Favorites")}
-        <View>
-          <View style={[{ backgroundColor: "none" }]}>
-            <View
-              style={{
-                marginVertical: 20,
-                backgroundColor: "none",
-                minWidth: 200,
+        <SignedIn>
+          <TouchableOpacity
+            style={styles.profilePictureContainer}
+            onPress={() => {
+              setModalVisible(true);
+            }}>
+            <Image
+              style={styles.profilePicture}
+              source={{
+                uri: pfp,
               }}
-            >
-              {MainButton("Log Out", () => {
-                navigation.navigate("Login");
-              })}
+            />
+            <Text>Your Name</Text>
+          </TouchableOpacity>
+          
+          <ImageUploader
+            isVisible={modalVisible}
+            onClose={() => setModalVisible(false)}
+          />
+          
+          {horizontalCards("Your Reviews")}
+          {horizontalCards("Your Favorites")}
+          <View>
+            <View style={[{ backgroundColor: "none" }]}>
+              <View
+                style={{
+                  marginVertical: 20,
+                  backgroundColor: "none",
+                  minWidth: 200,
+                }}
+              >
+                {MainButton("Log Out", () => {
+                  signOut();
+                })}
+              </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
+        </SignedIn>
+        <SignedOut>
+          
+        </SignedOut>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  signedIn: {
+    flex: 1,
+    alignSelf: "center",
+    backgroundColor: "#EEF8F7",
+  },
+  signedOut: {
+    flex: 1,
+    alignSelf: "center",
+    backgroundColor: "#EEF8F7",
+  },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -181,7 +202,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    backgroundColor: "none",
     fontFamily: "EudoxusSans-Bold",
   },
   separator: {
@@ -229,9 +249,5 @@ const styles = StyleSheet.create({
   imageContainer: {
     flexDirection: "row",
     alignItems: "center",
-  },
-  imageLink: {
-    marginRight: 10,
-    color: "blue",
   },
 });

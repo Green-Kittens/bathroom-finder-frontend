@@ -3,7 +3,6 @@ import StackNavigator from "./navigation/stackNavigator";
 import { useFonts } from "expo-font";
 import { setCustomText } from "react-native-global-props";
 import { ClerkProvider } from "@clerk/clerk-expo";
-import Constants from "expo-constants"
 import * as SecureStore from "expo-secure-store";
 
 
@@ -48,13 +47,10 @@ export default function App() {
     },
   };
 
-  const clerkPublishableKey = Constants.manifest2.extra.clerkPublishableKey;
-
-
   return (
     <ClerkProvider
     tokenCache={tokenCache} 
-    publishableKey={clerkPublishableKey}>
+    publishableKey={"pk_test_ZXhhY3QtZmlzaC00NS5jbGVyay5hY2NvdW50cy5kZXYk"}>
       <NavigationContainer>
         <StackNavigator />
       </NavigationContainer>

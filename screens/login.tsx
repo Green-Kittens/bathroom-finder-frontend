@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   Image,
@@ -13,17 +13,34 @@ import {
 } from "react-native";
 import { ScreenNavigationProp } from "../navigation/type";
 import MainButton from "../components/Buttons";
+import { useSignIn } from "@clerk/clerk-expo";
+ 
 
 function TabLoginScreen() {
   // State management for text inputs
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
+  const {signIn, setActive, isLoaded } = useSignIn();
+  const [emailAddress, setEmailAddress] = React.useState("");
+  const [password, setPassword] = React.useState("");
+ 
   // navigation
   const navigation = useNavigation<ScreenNavigationProp>();
 
-  const onLoginPress = () => {
-    navigation.navigate("Main");
+  const onSignInPress = async () => {
+    if (!isLoaded) {
+      return;
+    }
+ 
+    try {
+      const completeSignIn = await signIn.create({
+        identifier: emailAddress,
+        password,
+      });
+      // This is an important step,
+      // This indicates the user is signed in
+      await setActive({ session: completeSignIn.createdSessionId });
+    } catch (err: any) {
+      console.log(err);
+    }
   };
 
   const onRegisterPress = () => {
@@ -63,17 +80,18 @@ function TabLoginScreen() {
 
         {/* Text input fields */}
         <TextInput
+          autoCapitalize="none"
           style={styles.input}
-          onChangeText={setUsername}
-          value={username}
-          placeholder="Username"
+          value={emailAddress}
+          placeholder="Email..."
+          onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
         />
         <TextInput
-          style={styles.input}
-          onChangeText={setPassword}
           value={password}
-          placeholder="Password"
+          style={styles.input}
+          placeholder="Password..."
           secureTextEntry={true}
+          onChangeText={(password) => setPassword(password)}
         />
         <TouchableOpacity
           onPress={onForgotPress}
@@ -84,7 +102,7 @@ function TabLoginScreen() {
 
         {/* Login button */}
         <View style={[{ margin: "10%" }]}>
-          {MainButton("Login", onLoginPress)}
+          {MainButton("Login", onSignInPress)}
         </View>
       </SafeAreaView>
 
@@ -137,6 +155,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     backgroundColor: "#FFFFFF",
     minWidth: 200,
+    color: "black",
   },
   // Text Section
   text: {
