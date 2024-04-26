@@ -18,7 +18,7 @@ const DisplayImage: React.FC<DisplayImageProps> = ({
   onClose,
   onDelete,
 }) => {
-  const { deleteImage } = useImages();
+  //const { deleteImage } = useImages();
 
   return (
     <Modal
