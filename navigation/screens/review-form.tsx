@@ -1,3 +1,4 @@
+
 import React from "react";
 import MainButton from "../../components/Buttons";
 import { CancelButton } from "../../components/Buttons";
@@ -20,16 +21,11 @@ import { MaterialIcons } from "@expo/vector-icons";
 import StarRating from "react-native-star-rating-widget";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
-import { Button } from "../../components/Button";
-import { useImages } from "../../contexts/ImageContext";
-import MainButton, { CancelButton } from "../../components/Buttons";
-import { HorizontalCards } from "../../components/Carousel";
 
 // type
 import { ScreenNavigationProp } from "../type";
 
 export default function TabReviewForm() {
-
   // location
   const [, setLocation] = useState("");
 
@@ -39,37 +35,119 @@ export default function TabReviewForm() {
   // description
   const [description, setDescription] = useState("");
 
-  // photo upload
-  const { addImage } = useImages();
+  // add photo modal
   const [modalVisible, setModalVisible] = useState(false);
-  const handleAddImage = async (source: "camera" | "gallery") => {
-    let pickerResult;
-    if (source === "camera") {
-      const cameraPerm = await ImagePicker.requestCameraPermissionsAsync();
-      if (cameraPerm.granted) {
-        pickerResult = await ImagePicker.launchCameraAsync({
-          allowsEditing: true,
-          aspect: [4, 3],
-          quality: 1,
-        });
-      }
-    } else {
-      const galleryPerm =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (galleryPerm.granted) {
-        pickerResult = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: true,
-          aspect: [4, 3],
-          quality: 1,
-        });
-      }
-    }
+  const ImageUploader = ({
+    isVisible,
+    onClose,
+  }: {
+    isVisible: boolean;
+    onClose: () => void;
+  }) => {
+    return (
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isVisible}
+        onRequestClose={onClose}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            {MainButton("Take Photo", addUsingCamera)}
+            {MainButton("Choose from Gallery", addFromGallery)}
+            {CancelButton("Cancel", () => {
+              onClose();
+            })}
+          </View>
+        </View>
+      </Modal>
+    );
+  };
 
-    if (pickerResult && !pickerResult.canceled) {
-      addImage(pickerResult);
-      setModalVisible(false); // Hide modal after adding image
+  // modal to display image
+  const [displayImageVisible, setDisplayImageVisible] = useState(false);
+  const [imageToDisplay, setImageToDisplay] = useState("");
+  const DisplayImage = ({
+    isVisible,
+    onClose,
+  }: {
+    isVisible: boolean;
+    onClose: () => void;
+  }) => {
+    return (
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isVisible}
+        onRequestClose={onClose}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Image style={styles.modalImage} source={{ uri: imageToDisplay }} />
+            {CancelButton("Cancel", () => {
+              onClose();
+            })}
+          </View>
+        </View>
+      </Modal>
+    );
+  };
+
+  // images uploaded
+  const [images, setImages] = useState<
+    Array<ImagePicker.ImagePickerSuccessResult>
+  >([]);
+
+  // permissions
+  const [cameraStatus] = ImagePicker.useCameraPermissions();
+  const [galleryAccessStatus] = ImagePicker.useMediaLibraryPermissions();
+
+  // add photo from device gallery
+  const addFromGallery = async () => {
+    if (galleryAccessStatus?.status !== "granted") {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("gallery access permission denied");
+        return;
+      }
     }
+    const _image = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!_image.canceled) {
+      images.push(_image);
+      setModalVisible(false);
+    }
+  };
+
+  // add photo using camera
+  const addUsingCamera = async () => {
+    if (cameraStatus?.status !== "granted") {
+      const { status } = await ImagePicker.requestCameraPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("camera permission denied");
+        return;
+      }
+    }
+    const _image = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      base64: true,
+      quality: 1,
+    });
+    if (!_image.canceled) {
+      images.push(_image);
+      setModalVisible(false);
+    }
+  };
+
+  // delete uploaded image
+  const deleteImage = (toDelete: ImagePicker.ImagePickerSuccessResult) => {
+    const updatedImages = images.filter((curr) => curr !== toDelete);
+    setImages(updatedImages);
   };
 
   // rating
@@ -280,22 +358,5 @@ const styles = StyleSheet.create({
   imageLink: {
     marginRight: 10,
     color: "blue",
-  },
-  card: {
-    width: 100,
-    height: 150,
-    borderRadius: 10,
-    backgroundColor: "grey",
-    marginHorizontal: 5,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  cardImage: {
-    width: 100,
-    height: 150,
-    borderRadius: 10, // If you want rounded corners for the images
-  },
-  horizontalScroll: {
-    marginVertical: 10,
   },
 });

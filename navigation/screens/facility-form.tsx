@@ -18,7 +18,7 @@ import { ScreenNavigationProp } from "../type";
 import MainButton, { CancelButton } from "../../components/Buttons";
 import * as Location from "expo-location";
 import MapView, { Callout, Marker } from "react-native-maps";
-import axios from 'axios'; 
+import axios from "axios";
 
 export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
@@ -107,25 +107,24 @@ export default function FacilityForm() {
                 latitude: currentLocation.coords.latitude + 0.001,
                 longitude: currentLocation.coords.longitude + 0.001,
               }}
-              onPress={ async (e) => {
+              onPress={async (e) => {
                 const { latitude, longitude } = e.nativeEvent.coordinate;
                 try {
-                    const response = await axios.get(
-                        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
-                    );
-                    const addressDetails = response.data.address;
-                    let buildingName = '';
-                    if (addressDetails && addressDetails.building) {
-                        buildingName = addressDetails.building;
-                    }
-                    setMarkerAddress(buildingName || response.data.display_name);
-                    setMapModal(true);
+                  const response = await axios.get(
+                    `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`,
+                  );
+                  const addressDetails = response.data.address;
+                  let buildingName = "";
+                  if (addressDetails && addressDetails.building) {
+                    buildingName = addressDetails.building;
+                  }
+                  setMarkerAddress(buildingName || response.data.display_name);
+                  setMapModal(true);
                 } catch (error) {
-                    console.error("Error fetching address:", error);
+                  console.error("Error fetching address:", error);
                 }
               }}
-            >
-            </Marker>
+            ></Marker>
           </MapView>
         ) : (
           <Text style={styles.subtext}>Fetching current location...</Text>
@@ -318,7 +317,7 @@ const styles = StyleSheet.create({
   },
   markerModalTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   calloutText: {
     alignContent: "center",
