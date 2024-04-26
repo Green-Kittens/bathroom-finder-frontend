@@ -2,7 +2,6 @@
 
 import React from "react";
 import { Modal, View, Image, StyleSheet } from "react-native";
-import { useImages } from "../contexts/ImageContext"; // Ensure the correct import path
 import { CancelButton } from "./Buttons"; // Adjust the import path as needed
 
 interface DisplayImageProps {
