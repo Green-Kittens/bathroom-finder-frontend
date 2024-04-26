@@ -1,4 +1,3 @@
-
 import React from "react";
 import MainButton from "../../components/Buttons";
 import { CancelButton } from "../../components/Buttons";
