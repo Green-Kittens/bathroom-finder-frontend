@@ -3,7 +3,7 @@ import MockAdapter from "axios-mock-adapter";
 import {
   registerUser,
   getUserProfile,
-  createBathroom
+  createBathroom,
 } from "../userController";
 import { port, host } from "../porthost";
 
@@ -68,7 +68,7 @@ describe("getUserProfile", () => {
   });
 });
 
-describe("createBathroom", (user) => {
+describe("createBathroom", () => {
   it("should return success msg upon successfully creating a bathroom", async () => {
     const mock = new MockAdapter(axios);
     const bathroom = {
@@ -83,10 +83,16 @@ describe("createBathroom", (user) => {
       favorites: 2,
       reports: 0,
     };
+    const user = {
+      id: "1",
+      firstname: "undefined",
+      lastname: "undefined",
+      email: "undefined",
+      password: "undefined",
+      username: "undefined",
+    };
     const success = `Bathroom successfully created by ${user}: hours of operation (${bathroom.operations}), tags (${bathroom.tags})).`;
-    mock
-      .onPost(`http://${host}:${port}/facilities/`)
-      .reply(200, success);
+    mock.onPost(`http://${host}:${port}/facilities/`).reply(200, success);
 
     const result = await createBathroom();
     expect(result).toEqual(success);

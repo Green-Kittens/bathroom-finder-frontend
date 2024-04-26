@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   preset: "jest-expo",
   transform: {
     "^.+\\.js$": "babel-jest",
