@@ -17,7 +17,7 @@ import { useImages } from "../../contexts/ImageContext"; // Ensure the import pa
 import { ScreenNavigationProp } from "../type";
 import MainButton, { CancelButton } from "../../components/Buttons";
 import * as Location from "expo-location";
-import MapView, { Callout, Marker } from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import axios from "axios";
 
 export default function FacilityForm() {
