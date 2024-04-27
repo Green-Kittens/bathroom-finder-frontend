@@ -23,7 +23,6 @@
     "@rneui/base": "^4.0.0-rc.8",
     "@rneui/themed": "^4.0.0-rc.8",
     "auth-session": "^0.0.7",
-    "env": "^0.0.2",
     "expo": "~50.0.17",
     "expo-application": "^5.8.4",
     "expo-auth-session": "^5.4.0",
