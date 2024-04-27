@@ -38,16 +38,16 @@ describe("createReview", () => {
   it("should return a success message upon successfully creating a review", async () => {
     const mock = new MockAdapter(axios);
     const review = {
-      id: "undefined",
-      rating: 0,
-      likes: 0,
-      dislikes: 0,
-      facilityId: "undefined",
-      userId: "undefined",
-      date: "undefined",
-      description: "undefined",
+      id: undefined,
+      rating: null,
+      likes: null,
+      dislikes: null,
+      facilityId: undefined,
+      userId: undefined,
+      date: undefined,
+      description: undefined,
     };
-    const success = `Review for bathroom (${review.facilityId}) successfully created by ${review.userId}: ${review.description}, ${review.rating}, ${review.date}`;
+    const success = `Review for bathroom (${review.facilityId}) successfully created by ${review.userId}: ${review.description}`;
     mock.onPost(`http://${host}:${port}/reviews/`).reply(200, success);
 
     const result = await createReview();

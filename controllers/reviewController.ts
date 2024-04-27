@@ -43,7 +43,7 @@ export async function createReview(
     await axios.post<Review>(`http://${host}:${port}/reviews/`, {
       params: { username, bathroomID, description, rating, time },
     });
-    const successMsg = `Review for bathroom (${bathroomID}) successfully created by ${username}: ${description}, ${rating}, ${time}`;
+    const successMsg = `Review for bathroom (${bathroomID}) successfully created by ${username}: ${description}`;
     return successMsg;
   } catch (error) {
     console.error("Error creating review:", error);

@@ -85,13 +85,13 @@ describe("createBathroom", () => {
     };
     const user = {
       id: "1",
-      firstname: "undefined",
-      lastname: "undefined",
-      email: "undefined",
-      password: "undefined",
-      username: "undefined",
+      firstname: undefined,
+      lastname: undefined,
+      email: undefined,
+      password: undefined,
+      username: undefined,
     };
-    const success = `Bathroom successfully created by ${user}: hours of operation (${bathroom.operations}), tags (${bathroom.tags})).`;
+    const success = `Bathroom successfully created by ${user.firstname}: hours of operation (${bathroom.operations}), tags (${bathroom.tags})).`;
     mock.onPost(`http://${host}:${port}/facilities/`).reply(200, success);
 
     const result = await createBathroom();
