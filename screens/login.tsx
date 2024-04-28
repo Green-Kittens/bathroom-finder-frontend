@@ -16,14 +16,14 @@ import MainButton from "../components/Buttons";
 import { useSignIn } from "@clerk/clerk-expo";
 import GoogleSignIn from "../components/GoogleSignIn";
 import MicroSignIn from "../components/MicroSignIn";
-import { Divider } from '@rneui/themed';
+import { Divider } from "@rneui/themed";
 
 function TabLoginScreen() {
   // State management for text inputs
-  const {signIn, setActive, isLoaded } = useSignIn();
+  const { signIn, setActive, isLoaded } = useSignIn();
   const [emailAddress, setEmailAddress] = React.useState("");
   const [password, setPassword] = React.useState("");
- 
+
   // navigation
   const nav = useNavigation<ScreenNavigationProp>();
 
@@ -31,7 +31,7 @@ function TabLoginScreen() {
     if (!isLoaded) {
       return;
     }
- 
+
     try {
       const completeSignIn = await signIn.create({
         identifier: emailAddress,
@@ -93,7 +93,9 @@ function TabLoginScreen() {
           onChangeText={(password) => setPassword(password)}
         />
         <TouchableOpacity
-          onPress={() => {nav.navigate("ForgotPassword")}}
+          onPress={() => {
+            nav.navigate("ForgotPassword");
+          }}
           style={styles.registerContainer}
         >
           <Text style={styles.text}>Forgot Password</Text>
@@ -105,7 +107,7 @@ function TabLoginScreen() {
         </View>
 
         {/* Google Sign In */}
-        <View style={[{ margin: "10%", flexDirection: 'row' }]}>
+        <View style={[{ margin: "10%", flexDirection: "row" }]}>
           <GoogleSignIn />
           <MicroSignIn />
         </View>
@@ -118,7 +120,9 @@ function TabLoginScreen() {
             Don&apos;t have an account?
           </Text>
           <TouchableOpacity
-            onPress={() => {nav.navigate("Register")}}
+            onPress={() => {
+              nav.navigate("Register");
+            }}
             style={styles.registerContainer}
           >
             <Text style={styles.registerText}>Register</Text>
@@ -142,7 +146,6 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     alignItems: "center",
-
   },
   // Title Section
   title: {

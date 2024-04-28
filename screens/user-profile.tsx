@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
-import { SignedIn, SignedOut} from "@clerk/clerk-expo";
+import { SignedIn, SignedOut } from "@clerk/clerk-expo";
 import { useSignOut } from "../hooks/useSignOut";
 
 // types
@@ -116,10 +116,7 @@ export default function UserProfileScreen() {
     setModalVisible(false);
   };
 
-
-
   return (
-    
     <View style={styles.container}>
       <ImageBackground
         source={boomerangimage}
@@ -135,47 +132,46 @@ export default function UserProfileScreen() {
           alignSelf: "flex-end",
         }}
       ></ImageBackground>
-        <SignedIn>
-          <TouchableOpacity
-            style={styles.profilePictureContainer}
-            onPress={() => {
-              setModalVisible(true);
-            }}>
-            <Image
-              style={styles.profilePicture}
-              source={{
-                uri: pfp,
-              }}
-            />
-            <Text>Your Name</Text>
-          </TouchableOpacity>
-          
-          <ImageUploader
-            isVisible={modalVisible}
-            onClose={() => setModalVisible(false)}
+      <SignedIn>
+        <TouchableOpacity
+          style={styles.profilePictureContainer}
+          onPress={() => {
+            setModalVisible(true);
+          }}
+        >
+          <Image
+            style={styles.profilePicture}
+            source={{
+              uri: pfp,
+            }}
           />
-          
-          {horizontalCards("Your Reviews")}
-          {horizontalCards("Your Favorites")}
-          <View>
-            <View style={[{ backgroundColor: "none" }]}>
-              <View
-                style={{
-                  marginVertical: 20,
-                  backgroundColor: "none",
-                  minWidth: 200,
-                }}
-              >
-                {MainButton("Log Out", () => {
-                  signOut();
-                })}
-              </View>
+          <Text>Your Name</Text>
+        </TouchableOpacity>
+
+        <ImageUploader
+          isVisible={modalVisible}
+          onClose={() => setModalVisible(false)}
+        />
+
+        {horizontalCards("Your Reviews")}
+        {horizontalCards("Your Favorites")}
+        <View>
+          <View style={[{ backgroundColor: "none" }]}>
+            <View
+              style={{
+                marginVertical: 20,
+                backgroundColor: "none",
+                minWidth: 200,
+              }}
+            >
+              {MainButton("Log Out", () => {
+                signOut();
+              })}
             </View>
           </View>
-        </SignedIn>
-        <SignedOut>
-          
-        </SignedOut>
+        </View>
+      </SignedIn>
+      <SignedOut></SignedOut>
     </View>
   );
 }

@@ -34,14 +34,8 @@ export default function StackNavigator() {
       <Stack.Screen name={facilityProfileName} component={FacilityProfile} />
       <Stack.Screen name={facilityReviewsName} component={FacilityReviews} />
       <Stack.Screen name={loginName} component={Login} />
-      <Stack.Screen
-        name={registerName}
-        component={Register}
-      />
-      <Stack.Screen
-        name={forgotPasswordName}
-        component={ForgotPassword}
-      />
+      <Stack.Screen name={registerName} component={Register} />
+      <Stack.Screen name={forgotPasswordName} component={ForgotPassword} />
     </Stack.Navigator>
   );
 }

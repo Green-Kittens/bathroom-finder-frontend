@@ -5,8 +5,6 @@ import { setCustomText } from "react-native-global-props";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import * as SecureStore from "expo-secure-store";
 
-
-
 export default function App() {
   const [fontsLoaded] = useFonts({
     "EudoxusSans-Regular": require("./assets/fonts/EudoxusSans-Regular.ttf"),
@@ -49,8 +47,9 @@ export default function App() {
 
   return (
     <ClerkProvider
-    tokenCache={tokenCache} 
-    publishableKey={"pk_test_ZXhhY3QtZmlzaC00NS5jbGVyay5hY2NvdW50cy5kZXYk"}>
+      tokenCache={tokenCache}
+      publishableKey={"pk_test_ZXhhY3QtZmlzaC00NS5jbGVyay5hY2NvdW50cy5kZXYk"}
+    >
       <NavigationContainer>
         <StackNavigator />
       </NavigationContainer>

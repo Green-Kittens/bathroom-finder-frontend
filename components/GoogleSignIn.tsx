@@ -3,19 +3,19 @@ import * as WebBrowser from "expo-web-browser";
 import { Button } from "react-native";
 import { useOAuth } from "@clerk/clerk-expo";
 import { useWarmUpBrowser } from "../hooks/useWarmUpBrowser";
- 
+
 WebBrowser.maybeCompleteAuthSession();
- 
+
 const googleSignIn = () => {
   useWarmUpBrowser();
- 
+
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
- 
+
   const onPress = React.useCallback(async () => {
     try {
       const { createdSessionId, signIn, signUp, setActive } =
         await startOAuthFlow();
- 
+
       if (createdSessionId) {
         setActive && setActive({ session: createdSessionId });
       } else {
@@ -25,12 +25,7 @@ const googleSignIn = () => {
       console.error("OAuth error", err);
     }
   }, []);
- 
-  return (
-    <Button
-      title="Sign in with Google"
-      onPress={onPress}
-    />
-  );
-}
+
+  return <Button title="Sign in with Google" onPress={onPress} />;
+};
 export default googleSignIn;

@@ -204,12 +204,12 @@ export default function TabFacilityProfileScreen() {
           style={[{ flex: 1, marginHorizontal: 40, backgroundColor: "none" }]}
         >
           <SignedIn>
-          <View style={{ marginTop: 10 }}>
-            {MainButton("Add Review", () => {
-              // figure out how to make it so that dropdown renders current facility as location
-              navigation.navigate("ReviewForm");
-            })}
-          </View>
+            <View style={{ marginTop: 10 }}>
+              {MainButton("Add Review", () => {
+                // figure out how to make it so that dropdown renders current facility as location
+                navigation.navigate("ReviewForm");
+              })}
+            </View>
           </SignedIn>
         </View>
         <CollapseView />

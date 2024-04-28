@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  SafeAreaView,
-  TextInput,
-  Text,
-  View,
-} from "react-native";
+import { StyleSheet, SafeAreaView, TextInput, Text, View } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
 import MainButton from "../components/Buttons";
 
@@ -18,7 +12,7 @@ export default function RegisterScreen() {
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [pendingVerification, setPendingVerification] = React.useState(false);
   const [code, setCode] = React.useState("");
- 
+
   // start the sign up process.
   const { isLoaded, signUp, setActive } = useSignUp();
 
@@ -26,7 +20,7 @@ export default function RegisterScreen() {
     if (!isLoaded) {
       return;
     }
- 
+
     try {
       await signUp.create({
         firstName,
@@ -34,28 +28,28 @@ export default function RegisterScreen() {
         emailAddress,
         password,
       });
- 
+
       // send the email.
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
- 
+
       // change the UI to our pending section.
       setPendingVerification(true);
     } catch (err: any) {
       console.error(JSON.stringify(err, null, 2));
     }
   };
- 
+
   // This verifies the user using email code that is delivered.
   const onPressVerify = async () => {
     if (!isLoaded) {
       return;
     }
- 
+
     try {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
       });
- 
+
       await setActive({ session: completeSignUp.createdSessionId });
     } catch (err: any) {
       console.error(JSON.stringify(err, null, 2));
@@ -63,25 +57,25 @@ export default function RegisterScreen() {
   };
 
   return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Register</Text>
-        {!pendingVerification && (
-        <SafeAreaView style={styles.safeArea}> 
+    <View style={styles.container}>
+      <Text style={styles.title}>Register</Text>
+      {!pendingVerification && (
+        <SafeAreaView style={styles.safeArea}>
           <View style={{ flexDirection: "row" }}>
-          <TextInput
-            style={styles.input}
-            onChangeText={(firstName) => setFirstName(firstName)}
-            value={firstName}
-            placeholder="First Name..."
-            placeholderTextColor="#000"
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={(lastName) => setLastName(lastName)}
-            value={lastName}
-            placeholder="Last Name..."
-            placeholderTextColor="#000"
-          />
+            <TextInput
+              style={styles.input}
+              onChangeText={(firstName) => setFirstName(firstName)}
+              value={firstName}
+              placeholder="First Name..."
+              placeholderTextColor="#000"
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={(lastName) => setLastName(lastName)}
+              value={lastName}
+              placeholder="Last Name..."
+              placeholderTextColor="#000"
+            />
           </View>
           <TextInput
             style={styles.inputLong}
@@ -108,15 +102,14 @@ export default function RegisterScreen() {
             secureTextEntry={true}
           />
           <View style={styles.fixToText}>
-            {MainButton("Sign Up", onSignUpPress )}
+            {MainButton("Sign Up", onSignUpPress)}
           </View>
         </SafeAreaView>
-        )}
-        {pendingVerification && (
-        
+      )}
+      {pendingVerification && (
         <SafeAreaView style={styles.container}>
           <View>
-            <TextInput 
+            <TextInput
               style={styles.input}
               value={code}
               placeholder="Code..."
@@ -127,7 +120,7 @@ export default function RegisterScreen() {
           {MainButton("Verify Email", onPressVerify)}
         </SafeAreaView>
       )}
-      </View>
+    </View>
   );
 }
 

@@ -12,7 +12,6 @@ import UserProfile from "../screens/user-profile";
 import FacilityForm from "../screens/facility-form";
 import Login from "../screens/login";
 
-
 // screen names
 const mainName = "Main";
 const reviewFormName = "ReviewForm";
@@ -44,16 +43,28 @@ export default function NavBar() {
           } else if (current === userLoginName) {
             iconName = focused ? "person-circle" : "person-circle-outline";
           }
-          
+
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
     >
-      {isSignedIn && <Tab.Screen name={reviewFormName} component={ReviewForm} />}
-      {isSignedIn && <Tab.Screen name={facilityFormName} component={FacilityForm} />}
+      {isSignedIn && (
+        <Tab.Screen name={reviewFormName} component={ReviewForm} />
+      )}
+      {isSignedIn && (
+        <Tab.Screen name={facilityFormName} component={FacilityForm} />
+      )}
       <Tab.Screen name={mainName} component={Main} />
-      {isSignedIn && <Tab.Screen name={userProfileName} component={UserProfile} />}
-      {!isSignedIn && <Tab.Screen name={userLoginName} component={Login} options={{ headerShown: false }}/>}
+      {isSignedIn && (
+        <Tab.Screen name={userProfileName} component={UserProfile} />
+      )}
+      {!isSignedIn && (
+        <Tab.Screen
+          name={userLoginName}
+          component={Login}
+          options={{ headerShown: false }}
+        />
+      )}
     </Tab.Navigator>
   );
 }
