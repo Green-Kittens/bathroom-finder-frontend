@@ -44,11 +44,6 @@ function TabLoginScreen() {
     }
   };
 
-  const onForgotPress = () => {
-    // Placeholder for navigation logic
-    Alert.alert("Forgot Pressed", "Navigate to Forgot screen");
-  };
-
   const boomerangimage = { uri: "../assets/images/boomerang.png" };
 
   return (

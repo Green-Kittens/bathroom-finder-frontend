@@ -12,13 +12,9 @@ import {
   ImageBackground,
   StyleSheet,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { SignedIn, SignedOut } from "@clerk/clerk-expo";
 import { useSignOut } from "../hooks/useSignOut";
-
-// types
-import { ScreenNavigationProp } from "../navigation/type";
 
 const boomerangimage = { uri: "/assets/images/boomerang.png" };
 
