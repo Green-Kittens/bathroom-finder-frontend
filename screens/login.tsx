@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   Text,
   View,
-  Alert,
 } from "react-native";
 import { ScreenNavigationProp } from "../navigation/type";
 import MainButton from "../components/Buttons";
@@ -39,7 +38,7 @@ function TabLoginScreen() {
       // This is an important step,
       // This indicates the user is signed in
       await setActive({ session: completeSignIn.createdSessionId });
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.log(err);
     }
   };

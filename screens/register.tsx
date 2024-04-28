@@ -34,7 +34,7 @@ export default function RegisterScreen() {
 
       // change the UI to our pending section.
       setPendingVerification(true);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(JSON.stringify(err, null, 2));
     }
   };
