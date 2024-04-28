@@ -16,6 +16,7 @@ import MainButton from "../components/Buttons";
 import { useSignIn } from "@clerk/clerk-expo";
 import GoogleSignIn from "../components/GoogleSignIn";
 import MicroSignIn from "../components/MicroSignIn";
+import { Divider } from '@rneui/themed';
 
 function TabLoginScreen() {
   // State management for text inputs
@@ -42,11 +43,6 @@ function TabLoginScreen() {
     } catch (err: any) {
       console.log(err);
     }
-  };
-
-  const onRegisterPress = () => {
-    // Placeholder for navigation logic
-    nav.navigate("Register"); 
   };
 
   const onForgotPress = () => {
@@ -97,7 +93,7 @@ function TabLoginScreen() {
           onChangeText={(password) => setPassword(password)}
         />
         <TouchableOpacity
-          onPress={onForgotPress}
+          onPress={() => {nav.navigate("ForgotPassword")}}
           style={styles.registerContainer}
         >
           <Text style={styles.text}>Forgot Password</Text>
@@ -106,6 +102,12 @@ function TabLoginScreen() {
         {/* Login button */}
         <View style={[{ margin: "10%" }]}>
           {MainButton("Login", onSignInPress)}
+        </View>
+
+        {/* Google Sign In */}
+        <View style={[{ margin: "10%", flexDirection: 'row' }]}>
+          <GoogleSignIn />
+          <MicroSignIn />
         </View>
       </SafeAreaView>
 

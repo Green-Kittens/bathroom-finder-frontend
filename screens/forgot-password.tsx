@@ -44,7 +44,7 @@ export default function TabSubmitScreen() {
           </View>
         </Modal>
         <Image
-          source={require("../../assets/images/logo-placeholder.png")}
+          source={require("../assets/images/logo-placeholder.png")}
           style={styles.logo}
         />
         <Text style={styles.title}>Forgot-Password</Text>
@@ -54,7 +54,8 @@ export default function TabSubmitScreen() {
           style={styles.input}
           onChangeText={setEmail}
           value={email}
-          placeholder="Email:"
+          placeholderTextColor={"#000000"}
+          placeholder="Email..."
         />
 
         {/* Submit button */}

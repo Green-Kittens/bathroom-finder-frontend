@@ -10,6 +10,7 @@ import FacilityProfile from "../screens/facility-profile";
 import FacilityReviews from "../screens/facility-reviews";
 import Login from "../screens/login";
 import Register from "../screens/register";
+import ForgotPassword from "../screens/forgot-password";
 
 // screen names
 const headName = "Back";
@@ -17,6 +18,7 @@ const facilityProfileName = "FacilityProfile";
 const facilityReviewsName = "FacilityReviews";
 const loginName = "Login";
 const registerName = "Register";
+const forgotPasswordName = "ForgotPassword";
 
 // navigation
 const Stack = createStackNavigator<ScreensParamList>();
@@ -35,6 +37,10 @@ export default function StackNavigator() {
       <Stack.Screen
         name={registerName}
         component={Register}
+      />
+      <Stack.Screen
+        name={forgotPasswordName}
+        component={ForgotPassword}
       />
     </Stack.Navigator>
   );
