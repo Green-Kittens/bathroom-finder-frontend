@@ -14,6 +14,7 @@ import {
 import { ScreenNavigationProp } from "../navigation/type";
 import MainButton from "../components/Buttons";
 import { useSignIn } from "@clerk/clerk-expo";
+
  
 
 function TabLoginScreen() {
@@ -23,7 +24,7 @@ function TabLoginScreen() {
   const [password, setPassword] = React.useState("");
  
   // navigation
-  const navigation = useNavigation<ScreenNavigationProp>();
+  const nav = useNavigation<ScreenNavigationProp>();
 
   const onSignInPress = async () => {
     if (!isLoaded) {
@@ -45,7 +46,7 @@ function TabLoginScreen() {
 
   const onRegisterPress = () => {
     // Placeholder for navigation logic
-    Alert.alert("Register Pressed", "Navigate to registration screen.");
+    nav.navigate("Register"); 
   };
 
   const onForgotPress = () => {
@@ -113,7 +114,7 @@ function TabLoginScreen() {
             Don&apos;t have an account?{" "}
           </Text>
           <TouchableOpacity
-            onPress={onRegisterPress}
+            onPress={() => {nav.navigate("Register")}}
             style={styles.registerContainer}
           >
             <Text style={styles.registerText}>Register</Text>

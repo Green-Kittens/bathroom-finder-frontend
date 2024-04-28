@@ -9,7 +9,7 @@ import { ScreensParamList } from "./type";
 import FacilityProfile from "../screens/facility-profile";
 import FacilityReviews from "../screens/facility-reviews";
 import Login from "../screens/login";
-import Register from "../screens/signUp";
+import Register from "../screens/register";
 
 // screen names
 const headName = "Head";

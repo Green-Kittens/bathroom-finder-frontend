@@ -1,57 +1,109 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
-  Image,
   SafeAreaView,
   TextInput,
   Button,
   Text,
   View,
+  Modal,
 } from "react-native";
+import { useSignUp } from "@clerk/clerk-expo";
 
 export default function RegisterScreen() {
   // State management for text inputs
-  const [firstName, setFirstName] = useState("");
-  const [lasttName, setLastName] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const onRegisterPress = () => {
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [emailAddress, setEmailAddress] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [pendingVerification, setPendingVerification] = React.useState(false);
+  const [code, setCode] = React.useState("");
+ 
+  // start the sign up process.
+  const { isLoaded, signUp, setActive } = useSignUp();
+
+  const [modalVisible, setModalVisible] = React.useState(false);
+
+  const onSubmitPress = () => {
     // Placeholder for navigation logic
+    setModalVisible(true);
+  };
+
+  const onClosePress = () => {
+    // Placeholder for navigation logic
+    setModalVisible(false);
+  };
+
+const onSignUpPress = async () => {
+    if (!isLoaded) {
+      return;
+    }
+ 
+    try {
+      await signUp.create({
+        firstName,
+        lastName,
+        emailAddress,
+        password,
+      });
+ 
+      // send the email.
+      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+ 
+      // change the UI to our pending section.
+      setPendingVerification(true);
+    } catch (err: any) {
+      console.error(JSON.stringify(err, null, 2));
+    }
+  };
+ 
+  // This verifies the user using email code that is delivered.
+  const onPressVerify = async () => {
+    if (!isLoaded) {
+      return;
+    }
+ 
+    try {
+      const completeSignUp = await signUp.attemptEmailAddressVerification({
+        code,
+      });
+ 
+      await setActive({ session: completeSignUp.createdSessionId });
+    } catch (err: any) {
+      console.error(JSON.stringify(err, null, 2));
+    }
   };
 
   return (
       <View style={styles.container}>
+        {!pendingVerification && (
         <SafeAreaView style={styles.safeArea}>
-          <Image
-            source={require("../../assets/images/uploadImage.jpg")}
-            style={styles.upload}
-          />
           <Text style={styles.title}>Register</Text>
 
           <TextInput
             style={styles.input}
             onChangeText={setFirstName}
             value={firstName}
-            placeholder="First Name"
+            placeholder="First Name..."
           />
           <TextInput
             style={styles.input}
             onChangeText={setLastName}
-            value={lasttName}
-            placeholder="Last Name"
+            value={lastName}
+            placeholder="Last Name..."
           />
           <TextInput
             style={styles.input}
-            onChangeText={setUsername}
-            value={username}
-            placeholder="Username"
+            onChangeText={setEmailAddress}
+            value={emailAddress}
+            placeholder="Email..."
           />
           <TextInput
             style={styles.input}
             onChangeText={setPassword}
             value={password}
-            placeholder="Password"
+            placeholder="Password..."
             secureTextEntry={true}
           />
           <TextInput
@@ -66,10 +118,11 @@ export default function RegisterScreen() {
             <Button
               title="Register"
               color={"#000000"}
-              onPress={onRegisterPress}
+              onPress={onSignUpPress}
             />
           </View>
         </SafeAreaView>
+        )};
       </View>
   );
 }

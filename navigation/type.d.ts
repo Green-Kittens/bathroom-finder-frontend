@@ -15,14 +15,13 @@ export type ScreensParamList = {
 };
 
 export type ScreenNavigationProp = NativeStackScreenProps<
-  ScreensParamList,
   FacilityForm,
   FacilityProfile,
   FacilityReviews,
   Login,
   Main,
   ReviewForm,
-  Registered,
   UserProfile,
-  Head
+  Head,
+  Register,
 >;

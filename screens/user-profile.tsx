@@ -15,9 +15,6 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { SignedIn, SignedOut} from "@clerk/clerk-expo";
-import SignUpScreen from "../components/SignUpScreen";
-import SignInScreen from "../components/SignInScreen";
-import SignInWithOAuth from "../components/SignInWithAuth";
 import { useSignOut } from "../hooks/useSignOut";
 
 // types
