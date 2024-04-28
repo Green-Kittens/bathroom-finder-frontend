@@ -14,7 +14,7 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../navigation/type";
 import Review from "../components/Review";
-import { SignedIn, SignedOut } from "@clerk/clerk-expo";
+import { SignedIn } from "@clerk/clerk-expo";
 
 import { LinearGradient } from "expo-linear-gradient";
 import MainButton, { LightButton } from "../components/Buttons";

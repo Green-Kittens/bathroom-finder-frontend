@@ -13,8 +13,7 @@ const microSignIn = () => {
 
   const onPress = React.useCallback(async () => {
     try {
-      const { createdSessionId, signIn, signUp, setActive } =
-        await startOAuthFlow();
+      const { createdSessionId, setActive } = await startOAuthFlow();
 
       if (createdSessionId) {
         setActive && setActive({ session: createdSessionId });

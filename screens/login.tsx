@@ -16,7 +16,6 @@ import MainButton from "../components/Buttons";
 import { useSignIn } from "@clerk/clerk-expo";
 import GoogleSignIn from "../components/GoogleSignIn";
 import MicroSignIn from "../components/MicroSignIn";
-import { Divider } from "@rneui/themed";
 
 function TabLoginScreen() {
   // State management for text inputs

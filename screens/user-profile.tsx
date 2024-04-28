@@ -24,7 +24,6 @@ const boomerangimage = { uri: "/assets/images/boomerang.png" };
 
 export default function UserProfileScreen() {
   // navigation
-  const navigation = useNavigation<ScreenNavigationProp>();
   const signOut = useSignOut();
 
   // add photo modal
