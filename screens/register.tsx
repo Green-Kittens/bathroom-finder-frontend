@@ -3,12 +3,11 @@ import {
   StyleSheet,
   SafeAreaView,
   TextInput,
-  Button,
   Text,
   View,
-  Modal,
 } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
+import MainButton from "../components/Buttons";
 
 export default function RegisterScreen() {
   // State management for text inputs
@@ -23,19 +22,7 @@ export default function RegisterScreen() {
   // start the sign up process.
   const { isLoaded, signUp, setActive } = useSignUp();
 
-  const [modalVisible, setModalVisible] = React.useState(false);
-
-  const onSubmitPress = () => {
-    // Placeholder for navigation logic
-    setModalVisible(true);
-  };
-
-  const onClosePress = () => {
-    // Placeholder for navigation logic
-    setModalVisible(false);
-  };
-
-const onSignUpPress = async () => {
+  const onSignUpPress = async () => {
     if (!isLoaded) {
       return;
     }
@@ -77,52 +64,69 @@ const onSignUpPress = async () => {
 
   return (
       <View style={styles.container}>
+        <Text style={styles.title}>Register</Text>
         {!pendingVerification && (
-        <SafeAreaView style={styles.safeArea}>
-          <Text style={styles.title}>Register</Text>
-
+        <SafeAreaView style={styles.safeArea}> 
+          <View style={{ flexDirection: "row" }}>
           <TextInput
             style={styles.input}
-            onChangeText={setFirstName}
+            onChangeText={(firstName) => setFirstName(firstName)}
             value={firstName}
             placeholder="First Name..."
+            placeholderTextColor="#000"
           />
           <TextInput
             style={styles.input}
-            onChangeText={setLastName}
+            onChangeText={(lastName) => setLastName(lastName)}
             value={lastName}
             placeholder="Last Name..."
+            placeholderTextColor="#000"
           />
+          </View>
           <TextInput
-            style={styles.input}
-            onChangeText={setEmailAddress}
+            style={styles.inputLong}
+            onChangeText={(email) => setEmailAddress(email)}
             value={emailAddress}
             placeholder="Email..."
+            placeholderTextColor="#000"
           />
           <TextInput
-            style={styles.input}
-            onChangeText={setPassword}
+            style={styles.inputLong}
+            onChangeText={(password) => setPassword(password)}
+            placeholderTextColor="#000"
             value={password}
             placeholder="Password..."
             secureTextEntry={true}
           />
           <TextInput
-            style={styles.input}
+            style={styles.inputLong}
             //implemtation to check against initially entered password
-            onChangeText={setConfirmPassword}
+            onChangeText={(password) => setConfirmPassword(password)}
+            placeholderTextColor="#000"
             value={confirmPassword}
             placeholder="Confirm Password"
             secureTextEntry={true}
           />
           <View style={styles.fixToText}>
-            <Button
-              title="Register"
-              color={"#000000"}
-              onPress={onSignUpPress}
-            />
+            {MainButton("Sign Up", onSignUpPress )}
           </View>
         </SafeAreaView>
-        )};
+        )}
+        {pendingVerification && (
+        
+        <SafeAreaView style={styles.container}>
+          <View>
+            <TextInput 
+              style={styles.input}
+              value={code}
+              placeholder="Code..."
+              placeholderTextColor={"#000"}
+              onChangeText={(code) => setCode(code)}
+            />
+          </View>
+          {MainButton("Verify Email", onPressVerify)}
+        </SafeAreaView>
+      )}
       </View>
   );
 }
@@ -137,18 +141,28 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    marginTop: 50,
   },
   // Title Section
   title: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginTop: 50,
+    alignSelf: "center",
   },
   // Input Section
   input: {
     height: 40,
-    width: "30%", // Control the width of the input size
+    width: "40%", // Control the width of the input size
+    margin: 5,
+    borderWidth: 1,
+    padding: 10,
+    alignSelf: "center",
+  },
+  // Input Section
+  inputLong: {
+    height: 40,
+    width: "82%", // Control the width of the input size
     margin: 12,
     borderWidth: 1,
     padding: 10,

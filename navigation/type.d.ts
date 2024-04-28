@@ -10,7 +10,7 @@ export type ScreensParamList = {
   Main: undefined;
   ReviewForm: undefined;
   UserProfile: undefined;
-  Head: undefined;
+  Back: undefined;
   Register: undefined;
 };
 
@@ -22,6 +22,6 @@ export type ScreenNavigationProp = NativeStackScreenProps<
   Main,
   ReviewForm,
   UserProfile,
-  Head,
+  Back,
   Register,
 >;

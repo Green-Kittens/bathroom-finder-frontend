@@ -12,7 +12,7 @@ import Login from "../screens/login";
 import Register from "../screens/register";
 
 // screen names
-const headName = "Head";
+const headName = "Back";
 const facilityProfileName = "FacilityProfile";
 const facilityReviewsName = "FacilityReviews";
 const loginName = "Login";
@@ -35,7 +35,6 @@ export default function StackNavigator() {
       <Stack.Screen
         name={registerName}
         component={Register}
-        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

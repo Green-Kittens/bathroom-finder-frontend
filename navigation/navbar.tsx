@@ -53,7 +53,7 @@ export default function NavBar() {
       {isSignedIn && <Tab.Screen name={facilityFormName} component={FacilityForm} />}
       <Tab.Screen name={mainName} component={Main} />
       {isSignedIn && <Tab.Screen name={userProfileName} component={UserProfile} />}
-      {!isSignedIn && <Tab.Screen name={userLoginName} component={Login} />}
+      {!isSignedIn && <Tab.Screen name={userLoginName} component={Login} options={{ headerShown: false }}/>}
     </Tab.Navigator>
   );
 }

@@ -14,8 +14,8 @@ import {
 import { ScreenNavigationProp } from "../navigation/type";
 import MainButton from "../components/Buttons";
 import { useSignIn } from "@clerk/clerk-expo";
-
- 
+import GoogleSignIn from "../components/GoogleSignIn";
+import MicroSignIn from "../components/MicroSignIn";
 
 function TabLoginScreen() {
   // State management for text inputs
@@ -85,12 +85,14 @@ function TabLoginScreen() {
           style={styles.input}
           value={emailAddress}
           placeholder="Email..."
+          placeholderTextColor="#000"
           onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
         />
         <TextInput
           value={password}
           style={styles.input}
           placeholder="Password..."
+          placeholderTextColor="#000"
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
         />
@@ -111,7 +113,7 @@ function TabLoginScreen() {
       <View style={styles.footer}>
         <View style={styles.registerContainer}>
           <Text style={styles.text} disabled>
-            Don&apos;t have an account?{" "}
+            Don&apos;t have an account?
           </Text>
           <TouchableOpacity
             onPress={() => {nav.navigate("Register")}}
@@ -138,7 +140,7 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+
   },
   // Title Section
   title: {
@@ -156,7 +158,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     backgroundColor: "#FFFFFF",
     minWidth: 200,
-    color: "black",
   },
   // Text Section
   text: {
