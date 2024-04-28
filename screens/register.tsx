@@ -51,7 +51,7 @@ export default function RegisterScreen() {
       });
 
       await setActive({ session: completeSignUp.createdSessionId });
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(JSON.stringify(err, null, 2));
     }
   };
