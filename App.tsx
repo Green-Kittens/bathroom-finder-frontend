@@ -2,6 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import StackNavigator from "./navigation/stackNavigator";
 import { useFonts } from "expo-font";
 import { setCustomText } from "react-native-global-props";
+import { ImageProvider } from "./contexts/ImageContext";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -28,8 +29,10 @@ export default function App() {
   setCustomText(customTextProps);
 
   return (
-    <NavigationContainer>
-      <StackNavigator />
-    </NavigationContainer>
+    <ImageProvider>
+      <NavigationContainer>
+        <StackNavigator />
+      </NavigationContainer>
+    </ImageProvider>
   );
 }
