@@ -1,5 +1,8 @@
 import React from "react";
-import MainButton, { CancelButton, SecondaryButton } from "../../components/Buttons";
+import MainButton, {
+  CancelButton,
+  SecondaryButton,
+} from "../../components/Buttons";
 import {
   StyleSheet,
   TextInput,
