@@ -36,7 +36,7 @@ export default function UserProfileScreen() {
   }) => {
     return (
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={isVisible}
         onRequestClose={onClose}
