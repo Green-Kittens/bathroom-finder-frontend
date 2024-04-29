@@ -49,7 +49,7 @@ export function LightButton(
   );
 }
 
-export function SecordaryButton(
+export function SecondaryButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
   styling?: StyleProp<ViewStyle>,

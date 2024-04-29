@@ -8,7 +8,7 @@ import {
   ScrollView,
   Modal,
   TouchableOpacity,
-  Modal,
+  ImageBackground,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
@@ -95,23 +95,8 @@ export default function FacilityForm() {
           }}
         >
           <Text style={styles.title}>Add a New Facility</Text>
-          <View style={styles.dropdown}>
-            <RNPickerSelect
-              style={styles.dropdown}
-              placeholder={{
-                label: "select a location",
-                value: null,
-              }}
-              onValueChange={(newLocation) => setLocation(newLocation)}
-              items={[
-                { label: "Location 1", value: "location1" },
-                { label: "Location 2", value: "location2" },
-              ]}
-            />
-          </View>
-          <Text style={styles.subtext}>Facility Hours:</Text>
           <View style={styles.timeSelect}>
-            <TouchableOpacity onPress={showOpenPicker}>
+            <TouchableOpacity onPress={() => setOpenPickerVisibility(true)}>
               <Text style={styles.timeSelectButton}>
                 {openTime
                   ? openTime.toLocaleTimeString([], {
@@ -128,9 +113,9 @@ export default function FacilityForm() {
               onCancel={() => setOpenPickerVisibility(false)}
             />
             <TouchableOpacity>
-              <Text style={styles.subtext}> to </Text>
+              <Text style={[styles.subtext, {marginBottom: 10}]}> to </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={showClosedPicker}>
+            <TouchableOpacity onPress={() => setClosedPickerVisibility(true)}>
               <Text style={styles.timeSelectButton}>
                 {closedTime
                   ? closedTime.toLocaleTimeString([], {
@@ -194,6 +179,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontFamily: "EudoxusSans-Bold",
+  },
   icon: {
     marginLeft: "auto",
   },
