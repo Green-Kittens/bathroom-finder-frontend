@@ -4,35 +4,35 @@
     "scheme": "bathroom-finder-frontend",
     "slug": "bathroom-finder-frontend",
     "version": "1.0.0",
-    "orientation": "portrait"
-  },
-  "icon": "./assets/images/icon.png",
-  "userInterfaceStyle": "light",
-  "splash": {
-    "image": "./assets/images/splash.png",
-    "resizeMode": "contain",
-    "backgroundColor": "#ffffff"
-  },
-  "assetBundlePatterns": ["**/*"],
-  "ios": {
-    "supportsTablet": true
-  },
-  "android": {
-    "adaptiveIcon": {
-      "foregroundImage": "./assets/images/adaptive-icon.png",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
       "backgroundColor": "#ffffff"
-    }
-  },
-  "web": {
-    "favicon": "./assets/images/favicon.png"
-  },
-  "plugins": [
-    [
-      "expo-font",
-      {
-        "fonts": ["./assets/fonts/EudoxusSans-Regular.ttf"]
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
       }
-    ]
-  ],
-  "platforms": ["ios", "android"]
+    },
+    "web": {
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/EudoxusSans-Regular.ttf"]
+        }
+      ]
+    ],
+    "platforms": ["ios", "android"]
+  }
 }
