@@ -16,7 +16,10 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { ImageCarousel } from "../../components/Carousel";
 import { useImages } from "../../contexts/ImageContext"; // Ensure the import path is correct
 import { ScreenNavigationProp } from "../type";
-import MainButton, { CancelButton, SecondaryButton } from "../../components/Buttons";
+import MainButton, {
+  CancelButton,
+  SecondaryButton,
+} from "../../components/Buttons";
 
 const boomerangimage = { uri: "/assets/images/boomerang.png" };
 
@@ -113,7 +116,7 @@ export default function FacilityForm() {
               onCancel={() => setOpenPickerVisibility(false)}
             />
             <TouchableOpacity>
-              <Text style={[styles.subtext, {marginBottom: 10}]}> to </Text>
+              <Text style={[styles.subtext, { marginBottom: 10 }]}> to </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setClosedPickerVisibility(true)}>
               <Text style={styles.timeSelectButton}>
@@ -143,26 +146,28 @@ export default function FacilityForm() {
           />
 
           {MainButton("Add Photo", () => setModalVisible(true))}
-        {modalVisible && (
-          <Modal
-            animationType="fade"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => setModalVisible(false)}
-          >
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                {MainButton("Take Photo", () => handleAddImage("camera"))}
-                {MainButton("Choose from Gallery", () =>
-                  handleAddImage("gallery"),
-                )}
-                {CancelButton("Close", () => setModalVisible(false))}
+          {modalVisible && (
+            <Modal
+              animationType="fade"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => setModalVisible(false)}
+            >
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  {MainButton("Take Photo", () => handleAddImage("camera"))}
+                  {MainButton("Choose from Gallery", () =>
+                    handleAddImage("gallery"),
+                  )}
+                  {CancelButton("Close", () => setModalVisible(false))}
+                </View>
               </View>
-            </View>
-          </Modal>
-        )}
-        {SecondaryButton("Submit Facility", () => navigation.navigate("Main"))}
-      </View>
+            </Modal>
+          )}
+          {SecondaryButton("Submit Facility", () =>
+            navigation.navigate("Main"),
+          )}
+        </View>
       </ScrollView>
     </View>
   );
