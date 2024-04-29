@@ -1,5 +1,5 @@
 import React from "react";
-import MainButton, { CancelButton } from "../../components/Buttons";
+import MainButton, { CancelButton, SecondaryButton } from "../../components/Buttons";
 import {
   StyleSheet,
   TextInput,
@@ -152,7 +152,7 @@ export default function ReviewForm() {
             color="black"
           />
 
-          {MainButton("Post Rating", () => {
+          {SecondaryButton("Post Rating", () => {
             // make a check to make sure that all fields are filled out
             navigation.navigate("Main");
           })}
