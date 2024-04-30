@@ -46,7 +46,7 @@
     "yarn": "^1.22.22"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
+    "@babel/core": "^7.24.5",
     "@types/react": "~18.2.45",
     "@types/react-native-global-props": "^1.1.6",
     "eslint": "^8.57.0",
