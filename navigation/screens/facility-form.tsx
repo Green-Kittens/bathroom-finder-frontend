@@ -121,7 +121,7 @@ export default function FacilityForm() {
             alignItems: "center",
             alignContent: "center",
             paddingTop: 80,
-            paddingBottom: 400,
+            paddingBottom: 250,
           }}
         >
           <Text style={styles.title}>Add a New Facility</Text>
@@ -168,7 +168,7 @@ export default function FacilityForm() {
             <Text style={styles.subtext}>Fetching current location...</Text>
           )}
 
-          <Text>press and drag pin marker to see address and relocate</Text>
+          <Text>Press and drag pin marker to see address and relocate</Text>
 
           <Modal
             animationType="fade"
@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
   },
   timeSelect: {
     fontSize: 17,
-    marginBottom: 20,
+    marginBottom: 10,
     color: "#6da798",
     flexDirection: "row",
     alignItems: "center",
@@ -295,8 +295,8 @@ const styles = StyleSheet.create({
   },
   timeSelectButton: {
     fontSize: 17,
-    marginTop: 10,
-    marginBottom: 20,
+    marginTop: 20,
+    marginBottom: 10,
     color: "#6da798",
     borderWidth: 1,
     borderColor: "#6da798",
