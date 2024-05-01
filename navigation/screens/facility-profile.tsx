@@ -14,6 +14,7 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../type";
 import Review from "../../components/Review";
+import { StarRatingDisplay } from "react-native-star-rating-widget";
 
 import { LinearGradient } from "expo-linear-gradient";
 import MainButton, { LightButton } from "../../components/Buttons";
@@ -174,26 +175,7 @@ export default function TabFacilityProfileScreen() {
               },
             ]}
           >
-            <Image
-              style={{ height: 30, width: 30 }}
-              source={require("../../assets/images/star_filled.png")}
-            />
-            <Image
-              style={{ height: 30, width: 30 }}
-              source={require("../../assets/images/star_filled.png")}
-            />
-            <Image
-              style={{ height: 30, width: 30 }}
-              source={require("../../assets/images/star_filled.png")}
-            />
-            <Image
-              style={{ height: 30, width: 30 }}
-              source={require("../../assets/images/star_filled.png")}
-            />
-            <Image
-              style={{ height: 30, width: 30 }}
-              source={require("../../assets/images/star_filled.png")}
-            />
+            <StarRatingDisplay rating={5} color="black" />
             <Text style={styles.body}> 5.0 stars</Text>
           </View>
         </View>
