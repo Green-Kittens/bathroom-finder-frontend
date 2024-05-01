@@ -21,8 +21,6 @@ import MainButton, { LightButton } from "../../components/Buttons";
 const maxLineNumber = 5;
 const windowHeight = Dimensions.get("window").height;
 
-const blobimage = { uri: "/assets/images/blob.png" };
-
 function CollapseView() {
   const [collapsed, setCollapsed] = useState(true);
   const [maxLines, setMaxLines] = useState(2);
@@ -144,12 +142,12 @@ export default function TabFacilityProfileScreen() {
           style={[{ flex: 0.9, alignItems: "center", backgroundColor: "none" }]}
         >
           <ImageBackground
-            source={blobimage}
+            source={require("../../assets/images/blob.png")}
             style={{
               width: 953,
               height: windowHeight,
               position: "absolute",
-              top: 0,
+              top: 100,
               left: -200,
             }}
             imageStyle={{

@@ -19,8 +19,6 @@ import * as ImagePicker from "expo-image-picker";
 // types
 import { ScreenNavigationProp } from "../type";
 
-const boomerangimage = { uri: "/assets/images/boomerang.png" };
-
 export default function UserProfileScreen() {
   // navigation
   const navigation = useNavigation<ScreenNavigationProp>();
@@ -117,7 +115,7 @@ export default function UserProfileScreen() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={boomerangimage}
+        source={require("../../assets/images/boomerang.png")}
         style={{
           width: "100%",
           height: "100%",

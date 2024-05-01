@@ -36,12 +36,10 @@ function TabLoginScreen() {
     Alert.alert("Forgot Pressed", "Navigate to Forgot screen");
   };
 
-  const boomerangimage = { uri: "/assets/images/boomerang.png" };
-
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={boomerangimage}
+        source={require("../../assets/images/boomerang.png")}
         style={{
           width: 753,
           height: 499,

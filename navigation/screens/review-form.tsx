@@ -69,17 +69,16 @@ export default function ReviewForm() {
 
   // post rating (submit button)
   const navigation = useNavigation<ScreenNavigationProp>();
-  const circleimage = { uri: "/assets/images/circle.png" };
 
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={circleimage}
+        source={require("../../assets/images/circle.png")}
         style={{
           width: 1070,
           height: 1000,
           position: "absolute",
-          top: 550,
+          top: 500,
           left: -200,
         }}
         imageStyle={{
