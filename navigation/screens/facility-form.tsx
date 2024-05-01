@@ -24,8 +24,8 @@ export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
   const { addImage } = useImages();
   const [description, setDescription] = useState("");
-  const [openTime, setOpenTime] = useState<Date | null>(null);
-  const [closedTime, setClosedTime] = useState<Date | null>(null);
+  const [openTime, setOpenTime] = useState("");
+  const [closedTime, setClosedTime] = useState("");
   const [isOpenPickerVisible, setOpenPickerVisibility] = useState(false);
   const [isClosedPickerVisible, setClosedPickerVisibility] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -33,14 +33,23 @@ export default function FacilityForm() {
   const [markerAddress, setMarkerAddress] = useState("");
   const [currentLocation, setCurrentLocation] =
     useState<Location.LocationObject | null>(null);
+  
+  const formatTime = (date: Date) => {
+    let hours = date.getHours();
+    const minutes = ("0" + date.getMinutes()).slice(-2);
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;  // for when hours = 0
+    return `${hours}:${minutes} ${ampm}`;
+  };
 
   const handleOpenConfirm = (date: Date) => {
-    setOpenTime(date);
+    setOpenTime(formatTime(date));
     setOpenPickerVisibility(false);
   };
 
   const handleClosedConfirm = (date: Date) => {
-    setClosedTime(date);
+    setClosedTime(formatTime(date));
     setClosedPickerVisibility(false);
   };
 
@@ -96,16 +105,16 @@ export default function FacilityForm() {
             initialRegion={{
               latitude: currentLocation.coords.latitude,
               longitude: currentLocation.coords.longitude,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
+              latitudeDelta: 0.005, // adjusts zoom level (smaller the value, the more zoom)
+              longitudeDelta: 0.005, // adjusts zoom level (smaller the value, the more zoom)
             }}
           >
             <Marker
               draggable // enables user to drag to desired location
               tappable // enables user to tap the marker and trigger modal
               coordinate={{
-                latitude: currentLocation.coords.latitude + 0.001,
-                longitude: currentLocation.coords.longitude + 0.001,
+                latitude: currentLocation.coords.latitude + 0.000001,
+                longitude: currentLocation.coords.longitude + 0.000001,
               }}
               onPress={async (e) => {
                 const { latitude, longitude } = e.nativeEvent.coordinate;
@@ -150,7 +159,7 @@ export default function FacilityForm() {
         <View style={styles.timeSelect}>
           <TouchableOpacity onPress={() => setOpenPickerVisibility(true)}>
             <Text style={styles.timeSelectButton}>
-              {openTime ? openTime.toLocaleTimeString() : "Open Time"}
+              {openTime || "Open Time"}
             </Text>
           </TouchableOpacity>
           <DateTimePickerModal
@@ -162,7 +171,7 @@ export default function FacilityForm() {
           <Text> to </Text>
           <TouchableOpacity onPress={() => setClosedPickerVisibility(true)}>
             <Text style={styles.timeSelectButton}>
-              {closedTime ? closedTime.toLocaleTimeString() : "Close Time"}
+              {closedTime  || "Close Time"}
             </Text>
           </TouchableOpacity>
           <DateTimePickerModal
@@ -170,8 +179,11 @@ export default function FacilityForm() {
             mode="time"
             onConfirm={handleClosedConfirm}
             onCancel={() => setClosedPickerVisibility(false)}
-          />
+          />        
         </View>
+
+        <HorizontalCards />
+
         <TextInput
           style={styles.input}
           placeholder="Write your description..."
@@ -198,7 +210,7 @@ export default function FacilityForm() {
             </View>
           </Modal>
         )}
-        <HorizontalCards />
+
         {MainButton("Submit Facility", () => navigation.navigate("Main"))}
       </View>
     </ScrollView>
@@ -210,11 +222,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
+    paddingBottom: 400,  // fixes scroll view
     backgroundColor: "#afd6ae",
     color: "#344f33",
   },
   scrollView: {
     flex: 1,
+    paddingBottom: 300,  // fixes scroll view
     backgroundColor: "#afd6ae",
   },
   title: {
@@ -245,6 +259,7 @@ const styles = StyleSheet.create({
     padding: 10,
     width: "85%",
     minHeight: 150,
+    marginTop: 20,
     marginBottom: 20,
     color: "#344f33",
     alignContent: "center",
@@ -252,7 +267,6 @@ const styles = StyleSheet.create({
   timeSelect: {
     fontSize: 17,
     marginTop: 20,
-    marginBottom: 20,
     color: "#344f33",
     flexDirection: "row",
     alignItems: "center",
@@ -306,7 +320,7 @@ const styles = StyleSheet.create({
   },
   mapContainer: {
     width: "100%",
-    height: "25%",
+    height: "35%",
     marginTop: 20,
     marginBottom: 20,
   },
