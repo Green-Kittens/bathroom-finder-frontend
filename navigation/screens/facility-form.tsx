@@ -33,13 +33,13 @@ export default function FacilityForm() {
   const [markerAddress, setMarkerAddress] = useState("");
   const [currentLocation, setCurrentLocation] =
     useState<Location.LocationObject | null>(null);
-  
+
   const formatTime = (date: Date) => {
     let hours = date.getHours();
     const minutes = ("0" + date.getMinutes()).slice(-2);
-    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const ampm = hours >= 12 ? "PM" : "AM";
     hours = hours % 12;
-    hours = hours ? hours : 12;  // for when hours = 0
+    hours = hours ? hours : 12; // for when hours = 0
     return `${hours}:${minutes} ${ampm}`;
   };
 
@@ -171,7 +171,7 @@ export default function FacilityForm() {
           <Text> to </Text>
           <TouchableOpacity onPress={() => setClosedPickerVisibility(true)}>
             <Text style={styles.timeSelectButton}>
-              {closedTime  || "Close Time"}
+              {closedTime || "Close Time"}
             </Text>
           </TouchableOpacity>
           <DateTimePickerModal
@@ -179,7 +179,7 @@ export default function FacilityForm() {
             mode="time"
             onConfirm={handleClosedConfirm}
             onCancel={() => setClosedPickerVisibility(false)}
-          />        
+          />
         </View>
 
         <HorizontalCards />
@@ -222,13 +222,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingBottom: 400,  // fixes scroll view
+    paddingBottom: 400, // fixes scroll view
     backgroundColor: "#afd6ae",
     color: "#344f33",
   },
   scrollView: {
     flex: 1,
-    paddingBottom: 300,  // fixes scroll view
+    paddingBottom: 300, // fixes scroll view
     backgroundColor: "#afd6ae",
   },
   title: {
