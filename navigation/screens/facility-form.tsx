@@ -21,8 +21,6 @@ import MainButton, {
   SecondaryButton,
 } from "../../components/Buttons";
 
-const boomerangimage = { uri: "/assets/images/boomerang.png" };
-
 export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
   const { addImage } = useImages("facilityForm");
@@ -76,13 +74,13 @@ export default function FacilityForm() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={boomerangimage}
+        source={require("../../assets/images/boomerang.png")}
         style={{
-          width: 1070,
-          height: 1000,
+          width: 1000,
+          height: 500,
           position: "absolute",
-          top: 550,
-          left: -200,
+          top: -80,
+          left: 100,
         }}
         imageStyle={{
           resizeMode: "cover",
