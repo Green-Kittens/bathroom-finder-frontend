@@ -8,31 +8,35 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
+  ImageBackground,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { HorizontalCards } from "../../components/Carousel";
+import { ImageCarousel } from "../../components/Carousel";
 import { useImages } from "../../contexts/ImageContext"; // Ensure the import path is correct
 import { ScreenNavigationProp } from "../type";
-import MainButton, { CancelButton } from "../../components/Buttons";
+import MainButton, {
+  CancelButton,
+  SecondaryButton,
+} from "../../components/Buttons";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import axios from "axios";
 
 export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
-  const { addImage } = useImages();
-  const [description, setDescription] = useState("");
+  const [mapModal, setMapModal] = useState(false);
+  const [markerAddress, setMarkerAddress] = useState("");
+  const [currentLocation, setCurrentLocation] =
+    useState<Location.LocationObject | null>(null);
   const [openTime, setOpenTime] = useState("");
   const [closedTime, setClosedTime] = useState("");
   const [isOpenPickerVisible, setOpenPickerVisibility] = useState(false);
   const [isClosedPickerVisible, setClosedPickerVisibility] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [mapModal, setMapModal] = useState(false);
-  const [markerAddress, setMarkerAddress] = useState("");
-  const [currentLocation, setCurrentLocation] =
-    useState<Location.LocationObject | null>(null);
+  const { addImage } = useImages("facilityForm");
+  const [description, setDescription] = useState("");
 
   const formatTime = (date: Date) => {
     let hours = date.getHours();
@@ -95,125 +99,153 @@ export default function FacilityForm() {
   }, []);
 
   return (
-    <ScrollView style={styles.scrollView}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Add a New Facility</Text>
-        {currentLocation ? (
-          <MapView
-            style={styles.mapContainer}
-            showsUserLocation={true}
-            initialRegion={{
-              latitude: currentLocation.coords.latitude,
-              longitude: currentLocation.coords.longitude,
-              latitudeDelta: 0.005, // adjusts zoom level (smaller the value, the more zoom)
-              longitudeDelta: 0.005, // adjusts zoom level (smaller the value, the more zoom)
-            }}
-          >
-            <Marker
-              draggable // enables user to drag to desired location
-              tappable // enables user to tap the marker and trigger modal
-              coordinate={{
-                latitude: currentLocation.coords.latitude + 0.000001,
-                longitude: currentLocation.coords.longitude + 0.000001,
-              }}
-              onPress={async (e) => {
-                const { latitude, longitude } = e.nativeEvent.coordinate;
-                try {
-                  const response = await axios.get(
-                    `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`,
-                  );
-                  const addressDetails = response.data.address;
-                  let buildingName = "";
-                  if (addressDetails && addressDetails.building) {
-                    buildingName = addressDetails.building;
-                  }
-                  setMarkerAddress(buildingName || response.data.display_name);
-                  setMapModal(true);
-                } catch (error) {
-                  console.error("Error fetching address:", error);
-                }
-              }}
-            ></Marker>
-          </MapView>
-        ) : (
-          <Text style={styles.subtext}>Fetching current location...</Text>
-        )}
-
-        <Text>press and drag pin marker to see address and relocate</Text>
-
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={mapModal}
-          onRequestClose={() => setMapModal(false)}
+    <View style={styles.container}>
+      <ImageBackground
+        source={require("../../assets/images/boomerang.png")}
+        style={{
+          width: 1000,
+          height: 500,
+          position: "absolute",
+          top: -80,
+          left: 100,
+        }}
+        imageStyle={{
+          resizeMode: "cover",
+          alignSelf: "flex-end",
+        }}
+      ></ImageBackground>
+      <ScrollView style={{ width: "100%" }}>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            alignContent: "center",
+            paddingTop: 80,
+            paddingBottom: 400,
+          }}
         >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.markerModalTitle}>Marker Location</Text>
-              <Text>{markerAddress}</Text>
-              {CancelButton("Close", () => setMapModal(false))}
-            </View>
-          </View>
-        </Modal>
+          <Text style={styles.title}>Add a New Facility</Text>
+          {currentLocation ? (
+            <MapView
+              style={styles.mapContainer}
+              showsUserLocation={true}
+              initialRegion={{
+                latitude: currentLocation.coords.latitude,
+                longitude: currentLocation.coords.longitude,
+                latitudeDelta: 0.005, // adjusts zoom level (smaller the value, the more zoom)
+                longitudeDelta: 0.005, // adjusts zoom level (smaller the value, the more zoom)
+              }}
+            >
+              <Marker
+                draggable // enables user to drag to desired location
+                tappable // enables user to tap the marker and trigger modal
+                coordinate={{
+                  latitude: currentLocation.coords.latitude + 0.000001,
+                  longitude: currentLocation.coords.longitude + 0.000001,
+                }}
+                onPress={async (e) => {
+                  const { latitude, longitude } = e.nativeEvent.coordinate;
+                  try {
+                    const response = await axios.get(
+                      `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`,
+                    );
+                    const addressDetails = response.data.address;
+                    let buildingName = "";
+                    if (addressDetails && addressDetails.building) {
+                      buildingName = addressDetails.building;
+                    }
+                    setMarkerAddress(
+                      buildingName || response.data.display_name,
+                    );
+                    setMapModal(true);
+                  } catch (error) {
+                    console.error("Error fetching address:", error);
+                  }
+                }}
+              ></Marker>
+            </MapView>
+          ) : (
+            <Text style={styles.subtext}>Fetching current location...</Text>
+          )}
 
-        <View style={styles.timeSelect}>
-          <TouchableOpacity onPress={() => setOpenPickerVisibility(true)}>
-            <Text style={styles.timeSelectButton}>
-              {openTime || "Open Time"}
-            </Text>
-          </TouchableOpacity>
-          <DateTimePickerModal
-            isVisible={isOpenPickerVisible}
-            mode="time"
-            onConfirm={handleOpenConfirm}
-            onCancel={() => setOpenPickerVisibility(false)}
-          />
-          <Text> to </Text>
-          <TouchableOpacity onPress={() => setClosedPickerVisibility(true)}>
-            <Text style={styles.timeSelectButton}>
-              {closedTime || "Close Time"}
-            </Text>
-          </TouchableOpacity>
-          <DateTimePickerModal
-            isVisible={isClosedPickerVisible}
-            mode="time"
-            onConfirm={handleClosedConfirm}
-            onCancel={() => setClosedPickerVisibility(false)}
-          />
-        </View>
+          <Text>press and drag pin marker to see address and relocate</Text>
 
-        <HorizontalCards />
-
-        <TextInput
-          style={styles.input}
-          placeholder="Write your description..."
-          multiline={true}
-          value={description}
-          onChangeText={setDescription}
-        />
-        {MainButton("Add Photo", () => setModalVisible(true))}
-        {modalVisible && (
           <Modal
-            animationType="slide"
+            animationType="fade"
             transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => setModalVisible(false)}
+            visible={mapModal}
+            onRequestClose={() => setMapModal(false)}
           >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                {MainButton("Take Photo", () => handleAddImage("camera"))}
-                {MainButton("Choose from Gallery", () =>
-                  handleAddImage("gallery"),
-                )}
-                {CancelButton("Close", () => setModalVisible(false))}
+                <Text style={styles.markerModalTitle}>Marker Location</Text>
+                <Text>{markerAddress}</Text>
+                {CancelButton("Close", () => setMapModal(false))}
               </View>
             </View>
           </Modal>
-        )}
 
-        {MainButton("Submit Facility", () => navigation.navigate("Main"))}
-      </View>
-    </ScrollView>
+          <View style={styles.timeSelect}>
+            <TouchableOpacity onPress={() => setOpenPickerVisibility(true)}>
+              <Text style={styles.timeSelectButton}>
+                {openTime || "Open Time"}
+              </Text>
+            </TouchableOpacity>
+            <DateTimePickerModal
+              isVisible={isOpenPickerVisible}
+              mode="time"
+              onConfirm={handleOpenConfirm}
+              onCancel={() => setOpenPickerVisibility(false)}
+            />
+            <Text> to </Text>
+            <TouchableOpacity onPress={() => setClosedPickerVisibility(true)}>
+              <Text style={styles.timeSelectButton}>
+                {closedTime || "Close Time"}
+              </Text>
+            </TouchableOpacity>
+            <DateTimePickerModal
+              isVisible={isClosedPickerVisible}
+              mode="time"
+              onConfirm={handleClosedConfirm}
+              onCancel={() => setClosedPickerVisibility(false)}
+            />
+          </View>
+
+          <ImageCarousel componentId="facilityForm" />
+
+          <TextInput
+            style={styles.input}
+            placeholder="Write your description..."
+            multiline={true}
+            value={description}
+            onChangeText={setDescription}
+          />
+          {MainButton("Add Photo", () => setModalVisible(true))}
+          {modalVisible && (
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => setModalVisible(false)}
+            >
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  {MainButton("Take Photo", () => handleAddImage("camera"))}
+                  {MainButton("Choose from Gallery", () =>
+                    handleAddImage("gallery"),
+                  )}
+                  {CancelButton("Close", () => setModalVisible(false))}
+                </View>
+              </View>
+            </Modal>
+          )}
+
+          {SecondaryButton("Submit Facility", () =>
+            navigation.navigate("Main"),
+          )}
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -221,53 +253,42 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "flex-start",
-    paddingBottom: 400, // fixes scroll view
-    backgroundColor: "#afd6ae",
-    color: "#344f33",
+    justifyContent: "center",
+    backgroundColor: "#EEF8F7",
+    height: "100%",
   },
   scrollView: {
     flex: 1,
-    paddingBottom: 300, // fixes scroll view
     backgroundColor: "#afd6ae",
   },
   title: {
     fontSize: 30,
     fontFamily: "EudoxusSans-Bold",
-    marginTop: 20,
-    color: "#344f33",
   },
   icon: {
     marginLeft: "auto",
   },
   subtext: {
     fontSize: 17,
-    marginTop: 20,
-    marginBottom: 20,
-    color: "#344f33",
-    textAlign: "center",
+    color: "#6da798",
   },
   errorText: {
     fontSize: 17,
     marginBottom: 20,
-    color: "red",
+    color: "#540F00",
   },
   input: {
-    borderWidth: 1,
-    borderColor: "#344f33",
+    backgroundColor: "#CDEEEA",
     borderRadius: 20,
     padding: 10,
     width: "85%",
     minHeight: 150,
-    marginTop: 20,
     marginBottom: 20,
-    color: "#344f33",
-    alignContent: "center",
   },
   timeSelect: {
     fontSize: 17,
-    marginTop: 20,
-    color: "#344f33",
+    marginBottom: 20,
+    color: "#6da798",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -276,9 +297,9 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginTop: 10,
     marginBottom: 20,
-    color: "#344f33",
+    color: "#6da798",
     borderWidth: 1,
-    borderColor: "#344f33",
+    borderColor: "#6da798",
     borderRadius: 20,
     padding: 10,
   },
