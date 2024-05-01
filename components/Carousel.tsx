@@ -25,8 +25,12 @@ const Card: React.FC<CardProps> = ({ imageSource, onPress }) => {
   );
 };
 
-const HorizontalCards: React.FC = () => {
-  const { images, deleteImage } = useImages();
+interface CarouselProps {
+  componentId: string; // Accept componentId as a prop
+}
+
+const ImageCarousel: React.FC<CarouselProps> = ({ componentId }) => {
+  const { images, deleteImage } = useImages(componentId);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedImageUri, setSelectedImageUri] = useState("");
 
@@ -107,4 +111,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { HorizontalCards, Card };
+export { ImageCarousel, Card };

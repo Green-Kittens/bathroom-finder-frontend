@@ -1,30 +1,27 @@
 import React from "react";
-import MainButton from "../../components/Buttons";
-import { CancelButton } from "../../components/Buttons";
+import MainButton, {
+  CancelButton,
+  SecondaryButton,
+} from "../../components/Buttons";
 import {
   StyleSheet,
   TextInput,
   Text,
   View,
-  Modal,
-  Alert,
-  TouchableOpacity,
   ImageBackground,
   ScrollView,
-  Image,
+  Modal,
 } from "react-native";
-
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
-import { MaterialIcons } from "@expo/vector-icons";
 import StarRating from "react-native-star-rating-widget";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
-
-// type
+import { useImages } from "../../contexts/ImageContext";
+import { ImageCarousel } from "../../components/Carousel";
 import { ScreenNavigationProp } from "../type";
 
-export default function TabReviewForm() {
+export default function ReviewForm() {
   // location
   const [, setLocation] = useState("");
 
@@ -34,119 +31,37 @@ export default function TabReviewForm() {
   // description
   const [description, setDescription] = useState("");
 
-  // add photo modal
+  // image uploader and carousel
+  const { addImage } = useImages("reviewForm");
   const [modalVisible, setModalVisible] = useState(false);
-  const ImageUploader = ({
-    isVisible,
-    onClose,
-  }: {
-    isVisible: boolean;
-    onClose: () => void;
-  }) => {
-    return (
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isVisible}
-        onRequestClose={onClose}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            {MainButton("Take Photo", addUsingCamera)}
-            {MainButton("Choose from Gallery", addFromGallery)}
-            {CancelButton("Cancel", () => {
-              onClose();
-            })}
-          </View>
-        </View>
-      </Modal>
-    );
-  };
-
-  // modal to display image
-  const [displayImageVisible, setDisplayImageVisible] = useState(false);
-  const [imageToDisplay, setImageToDisplay] = useState("");
-  const DisplayImage = ({
-    isVisible,
-    onClose,
-  }: {
-    isVisible: boolean;
-    onClose: () => void;
-  }) => {
-    return (
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isVisible}
-        onRequestClose={onClose}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Image style={styles.modalImage} source={{ uri: imageToDisplay }} />
-            {CancelButton("Cancel", () => {
-              onClose();
-            })}
-          </View>
-        </View>
-      </Modal>
-    );
-  };
-
-  // images uploaded
-  const [images, setImages] = useState<
-    Array<ImagePicker.ImagePickerSuccessResult>
-  >([]);
-
-  // permissions
-  const [cameraStatus] = ImagePicker.useCameraPermissions();
-  const [galleryAccessStatus] = ImagePicker.useMediaLibraryPermissions();
-
-  // add photo from device gallery
-  const addFromGallery = async () => {
-    if (galleryAccessStatus?.status !== "granted") {
-      const { status } =
+  const handleAddImage = async (source: "camera" | "gallery") => {
+    let pickerResult;
+    if (source === "camera") {
+      const cameraPerm = await ImagePicker.requestCameraPermissionsAsync();
+      if (cameraPerm.granted) {
+        pickerResult = await ImagePicker.launchCameraAsync({
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+      }
+    } else {
+      const galleryPerm =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== "granted") {
-        Alert.alert("gallery access permission denied");
-        return;
+      if (galleryPerm.granted) {
+        pickerResult = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
       }
     }
-    const _image = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    if (!_image.canceled) {
-      images.push(_image);
-      setModalVisible(false);
-    }
-  };
 
-  // add photo using camera
-  const addUsingCamera = async () => {
-    if (cameraStatus?.status !== "granted") {
-      const { status } = await ImagePicker.requestCameraPermissionsAsync();
-      if (status !== "granted") {
-        Alert.alert("camera permission denied");
-        return;
-      }
+    if (pickerResult && !pickerResult.canceled) {
+      addImage(pickerResult);
+      setModalVisible(false); // Hide modal after adding image
     }
-    const _image = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      base64: true,
-      quality: 1,
-    });
-    if (!_image.canceled) {
-      images.push(_image);
-      setModalVisible(false);
-    }
-  };
-
-  // delete uploaded image
-  const deleteImage = (toDelete: ImagePicker.ImagePickerSuccessResult) => {
-    const updatedImages = images.filter((curr) => curr !== toDelete);
-    setImages(updatedImages);
   };
 
   // rating
@@ -154,17 +69,16 @@ export default function TabReviewForm() {
 
   // post rating (submit button)
   const navigation = useNavigation<ScreenNavigationProp>();
-  const circleimage = { uri: "/assets/images/circle.png" };
 
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={circleimage}
+        source={require("../../assets/images/circle.png")}
         style={{
           width: 1070,
           height: 1000,
           position: "absolute",
-          top: 550,
+          top: 500,
           left: -200,
         }}
         imageStyle={{
@@ -196,64 +110,38 @@ export default function TabReviewForm() {
             />
           </View>
 
-          <Text style={styles.subtext}>
-            {currentDate.toLocaleString(navigator.language, {
-              month: "2-digit",
-              day: "2-digit",
-              year: "2-digit",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </Text>
-          <View style={styles.input}>
-            <TextInput
-              style={[styles.input, { width: "100%" }]}
-              placeholder="write your description..."
-              placeholderTextColor="#6da798"
-              value={description}
-              onChangeText={setDescription}
-              multiline={true}
-            />
-          </View>
+          <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
 
-          {images.length === 3 && (
-            <Text style={styles.errorText}>
-              You can only upload a max of 3 photos.
-            </Text>
-          )}
-          {images.length < 3 &&
-            MainButton("Upload Image", () => {
-              setModalVisible(true);
-            })}
+          <ImageCarousel componentId="reviewForm" />
 
-          <ImageUploader
-            isVisible={modalVisible}
-            onClose={() => setModalVisible(false)}
+          <TextInput
+            style={styles.input}
+            placeholder="write your description..."
+            placeholderTextColor="#344f33"
+            value={description}
+            onChangeText={setDescription}
+            multiline={true}
           />
 
-          <DisplayImage
-            isVisible={displayImageVisible}
-            onClose={() => setDisplayImageVisible(false)}
-          />
-
-          {images.length !== 0 &&
-            images.map((currImage, idx) => (
-              <View key={idx} style={styles.imageContainer}>
-                <TouchableOpacity
-                  onPress={() => {
-                    setImageToDisplay(currImage.assets[0].uri);
-                    setDisplayImageVisible(true);
-                  }}
-                >
-                  <Text style={styles.imageLink}>
-                    {currImage.assets[0].fileName}
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => deleteImage(currImage)}>
-                  <MaterialIcons name="delete" size={20} color="gray" />
-                </TouchableOpacity>
+          {MainButton("Add Photo", () => setModalVisible(true))}
+          {modalVisible && (
+            <Modal
+              animationType="fade"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => setModalVisible(false)}
+            >
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  {MainButton("Take Photo", () => handleAddImage("camera"))}
+                  {MainButton("Choose from Gallery", () =>
+                    handleAddImage("gallery"),
+                  )}
+                  {CancelButton("Close", () => setModalVisible(false))}
+                </View>
               </View>
-            ))}
+            </Modal>
+          )}
 
           <Text style={[styles.subtext, { color: "black" }]}>
             Rate Your Experience:
@@ -266,7 +154,7 @@ export default function TabReviewForm() {
             color="black"
           />
 
-          {MainButton("Post Rating", () => {
+          {SecondaryButton("Post Rating", () => {
             // make a check to make sure that all fields are filled out
             navigation.navigate("Main");
           })}
@@ -357,5 +245,22 @@ const styles = StyleSheet.create({
   imageLink: {
     marginRight: 10,
     color: "blue",
+  },
+  card: {
+    width: 100,
+    height: 150,
+    borderRadius: 10,
+    backgroundColor: "grey",
+    marginHorizontal: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardImage: {
+    width: 100,
+    height: 150,
+    borderRadius: 10, // If you want rounded corners for the images
+  },
+  horizontalScroll: {
+    marginVertical: 10,
   },
 });
