@@ -9,7 +9,11 @@ import {
   Text,
   View,
   Modal,
+  ImageBackground
 } from "react-native";
+import MainButton from "../../components/Buttons";
+
+const circleimage = { uri: "/assets/images/circle.png" };
 
 export default function TabSubmitScreen() {
   // State management for text inputs
@@ -28,6 +32,20 @@ export default function TabSubmitScreen() {
 
   return (
     <View style={styles.container}>
+      <ImageBackground
+        source={require("../../assets/images/circle.png")}
+        style={{
+          top: 0,
+          left: -100,
+          flex: 1,
+          justifyContent: "center",
+        }}
+        imageStyle={{
+          resizeMode: "cover",
+          alignSelf: "flex-end",
+        }}
+      >
+      </ImageBackground>
       <SafeAreaView style={styles.safeArea}>
         <Modal
           animationType="fade"
@@ -40,15 +58,13 @@ export default function TabSubmitScreen() {
         >
           <View style={styles.modalView}>
             <Text style={styles.text}>Email has been sent to {email}</Text>
-            <Button title="Close" color={"#000000"} onPress={onClosePress} />
+            {MainButton("Close", onClosePress)}
           </View>
         </Modal>
-        <Image
-          source={require("../../assets/images/icon.png")}
-          style={styles.logo}
-        />
-        <Text style={styles.title}>Forgot-Password</Text>
-
+        <Text style={styles.title}>Forgot Password?</Text>
+        <Text style={styles.text}>
+          Enter your email below for a password reset link.
+        </Text>
         {/* Text input fields */}
         <TextInput
           style={styles.input}
@@ -59,7 +75,7 @@ export default function TabSubmitScreen() {
 
         {/* Submit button */}
         <View style={styles.fixToText}>
-          <Button title="Submit" color={"#000000"} onPress={onSubmitPress} />
+          {MainButton("Submit", onSubmitPress)}
         </View>
       </SafeAreaView>
     </View>
@@ -71,6 +87,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
+    backgroundColor: "#EEF8F7",
   },
   // Safe Area Section
   safeArea: {
@@ -81,8 +98,8 @@ const styles = StyleSheet.create({
   // Title Section
   title: {
     fontSize: 20,
-    fontWeight: "bold",
     marginBottom: 50,
+    fontFamily: "EudoxusSans-Bold",
   },
   // Input Section
   input: {
@@ -92,6 +109,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     alignSelf: "center",
+    backgroundColor: "#FFFFFF",
+    minWidth: 200,
   },
   // Text Section
   text: {
@@ -110,6 +129,7 @@ const styles = StyleSheet.create({
     height: 100,
     alignSelf: "center",
     marginBottom: 5,
+    borderRadius: 50,
   },
   modalView: {
     marginTop: "10%",
