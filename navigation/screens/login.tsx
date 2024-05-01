@@ -170,5 +170,6 @@ const styles = StyleSheet.create({
     height: 100,
     alignSelf: "center",
     marginBottom: 5,
+    borderRadius: 50,
   },
 });
