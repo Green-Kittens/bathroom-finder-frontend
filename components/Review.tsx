@@ -54,15 +54,6 @@ export default function Review() {
   return notReview();
 }
 
-function star() {
-  return (
-    <Image
-      style={{ width: 30, height: 30 }}
-      source={require("../assets/images/star_filled.png")}
-    />
-  );
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
