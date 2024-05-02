@@ -1,13 +1,13 @@
 //facility-form.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   TextInput,
   Text,
   View,
   ScrollView,
-  Modal,
   TouchableOpacity,
+  Modal,
   ImageBackground,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -20,24 +20,40 @@ import MainButton, {
   CancelButton,
   SecondaryButton,
 } from "../../components/Buttons";
+import * as Location from "expo-location";
+import MapView, { Marker } from "react-native-maps";
+import axios from "axios";
 
 export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
-  const { addImage } = useImages("facilityForm");
-  const [description, setDescription] = useState("");
-  const [openTime, setOpenTime] = useState<Date | null>(null);
-  const [closedTime, setClosedTime] = useState<Date | null>(null);
+  const [mapModal, setMapModal] = useState(false);
+  const [markerAddress, setMarkerAddress] = useState("");
+  const [currentLocation, setCurrentLocation] =
+    useState<Location.LocationObject | null>(null);
+  const [openTime, setOpenTime] = useState("");
+  const [closedTime, setClosedTime] = useState("");
   const [isOpenPickerVisible, setOpenPickerVisibility] = useState(false);
   const [isClosedPickerVisible, setClosedPickerVisibility] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const { addImage } = useImages("facilityForm");
+  const [description, setDescription] = useState("");
+
+  const formatTime = (date: Date) => {
+    let hours = date.getHours();
+    const minutes = ("0" + date.getMinutes()).slice(-2);
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12;
+    hours = hours ? hours : 12; // for when hours = 0
+    return `${hours}:${minutes} ${ampm}`;
+  };
 
   const handleOpenConfirm = (date: Date) => {
-    setOpenTime(date);
+    setOpenTime(formatTime(date));
     setOpenPickerVisibility(false);
   };
 
   const handleClosedConfirm = (date: Date) => {
-    setClosedTime(date);
+    setClosedTime(formatTime(date));
     setClosedPickerVisibility(false);
   };
 
@@ -71,6 +87,17 @@ export default function FacilityForm() {
     }
   };
 
+  useEffect(() => {
+    const getLocation = async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status === "granted") {
+        const location = await Location.getCurrentPositionAsync();
+        setCurrentLocation(location);
+      }
+    };
+    getLocation();
+  }, []);
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -93,18 +120,75 @@ export default function FacilityForm() {
             justifyContent: "center",
             alignItems: "center",
             alignContent: "center",
+            paddingTop: 80,
+            paddingBottom: 250,
           }}
         >
           <Text style={styles.title}>Add a New Facility</Text>
+          {currentLocation ? (
+            <MapView
+              style={styles.mapContainer}
+              showsUserLocation={true}
+              initialRegion={{
+                latitude: currentLocation.coords.latitude,
+                longitude: currentLocation.coords.longitude,
+                latitudeDelta: 0.005, // adjusts zoom level (smaller the value, the more zoom)
+                longitudeDelta: 0.005, // adjusts zoom level (smaller the value, the more zoom)
+              }}
+            >
+              <Marker
+                draggable // enables user to drag to desired location
+                tappable // enables user to tap the marker and trigger modal
+                coordinate={{
+                  latitude: currentLocation.coords.latitude + 0.000001,
+                  longitude: currentLocation.coords.longitude + 0.000001,
+                }}
+                onPress={async (e) => {
+                  const { latitude, longitude } = e.nativeEvent.coordinate;
+                  try {
+                    const response = await axios.get(
+                      `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`,
+                    );
+                    const addressDetails = response.data.address;
+                    let buildingName = "";
+                    if (addressDetails && addressDetails.building) {
+                      buildingName = addressDetails.building;
+                    }
+                    setMarkerAddress(
+                      buildingName || response.data.display_name,
+                    );
+                    setMapModal(true);
+                  } catch (error) {
+                    console.error("Error fetching address:", error);
+                  }
+                }}
+              ></Marker>
+            </MapView>
+          ) : (
+            <Text style={styles.subtext}>Fetching current location...</Text>
+          )}
+
+          <Text>Press and drag pin marker to see address and relocate</Text>
+
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={mapModal}
+            onRequestClose={() => setMapModal(false)}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.markerModalTitle}>Marker Location</Text>
+                <Text>{markerAddress}</Text>
+                {CancelButton("Close", () => setMapModal(false))}
+              </View>
+            </View>
+          </Modal>
+
           <View style={styles.timeSelect}>
             <TouchableOpacity onPress={() => setOpenPickerVisibility(true)}>
               <Text style={styles.timeSelectButton}>
-                {openTime
-                  ? openTime.toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })
-                  : "Open Time"}
+                {openTime || "Open Time"}
               </Text>
             </TouchableOpacity>
             <DateTimePickerModal
@@ -113,17 +197,10 @@ export default function FacilityForm() {
               onConfirm={handleOpenConfirm}
               onCancel={() => setOpenPickerVisibility(false)}
             />
-            <TouchableOpacity>
-              <Text style={[styles.subtext, { marginBottom: 10 }]}> to </Text>
-            </TouchableOpacity>
+            <Text> to </Text>
             <TouchableOpacity onPress={() => setClosedPickerVisibility(true)}>
               <Text style={styles.timeSelectButton}>
-                {closedTime
-                  ? closedTime.toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })
-                  : "Close Time"}
+                {closedTime || "Close Time"}
               </Text>
             </TouchableOpacity>
             <DateTimePickerModal
@@ -133,20 +210,20 @@ export default function FacilityForm() {
               onCancel={() => setClosedPickerVisibility(false)}
             />
           </View>
+
           <ImageCarousel componentId="facilityForm" />
+
           <TextInput
             style={styles.input}
-            placeholder="write your description..."
-            placeholderTextColor="#6da798"
+            placeholder="Write your description..."
+            multiline={true}
             value={description}
             onChangeText={setDescription}
-            multiline={true}
           />
-
           {MainButton("Add Photo", () => setModalVisible(true))}
           {modalVisible && (
             <Modal
-              animationType="fade"
+              animationType="slide"
               transparent={true}
               visible={modalVisible}
               onRequestClose={() => setModalVisible(false)}
@@ -162,6 +239,7 @@ export default function FacilityForm() {
               </View>
             </Modal>
           )}
+
           {SecondaryButton("Submit Facility", () =>
             navigation.navigate("Main"),
           )}
@@ -178,6 +256,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#EEF8F7",
     height: "100%",
+  },
+  scrollView: {
+    flex: 1,
+    backgroundColor: "#afd6ae",
   },
   title: {
     fontSize: 30,
@@ -205,7 +287,7 @@ const styles = StyleSheet.create({
   },
   timeSelect: {
     fontSize: 17,
-    marginBottom: 20,
+    marginBottom: 10,
     color: "#6da798",
     flexDirection: "row",
     alignItems: "center",
@@ -213,8 +295,8 @@ const styles = StyleSheet.create({
   },
   timeSelectButton: {
     fontSize: 17,
-    marginTop: 10,
-    marginBottom: 20,
+    marginTop: 20,
+    marginBottom: 10,
     color: "#6da798",
     borderWidth: 1,
     borderColor: "#6da798",
@@ -256,5 +338,26 @@ const styles = StyleSheet.create({
   imageLink: {
     marginRight: 10,
     color: "blue",
+  },
+  mapContainer: {
+    width: "100%",
+    height: "35%",
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  markerModalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  calloutText: {
+    alignContent: "center",
+    margin: 10,
+    flexShrink: 1,
+    flex: 1,
   },
 });
