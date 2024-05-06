@@ -35,18 +35,26 @@ export async function getAllReviews(facilityId: string): Promise<Review[]> {
  * @returns {Promise<string>} - Returns a promise with a success message upon successfully creating a new review
  */
 export async function createReview(
-  rating: number, 
-  likes: number, 
-  dislikes: number, 
+  rating: number,
+  likes: number,
+  dislikes: number,
   pictureURL: string,
   facilityId: string,
   userId: string,
   date: Date,
-  description: string
+  description: string,
 ): Promise<string> {
   try {
-    await axios.post<Review>(`http://${host}:${port}/reviews/`, {Rating: rating, Likes: likes, Dislikes: dislikes, PictureURL: pictureURL, FacilityID: facilityId, UserId: userId, Date: date, Description: description},
-    );
+    await axios.post<Review>(`http://${host}:${port}/reviews/`, {
+      Rating: rating,
+      Likes: likes,
+      Dislikes: dislikes,
+      PictureURL: pictureURL,
+      FacilityID: facilityId,
+      UserId: userId,
+      Date: date,
+      Description: description,
+    });
     const successMsg = `Review for bathroom (${facilityId}) successfully created by ${userId}: ${description}`;
     return successMsg;
   } catch (error) {

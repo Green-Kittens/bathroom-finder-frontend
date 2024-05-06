@@ -11,7 +11,6 @@ import {
   ImageBackground,
   ScrollView,
   Modal,
-  Alert
 } from "react-native";
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
@@ -23,7 +22,6 @@ import * as ImagePicker from "expo-image-picker";
 import { useImages } from "../../contexts/ImageContext";
 import { ImageCarousel } from "../../components/Carousel";
 import { ScreenNavigationProp } from "../type";
-import { createBathroom } from "../../controllers/userController";
 
 export default function ReviewForm() {
   // location

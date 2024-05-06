@@ -3,10 +3,10 @@ import { User as UserProfile } from "../types/user";
 import { Facility as BathroomProfile } from "../types/facility";
 import { port, host } from "./porthost";
 
-interface Location{
+interface Location {
   coordinates: number[];
   type: string;
-};
+}
 
 /**
  * Function to register a new user
@@ -24,10 +24,17 @@ export async function registerUser(
   reviews: string[],
   date: Date,
   pfpURL: string,
-  username: string
+  username: string,
 ): Promise<string> {
   try {
-    await axios.post<UserProfile>(`http://${host}:${port}/users/`, { email: email, Favorites: favorites, Reviews: reviews, DateJoined: date, pfpURL: pfpURL, DisplayName: username},);
+    await axios.post<UserProfile>(`http://${host}:${port}/users/`, {
+      email: email,
+      Favorites: favorites,
+      Reviews: reviews,
+      DateJoined: date,
+      pfpURL: pfpURL,
+      DisplayName: username,
+    });
     const successsMsg = `${username} successfully created with ${email}.`;
     return successsMsg;
   } catch (error) {
@@ -94,7 +101,7 @@ export async function getUserProfile(userId: string): Promise<UserProfile> {
  * @param {string} name - Name of the bathroom
  * @param {Location} location - Location of bathroom
  * @param {string} tags - Tags on the bathroom
- * @param {string} operations - Bathroom's hours of operation 
+ * @param {string} operations - Bathroom's hours of operation
  * @param {string[]} reviews - Reviews on bathroom
  * @param {Date} date - Date the bathroom was created/posted
  * @param {string} pictureURL - Picture(s) of the bathroom
@@ -114,11 +121,23 @@ export async function createBathroom(
   pictureURL: string,
   ratingAVG: number,
   favorites: number,
-  reports: number
+  reports: number,
 ): Promise<string> {
   try {
     await axios.post<BathroomProfile>(`http://${host}:${port}/facilities/`, {
-      params: {Name: name, Location: location, Category: category, Tags: tags, Operations: operations, Reviews: reviews, Date: date, PictureURL: pictureURL, RatingAVG: ratingAVG, Favorites: favorites, Reports: reports},
+      params: {
+        Name: name,
+        Location: location,
+        Category: category,
+        Tags: tags,
+        Operations: operations,
+        Reviews: reviews,
+        Date: date,
+        PictureURL: pictureURL,
+        RatingAVG: ratingAVG,
+        Favorites: favorites,
+        Reports: reports,
+      },
     });
     const successMsg = `Bathroom successfully created: hours of operation (${operations}), tags (${tags})).`;
     return successMsg;
