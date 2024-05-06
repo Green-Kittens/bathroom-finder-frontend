@@ -4,15 +4,13 @@ import { View } from "../../components/Themed";
 import { ScrollView, ImageBackground, StyleSheet } from "react-native";
 import ReviewButtons from "../../components/ReviewButtons";
 
-const blobimage = { uri: "/assets/images/blob.png" };
-
 export default function FacilityReviewsScreen() {
   return (
     <ScrollView style={{ width: "100%", height: 100 }}>
       <View style={styles.container}>
         <View style={styles.subcontainer}>
           <ImageBackground
-            source={blobimage}
+            source={require("../../assets/images/blob.png")}
             style={{
               width: 953,
               height: 1069,
