@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -6,13 +5,14 @@ import {
   SafeAreaView,
   TextInput,
   ImageBackground,
+  Alert,
   TouchableOpacity,
   Text,
   View,
-  Alert,
 } from "react-native";
 import { ScreenNavigationProp } from "../type";
 import MainButton from "../../components/Buttons";
+import { useNavigation } from "@react-navigation/native";
 
 function TabLoginScreen() {
   // State management for text inputs
@@ -22,17 +22,16 @@ function TabLoginScreen() {
   // navigation
   const navigation = useNavigation<ScreenNavigationProp>();
 
-  const onLoginPress = () => {
+  const onLoginPress = async () => {
     navigation.navigate("Main");
+    Alert.alert("Login Pressed", "Navigate to home screen.");
   };
 
-  const onRegisterPress = () => {
-    // Placeholder for navigation logic
+  const onRegisterPress = async () => {
     Alert.alert("Register Pressed", "Navigate to registration screen.");
   };
 
-  const onForgotPress = () => {
-    // Placeholder for navigation logic
+  const onForgotPress = async () => {
     Alert.alert("Forgot Pressed", "Navigate to Forgot screen");
   };
 

@@ -27,6 +27,15 @@ function CollapseView() {
   const [maxLines, setMaxLines] = useState(2);
   const animationHeight = useRef(new Animated.Value(0)).current;
 
+  /**get all reviews*/
+  // const handleReviews = async () => {
+  //   try {
+  //     const reviews = await getAllReviews(bathroomID);
+  //   } catch (error) {
+  //     console.error("Error retrieving reviews:", error);
+  //   }
+  // };
+
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
