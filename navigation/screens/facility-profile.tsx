@@ -22,10 +22,7 @@ import MainButton, { LightButton } from "../../components/Buttons";
 const maxLineNumber = 5;
 const windowHeight = Dimensions.get("window").height;
 
-<<<<<<< HEAD
 const blobimage = { uri: "/assets/images/blob.png" };
-=======
->>>>>>> main
 function CollapseView() {
   const [collapsed, setCollapsed] = useState(true);
   const [maxLines, setMaxLines] = useState(2);

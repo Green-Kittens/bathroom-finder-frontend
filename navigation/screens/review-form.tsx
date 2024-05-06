@@ -11,6 +11,7 @@ import {
   ImageBackground,
   ScrollView,
   Modal,
+  Alert
 } from "react-native";
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
@@ -22,6 +23,7 @@ import * as ImagePicker from "expo-image-picker";
 import { useImages } from "../../contexts/ImageContext";
 import { ImageCarousel } from "../../components/Carousel";
 import { ScreenNavigationProp } from "../type";
+import { getAllBathrooms } from "../../controllers/bathroomController";
 
 export default function ReviewForm() {
   // location
@@ -156,9 +158,12 @@ export default function ReviewForm() {
             color="black"
           />
 
-          {SecondaryButton("Post Rating", () => {
+          {SecondaryButton("Post Rating", async () => {
             // make a check to make sure that all fields are filled out
-            navigation.navigate("Main");
+            //navigation.navigate("Main");
+            const call = getAllBathrooms();
+            Alert.alert(JSON.stringify(call));
+            console.log(JSON.stringify(call));
           })}
         </View>
       </ScrollView>

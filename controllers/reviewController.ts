@@ -24,26 +24,30 @@ export async function getAllReviews(bathroomID: string): Promise<Review[]> {
 
 /**
  * Function for creating a review
- * @param {string} username - The user
- * @param {string} bathroomID - The ID of the bathroom
+ * @param {string} useId - The user
+ * @param {string} facilityId - The ID of the bathroom
  * @param {string} description - The review
  * @param {int} rating - The user's rating of the bathroom
- * @param {Date} time - The date and time the review was uploaded
- * @param {Optional<Image>} images - User's uploaded images
+ * @param {int} likes - the number of likes a reivew has; starts at 0
+ * @param {int} dislikes - The number of dislikes a review has; starts at 0
+ * @param {Date} date - The date and time the review was uploaded
+ * @param {string} pictureURL - User's uploaded images of the bathroom
  * @returns {Promise<string>} - Returns a promise with a success message upon successfully creating a new review
  */
 export async function createReview(
-  username: string,
-  bathroomID: string,
-  description: string,
-  rating: number,
-  time: Date,
+  rating: number, 
+  likes: number, 
+  dislikes: number, 
+  pictureURL: string,
+  facilityId: string,
+  userId: string,
+  date: Date,
+  description: string
 ): Promise<string> {
   try {
-    await axios.post<Review>(`http://${host}:${port}/reviews/`, {
-      params: { username, bathroomID, description, rating, time },
-    });
-    const successMsg = `Review for bathroom (${bathroomID}) successfully created by ${username}: ${description}`;
+    await axios.post<Review>(`http://${host}:${port}/reviews/`, {Rating: rating, Likes: likes, Dislikes: dislikes, PictureURL: pictureURL, FacilityID: facilityId, UserId: userId, Date: date, Description: description},
+    );
+    const successMsg = `Review for bathroom (${facilityId}) successfully created by ${userId}: ${description}`;
     return successMsg;
   } catch (error) {
     console.error("Error creating review:", error);
