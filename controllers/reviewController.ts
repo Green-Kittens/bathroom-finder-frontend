@@ -4,10 +4,10 @@ import { port, host } from "./porthost";
 
 /**
  * Function for retrieving reviews of a bathroom
- * @param {string} bathroomID - ID of bathroom
+ * @param {string} facilityId - ID of bathroom
  * @returns {Promise<Review[]>} - Returns a promise with all reviews for specific bathroom after retrieving
  */
-export async function getAllReviews(bathroomID: string): Promise<Review[]> {
+export async function getAllReviews(facilityId: string): Promise<Review[]> {
   try {
     const response = await axios.get<Review[]>(
       `http://${host}:${port}/reviews/`,
@@ -15,7 +15,7 @@ export async function getAllReviews(bathroomID: string): Promise<Review[]> {
     return response.data;
   } catch (error) {
     console.error(
-      `Error fetching all reviews for bathroom ${bathroomID}:`,
+      `Error fetching all reviews for bathroom ${facilityId}:`,
       error,
     );
     throw error;
@@ -24,7 +24,7 @@ export async function getAllReviews(bathroomID: string): Promise<Review[]> {
 
 /**
  * Function for creating a review
- * @param {string} useId - The user
+ * @param {string} userId - The user
  * @param {string} facilityId - The ID of the bathroom
  * @param {string} description - The review
  * @param {int} rating - The user's rating of the bathroom

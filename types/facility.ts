@@ -1,5 +1,4 @@
 export type Facility = {
-  id: string;
   name: string;
   location: {
     coordinates: number[];

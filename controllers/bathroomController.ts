@@ -20,15 +20,15 @@ export async function getAllBathrooms(): Promise<BathroomProfile[]> {
 
 /**
  * Function for retrieving a specific bathroom
- * @param {string} bathroomID - The ID of the bathroom
+ * @param {string} facilityId - The ID of the bathroom
  * @returns {Promise<BathroomProfile>} - Returns a promise with bathroom profile information
  */
 export async function getBathroomProfile(
-  bathroomID: string,
+  facilityId: string,
 ): Promise<BathroomProfile> {
   try {
     const response = await axios.get<BathroomProfile>(
-      `http://${host}:${port}/facilities/${bathroomID}`,
+      `http://${host}:${port}/facilities/${facilityId}`,
     );
     return response.data;
   } catch (error) {

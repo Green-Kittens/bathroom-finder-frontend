@@ -23,7 +23,7 @@ import * as ImagePicker from "expo-image-picker";
 import { useImages } from "../../contexts/ImageContext";
 import { ImageCarousel } from "../../components/Carousel";
 import { ScreenNavigationProp } from "../type";
-import { getAllBathrooms } from "../../controllers/bathroomController";
+import { createBathroom } from "../../controllers/userController";
 
 export default function ReviewForm() {
   // location
@@ -160,10 +160,7 @@ export default function ReviewForm() {
 
           {SecondaryButton("Post Rating", async () => {
             // make a check to make sure that all fields are filled out
-            //navigation.navigate("Main");
-            const call = getAllBathrooms();
-            Alert.alert(JSON.stringify(call));
-            console.log(JSON.stringify(call));
+            navigation.navigate("Main");
           })}
         </View>
       </ScrollView>
