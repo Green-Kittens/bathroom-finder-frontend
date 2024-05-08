@@ -120,7 +120,8 @@ export default function FacilityForm() {
             justifyContent: "center",
             alignItems: "center",
             alignContent: "center",
-            paddingTop: 80,
+            paddingTop: 60,
+            marginTop: 50,
             paddingBottom: 250,
           }}
         >

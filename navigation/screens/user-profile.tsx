@@ -129,6 +129,7 @@ export default function UserProfileScreen() {
         }}
       ></ImageBackground>
       <ScrollView>
+        <View style={{marginTop: 50}}>
         <TouchableOpacity
           style={styles.profilePictureContainer}
           onPress={() => {
@@ -164,6 +165,7 @@ export default function UserProfileScreen() {
               })}
             </View>
           </View>
+        </View>
         </View>
       </ScrollView>
     </View>
