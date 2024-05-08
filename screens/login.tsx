@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   Image,
   SafeAreaView,
   TextInput,
   ImageBackground,
-  Alert,
   TouchableOpacity,
   Text,
   View,
