@@ -2,7 +2,7 @@ import React from "react";
 import MainButton, {
   CancelButton,
   SecondaryButton,
-} from "../../components/Buttons";
+} from "../components/Buttons";
 import {
   StyleSheet,
   TextInput,
@@ -19,9 +19,9 @@ import StarRating from "react-native-star-rating-widget";
 // screens
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
-import { useImages } from "../../contexts/ImageContext";
-import { ImageCarousel } from "../../components/Carousel";
-import { ScreenNavigationProp } from "../type";
+import { useImages } from "../contexts/ImageContext";
+import { ImageCarousel } from "../components/Carousel";
+import { ScreenNavigationProp } from "../navigation/type";
 
 export default function ReviewForm() {
   // location
@@ -75,7 +75,7 @@ export default function ReviewForm() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../../assets/images/circle.png")}
+        source={require("../assets/images/circle.png")}
         style={{
           width: 1070,
           height: 1000,

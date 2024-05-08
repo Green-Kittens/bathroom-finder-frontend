@@ -153,7 +153,7 @@ export default function TabFacilityProfileScreen() {
           style={[{ flex: 0.9, alignItems: "center", backgroundColor: "none" }]}
         >
           <ImageBackground
-            source={require("../../assets/images/blob.png")}
+            source={require("../assets/images/blob.png")}
             style={{
               width: 953,
               height: windowHeight,

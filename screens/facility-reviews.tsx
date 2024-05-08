@@ -9,7 +9,7 @@ export default function FacilityReviewsScreen() {
       <View style={styles.container}>
         <View style={styles.subcontainer}>
           <ImageBackground
-            source={require("../../assets/images/blob.png")}
+            source={require("../assets/images/blob.png")}
             style={{
               width: 953,
               height: 1069,

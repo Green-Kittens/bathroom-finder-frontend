@@ -13,13 +13,13 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { ImageCarousel } from "../../components/Carousel";
-import { useImages } from "../../contexts/ImageContext"; // Ensure the import path is correct
+import { ImageCarousel } from "../components/Carousel";
+import { useImages } from "../contexts/ImageContext"; // Ensure the import path is correct
 import { ScreenNavigationProp } from "../navigation/type";
 import MainButton, {
   CancelButton,
   SecondaryButton,
-} from "../../components/Buttons";
+} from "../components/Buttons";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import axios from "axios";
@@ -101,7 +101,7 @@ export default function FacilityForm() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../../assets/images/boomerang.png")}
+        source={require("../assets/images/boomerang.png")}
         style={{
           width: 1000,
           height: 500,

@@ -112,7 +112,7 @@ export default function UserProfileScreen() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../../assets/images/boomerang.png")}
+        source={require("../assets/images/boomerang.png")}
         style={{
           width: "100%",
           height: "100%",

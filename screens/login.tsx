@@ -46,7 +46,7 @@ function TabLoginScreen() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../../assets/images/boomerang.png")}
+        source={require("../assets/images/boomerang.png")}
         style={{
           width: 753,
           height: 499,
@@ -61,7 +61,7 @@ function TabLoginScreen() {
       ></ImageBackground>
       <SafeAreaView style={styles.safeArea}>
         <Image
-          source={require("../../assets/images/icon.png")}
+          source={require("../assets/images/icon.png")}
           style={styles.logo}
         />
         <Text style={styles.title}>Login</Text>
