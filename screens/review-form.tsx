@@ -13,7 +13,6 @@ import {
   Modal,
 } from "react-native";
 import { useState } from "react";
-import RNPickerSelect from "react-native-picker-select";
 import StarRating from "react-native-star-rating-widget";
 
 // screens
@@ -99,17 +98,8 @@ export default function ReviewForm() {
           <Text style={styles.title}>New Bathroom Rating</Text>
 
           <View style={styles.dropdown}>
-            <RNPickerSelect
-              placeholder={{
-                label: "select a location",
-                value: null,
-              }}
-              onValueChange={(newLocation) => setLocation(newLocation)}
-              items={[
-                { label: "Location 1", value: "location1" },
-                { label: "Location 2", value: "location2" },
-              ]}
-            />
+            <Text style={{ color: "black" }}>Location: </Text>
+            <Text style={styles.icon}>📍</Text>
           </View>
 
           <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>

@@ -49,9 +49,6 @@ export default function NavBar() {
       })}
     >
       {isSignedIn && (
-        <Tab.Screen name={reviewFormName} component={ReviewForm} />
-      )}
-      {isSignedIn && (
         <Tab.Screen name={facilityFormName} component={FacilityForm} />
       )}
       <Tab.Screen name={mainName} component={Main} />

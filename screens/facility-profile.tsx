@@ -196,7 +196,9 @@ export default function TabFacilityProfileScreen() {
             <View style={{ marginTop: 10 }}>
               {MainButton("Add Review", () => {
                 // figure out how to make it so that dropdown renders current facility as location
-                navigation.navigate("ReviewForm");
+                navigation.navigate("ReviewForm", {
+                  facilityName: facility.name,
+                });
               })}
             </View>
           </SignedIn>
