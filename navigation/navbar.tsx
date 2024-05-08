@@ -25,6 +25,7 @@ export default function NavBar() {
     <Tab.Navigator
       initialRouteName={mainName} // ask about implementing login as initial page display
       screenOptions={({ route }) => ({
+        tabBarShowLabel: false,
         tabBarStyle:{
           backgroundColor:'#328281',
         },
