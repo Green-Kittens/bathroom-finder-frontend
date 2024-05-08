@@ -53,7 +53,6 @@ export default function FacilityForm() {
     cleanedRegularly: false,
     genderNeutral: false,
   });
-  
 
   const handleOpenConfirm = (date: Date) => {
     setOpenTime(formatTime(date));
@@ -68,10 +67,9 @@ export default function FacilityForm() {
   const handleTagChange = (tag) => {
     setTags((prevTags) => ({
       ...prevTags,
-      [tag]: !prevTags[tag]
+      [tag]: !prevTags[tag],
     }));
   };
-  
 
   const handleAddImage = async (source: "camera" | "gallery") => {
     let pickerResult;
@@ -231,23 +229,53 @@ export default function FacilityForm() {
             <Text style={styles.tagTitle}>Select Tags</Text>
             <View style={styles.tags}>
               <View style={styles.tagCheckbox}>
-                <TouchableOpacity onPress={() => handleTagChange('wheelchairAccessible')}>
-                  <Text style={{ color: tags.wheelchairAccessible ? '#007AFF' : '#6da798' }}>Wheelchair Accessible</Text>
+                <TouchableOpacity
+                  onPress={() => handleTagChange("wheelchairAccessible")}
+                >
+                  <Text
+                    style={{
+                      color: tags.wheelchairAccessible ? "#007AFF" : "#6da798",
+                    }}
+                  >
+                    Wheelchair Accessible
+                  </Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.tagCheckbox}>
-                <TouchableOpacity onPress={() => handleTagChange('babyChanging')}>
-                  <Text style={{ color: tags.babyChanging ? '#007AFF' : '#6da798' }}>Baby Changing Station</Text>
+                <TouchableOpacity
+                  onPress={() => handleTagChange("babyChanging")}
+                >
+                  <Text
+                    style={{ color: tags.babyChanging ? "#007AFF" : "#6da798" }}
+                  >
+                    Baby Changing Station
+                  </Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.tagCheckbox}>
-                <TouchableOpacity onPress={() => handleTagChange('cleanedRegularly')}>
-                  <Text style={{ color: tags.cleanedRegularly ? '#007AFF' : '#6da798' }}>Regularly Cleaned</Text>
+                <TouchableOpacity
+                  onPress={() => handleTagChange("cleanedRegularly")}
+                >
+                  <Text
+                    style={{
+                      color: tags.cleanedRegularly ? "#007AFF" : "#6da798",
+                    }}
+                  >
+                    Regularly Cleaned
+                  </Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.tagCheckbox}>
-                <TouchableOpacity onPress={() => handleTagChange('genderNeutral')}>
-                  <Text style={{ color: tags.genderNeutral ? '#007AFF' : '#6da798' }}>Gender Neutral</Text>
+                <TouchableOpacity
+                  onPress={() => handleTagChange("genderNeutral")}
+                >
+                  <Text
+                    style={{
+                      color: tags.genderNeutral ? "#007AFF" : "#6da798",
+                    }}
+                  >
+                    Gender Neutral
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -306,11 +334,11 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontFamily: "EudoxusSans-Bold",
   },
-  tagTitle : {
+  tagTitle: {
     fontSize: 15,
     fontFamily: "EudoxusSans-Bold",
     marginBottom: 25,
-    textAlign: 'center',
+    textAlign: "center",
   },
   icon: {
     marginLeft: "auto",
@@ -408,23 +436,23 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tagSelectionContainer: {
-    width: '85%',
+    width: "85%",
     marginVertical: 20,
   },
-  tags : {
-    flexDirection: 'row',
-    alignItems: 'center',
+  tags: {
+    flexDirection: "row",
+    alignItems: "center",
     justifyContent: "center",
-    flexWrap: 'wrap',
+    flexWrap: "wrap",
   },
   tagCheckbox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,    
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
     borderWidth: 1,
     borderColor: "#6da798",
     borderRadius: 20,
     padding: 10,
     marginRight: 5,
-  }, 
+  },
 });
