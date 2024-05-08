@@ -5,20 +5,34 @@ import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../type";
+import { getAllBathrooms } from "../../controllers/bathroomController";
+import { Facility as BathroomProfile } from "../../types/facility"
 
 const LAT_DELT = 0.0922;
 const LON_DELT = 0.0421;
 
 export default function MainScreen() {
   const [location, setLocation] = useState<Location.LocationObject>();
+  const [bathrooms, setBathrooms] = useState<BathroomProfile[]>([]);
 
   useEffect(() => {
+
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status === "granted") {
         setLocation(await Location.getCurrentPositionAsync());
       }
     })();
+
+    (async () => {
+      try {
+        const fetchBathrooms = await getAllBathrooms();
+        setBathrooms(fetchBathrooms);
+      } catch (error) {
+        console.error("Failed to fetch bathrooms", error);
+      }
+    })();
+
   }, []);
 
   const nav = useNavigation<ScreenNavigationProp>();
@@ -47,15 +61,18 @@ export default function MainScreen() {
           longitudeDelta: LON_DELT,
         }}
       >
-        <Marker
+        {bathrooms.map(bathroom => (
+          <Marker
           coordinate={{
-            latitude: location.coords.latitude + 0.001,
-            longitude: location.coords.longitude + 0.001,
+            // ask what order the coordinates are stored in
+            latitude: bathroom.location.coordinates[1],
+            longitude: bathroom.location.coordinates[0],
           }}
           onPress={() => {
             nav.navigate("FacilityProfile");
           }}
         />
+        ))}
       </MapView>
     );
   }
