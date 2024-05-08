@@ -47,6 +47,14 @@ export default function FacilityForm() {
     return `${hours}:${minutes} ${ampm}`;
   };
 
+  const [tags, setTags] = useState({
+    wheelchairAccessible: false,
+    babyChanging: false,
+    cleanedRegularly: false,
+    genderNeutral: false,
+  });
+  
+
   const handleOpenConfirm = (date: Date) => {
     setOpenTime(formatTime(date));
     setOpenPickerVisibility(false);
@@ -56,6 +64,14 @@ export default function FacilityForm() {
     setClosedTime(formatTime(date));
     setClosedPickerVisibility(false);
   };
+
+  const handleTagChange = (tag) => {
+    setTags((prevTags) => ({
+      ...prevTags,
+      [tag]: !prevTags[tag]
+    }));
+  };
+  
 
   const handleAddImage = async (source: "camera" | "gallery") => {
     let pickerResult;
@@ -211,6 +227,30 @@ export default function FacilityForm() {
             />
           </View>
 
+          <View style={styles.tagSelectionContainer}>
+            <Text style={styles.tagTitle}>Select Tags</Text>
+            <View style={styles.tagCheckbox}>
+              <TouchableOpacity onPress={() => handleTagChange('wheelchairAccessible')} style={styles.tagButton}>
+                <Text style={{ color: tags.wheelchairAccessible ? '#007AFF' : '#6da798' }}>Wheelchair Accessible</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.tagCheckbox}>
+              <TouchableOpacity onPress={() => handleTagChange('babyChanging')} style={styles.tagButton}>
+                <Text style={{ color: tags.babyChanging ? '#007AFF' : '#6da798' }}>Baby Changing Station</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.tagCheckbox}>
+              <TouchableOpacity onPress={() => handleTagChange('cleanedRegularly')} style={styles.tagButton}>
+                <Text style={{ color: tags.cleanedRegularly ? '#007AFF' : '#6da798' }}>Regularly Cleaned</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.tagCheckbox}>
+              <TouchableOpacity onPress={() => handleTagChange('genderNeutral')} style={styles.tagButton}>
+                <Text style={{ color: tags.genderNeutral ? '#007AFF' : '#6da798' }}>Gender Neutral</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
           <ImageCarousel componentId="facilityForm" />
 
           <TextInput
@@ -239,7 +279,6 @@ export default function FacilityForm() {
               </View>
             </Modal>
           )}
-
           {SecondaryButton("Submit Facility", () =>
             navigation.navigate("Main"),
           )}
@@ -264,6 +303,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontFamily: "EudoxusSans-Bold",
+  },
+  tagTitle : {
+    fontSize: 15,
+    fontFamily: "EudoxusSans-Bold",
+    marginBottom: 25,
+    textAlign: 'center',
   },
   icon: {
     marginLeft: "auto",
@@ -360,4 +405,24 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     flex: 1,
   },
+  tagSelectionContainer: {
+    width: '85%',
+    marginVertical: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: 'row', 
+    flexWrap: 'wrap',
+  },
+  tagCheckbox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  }, 
+  tagButton : {
+    borderWidth: 1,
+    borderColor: "#6da798",
+    borderRadius: 20,
+    padding: 10,
+    marginBottom: 5,
+  }
 });
