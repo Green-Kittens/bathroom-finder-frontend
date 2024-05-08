@@ -52,10 +52,10 @@ export default function App() {
       publishableKey={"pk_test_ZXhhY3QtZmlzaC00NS5jbGVyay5hY2NvdW50cy5kZXYk"}
     >
       <ImageProvider>
-      <NavigationContainer>
+        <NavigationContainer>
           <StackNavigator />
         </NavigationContainer>
+      </ImageProvider>
     </ClerkProvider>
-    </ImageProvider>
   );
 }
