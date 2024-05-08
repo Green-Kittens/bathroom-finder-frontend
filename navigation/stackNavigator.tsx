@@ -27,8 +27,24 @@ export default function StackNavigator() {
         component={NavBar}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name={facilityProfileName} component={FacilityProfile} />
-      <Stack.Screen name={facilityReviewsName} component={FacilityReviews} />
+      <Stack.Screen
+        name={facilityProfileName}
+        component={FacilityProfile}
+        options={{
+          headerTitle: "",
+          headerShadowVisible: false,
+          headerStyle: { backgroundColor: "#EEF8F7" },
+        }}
+      />
+      <Stack.Screen
+        name={facilityReviewsName}
+        component={FacilityReviews}
+        options={{
+          headerTitle: "",
+          headerShadowVisible: false,
+          headerStyle: { backgroundColor: "#EEF8F7" },
+        }}
+      />
       <Stack.Screen
         name={loginName}
         component={Login}
