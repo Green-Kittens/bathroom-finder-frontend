@@ -1,17 +1,18 @@
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Image,
   SafeAreaView,
   TextInput,
   ImageBackground,
+  Alert,
   TouchableOpacity,
   Text,
   View,
 } from "react-native";
 import { ScreenNavigationProp } from "../navigation/type";
 import MainButton from "../components/Buttons";
+import { useNavigation } from "@react-navigation/native";
 import { useSignIn } from "@clerk/clerk-expo";
 import GoogleSignIn from "../components/GoogleSignIn";
 import MicroSignIn from "../components/MicroSignIn";
@@ -43,12 +44,10 @@ function TabLoginScreen() {
     }
   };
 
-  const boomerangimage = { uri: "../assets/images/boomerang.png" };
-
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={boomerangimage}
+        source={require("../../assets/images/boomerang.png")}
         style={{
           width: 753,
           height: 499,
@@ -63,7 +62,7 @@ function TabLoginScreen() {
       ></ImageBackground>
       <SafeAreaView style={styles.safeArea}>
         <Image
-          source={require("../assets/images/logo-placeholder.png")}
+          source={require("../../assets/images/icon.png")}
           style={styles.logo}
         />
         <Text style={styles.title}>Login</Text>

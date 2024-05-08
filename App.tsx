@@ -4,6 +4,7 @@ import { useFonts } from "expo-font";
 import { setCustomText } from "react-native-global-props";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import * as SecureStore from "expo-secure-store";
+import { ImageProvider } from "./contexts/ImageContext";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -50,9 +51,11 @@ export default function App() {
       tokenCache={tokenCache}
       publishableKey={"pk_test_ZXhhY3QtZmlzaC00NS5jbGVyay5hY2NvdW50cy5kZXYk"}
     >
+      <ImageProvider>
       <NavigationContainer>
-        <StackNavigator />
-      </NavigationContainer>
+          <StackNavigator />
+        </NavigationContainer>
     </ClerkProvider>
+    </ImageProvider>
   );
 }

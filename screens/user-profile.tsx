@@ -16,8 +16,6 @@ import * as ImagePicker from "expo-image-picker";
 import { SignedIn, SignedOut } from "@clerk/clerk-expo";
 import { useSignOut } from "../hooks/useSignOut";
 
-const boomerangimage = { uri: "/assets/images/boomerang.png" };
-
 export default function UserProfileScreen() {
   // navigation
   const signOut = useSignOut();
@@ -114,7 +112,7 @@ export default function UserProfileScreen() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={boomerangimage}
+        source={require("../../assets/images/boomerang.png")}
         style={{
           width: "100%",
           height: "100%",

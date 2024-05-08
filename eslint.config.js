@@ -11,7 +11,7 @@ export default [
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    files: ["components/__tests__/**"],
+    files: ["components/__tests__/**", "controllers/__tests__/**"],
     ...jest.configs["flat/recommended"],
   },
 ];

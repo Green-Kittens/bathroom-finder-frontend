@@ -44,7 +44,7 @@ export default function TabSubmitScreen() {
           </View>
         </Modal>
         <Image
-          source={require("../assets/images/logo-placeholder.png")}
+          source={require("../../assets/images/icon.png")}
           style={styles.logo}
         />
         <Text style={styles.title}>Forgot-Password</Text>
