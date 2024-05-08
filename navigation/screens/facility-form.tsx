@@ -229,25 +229,27 @@ export default function FacilityForm() {
 
           <View style={styles.tagSelectionContainer}>
             <Text style={styles.tagTitle}>Select Tags</Text>
-            <View style={styles.tagCheckbox}>
-              <TouchableOpacity onPress={() => handleTagChange('wheelchairAccessible')} style={styles.tagButton}>
-                <Text style={{ color: tags.wheelchairAccessible ? '#007AFF' : '#6da798' }}>Wheelchair Accessible</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.tagCheckbox}>
-              <TouchableOpacity onPress={() => handleTagChange('babyChanging')} style={styles.tagButton}>
-                <Text style={{ color: tags.babyChanging ? '#007AFF' : '#6da798' }}>Baby Changing Station</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.tagCheckbox}>
-              <TouchableOpacity onPress={() => handleTagChange('cleanedRegularly')} style={styles.tagButton}>
-                <Text style={{ color: tags.cleanedRegularly ? '#007AFF' : '#6da798' }}>Regularly Cleaned</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.tagCheckbox}>
-              <TouchableOpacity onPress={() => handleTagChange('genderNeutral')} style={styles.tagButton}>
-                <Text style={{ color: tags.genderNeutral ? '#007AFF' : '#6da798' }}>Gender Neutral</Text>
-              </TouchableOpacity>
+            <View style={styles.tags}>
+              <View style={styles.tagCheckbox}>
+                <TouchableOpacity onPress={() => handleTagChange('wheelchairAccessible')} style={styles.tagButton}>
+                  <Text style={{ color: tags.wheelchairAccessible ? '#007AFF' : '#6da798' }}>Wheelchair Accessible</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.tagCheckbox}>
+                <TouchableOpacity onPress={() => handleTagChange('babyChanging')} style={styles.tagButton}>
+                  <Text style={{ color: tags.babyChanging ? '#007AFF' : '#6da798' }}>Baby Changing Station</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.tagCheckbox}>
+                <TouchableOpacity onPress={() => handleTagChange('cleanedRegularly')} style={styles.tagButton}>
+                  <Text style={{ color: tags.cleanedRegularly ? '#007AFF' : '#6da798' }}>Regularly Cleaned</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.tagCheckbox}>
+                <TouchableOpacity onPress={() => handleTagChange('genderNeutral')} style={styles.tagButton}>
+                  <Text style={{ color: tags.genderNeutral ? '#007AFF' : '#6da798' }}>Gender Neutral</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
 
@@ -408,9 +410,11 @@ const styles = StyleSheet.create({
   tagSelectionContainer: {
     width: '85%',
     marginVertical: 20,
-    alignItems: "center",
+  },
+  tags : {
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: "center",
-    flexDirection: 'row', 
     flexWrap: 'wrap',
   },
   tagCheckbox: {
@@ -424,5 +428,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     marginBottom: 5,
+    marginRight: 5,
   }
 });
