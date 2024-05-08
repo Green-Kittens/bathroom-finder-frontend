@@ -231,22 +231,22 @@ export default function FacilityForm() {
             <Text style={styles.tagTitle}>Select Tags</Text>
             <View style={styles.tags}>
               <View style={styles.tagCheckbox}>
-                <TouchableOpacity onPress={() => handleTagChange('wheelchairAccessible')} style={styles.tagButton}>
+                <TouchableOpacity onPress={() => handleTagChange('wheelchairAccessible')}>
                   <Text style={{ color: tags.wheelchairAccessible ? '#007AFF' : '#6da798' }}>Wheelchair Accessible</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.tagCheckbox}>
-                <TouchableOpacity onPress={() => handleTagChange('babyChanging')} style={styles.tagButton}>
+                <TouchableOpacity onPress={() => handleTagChange('babyChanging')}>
                   <Text style={{ color: tags.babyChanging ? '#007AFF' : '#6da798' }}>Baby Changing Station</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.tagCheckbox}>
-                <TouchableOpacity onPress={() => handleTagChange('cleanedRegularly')} style={styles.tagButton}>
+                <TouchableOpacity onPress={() => handleTagChange('cleanedRegularly')}>
                   <Text style={{ color: tags.cleanedRegularly ? '#007AFF' : '#6da798' }}>Regularly Cleaned</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.tagCheckbox}>
-                <TouchableOpacity onPress={() => handleTagChange('genderNeutral')} style={styles.tagButton}>
+                <TouchableOpacity onPress={() => handleTagChange('genderNeutral')}>
                   <Text style={{ color: tags.genderNeutral ? '#007AFF' : '#6da798' }}>Gender Neutral</Text>
                 </TouchableOpacity>
               </View>
@@ -420,14 +420,11 @@ const styles = StyleSheet.create({
   tagCheckbox: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
-  }, 
-  tagButton : {
+    marginBottom: 10,    
     borderWidth: 1,
     borderColor: "#6da798",
     borderRadius: 20,
     padding: 10,
-    marginBottom: 5,
     marginRight: 5,
-  }
+  }, 
 });
