@@ -26,15 +26,15 @@ export default function NavBar() {
       initialRouteName={mainName} // ask about implementing login as initial page display
       screenOptions={({ route }) => ({
         tabBarShowLabel: false,
-        tabBarStyle:{
-          backgroundColor:'#328281',
+        tabBarStyle: {
+          backgroundColor: "#328281",
         },
-        tabBarActiveBackgroundColor:"#408E88",
-        tabBarItemStyle:{
-          borderRadius:15
+        tabBarActiveBackgroundColor: "#408E88",
+        tabBarItemStyle: {
+          borderRadius: 15,
         },
         tabBarLabelStyle: {
-          color: "white"
+          color: "white",
         },
         tabBarIcon: ({ focused, size }) => {
           let iconName;
