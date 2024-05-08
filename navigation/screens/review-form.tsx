@@ -15,6 +15,8 @@ import {
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import StarRating from "react-native-star-rating-widget";
+
+// screens
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { useImages } from "../../contexts/ImageContext";
@@ -154,7 +156,7 @@ export default function ReviewForm() {
             color="black"
           />
 
-          {SecondaryButton("Post Rating", () => {
+          {SecondaryButton("Post Rating", async () => {
             // make a check to make sure that all fields are filled out
             navigation.navigate("Main");
           })}
