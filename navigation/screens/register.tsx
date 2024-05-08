@@ -4,11 +4,12 @@ import {
   Image,
   SafeAreaView,
   TextInput,
-  Button,
   Alert,
   Text,
   View,
 } from "react-native";
+import MainButton from "../../components/Buttons";
+import { ScrollView } from "react-native-gesture-handler";
 
 function RegisterScreen() {
   // State management for text inputs
@@ -22,52 +23,74 @@ function RegisterScreen() {
 
   return (
     <View style={styles.container}>
+      <ScrollView>
       <SafeAreaView style={styles.safeArea}>
         <Image
-          source={require("../../assets/images/logo-placeholder.png")}
+          source={require("../../assets/images/icon.png")}
           style={styles.logo}
         />
         <Text style={styles.title}>Register</Text>
-
+        <View style={styles.outerTextContainer}>
+          <View style={styles.innerTextContainer}>
+            <Text style={styles.basicText}>First Name:</Text>
+          </View>
+        </View>
         <TextInput
           style={styles.input}
           onChangeText={setUsername}
           value={username}
           placeholder="First Name:"
         />
+        <View style={styles.outerTextContainer}>
+          <View style={styles.innerTextContainer}>
+            <Text style={styles.basicText}>Last Name:</Text>
+          </View>
+        </View>
         <TextInput
           style={styles.input}
           onChangeText={setUsername}
           value={username}
           placeholder="Last Name:"
         />
+        <View style={styles.outerTextContainer}>
+          <View style={styles.innerTextContainer}>
+            <Text style={styles.basicText}>Username:</Text>
+          </View>
+        </View>
         <TextInput
           style={styles.input}
           onChangeText={setUsername}
           value={username}
           placeholder="Username:"
         />
+        <View style={styles.outerTextContainer}>
+          <View style={styles.innerTextContainer}>
+            <Text style={styles.basicText}>Password:</Text>
+          </View>
+        </View>
         <TextInput
           style={styles.input}
           onChangeText={setPassword}
           value={password}
-          placeholder="Password"
+          placeholder="Password:"
           secureTextEntry={true}
         />
+        <View style={styles.outerTextContainer}>
+          <View style={styles.innerTextContainer}>
+            <Text style={styles.basicText}>Confirm Password:</Text>
+          </View>
+        </View>
         <TextInput
           style={styles.input}
           onChangeText={setUsername}
           value={username}
           placeholder="Confirm Password:"
         />
-        <View style={styles.fixToText}>
-          <Button
-            title="Register"
-            color={"#000000"}
-            onPress={onRegisterPress}
-          />
+        <View style={[styles.fixToText, { marginBottom: 20 }]}>
+          {MainButton("Register", onRegisterPress)}
         </View>
       </SafeAreaView>
+      </ScrollView>
     </View>
   );
 }
@@ -79,6 +102,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
+    backgroundColor: "#EEF8F7",
+  },
+  outerTextContainer: {
+    width: "55%",
+  },
+  innerTextContainer: {
+    alignSelf: "flex-start",
+  },
+  basicText: {
+    fontFamily: "EudoxusSans-Regular",
+    fontSize: 15,
   },
   // Safe Area Section
   safeArea: {
@@ -89,8 +123,8 @@ const styles = StyleSheet.create({
   // Title Section
   title: {
     fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 50,
+    marginBottom: 20,
+    fontFamily: "EudoxusSans-Bold",
   },
   // Input Section
   input: {
@@ -100,6 +134,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     alignSelf: "center",
+    backgroundColor: "#FFFFFF",
+    minWidth: 200,
+    fontFamily: "EudoxusSans-Regular",
   },
   // Text Section
   text: {
@@ -133,5 +170,6 @@ const styles = StyleSheet.create({
     height: 100,
     alignSelf: "center",
     marginBottom: 5,
+    borderRadius: 50,
   },
 });
