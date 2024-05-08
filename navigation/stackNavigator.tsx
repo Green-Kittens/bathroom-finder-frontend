@@ -29,7 +29,7 @@ export default function StackNavigator() {
       />
       <Stack.Screen name={facilityProfileName} component={FacilityProfile} />
       <Stack.Screen name={facilityReviewsName} component={FacilityReviews} />
-      <Stack.Screen name={loginName} component={Login} />
+      <Stack.Screen name={loginName} component={Login} options={{headerShown: false}}/>
     </Stack.Navigator>
   );
 }
