@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    marginVertical: 20,
+    marginBottom: 20,
     fontFamily: "EudoxusSans-Bold",
   },
   body: {
