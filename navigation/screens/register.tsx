@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
   StyleSheet,
-  Image,
+  ImageBackground,
   SafeAreaView,
   TextInput,
   Alert,
@@ -23,73 +23,83 @@ function RegisterScreen() {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-      <SafeAreaView style={styles.safeArea}>
-        <Image
-          source={require("../../assets/images/icon.png")}
-          style={styles.logo}
-        />
-        <Text style={styles.title}>Register</Text>
-        <View style={styles.outerTextContainer}>
-          <View style={styles.innerTextContainer}>
-            <Text style={styles.basicText}>First Name:</Text>
+      <ImageBackground
+        source={require("../../assets/images/blob.png")}
+        style={{
+          width: 953,
+          height: 1069,
+          position: "absolute",
+          top: 200,
+          left: -650,
+        }}
+        imageStyle={{
+          resizeMode: "cover",
+          alignSelf: "flex-end",
+        }}
+      ></ImageBackground>
+      <ScrollView style={{ height: "100%" }}>
+        <SafeAreaView style={styles.safeArea}>
+          <Text style={styles.title}>Register</Text>
+          <View style={styles.outerTextContainer}>
+            <View style={styles.innerTextContainer}>
+              <Text style={styles.basicText}>First Name:</Text>
+            </View>
           </View>
-        </View>
-        <TextInput
-          style={styles.input}
-          onChangeText={setUsername}
-          value={username}
-          placeholder="First Name:"
-        />
-        <View style={styles.outerTextContainer}>
-          <View style={styles.innerTextContainer}>
-            <Text style={styles.basicText}>Last Name:</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={setUsername}
+            value={username}
+            placeholder="First Name"
+          />
+          <View style={styles.outerTextContainer}>
+            <View style={styles.innerTextContainer}>
+              <Text style={styles.basicText}>Last Name:</Text>
+            </View>
           </View>
-        </View>
-        <TextInput
-          style={styles.input}
-          onChangeText={setUsername}
-          value={username}
-          placeholder="Last Name:"
-        />
-        <View style={styles.outerTextContainer}>
-          <View style={styles.innerTextContainer}>
-            <Text style={styles.basicText}>Username:</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={setUsername}
+            value={username}
+            placeholder="Last Name"
+          />
+          <View style={styles.outerTextContainer}>
+            <View style={styles.innerTextContainer}>
+              <Text style={styles.basicText}>Username:</Text>
+            </View>
           </View>
-        </View>
-        <TextInput
-          style={styles.input}
-          onChangeText={setUsername}
-          value={username}
-          placeholder="Username:"
-        />
-        <View style={styles.outerTextContainer}>
-          <View style={styles.innerTextContainer}>
-            <Text style={styles.basicText}>Password:</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={setUsername}
+            value={username}
+            placeholder="Username"
+          />
+          <View style={styles.outerTextContainer}>
+            <View style={styles.innerTextContainer}>
+              <Text style={styles.basicText}>Password:</Text>
+            </View>
           </View>
-        </View>
-        <TextInput
-          style={styles.input}
-          onChangeText={setPassword}
-          value={password}
-          placeholder="Password:"
-          secureTextEntry={true}
-        />
-        <View style={styles.outerTextContainer}>
-          <View style={styles.innerTextContainer}>
-            <Text style={styles.basicText}>Confirm Password:</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={setPassword}
+            value={password}
+            placeholder="Password"
+            secureTextEntry={true}
+          />
+          <View style={styles.outerTextContainer}>
+            <View style={styles.innerTextContainer}>
+              <Text style={styles.basicText}>Confirm Password:</Text>
+            </View>
           </View>
-        </View>
-        <TextInput
-          style={styles.input}
-          onChangeText={setUsername}
-          value={username}
-          placeholder="Confirm Password:"
-        />
-        <View style={[styles.fixToText, { marginBottom: 20 }]}>
-          {MainButton("Register", onRegisterPress)}
-        </View>
-      </SafeAreaView>
+          <TextInput
+            style={styles.input}
+            onChangeText={setUsername}
+            value={username}
+            placeholder="Confirm Password"
+          />
+          <View style={[styles.fixToText, { marginBottom: 20 }]}>
+            {MainButton("Register", onRegisterPress)}
+          </View>
+        </SafeAreaView>
       </ScrollView>
     </View>
   );
@@ -105,13 +115,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#EEF8F7",
   },
   outerTextContainer: {
-    width: "55%",
+    width: "75%",
   },
   innerTextContainer: {
     alignSelf: "flex-start",
   },
   basicText: {
-    fontFamily: "EudoxusSans-Regular",
+    fontFamily: "EudoxusSans-Bold",
     fontSize: 15,
   },
   // Safe Area Section
@@ -129,13 +139,12 @@ const styles = StyleSheet.create({
   // Input Section
   input: {
     height: 40,
-    width: "30%", // Control the width of the input size
+    width: "75%", // Control the width of the input size
     margin: 12,
     borderWidth: 1,
     padding: 10,
     alignSelf: "center",
     backgroundColor: "#FFFFFF",
-    minWidth: 200,
     fontFamily: "EudoxusSans-Regular",
   },
   // Text Section
