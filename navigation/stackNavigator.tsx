@@ -32,6 +32,7 @@ export default function StackNavigator() {
         component={FacilityProfile}
         options={{
           headerTitle: "",
+          headerBackTitle: "Back",
           headerShadowVisible: false,
           headerStyle: { backgroundColor: "#EEF8F7" },
         }}
@@ -41,6 +42,7 @@ export default function StackNavigator() {
         component={FacilityReviews}
         options={{
           headerTitle: "",
+          headerBackTitle: "Back",
           headerShadowVisible: false,
           headerStyle: { backgroundColor: "#EEF8F7" },
         }}
