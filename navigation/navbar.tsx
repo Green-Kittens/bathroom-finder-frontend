@@ -32,9 +32,7 @@ export default function NavBar() {
         tabBarActiveBackgroundColor: "#408E88",
         tabBarItemStyle: {
           borderRadius: 15,
-        },
-        tabBarLabelStyle: {
-          color: "white",
+          marginHorizontal: 8,
         },
         tabBarIcon: ({ focused, size }) => {
           let iconName;
