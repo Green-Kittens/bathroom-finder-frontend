@@ -24,12 +24,17 @@ function TabLoginScreen() {
   const [emailAddress, setEmailAddress] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isPasswordVisible, setPasswordVisible] = React.useState(false);
+  const [emailError, setEmailError] = React.useState("");
+  const [validationError, setValidationError] = React.useState("");
+
+  // Regular expression for validating email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   // navigation
   const nav = useNavigation<ScreenNavigationProp>();
 
   const onSignInPress = async () => {
-    if (!isLoaded) {
+    if (!isLoaded || !validateFields()) {
       return;
     }
 
@@ -43,11 +48,41 @@ function TabLoginScreen() {
       await setActive({ session: completeSignIn.createdSessionId });
     } catch (err: unknown) {
       console.log(err);
+      setValidationError("Invalid email or password.");
     }
   };
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!isPasswordVisible);
+  };
+
+  // Validate fields
+  const validateFields = () => {
+    if (!emailAddress || !password) {
+      setValidationError("Please fill out all fields.");
+      return false;
+    }
+    setValidationError("");
+    return true;
+  };
+
+  // Handle email change and validation
+  const handleEmailChange = (input: string) => {
+    setEmailAddress(input);
+    if (input === "") {
+      setEmailError("");
+    } else if (!emailRegex.test(input)) {
+      setEmailError("Please enter a valid email address.");
+    } else {
+      setEmailError("");
+    }
+    validateFields();
+  };
+
+  // Handle last name change and validate
+  const handlePasswordChange = (input: string) => {
+    setPassword(input);
+    validateFields();
   };
 
   return (
@@ -81,7 +116,7 @@ function TabLoginScreen() {
               value={emailAddress}
               placeholder="Email..."
               placeholderTextColor="#000"
-              onChangeText={setEmailAddress}
+              onChangeText={handleEmailChange}
             />
 
             <View style={styles.passwordContainer}>
@@ -91,8 +126,9 @@ function TabLoginScreen() {
                 placeholder="Password..."
                 placeholderTextColor="#000"
                 secureTextEntry={!isPasswordVisible}
-                onChangeText={setPassword}
+                onChangeText={handlePasswordChange}
               />
+
               <TouchableOpacity
                 onPress={togglePasswordVisibility}
                 style={styles.toggleButton}
@@ -101,6 +137,14 @@ function TabLoginScreen() {
                   {isPasswordVisible ? "Hide" : "Show"}
                 </Text>
               </TouchableOpacity>
+            </View>
+            <View style={styles.errorContainer}>
+              {validationError ? (
+                <Text style={styles.errorText}>{validationError}</Text>
+              ) : null}
+              {emailError ? (
+                <Text style={styles.errorText}>{emailError}</Text>
+              ) : null}
             </View>
           </View>
 
@@ -244,5 +288,19 @@ const styles = StyleSheet.create({
     height: 100,
     alignSelf: "center",
     marginBottom: 5,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 14,
+    alignSelf: "center",
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  // Error Container Section
+  errorContainer: {
+    flexDirection: "row",
+    alignSelf: "center",
   },
 });
