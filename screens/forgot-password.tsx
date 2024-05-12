@@ -9,6 +9,8 @@ import {
   Text,
   View,
   Modal,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 
 export default function TabSubmitScreen() {
@@ -27,43 +29,45 @@ export default function TabSubmitScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <View style={styles.modalView}>
-            <Text style={styles.text}>Email has been sent to {email}</Text>
-            <Button title="Close" color={"#000000"} onPress={onClosePress} />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <SafeAreaView style={styles.safeArea}>
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <View style={styles.modalView}>
+              <Text style={styles.text}>Email has been sent to {email}</Text>
+              <Button title="Close" color={"#000000"} onPress={onClosePress} />
+            </View>
+          </Modal>
+          <Image
+            source={require("../assets/images/icon.png")}
+            style={styles.logo}
+          />
+          <Text style={styles.title}>Forgot-Password</Text>
+
+          {/* Text input fields */}
+          <TextInput
+            style={styles.input}
+            onChangeText={setEmail}
+            value={email}
+            placeholderTextColor={"#000000"}
+            placeholder="Email..."
+          />
+
+          {/* Submit button */}
+          <View style={styles.fixToText}>
+            <Button title="Submit" color={"#000000"} onPress={onSubmitPress} />
           </View>
-        </Modal>
-        <Image
-          source={require("../assets/images/icon.png")}
-          style={styles.logo}
-        />
-        <Text style={styles.title}>Forgot-Password</Text>
-
-        {/* Text input fields */}
-        <TextInput
-          style={styles.input}
-          onChangeText={setEmail}
-          value={email}
-          placeholderTextColor={"#000000"}
-          placeholder="Email..."
-        />
-
-        {/* Submit button */}
-        <View style={styles.fixToText}>
-          <Button title="Submit" color={"#000000"} onPress={onSubmitPress} />
-        </View>
-      </SafeAreaView>
-    </View>
+        </SafeAreaView>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
