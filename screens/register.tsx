@@ -11,7 +11,7 @@ import {
 import { useSignUp } from "@clerk/clerk-expo";
 import MainButton from "../components/Buttons";
 import zxcvbn, { ZXCVBNResult } from "zxcvbn";
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function RegisterScreen() {
   // State management for text inputs
@@ -25,10 +25,15 @@ export default function RegisterScreen() {
   const [code, setCode] = React.useState("");
   const [strength, setStrength] = React.useState<ZXCVBNResult | null>(null);
   const [validationError, setValidationError] = React.useState("");
+  const [emailError, setEmailError] = React.useState("");
 
   // start the sign up process.
   const { isLoaded, signUp, setActive } = useSignUp();
 
+  // Regular expression for validating email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // This function is called when the user presses the sign up button.
   const onSignUpPress = async () => {
     if (!passwordMatch || !validateFields()) {
       return;
@@ -71,6 +76,7 @@ export default function RegisterScreen() {
     }
   };
 
+  // Check password strength
   const checkPasswordStrength = (input: string) => {
     setPassword(input);
     if (input === "") {
@@ -80,28 +86,36 @@ export default function RegisterScreen() {
       setStrength(result);
     }
     setPasswordMatch(input === confirmPassword);
-  };
-
-  const handleConfirmPasswordChange = (input: string) => {
-    setConfirmPassword(input);
-    setPasswordMatch(input === password);
+    validateFields();
   };
 
   // Get color and text based on password strength score
   const getStrengthFeedback = (score: number) => {
     switch (score) {
       case 0:
-        return { text: "Very Weak", color: "red", icon: "close-circle" };
+        return {
+          text: "Very Weak",
+          color: "red",
+          icon: "close-circle" as const,
+        };
       case 1:
-        return { text: "Weak", color: "red", icon: "remove-circle" };
+        return { text: "Weak", color: "orange", icon: "alert" as const };
       case 2:
-        return { text: "Fair", color: "orange", icon: "remove-circle" };
+        return {
+          text: "Fair",
+          color: "#DBBD40",
+          icon: "remove-circle" as const,
+        };
       case 3:
-        return { text: "Good", color: "green", icon: "checkmark-circle" };
+        return { text: "Good", color: "#8FDB00", icon: "add-circle" as const };
       case 4:
-        return { text: "Strong", color: "green", icon: "checkmark-circle" };
+        return {
+          text: "Strong",
+          color: "green",
+          icon: "checkmark-circle" as const,
+        };
       default:
-        return { text: "Unknown", color: "gray", icon: "help-circle" };
+        return { text: "Unknown", color: "gray", icon: "help-circle" as const };
     }
   };
   // Custom feedback based on zxcvbn result
@@ -109,9 +123,9 @@ export default function RegisterScreen() {
     if (result.score === 0) return "Try adding more characters.";
     if (result.score === 1) return "Try adding numbers or symbols.";
     if (result.score === 2) return "Try adding more words or capital letters.";
-    if (result.score === 3) return "try adding more characters or symbols.";
+    if (result.score === 3) return "Try adding more characters or symbols.";
     if (result.score === 4) return "Password is strong!";
-    return "";
+    return "undefined";
   };
 
   // Validate fields
@@ -130,6 +144,36 @@ export default function RegisterScreen() {
     return true;
   };
 
+  // Handle field value changes and validate
+  const handleFirstNameChange = (input: string) => {
+    setFirstName(input);
+    validateFields();
+  };
+  // Handle last name change and validate
+  const handleLastNameChange = (input: string) => {
+    setLastName(input);
+    validateFields();
+  };
+  // Handle confirm password change and validate
+  const handleConfirmPasswordChange = (input: string) => {
+    setConfirmPassword(input);
+    setPasswordMatch(input === password);
+    validateFields();
+  };
+
+  // Handle email change and validation
+  const handleEmailChange = (input: string) => {
+    setEmailAddress(input);
+    if (input === "") {
+      setEmailError("");
+    } else if (!emailRegex.test(input)) {
+      setEmailError("Please enter a valid email address.");
+    } else {
+      setEmailError("");
+    }
+    validateFields();
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -139,14 +183,14 @@ export default function RegisterScreen() {
             <View style={{ flexDirection: "row" }}>
               <TextInput
                 style={styles.input}
-                onChangeText={(firstName) => setFirstName(firstName)}
+                onChangeText={handleFirstNameChange}
                 value={firstName}
                 placeholder="First Name..."
                 placeholderTextColor="#000"
               />
               <TextInput
                 style={styles.input}
-                onChangeText={(lastName) => setLastName(lastName)}
+                onChangeText={handleLastNameChange}
                 value={lastName}
                 placeholder="Last Name..."
                 placeholderTextColor="#000"
@@ -154,11 +198,14 @@ export default function RegisterScreen() {
             </View>
             <TextInput
               style={styles.inputLong}
-              onChangeText={(email) => setEmailAddress(email)}
+              onChangeText={handleEmailChange}
               value={emailAddress}
               placeholder="Email..."
               placeholderTextColor="#000"
             />
+            {emailError ? (
+              <Text style={styles.errorText}>{emailError}</Text>
+            ) : null}
             {strength && (
               <>
                 <View
@@ -199,12 +246,14 @@ export default function RegisterScreen() {
               placeholder="Confirm Password"
               secureTextEntry={true}
             />
-            {!passwordMatch && (
-              <Text style={styles.errorText}>Passwords do not match</Text>
-            )}
-            {validationError ? (
-              <Text style={styles.errorText}>{validationError}</Text>
-            ) : null}
+            <View style={styles.errorContainer}>
+              {!passwordMatch && (
+                <Text style={styles.errorText}>Passwords do not match</Text>
+              )}
+              {validationError ? (
+                <Text style={styles.errorText}>{validationError}</Text>
+              ) : null}
+            </View>
             <View style={styles.fixToText}>
               {MainButton("Sign Up", onSignUpPress)}
             </View>
@@ -315,6 +364,13 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 10,
     marginBottom: 10,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  // Error Container Section
+  errorContainer: {
+    flexDirection: "row",
+    alignSelf: "center",
   },
   // Icon Section
   icon: {
