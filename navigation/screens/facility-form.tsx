@@ -120,8 +120,9 @@ export default function FacilityForm() {
             justifyContent: "center",
             alignItems: "center",
             alignContent: "center",
-            paddingTop: 80,
-            paddingBottom: 250,
+            paddingTop: 60,
+            marginTop: 50,
+            paddingBottom: 200,
           }}
         >
           <Text style={styles.title}>Add a New Facility</Text>
@@ -167,7 +168,6 @@ export default function FacilityForm() {
           ) : (
             <Text style={styles.subtext}>Fetching current location...</Text>
           )}
-
           <Text>Press and drag pin marker to see address and relocate</Text>
 
           <Modal
@@ -258,7 +258,6 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   scrollView: {
-    flex: 1,
     backgroundColor: "#afd6ae",
   },
   title: {

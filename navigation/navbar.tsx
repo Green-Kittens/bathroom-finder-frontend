@@ -42,10 +42,26 @@ export default function NavBar() {
         },
       })}
     >
-      <Tab.Screen name={reviewFormName} component={ReviewForm} />
-      <Tab.Screen name={facilityFormName} component={FacilityForm} />
-      <Tab.Screen name={mainName} component={Main} />
-      <Tab.Screen name={userProfileName} component={UserProfile} />
+      <Tab.Screen
+        name={reviewFormName}
+        component={ReviewForm}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name={facilityFormName}
+        component={FacilityForm}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name={mainName}
+        component={Main}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name={userProfileName}
+        component={UserProfile}
+        options={{ headerShown: false }}
+      />
     </Tab.Navigator>
   );
 }
