@@ -27,10 +27,15 @@
     "@rneui/base": "^4.0.0-rc.8",
     "@rneui/themed": "^4.0.0-rc.8",
     "@types/jest": "^29.5.12",
+    "@types/zxcvbn": "^4.4.4",
+    "@zxcvbn-ts/core": "^3.0.4",
+    "@zxcvbn-ts/language-common": "^3.0.4",
+    "@zxcvbn-ts/language-en": "^3.0.2",
+    "auth-session": "^0.0.7",
     "auth-session": "^0.0.7",
     "axios": "^1.6.8",
     "axios-mock-adapter": "^1.22.0",
-    "expo": "~51.0.0",
+    "expo": "~51.0.2",
     "expo-application": "^5.8.4",
     "expo-auth-session": "^5.4.0",
     "expo-image-picker": "~15.0.4",
@@ -56,7 +61,8 @@
     "react-native-web": "~0.19.6",
     "react-time-picker": "^6.6.0",
     "ts-jest": "^29.1.2",
-    "yarn": "^1.22.22"
+    "yarn": "^1.22.22",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

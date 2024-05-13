@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   Text,
   View,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { ScreenNavigationProp } from "../navigation/type";
 import MainButton from "../components/Buttons";
@@ -21,12 +23,18 @@ function TabLoginScreen() {
   const { signIn, setActive, isLoaded } = useSignIn();
   const [emailAddress, setEmailAddress] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [isPasswordVisible, setPasswordVisible] = React.useState(false);
+  const [emailError, setEmailError] = React.useState("");
+  const [validationError, setValidationError] = React.useState("");
+
+  // Regular expression for validating email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   // navigation
   const nav = useNavigation<ScreenNavigationProp>();
 
   const onSignInPress = async () => {
-    if (!isLoaded) {
+    if (!isLoaded || !validateFields()) {
       return;
     }
 
@@ -40,87 +48,146 @@ function TabLoginScreen() {
       await setActive({ session: completeSignIn.createdSessionId });
     } catch (err: unknown) {
       console.log(err);
+      setValidationError("Invalid email or password.");
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!isPasswordVisible);
+  };
+
+  // Validate fields
+  const validateFields = () => {
+    if (!emailAddress || !password) {
+      setValidationError("Please fill out all fields.");
+      return false;
+    }
+    setValidationError("");
+    return true;
+  };
+
+  // Handle email change and validation
+  const handleEmailChange = (input: string) => {
+    setEmailAddress(input);
+    if (input === "") {
+      setEmailError("");
+    } else if (!emailRegex.test(input)) {
+      setEmailError("Please enter a valid email address.");
+    } else {
+      setEmailError("");
+    }
+    validateFields();
+  };
+
+  // Handle last name change and validate
+  const handlePasswordChange = (input: string) => {
+    setPassword(input);
+    validateFields();
+  };
+
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require("../assets/images/boomerang.png")}
-        style={{
-          width: 753,
-          height: 499,
-          position: "absolute",
-          top: 0,
-          left: -200,
-        }}
-        imageStyle={{
-          resizeMode: "cover",
-          alignSelf: "flex-end",
-        }}
-      ></ImageBackground>
-      <SafeAreaView style={styles.safeArea}>
-        <Image
-          source={require("../assets/images/icon.png")}
-          style={styles.logo}
-        />
-        <Text style={styles.title}>Login</Text>
-
-        {/* Text input fields */}
-        <TextInput
-          autoCapitalize="none"
-          style={styles.input}
-          value={emailAddress}
-          placeholder="Email..."
-          placeholderTextColor="#000"
-          onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
-        />
-        <TextInput
-          value={password}
-          style={styles.input}
-          placeholder="Password..."
-          placeholderTextColor="#000"
-          secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
-        />
-        <TouchableOpacity
-          onPress={() => {
-            nav.navigate("ForgotPassword");
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <ImageBackground
+          source={require("../assets/images/boomerang.png")}
+          style={{
+            width: 753,
+            height: 499,
+            position: "absolute",
+            top: 0,
+            left: -200,
           }}
-          style={styles.registerContainer}
-        >
-          <Text style={styles.text}>Forgot Password</Text>
-        </TouchableOpacity>
+          imageStyle={{
+            resizeMode: "cover",
+            alignSelf: "flex-end",
+          }}
+        ></ImageBackground>
+        <SafeAreaView style={styles.safeArea}>
+          <Image
+            source={require("../assets/images/icon.png")}
+            style={styles.logo}
+          />
+          <Text style={styles.title}>Login</Text>
 
-        {/* Login button */}
-        <View style={[{ margin: "10%" }]}>
-          {MainButton("Login", onSignInPress)}
-        </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              autoCapitalize="none"
+              style={styles.input}
+              value={emailAddress}
+              placeholder="Email..."
+              placeholderTextColor="#000"
+              onChangeText={handleEmailChange}
+            />
 
-        {/* Google Sign In */}
-        <View style={[{ margin: "10%", flexDirection: "row" }]}>
-          <GoogleSignIn />
-          <MicroSignIn />
-        </View>
-      </SafeAreaView>
+            <View style={styles.passwordContainer}>
+              <TextInput
+                value={password}
+                style={styles.passwordInput}
+                placeholder="Password..."
+                placeholderTextColor="#000"
+                secureTextEntry={!isPasswordVisible}
+                onChangeText={handlePasswordChange}
+              />
 
-      {/* Footer with Register Section */}
-      <View style={styles.footer}>
-        <View style={styles.registerContainer}>
-          <Text style={styles.text} disabled>
-            Don&apos;t have an account?
-          </Text>
+              <TouchableOpacity
+                onPress={togglePasswordVisibility}
+                style={styles.toggleButton}
+              >
+                <Text style={styles.toggleButtonText}>
+                  {isPasswordVisible ? "Hide" : "Show"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.errorContainer}>
+              {validationError ? (
+                <Text style={styles.errorText}>{validationError}</Text>
+              ) : null}
+              {emailError ? (
+                <Text style={styles.errorText}>{emailError}</Text>
+              ) : null}
+            </View>
+          </View>
+
+          {/* Forgot Password Section */}
           <TouchableOpacity
             onPress={() => {
-              nav.navigate("Register");
+              nav.navigate("ForgotPassword");
             }}
-            style={styles.registerContainer}
+            style={styles.forgotContainer}
           >
-            <Text style={styles.registerText}>Register</Text>
+            <Text style={styles.text}>Forgot Password</Text>
           </TouchableOpacity>
+
+          {/* Login button */}
+          <View style={[{ margin: "10%" }]}>
+            {MainButton("Login", onSignInPress)}
+          </View>
+
+          {/* Google Sign In */}
+          <View style={[{ margin: "10%", flexDirection: "row" }]}>
+            <GoogleSignIn />
+            <MicroSignIn />
+          </View>
+        </SafeAreaView>
+
+        {/* Footer with Register Section */}
+        <View style={styles.footer}>
+          <View style={styles.registerContainer}>
+            <Text style={styles.text} disabled>
+              Don&apos;t have an account?
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                nav.navigate("Register");
+              }}
+              style={styles.registerContainer}
+            >
+              <Text style={styles.registerText}>Register</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -155,9 +222,33 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     minWidth: 200,
   },
+  // Input Container Section
+  inputContainer: {
+    alignItems: "center",
+  },
+  // Password Section
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    padding: 10,
+    width: "80%",
+    height: 40,
+    backgroundColor: "#FFFFFF",
+    maxWidth: 200,
+  },
   // Text Section
   text: {
     alignSelf: "center",
+  },
+  toggleButton: {
+    marginLeft: 10,
+  },
+  toggleButtonText: {
+    color: "black",
+  },
+  passwordInput: {
+    flex: 1,
   },
   // Button Section
   fixToText: {
@@ -178,6 +269,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "none",
   },
+  // Register Section
+  forgotContainer: {
+    marginTop: 10,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "none",
+  },
   // Register Text
   registerText: {
     color: "black",
@@ -189,5 +288,19 @@ const styles = StyleSheet.create({
     height: 100,
     alignSelf: "center",
     marginBottom: 5,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 14,
+    alignSelf: "center",
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  // Error Container Section
+  errorContainer: {
+    flexDirection: "row",
+    alignSelf: "center",
   },
 });
