@@ -122,7 +122,7 @@ export default function FacilityForm() {
             alignContent: "center",
             paddingTop: 60,
             marginTop: 50,
-            paddingBottom: 230,
+            paddingBottom: 200,
           }}
         >
           <Text style={styles.title}>Add a New Facility</Text>
