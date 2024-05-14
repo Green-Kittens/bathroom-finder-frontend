@@ -12,38 +12,91 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
+import { useSignIn } from "@clerk/clerk-expo";
+import { enableScreens } from "react-native-screens";
+
+// Enable native screens for better performance
+enableScreens();
 
 export default function TabSubmitScreen() {
   // State management for text inputs
   const [emailAddress, setEmailAddress] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [emailError, setEmailError] = React.useState("");
+  const [password, setPassword] = useState("");
+  const [isPasswordVisible, setPasswordVisible] = React.useState(false);
+  const [code, setCode] = useState("");
+  const [successfulCreation, setSuccessfulCreation] = useState(false);
+  const { signIn, setActive } = useSignIn();
 
   // Regular expression for validating email
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const onSubmitPress = () => {
-    // Placeholder for navigation logic
-    setModalVisible(true);
+    if (emailRegex.test(emailAddress)) {
+      setModalVisible(true);
+      setEmailError(""); // Clear error if the email is valid
+    } else {
+      setEmailError("Please enter a valid email address.");
+    }
   };
 
-  const onClosePress = () => {
-    // Placeholder for navigation logic
+  const onClosePress = async () => {
     setModalVisible(false);
+    try {
+      await onRequestReset();
+    } catch (err) {
+      alert("An error occurred. Please try again.");
+    }
+  };
+  // Handle email change and validation
+  const handleEmailChange = (input: string) => {
+    setEmailAddress(input);
+    if (input === "") {
+      setEmailError("");
+    } else if (!emailRegex.test(input)) {
+      setEmailError("Please enter a valid email address.");
+    } else {
+      setEmailError("");
+    }
   };
 
-    // Handle email change and validation
-    const handleEmailChange = (input: string) => {
-      setEmailAddress(input);
-      if (input === "") {
-        setEmailError("");
-      } else if (!emailRegex.test(input)) {
-        setEmailError("Please enter a valid email address.");
-      } else {
-        setEmailError("");
-      }
-    };
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!isPasswordVisible);
+  };
 
+  // Request a passowrd reset code by email
+  const onRequestReset = async () => {
+    try {
+      await signIn!.create({
+        strategy: "reset_password_email_code",
+        identifier: emailAddress,
+      });
+      setSuccessfulCreation(true);
+    } catch (err: any) {
+      alert(err.errors[0].message);
+    }
+  };
+
+  // Reset the password with the code and the new password
+  const onReset = async () => {
+    try {
+      const result = await signIn!.attemptFirstFactor({
+        strategy: "reset_password_email_code",
+        code,
+        password,
+      });
+      console.log(result);
+      alert("Password reset successfully");
+
+      // Set the user session active, which will log in the user automatically
+      await setActive!({ session: result.createdSessionId });
+    } catch (err: any) {
+      alert(err.errors[0].message);
+    }
+  };
+
+  
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -58,7 +111,9 @@ export default function TabSubmitScreen() {
             }}
           >
             <View style={styles.modalView}>
-              <Text style={styles.text}>Email has been sent to {emailAddress}</Text>
+              <Text style={styles.text}>
+                Email has been sent to {emailAddress}
+              </Text>
               <Button title="Close" color={"#000000"} onPress={onClosePress} />
             </View>
           </Modal>
@@ -67,22 +122,53 @@ export default function TabSubmitScreen() {
             style={styles.logo}
           />
           <Text style={styles.title}>Forgot-Password</Text>
-
-          {/* Text input fields */}
-          <TextInput
-            style={styles.input}
-            onChangeText={setEmailAddress}
-            value={emailAddress}
-            placeholderTextColor={"#000000"}
-            placeholder="Email..."
-          />
-          {emailError ? (
-              <Text style={styles.errorText}>{emailError}</Text>
-            ) : null}
-          {/* Submit button */}
-          <View style={styles.fixToText}>
-            <Button title="Submit" color={"#000000"} onPress={onSubmitPress} />
-          </View>
+          {!successfulCreation && (
+            <>
+              {/* Text input fields */}
+              <TextInput
+                style={styles.input}
+                onChangeText={handleEmailChange}
+                value={emailAddress}
+                placeholderTextColor={"#000000"}
+                placeholder="Email..."
+              />
+              {emailError ? (
+                <Text style={styles.errorText}>{emailError}</Text>
+              ) : null}
+              {/* Submit button */}
+              <View style={styles.fixToText}>
+                <Button
+                  title="Submit"
+                  color={"#000000"}
+                  onPress={onSubmitPress}
+                />
+              </View>
+            </>
+          )}
+          {successfulCreation && (
+            <>
+              <View>
+                <TextInput
+                  value={code}
+                  placeholder="Code..."
+                  style={styles.input}
+                  onChangeText={setCode}
+                />
+                <TextInput
+                  placeholder="New password"
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry
+                  style={styles.input}
+                />
+              </View>
+              <Button
+                onPress={onReset}
+                title="Set new Password"
+                color={"#6c47ff"}
+              ></Button>
+            </>
+          )}
         </SafeAreaView>
       </View>
     </TouchableWithoutFeedback>

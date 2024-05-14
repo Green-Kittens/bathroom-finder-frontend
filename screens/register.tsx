@@ -7,11 +7,12 @@ import {
   View,
   Keyboard,
   TouchableWithoutFeedback,
+  TouchableOpacity,
 } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
 import MainButton from "../components/Buttons";
-import zxcvbn, { ZXCVBNResult } from "zxcvbn";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import PasswordStrengthMeter from "../components/PasswordMeter";
+import PasswordInput from "../components/Password";
 
 export default function RegisterScreen() {
   // State management for text inputs
@@ -23,7 +24,6 @@ export default function RegisterScreen() {
   const [passwordMatch, setPasswordMatch] = React.useState(true);
   const [pendingVerification, setPendingVerification] = React.useState(false);
   const [code, setCode] = React.useState("");
-  const [strength, setStrength] = React.useState<ZXCVBNResult | null>(null);
   const [validationError, setValidationError] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
 
@@ -76,58 +76,6 @@ export default function RegisterScreen() {
     }
   };
 
-  // Check password strength
-  const checkPasswordStrength = (input: string) => {
-    setPassword(input);
-    if (input === "") {
-      setStrength(null);
-    } else {
-      const result = zxcvbn(input);
-      setStrength(result);
-    }
-    setPasswordMatch(input === confirmPassword);
-    validateFields();
-  };
-
-  // Get color and text based on password strength score
-  const getStrengthFeedback = (score: number) => {
-    switch (score) {
-      case 0:
-        return {
-          text: "Very Weak",
-          color: "red",
-          icon: "close-circle" as const,
-        };
-      case 1:
-        return { text: "Weak", color: "orange", icon: "alert" as const };
-      case 2:
-        return {
-          text: "Fair",
-          color: "#DBBD40",
-          icon: "remove-circle" as const,
-        };
-      case 3:
-        return { text: "Good", color: "#8FDB00", icon: "add-circle" as const };
-      case 4:
-        return {
-          text: "Strong",
-          color: "green",
-          icon: "checkmark-circle" as const,
-        };
-      default:
-        return { text: "Unknown", color: "gray", icon: "help-circle" as const };
-    }
-  };
-  // Custom feedback based on zxcvbn result
-  const getCustomFeedback = (result: ZXCVBNResult) => {
-    if (result.score === 0) return "Try adding more characters.";
-    if (result.score === 1) return "Try adding numbers or symbols.";
-    if (result.score === 2) return "Try adding more words or capital letters.";
-    if (result.score === 3) return "Try adding more characters or symbols.";
-    if (result.score === 4) return "Password is strong!";
-    return "undefined";
-  };
-
   // Validate fields
   const validateFields = () => {
     if (
@@ -154,12 +102,6 @@ export default function RegisterScreen() {
     setLastName(input);
     validateFields();
   };
-  // Handle confirm password change and validate
-  const handleConfirmPasswordChange = (input: string) => {
-    setConfirmPassword(input);
-    setPasswordMatch(input === password);
-    validateFields();
-  };
 
   // Handle email change and validation
   const handleEmailChange = (input: string) => {
@@ -174,6 +116,17 @@ export default function RegisterScreen() {
     validateFields();
   };
 
+  const handlePasswordChange = (input: string) => {
+    setPassword(input);
+    setPasswordMatch(input === confirmPassword);
+    validateFields();
+  };
+
+  const handleConfirmPasswordChange = (input: string) => {
+    setConfirmPassword(input);
+    setPasswordMatch(input === password);
+    validateFields();
+  };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -206,45 +159,18 @@ export default function RegisterScreen() {
             {emailError ? (
               <Text style={styles.errorText}>{emailError}</Text>
             ) : null}
-            {strength && (
-              <>
-                <View
-                  style={{
-                    ...styles.strengthContainer,
-                    backgroundColor: getStrengthFeedback(strength.score).color,
-                  }}
-                >
-                  <Text style={styles.strengthText}>
-                    {getStrengthFeedback(strength.score).text}
-                  </Text>
-                  <Ionicons
-                    name={getStrengthFeedback(strength.score).icon}
-                    size={20}
-                    color="white"
-                    style={styles.icon}
-                  />
-                </View>
-                <Text style={styles.feedback}>
-                  {getCustomFeedback(strength)}
-                </Text>
-              </>
-            )}
-            <TextInput
-              style={styles.inputLong}
-              onChangeText={checkPasswordStrength}
-              placeholderTextColor="#000"
+            <PasswordStrengthMeter password={password} />
+            <PasswordInput
+              label="Password"
               value={password}
+              onChangeText={handlePasswordChange}
               placeholder="Password..."
-              secureTextEntry={true}
             />
-            <TextInput
-              style={styles.inputLong}
-              //implemtation to check against initially entered password
-              onChangeText={handleConfirmPasswordChange}
-              placeholderTextColor="#000"
+            <PasswordInput
+              label="Confirm Password"
               value={confirmPassword}
-              placeholder="Confirm Password"
-              secureTextEntry={true}
+              onChangeText={handleConfirmPasswordChange}
+              placeholder="Confirm Password..."
             />
             <View style={styles.errorContainer}>
               {!passwordMatch && (
@@ -300,20 +226,24 @@ const styles = StyleSheet.create({
   // Input Section
   input: {
     height: 40,
-    width: "40%", // Control the width of the input size
-    margin: 5,
-    borderWidth: 1,
-    padding: 10,
-    alignSelf: "center",
-  },
-  // Input Section
-  inputLong: {
-    height: 40,
-    width: "82%", // Control the width of the input size
+    width: "20%", // Control the width of the input size
     margin: 12,
     borderWidth: 1,
     padding: 10,
     alignSelf: "center",
+    backgroundColor: "#FFFFFF",
+    minWidth: 150,
+  },
+  // Input Section
+  inputLong: {
+    height: 40,
+    width: "30%", // Control the width of the input size
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    alignSelf: "center",
+    backgroundColor: "#FFFFFF",
+    minWidth: 325,
   },
   // Text Section
   text: {
@@ -377,5 +307,26 @@ const styles = StyleSheet.create({
     alignContent: "center",
     marginTop: 5,
     marginRight: 5,
+  },
+  toggleButton: {
+    marginLeft: 10,
+  },
+  toggleButtonText: {
+    color: "black",
+  },
+  passwordInput: {
+    flex: 1,
+  },
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    padding: 10,
+    width: "80%",
+    height: 40,
+    backgroundColor: "#FFFFFF",
+    maxWidth: 200,
+    paddingTop: 10,
+    minWidth: 325,
   },
 });

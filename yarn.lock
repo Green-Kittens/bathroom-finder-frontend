@@ -1234,21 +1234,21 @@
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
 "@clerk/clerk-expo@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@clerk/clerk-expo/-/clerk-expo-1.0.7.tgz#35acdb74d98ca06ea7e2d6b545ee7dc5d5546cea"
-  integrity sha512-cBLfCx2ALnV6hdCO9Nv2jtQqw8Yldgs8UtVS+3VGMDxBNofOHHxOj5YS65DXx4x49HYIkUSz3Ns9Lfx4UTEMpw==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@clerk/clerk-expo/-/clerk-expo-1.1.0.tgz#71d1654d550353f3d5310407c5130a92506095a1"
+  integrity sha512-BWWbvuheO5aDrSVm5zlDgNNLo4Zuw1VSJ4QRzaTpy7Z5mpNudlQW0dPT8XoQZYoEINX6HcAENciWGIFY5UPBcQ==
   dependencies:
-    "@clerk/clerk-js" "5.2.3"
+    "@clerk/clerk-js" "5.2.4"
     "@clerk/clerk-react" "5.0.4"
     "@clerk/shared" "2.0.2"
     base-64 "^1.0.0"
     react-native-url-polyfill "2.0.0"
     tslib "2.4.1"
 
-"@clerk/clerk-js@5.2.3":
-  version "5.2.3"
-  resolved "https://registry.yarnpkg.com/@clerk/clerk-js/-/clerk-js-5.2.3.tgz#cd0ff78a82a8c3562b326c5e47692424dd9c812f"
-  integrity sha512-/DH6gIGgwNHGTTZNhTOG6uEqcOVUWnp0pCHu9FCWYqtuEn0a5y9x4w0D6akZoPfHnLTOISM92woZ96eP2TBb+w==
+"@clerk/clerk-js@5.2.4":
+  version "5.2.4"
+  resolved "https://registry.yarnpkg.com/@clerk/clerk-js/-/clerk-js-5.2.4.tgz#e465a00cf81f1b3de5933417b162baf25bb88295"
+  integrity sha512-0Uyth9GnGNxYKQNxB1yD4PWm2VXcv2QTuOMga4oNAYpUg7aJtTfPna0oHjlFKiJECnunlR75A4h89EFdMz+6Qg==
   dependencies:
     "@clerk/localizations" "2.3.1"
     "@clerk/shared" "2.0.2"
@@ -1435,10 +1435,10 @@
     mv "~2"
     safe-json-stringify "~1"
 
-"@expo/cli@0.18.10":
-  version "0.18.10"
-  resolved "https://registry.yarnpkg.com/@expo/cli/-/cli-0.18.10.tgz#b3dc9061af1a501576761e65087ffba117f71d45"
-  integrity sha512-cuAE060tcX4Mn+sF+tGAchGDsTNzwCUB7ioFGB3OrvxoU3idsqZJPs6xMt5Utuuy7QDGPnOn68H0vC4kDsXkUQ==
+"@expo/cli@0.18.11":
+  version "0.18.11"
+  resolved "https://registry.yarnpkg.com/@expo/cli/-/cli-0.18.11.tgz#338215d9aa0d11b0d943814580bf4b9c27f43971"
+  integrity sha512-2xIfvj5RnQbQqZdkYa9a7Roll1ywBER2omCUKdbJazRcJTkkN3HMv/jILztdZ2uKlcfIqPq4VTbKEhV/IkewYg==
   dependencies:
     "@babel/runtime" "^7.20.0"
     "@expo/code-signing-certificates" "0.0.5"
@@ -2318,10 +2318,10 @@
     prompts "^2.4.2"
     semver "^7.5.2"
 
-"@react-native-community/datetimepicker@7.7.0":
-  version "7.7.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-7.7.0.tgz#0d0162b0434c7b35883f8c5af846f35e23d045ec"
-  integrity sha512-nYzZy4DQLRFUzKJShWzRleCaebmCJfZ1lIcFmZgMXJoiVuGJNw3OIGHSWmHhPETh3OhP1RO3to882d7WmDIyrA==
+"@react-native-community/datetimepicker@8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-8.0.1.tgz#047f27566fb21b5095fa54f558bffd8ab6472b46"
+  integrity sha512-4BO0t3geMNNw9cIIm9p9FNUzwMXexdzD4pAH0AaUAycs3BS71HLrX8jHbrI7nzq/+8O7cLAXn5Gudte+YpTV8Q==
   dependencies:
     invariant "^2.2.4"
 
@@ -3525,10 +3525,25 @@ babel-preset-current-node-syntax@^1.0.0:
     "@babel/plugin-syntax-optional-chaining" "^7.8.3"
     "@babel/plugin-syntax-top-level-await" "^7.8.3"
 
-babel-preset-expo@~11.0.0, babel-preset-expo@~11.0.5:
+babel-preset-expo@~11.0.0:
   version "11.0.5"
   resolved "https://registry.yarnpkg.com/babel-preset-expo/-/babel-preset-expo-11.0.5.tgz#aadc9aec722333a03a5939d9f91dcc51cc42ff85"
   integrity sha512-IjqR4B7wnBU55pofLeLGjwUGrWJE1buamgzE9CYpYCNicZmJcNjXUcinQiurXCMuClF2hOff3QfZsLxnGj1UaA==
+  dependencies:
+    "@babel/plugin-proposal-decorators" "^7.12.9"
+    "@babel/plugin-transform-export-namespace-from" "^7.22.11"
+    "@babel/plugin-transform-object-rest-spread" "^7.12.13"
+    "@babel/plugin-transform-parameters" "^7.22.15"
+    "@babel/preset-react" "^7.22.15"
+    "@babel/preset-typescript" "^7.23.0"
+    "@react-native/babel-preset" "~0.74.83"
+    babel-plugin-react-native-web "~0.19.10"
+    react-refresh "^0.14.2"
+
+babel-preset-expo@~11.0.6:
+  version "11.0.6"
+  resolved "https://registry.yarnpkg.com/babel-preset-expo/-/babel-preset-expo-11.0.6.tgz#b1ea2bd9f13338a9f7ca8d7089b5d6d6c7c03f79"
+  integrity sha512-jRi9I5/jT+dnIiNJDjDg+I/pV+AlxrIW/DNbdqYoRWPZA/LHDqD6IJnJXLxbuTcQ+llp+0LWcU7f/kC/PgGpkw==
   dependencies:
     "@babel/plugin-proposal-decorators" "^7.12.9"
     "@babel/plugin-transform-export-namespace-from" "^7.22.11"
@@ -5099,10 +5114,10 @@ expo-file-system@~17.0.1:
   resolved "https://registry.yarnpkg.com/expo-file-system/-/expo-file-system-17.0.1.tgz#b9f8af8c1c06ec71d96fd7a0d2567fa9e1c88f15"
   integrity sha512-dYpnZJqTGj6HCYJyXAgpFkQWsiCH3HY1ek2cFZVHFoEc5tLz9gmdEgTF6nFHurvmvfmXqxi7a5CXyVm0aFYJBw==
 
-expo-font@~12.0.4:
-  version "12.0.4"
-  resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-12.0.4.tgz#c3d9b7fc152286c1e2beae80f97b94ca4622db34"
-  integrity sha512-VtOQB7MEeFMVwo46/9/ntqzrgraTE7gAsnfi2NukFcCpDmyAU3G1R7m287LUXltE46SmGkMgAvM6+fflXFjaJA==
+expo-font@~12.0.5:
+  version "12.0.5"
+  resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-12.0.5.tgz#3451c2bd3f98859b127a6484d3474a292889b93f"
+  integrity sha512-h/VkN4jlHYDJ6T6pPgOYTVoDEfBY0CTKQe4pxnPDGQiE6H+DFdDgk+qWVABGpRMH0+zXoHB+AEi3OoQjXIynFA==
   dependencies:
     fontfaceobserver "^2.1.0"
 
@@ -5199,21 +5214,21 @@ expo-web-browser@~13.0.0, expo-web-browser@~13.0.3:
   resolved "https://registry.yarnpkg.com/expo-web-browser/-/expo-web-browser-13.0.3.tgz#dceb05dbc187b498ca937b02adf385b0232a4e92"
   integrity sha512-HXb7y82ApVJtqk8tManyudtTrCtx8xcUnVzmJECeHCB0SsWSQ+penVLZxJkcyATWoJOsFMnfVSVdrTcpKKGszQ==
 
-expo@~51.0.2:
-  version "51.0.2"
-  resolved "https://registry.yarnpkg.com/expo/-/expo-51.0.2.tgz#14de27d8d8addec5848285a6e4bd8792d07fc3f2"
-  integrity sha512-aRKrheMMQBcNDg2SBjW5kcSN5G58bdIpsxeSQ65Bx18DFLXjPv5UaU9kzIWRAcxaPtgictn9ut9IJQVZKChNxQ==
+expo@~51.0.5:
+  version "51.0.5"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-51.0.5.tgz#f39f7dc6d389f893f29c739ad4c8657aa9dea64d"
+  integrity sha512-i+AfkfToYPFCobX0NUT9PmDtsB3L19vhCB/XUE1Ph6FVrBF6GipkHzTADuRLMaVg5u/2sm/fdzGzBcMjXSHqmA==
   dependencies:
     "@babel/runtime" "^7.20.0"
-    "@expo/cli" "0.18.10"
+    "@expo/cli" "0.18.11"
     "@expo/config" "9.0.1"
     "@expo/config-plugins" "8.0.4"
     "@expo/metro-config" "0.18.3"
     "@expo/vector-icons" "^14.0.0"
-    babel-preset-expo "~11.0.5"
+    babel-preset-expo "~11.0.6"
     expo-asset "~10.0.6"
     expo-file-system "~17.0.1"
-    expo-font "~12.0.4"
+    expo-font "~12.0.5"
     expo-keep-awake "~13.0.1"
     expo-modules-autolinking "1.11.1"
     expo-modules-core "1.12.10"
@@ -8162,9 +8177,9 @@ path-type@^4.0.0:
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
 picocolors@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-1.0.0.tgz#cb5bdc74ff3f51892236eaf79d68bc44564ab81c"
-  integrity sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-1.0.1.tgz#a8ad579b571952f0e5d25892de5445bcfe25aaa1"
+  integrity sha512-anP1Z8qwhkbmu7MFP5iTt+wQKXgwzf7zTyGlcdzabySa9vd0Xt392U0rVmz9poOaBj0uHJKyyo9/upk0HrEQew==
 
 picomatch@^2.0.4, picomatch@^2.2.1, picomatch@^2.2.3, picomatch@^2.3.1:
   version "2.3.1"
@@ -8459,6 +8474,11 @@ react-fit@^1.7.0:
     prop-types "^15.6.0"
     tiny-warning "^1.0.0"
 
+react-freeze@^1.0.0:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-freeze/-/react-freeze-1.0.4.tgz#cbbea2762b0368b05cbe407ddc9d518c57c6f3ad"
+  integrity sha512-r4F0Sec0BLxWicc7HEyo2x3/2icUTrRmDjaaRyzzn+7aDyFZliszMDOgLVwSnQnYENOlL1o569Ze2HZefk8clA==
+
 "react-is@^16.12.0 || ^17.0.0 || ^18.0.0", react-is@^18.0.0, react-is@^18.2.0:
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.3.1.tgz#e83557dc12eae63a99e003a46388b1dcbb44db7e"
@@ -8543,6 +8563,14 @@ react-native-safe-area-context@4.10.1:
   version "4.10.1"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-4.10.1.tgz#29fb27395ff7dfa2fa38788a27226330d73a81cc"
   integrity sha512-w8tCuowDorUkPoWPXmhqosovBr33YsukkwYCDERZFHAxIkx6qBadYxfeoaJ91nCQKjkNzGrK5qhoNOeSIcYSpA==
+
+react-native-screens@^3.31.1:
+  version "3.31.1"
+  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-3.31.1.tgz#909a890f669e32b0fb1b1410278b71ad2f8238f6"
+  integrity sha512-8fRW362pfZ9y4rS8KY5P3DFScrmwo/vu1RrRMMx0PNHbeC9TLq0Kw1ubD83591yz64gLNHFLTVkTJmWeWCXKtQ==
+  dependencies:
+    react-freeze "^1.0.0"
+    warn-once "^0.1.0"
 
 react-native-size-matters@^0.4.0:
   version "0.4.2"
