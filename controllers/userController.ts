@@ -58,7 +58,7 @@ export async function getUserProfile(UserID: string): Promise<UserProfile> {
 /**
  * Function for creating a bathroom
  * @param {string} Name - Name of the bathroom
- * @param {number,number} Coordinates - Location of bathroom
+ * @param {number[]} Coordinates - Location of bathroom
  * @param {string} Tags - Tags on the bathroom
  * @param {string} Operations - Bathroom's hours of operation
  * @param {string[]} Reviews - Reviews on bathroom
