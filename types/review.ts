@@ -1,5 +1,5 @@
 export type Review = {
-  ID: string;
+  ReviewID: string;
   Rating: number;
   Likes: number;
   Dislikes: number;

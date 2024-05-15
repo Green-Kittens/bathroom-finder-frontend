@@ -1,5 +1,5 @@
 export type User = {
-  ID: string;
+  UserID: string;
   Email: string;
   password: string;
   Favorites: string[];

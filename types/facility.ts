@@ -1,4 +1,5 @@
 export type Facility = {
+  FacilityID: string;
   Name: string;
   Coordinates: [number, number];
   Category: string;
