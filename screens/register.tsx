@@ -7,7 +7,6 @@ import {
   View,
   Keyboard,
   TouchableWithoutFeedback,
-  TouchableOpacity,
 } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
 import MainButton from "../components/Buttons";
