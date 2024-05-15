@@ -1,10 +1,10 @@
 export type User = {
-  id: string;
-  email: string;
+  ID: string;
+  Email: string;
   password: string;
-  favorites: string[];
-  reviews: string[];
-  dateJoined: Date;
-  pfpURL?: string;
-  displayName: string;
+  Favorites: string[];
+  Reviews: string[];
+  DateJoined: Date;
+  PictureURL: string;
+  DisplayName: string;
 };
