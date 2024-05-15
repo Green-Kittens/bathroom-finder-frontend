@@ -13,7 +13,6 @@ import {
   Modal,
 } from "react-native";
 import { useState } from "react";
-import RNPickerSelect from "react-native-picker-select";
 import StarRating from "react-native-star-rating-widget";
 
 // screens
@@ -25,7 +24,6 @@ import { ScreenNavigationProp } from "../type";
 
 export default function ReviewForm() {
   // location
-  const [, setLocation] = useState("");
 
   // getting current date and time
   const currentDate = new Date();
