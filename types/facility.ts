@@ -1,6 +1,6 @@
 export type Facility = {
   Name: string;
-  Coordinates:[number, number];
+  Coordinates: [number, number];
   Category: string;
   Tags: string[];
   Operations: string;
