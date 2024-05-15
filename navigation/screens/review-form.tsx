@@ -98,20 +98,7 @@ export default function ReviewForm() {
           }}
         >
           <Text style={styles.title}>New Bathroom Rating</Text>
-
-          <View style={styles.dropdown}>
-            <RNPickerSelect
-              placeholder={{
-                label: "select a location",
-                value: null,
-              }}
-              onValueChange={(newLocation) => setLocation(newLocation)}
-              items={[
-                { label: "Location 1", value: "location1" },
-                { label: "Location 2", value: "location2" },
-              ]}
-            />
-          </View>
+          <Text style={styles.header}>Facility Name</Text>
 
           <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
 
@@ -265,5 +252,10 @@ const styles = StyleSheet.create({
   },
   horizontalScroll: {
     marginVertical: 10,
+  },
+  header: {
+    margin: 10,
+    fontSize: 24,
+    fontWeight: "bold",
   },
 });
