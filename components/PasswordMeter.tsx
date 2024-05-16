@@ -2,7 +2,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import zxcvbn from "zxcvbn";
+import zxcvbn, { ZXCVBNResult } from "zxcvbn";
 
 const PasswordStrengthMeter = ({ password }: { password: string }) => {
   if (password === "") return null;
@@ -37,7 +37,7 @@ const PasswordStrengthMeter = ({ password }: { password: string }) => {
     }
   };
 
-  const getCustomFeedback = (result: any) => {
+  const getCustomFeedback = (result: ZXCVBNResult) => {
     if (result.score === 0) return "Try adding more characters.";
     if (result.score === 1) return "Try adding numbers or symbols.";
     if (result.score === 2) return "Try adding more words or capital letters.";
