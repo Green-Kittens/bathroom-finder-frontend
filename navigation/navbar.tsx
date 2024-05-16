@@ -59,17 +59,17 @@ export default function NavBar() {
     >
       {isSignedIn && (
         <Tab.Screen
-        name={reviewFormName}
-        component={ReviewForm}
-        options={{ headerShown: false }}
-      />
+          name={reviewFormName}
+          component={ReviewForm}
+          options={{ headerShown: false }}
+        />
       )}
       {isSignedIn && (
         <Tab.Screen
-        name={facilityFormName}
-        component={FacilityForm}
-        options={{ headerShown: false }}
-      />
+          name={facilityFormName}
+          component={FacilityForm}
+          options={{ headerShown: false }}
+        />
       )}
       <Tab.Screen
         name={mainName}
@@ -78,10 +78,10 @@ export default function NavBar() {
       />
       {isSignedIn && (
         <Tab.Screen
-        name={userProfileName}
-        component={UserProfile}
-        options={{ headerShown: false }}
-      />
+          name={userProfileName}
+          component={UserProfile}
+          options={{ headerShown: false }}
+        />
       )}
       {!isSignedIn && (
         <Tab.Screen
