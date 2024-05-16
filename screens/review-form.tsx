@@ -94,6 +94,7 @@ export default function ReviewForm() {
             justifyContent: "center",
             alignItems: "center",
             alignContent: "center",
+            marginTop: 50,
           }}
         >
           <Text style={styles.title}>New Bathroom Rating</Text>

@@ -126,40 +126,42 @@ export default function UserProfileScreen() {
         }}
       ></ImageBackground>
       <SignedIn>
-        <TouchableOpacity
-          style={styles.profilePictureContainer}
-          onPress={() => {
-            setModalVisible(true);
-          }}
-        >
-          <Image
-            style={styles.profilePicture}
-            source={{
-              uri: pfp,
+        <View style={{ marginTop: 50 }}>
+          <TouchableOpacity
+            style={styles.profilePictureContainer}
+            onPress={() => {
+              setModalVisible(true);
             }}
-          />
-          <Text>Your Name</Text>
-        </TouchableOpacity>
-
-        <ImageUploader
-          isVisible={modalVisible}
-          onClose={() => setModalVisible(false)}
-        />
-
-        {horizontalCards("Your Reviews")}
-        {horizontalCards("Your Favorites")}
-        <View>
-          <View style={[{ backgroundColor: "none" }]}>
-            <View
-              style={{
-                marginVertical: 20,
-                backgroundColor: "none",
-                minWidth: 200,
+          >
+            <Image
+              style={styles.profilePicture}
+              source={{
+                uri: pfp,
               }}
-            >
-              {MainButton("Log Out", () => {
-                signOut();
-              })}
+            />
+            <Text>Your Name</Text>
+          </TouchableOpacity>
+
+          <ImageUploader
+            isVisible={modalVisible}
+            onClose={() => setModalVisible(false)}
+          />
+
+          {horizontalCards("Your Reviews")}
+          {horizontalCards("Your Favorites")}
+          <View>
+            <View style={[{ backgroundColor: "none" }]}>
+              <View
+                style={{
+                  marginVertical: 20,
+                  backgroundColor: "none",
+                  minWidth: 200,
+                }}
+              >
+                {MainButton("Log Out", () => {
+                  signOut();
+                })}
+              </View>
             </View>
           </View>
         </View>
