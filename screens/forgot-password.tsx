@@ -76,17 +76,12 @@ export default function TabSubmitScreen() {
 
   // Request a password reset code by email
   const onRequestReset = async () => {
-    try {
-      if (signIn) {
-        await signIn.create({
-          strategy: "reset_password_email_code",
-          identifier: emailAddress,
-        });
-        setSuccessfulCreation(true);
-      }
-    } catch (err: unknown) {
-      /* console.error("Error in onRequestReset:", err); */
-      throw err; // rethrow the error to be caught in onSubmitPress
+    if (signIn) {
+      await signIn.create({
+        strategy: "reset_password_email_code",
+        identifier: emailAddress,
+      });
+      setSuccessfulCreation(true);
     }
   };
 
