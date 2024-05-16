@@ -44,8 +44,8 @@ export default function TabSubmitScreen() {
       try {
         await onRequestReset();
         setModalMessage(`Email has been sent to ${emailAddress}`);
-      } catch (err: any) {
-        setModalMessage(err.errors[0].message);
+      } catch (err: unknown) {
+        setModalMessage((err as Error).message);
         /* console.error("Error caught in onSubmitPress:", err); */
       } finally {
         setModalVisible(true);
@@ -84,7 +84,7 @@ export default function TabSubmitScreen() {
         });
         setSuccessfulCreation(true);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       /* console.error("Error in onRequestReset:", err); */
       throw err; // rethrow the error to be caught in onSubmitPress
     }
@@ -105,9 +105,9 @@ export default function TabSubmitScreen() {
 
       // Set the user session active, which will log in the user automatically
       await setActive!({ session: result.createdSessionId });
-    } catch (err: any) {
+    } catch (err: unknown) {
       /* console.error("Error in onReset:", err); */
-      setModalMessage(err.errors[0].message);
+      setModalMessage((err as Error).message);
       setModalVisible(true);
     }
   };
