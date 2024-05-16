@@ -17,13 +17,13 @@ import { useNavigation } from "@react-navigation/native";
 import { useSignIn } from "@clerk/clerk-expo";
 import GoogleSignIn from "../components/GoogleSignIn";
 import MicroSignIn from "../components/MicroSignIn";
+import PasswordInput from "../components/Password";
 
 function TabLoginScreen() {
   // State management for text inputs
   const { signIn, setActive, isLoaded } = useSignIn();
   const [emailAddress, setEmailAddress] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [isPasswordVisible, setPasswordVisible] = React.useState(false);
   const [emailError, setEmailError] = React.useState("");
   const [validationError, setValidationError] = React.useState("");
 
@@ -50,10 +50,6 @@ function TabLoginScreen() {
       console.log(err);
       setValidationError("Invalid email or password.");
     }
-  };
-
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!isPasswordVisible);
   };
 
   // Validate fields
@@ -118,26 +114,14 @@ function TabLoginScreen() {
               placeholderTextColor="#000"
               onChangeText={handleEmailChange}
             />
+            <PasswordInput
+              label=""
+              value={password}
+              onChangeText={handlePasswordChange}
+              placeholder="Password..."
+              style={{ width: 200 }}
+            />
 
-            <View style={styles.passwordContainer}>
-              <TextInput
-                value={password}
-                style={styles.passwordInput}
-                placeholder="Password..."
-                placeholderTextColor="#000"
-                secureTextEntry={!isPasswordVisible}
-                onChangeText={handlePasswordChange}
-              />
-
-              <TouchableOpacity
-                onPress={togglePasswordVisibility}
-                style={styles.toggleButton}
-              >
-                <Text style={styles.toggleButtonText}>
-                  {isPasswordVisible ? "Hide" : "Show"}
-                </Text>
-              </TouchableOpacity>
-            </View>
             <View style={styles.errorContainer}>
               {validationError ? (
                 <Text style={styles.errorText}>{validationError}</Text>
@@ -209,6 +193,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     marginBottom: 50,
+    marginTop: 20,
     fontFamily: "EudoxusSans-Bold",
   },
   // Input Section
@@ -225,17 +210,6 @@ const styles = StyleSheet.create({
   // Input Container Section
   inputContainer: {
     alignItems: "center",
-  },
-  // Password Section
-  passwordContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderWidth: 1,
-    padding: 10,
-    width: "80%",
-    height: 40,
-    backgroundColor: "#FFFFFF",
-    maxWidth: 200,
   },
   // Text Section
   text: {
@@ -287,6 +261,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     alignSelf: "center",
+    marginTop: "20%",
     marginBottom: 5,
   },
   errorText: {

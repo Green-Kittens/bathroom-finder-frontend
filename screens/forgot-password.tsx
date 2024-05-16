@@ -5,15 +5,19 @@ import {
   SafeAreaView,
   TextInput,
   Button,
-  Alert,
   Text,
   View,
   Modal,
   Keyboard,
+  TouchableOpacity,
   TouchableWithoutFeedback,
 } from "react-native";
 import { useSignIn } from "@clerk/clerk-expo";
 import { enableScreens } from "react-native-screens";
+import { useNavigation } from "@react-navigation/native";
+import { ScreenNavigationProp } from "../navigation/type";
+import PasswordInput from "../components/Password";
+import PasswordStrengthMeter from "../components/PasswordMeter";
 
 // Enable native screens for better performance
 enableScreens();
@@ -24,31 +28,39 @@ export default function TabSubmitScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [emailError, setEmailError] = React.useState("");
   const [password, setPassword] = useState("");
-  const [isPasswordVisible, setPasswordVisible] = React.useState(false);
+  const [validationError, setValidationError] = React.useState("");
   const [code, setCode] = useState("");
   const [successfulCreation, setSuccessfulCreation] = useState(false);
   const { signIn, setActive } = useSignIn();
+  const [modalMessage, setModalMessage] = useState("");
+  const navigation = useNavigation<ScreenNavigationProp>();
 
   // Regular expression for validating email
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  const onSubmitPress = () => {
+  const onSubmitPress = async () => {
     if (emailRegex.test(emailAddress)) {
-      setModalVisible(true);
-      setEmailError(""); // Clear error if the email is valid
+      setEmailError("");
+      try {
+        await onRequestReset();
+        setModalMessage(`Email has been sent to ${emailAddress}`);
+      } catch (err: any) {
+        setModalMessage(err.errors[0].message);
+        /* console.error("Error caught in onSubmitPress:", err); */
+      } finally {
+        setModalVisible(true);
+      }
     } else {
       setEmailError("Please enter a valid email address.");
+      setModalMessage("Invalid Email Address");
+      setModalVisible(true);
     }
   };
 
   const onClosePress = async () => {
     setModalVisible(false);
-    try {
-      await onRequestReset();
-    } catch (err) {
-      alert("An error occurred. Please try again.");
-    }
   };
+
   // Handle email change and validation
   const handleEmailChange = (input: string) => {
     setEmailAddress(input);
@@ -59,22 +71,22 @@ export default function TabSubmitScreen() {
     } else {
       setEmailError("");
     }
+    validateFields();
   };
 
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!isPasswordVisible);
-  };
-
-  // Request a passowrd reset code by email
+  // Request a password reset code by email
   const onRequestReset = async () => {
     try {
-      await signIn!.create({
-        strategy: "reset_password_email_code",
-        identifier: emailAddress,
-      });
-      setSuccessfulCreation(true);
+      if (signIn) {
+        await signIn.create({
+          strategy: "reset_password_email_code",
+          identifier: emailAddress,
+        });
+        setSuccessfulCreation(true);
+      }
     } catch (err: any) {
-      alert(err.errors[0].message);
+      /* console.error("Error in onRequestReset:", err); */
+      throw err; // rethrow the error to be caught in onSubmitPress
     }
   };
 
@@ -87,16 +99,39 @@ export default function TabSubmitScreen() {
         password,
       });
       console.log(result);
-      alert("Password reset successfully");
+      setModalMessage("Password reset successfully");
+      setModalVisible(true);
+      navigation.navigate("Main");
 
       // Set the user session active, which will log in the user automatically
       await setActive!({ session: result.createdSessionId });
     } catch (err: any) {
-      alert(err.errors[0].message);
+      /* console.error("Error in onReset:", err); */
+      setModalMessage(err.errors[0].message);
+      setModalVisible(true);
     }
   };
 
-  
+  // Validate fields
+  const validateFields = () => {
+    if (!password) {
+      setValidationError("Please complete the form.");
+      return false;
+    }
+    setValidationError("");
+    return true;
+  };
+
+  const handlePasswordChange = (input: string) => {
+    setPassword(input);
+    validateFields();
+  };
+
+  const handleOutsidePress = () => {
+    Keyboard.dismiss();
+    setModalVisible(false);
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -106,16 +141,21 @@ export default function TabSubmitScreen() {
             transparent={true}
             visible={modalVisible}
             onRequestClose={() => {
-              Alert.alert("Modal has been closed.");
               setModalVisible(!modalVisible);
             }}
           >
-            <View style={styles.modalView}>
-              <Text style={styles.text}>
-                Email has been sent to {emailAddress}
-              </Text>
-              <Button title="Close" color={"#000000"} onPress={onClosePress} />
-            </View>
+            <TouchableWithoutFeedback onPress={handleOutsidePress}>
+              <View style={styles.modalOverlay}>
+                <TouchableOpacity activeOpacity={1} style={styles.modalView}>
+                  <Text style={styles.text}>{modalMessage}</Text>
+                  <Button
+                    title="Close"
+                    color={"#000000"}
+                    onPress={onClosePress}
+                  />
+                </TouchableOpacity>
+              </View>
+            </TouchableWithoutFeedback>
           </Modal>
           <Image
             source={require("../assets/images/icon.png")}
@@ -132,9 +172,11 @@ export default function TabSubmitScreen() {
                 placeholderTextColor={"#000000"}
                 placeholder="Email..."
               />
-              {emailError ? (
-                <Text style={styles.errorText}>{emailError}</Text>
-              ) : null}
+              <View style={styles.errorContainer}>
+                {emailError ? (
+                  <Text style={styles.errorText}>{emailError}</Text>
+                ) : null}
+              </View>
               {/* Submit button */}
               <View style={styles.fixToText}>
                 <Button
@@ -153,14 +195,21 @@ export default function TabSubmitScreen() {
                   placeholder="Code..."
                   style={styles.input}
                   onChangeText={setCode}
+                  placeholderTextColor={"#000000"}
                 />
-                <TextInput
-                  placeholder="New password"
+                <PasswordStrengthMeter password={password} />
+                <PasswordInput
+                  label=""
                   value={password}
-                  onChangeText={setPassword}
-                  secureTextEntry
-                  style={styles.input}
+                  onChangeText={handlePasswordChange}
+                  placeholder="New Password..."
+                  style={{ width: 200 }}
                 />
+              </View>
+              <View style={styles.errorContainer}>
+                {validationError ? (
+                  <Text style={styles.errorText}>{validationError}</Text>
+                ) : null}
               </View>
               <Button
                 onPress={onReset}
@@ -185,21 +234,23 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    marginTop: "25%",
   },
   // Title Section
   title: {
     fontSize: 20,
     fontWeight: "bold",
+    marginTop: 20,
     marginBottom: 50,
   },
   // Input Section
   input: {
     height: 40,
-    width: "30%", // Control the width of the input size
+    width: 200, // Control the width of the input size
     margin: 12,
     borderWidth: 1,
     padding: 10,
+    backgroundColor: "#FFFFFF",
     alignSelf: "center",
   },
   // Text Section
@@ -236,6 +287,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
   errorText: {
     color: "red",
     fontSize: 14,
@@ -244,5 +301,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 5,
     marginRight: 5,
+  },
+  // Error Container Section
+  errorContainer: {
+    flexDirection: "row",
+    alignSelf: "center",
   },
 });

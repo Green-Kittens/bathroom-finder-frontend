@@ -5,6 +5,7 @@ import { setCustomText } from "react-native-global-props";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import * as SecureStore from "expo-secure-store";
 import { ImageProvider } from "./contexts/ImageContext";
+import { enableScreens } from "react-native-screens";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -15,6 +16,8 @@ export default function App() {
     "EudoxusSans-ExtraLight": require("./assets/fonts/EudoxusSans-ExtraLight.ttf"),
     "EudoxusSans-Medium": require("./assets/fonts/EudoxusSans-Medium.ttf"),
   });
+
+  enableScreens();
 
   if (!fontsLoaded) {
     return null;

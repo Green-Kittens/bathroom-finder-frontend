@@ -160,13 +160,13 @@ export default function RegisterScreen() {
             ) : null}
             <PasswordStrengthMeter password={password} />
             <PasswordInput
-              label="Password"
+              label=""
               value={password}
               onChangeText={handlePasswordChange}
               placeholder="Password..."
             />
             <PasswordInput
-              label="Confirm Password"
+              label=""
               value={confirmPassword}
               onChangeText={handleConfirmPasswordChange}
               placeholder="Confirm Password..."

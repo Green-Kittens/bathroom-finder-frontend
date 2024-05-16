@@ -6,17 +6,20 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
+  ViewStyle,
 } from "react-native";
 
 const PasswordInput = ({
   value,
   onChangeText,
   placeholder,
+  style,
 }: {
   label: string;
   value: string;
   onChangeText: (text: string) => void;
   placeholder: string;
+  style?: ViewStyle;
 }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
 
@@ -26,7 +29,7 @@ const PasswordInput = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.passwordContainer}>
+      <View style={[styles.passwordContainer, style]}>
         <TextInput
           style={styles.passwordInput}
           value={value}
@@ -54,15 +57,13 @@ const styles = StyleSheet.create({
   },
   passwordContainer: {
     flexDirection: "row",
-    alignItems: "center",
+    alignSelf: "center",
     borderWidth: 1,
     padding: 10,
-    width: "80%",
+    width: 325,
     height: 40,
     backgroundColor: "#FFFFFF",
-    maxWidth: 325,
-    paddingTop: 10,
-    minWidth: 325,
+    margin: 5,
   },
   passwordInput: {
     flex: 1,
