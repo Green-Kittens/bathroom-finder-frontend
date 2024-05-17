@@ -237,7 +237,9 @@ export default function FacilityForm() {
                       color: tags.wheelchairAccessible ? "#007AFF" : "#6da798",
                     }}
                   >
-                    {tags.wheelchairAccessible ? "Wheelchair Accessible" : "Not Wheelchair Accessible"}
+                    {tags.wheelchairAccessible
+                      ? "Wheelchair Accessible"
+                      : "Not Wheelchair Accessible"}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -248,7 +250,9 @@ export default function FacilityForm() {
                   <Text
                     style={{ color: tags.babyChanging ? "#007AFF" : "#6da798" }}
                   >
-                    {tags.babyChanging ? "Baby Changing Station" : "No Baby Changing Station"}
+                    {tags.babyChanging
+                      ? "Baby Changing Station"
+                      : "No Baby Changing Station"}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -261,7 +265,9 @@ export default function FacilityForm() {
                       color: tags.cleanedRegularly ? "#007AFF" : "#6da798",
                     }}
                   >
-                    {tags.cleanedRegularly ? "Cleaned Regularly" : "Not Cleaned Regularly"}
+                    {tags.cleanedRegularly
+                      ? "Cleaned Regularly"
+                      : "Not Cleaned Regularly"}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -274,7 +280,9 @@ export default function FacilityForm() {
                       color: tags.genderNeutral ? "#007AFF" : "#6da798",
                     }}
                   >
-                    {tags.genderNeutral ? "Gender Neutral" : "Not Gender Neutral"}
+                    {tags.genderNeutral
+                      ? "Gender Neutral"
+                      : "Not Gender Neutral"}
                   </Text>
                 </TouchableOpacity>
               </View>
