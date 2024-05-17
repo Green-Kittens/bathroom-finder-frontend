@@ -25,7 +25,16 @@ export default function NavBar() {
     <Tab.Navigator
       initialRouteName={mainName} // ask about implementing login as initial page display
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          backgroundColor: "#328281",
+        },
+        tabBarActiveBackgroundColor: "#408E88",
+        tabBarItemStyle: {
+          borderRadius: 15,
+          marginHorizontal: 8,
+        },
+        tabBarIcon: ({ focused, size }) => {
           let iconName;
           const current = route.name;
 
@@ -38,14 +47,30 @@ export default function NavBar() {
           } else if (current === facilityFormName) {
             iconName = focused ? "pin" : "pin-outline";
           }
-          return <Ionicons name={iconName} size={size} color={color} />;
+          return <Ionicons name={iconName} size={size} color={"#C5D8DB"} />;
         },
       })}
     >
-      <Tab.Screen name={reviewFormName} component={ReviewForm} />
-      <Tab.Screen name={facilityFormName} component={FacilityForm} />
-      <Tab.Screen name={mainName} component={Main} />
-      <Tab.Screen name={userProfileName} component={UserProfile} />
+      <Tab.Screen
+        name={reviewFormName}
+        component={ReviewForm}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name={facilityFormName}
+        component={FacilityForm}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name={mainName}
+        component={Main}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name={userProfileName}
+        component={UserProfile}
+        options={{ headerShown: false }}
+      />
     </Tab.Navigator>
   );
 }
