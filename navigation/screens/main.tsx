@@ -28,6 +28,7 @@ export default function MainScreen() {
       try {
         const fetchBathrooms = await getAllBathrooms();
         setBathrooms(fetchBathrooms);
+        console.log(fetchBathrooms);
       } catch (error) {
         console.error("Failed to fetch bathrooms", error);
       }
