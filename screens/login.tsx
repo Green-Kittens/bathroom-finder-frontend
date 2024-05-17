@@ -170,12 +170,12 @@ function TabLoginScreen() {
           </TouchableOpacity>
 
           {/* Login button */}
-          <View style={[{ margin: "10%" }]}>
+          <View style={[{ margin: 10 }]}>
             {MainButton("Login", onSignInPress)}
           </View>
 
           {/* Google Sign In */}
-          <View style={[{ margin: "10%", flexDirection: "row" }]}>
+          <View style={[{ margin: 10, flexDirection: "row" }]}>
             <GoogleSignIn />
             <MicroSignIn />
           </View>
@@ -259,6 +259,7 @@ const styles = StyleSheet.create({
   },
   // Footer Section
   footer: {
+    marginTop: 20,
     paddingBottom: 20,
     alignItems: "center",
     backgroundColor: "none",
