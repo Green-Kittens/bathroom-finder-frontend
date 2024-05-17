@@ -333,6 +333,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontFamily: "EudoxusSans-Bold",
+    marginTop: 10,
+    paddingTop: 20,
   },
   tagTitle: {
     fontSize: 15,
