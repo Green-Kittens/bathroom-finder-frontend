@@ -10,6 +10,7 @@ import {
   View,
   Keyboard,
   TouchableWithoutFeedback,
+  Modal,
 } from "react-native";
 import { ScreenNavigationProp } from "../navigation/type";
 import MainButton from "../components/Buttons";
@@ -26,6 +27,8 @@ function TabLoginScreen() {
   const [password, setPassword] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
   const [validationError, setValidationError] = React.useState("");
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [modalMessage, setModalMessage] = React.useState("");
 
   // Regular expression for validating email
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -48,7 +51,10 @@ function TabLoginScreen() {
       await setActive({ session: completeSignIn.createdSessionId });
     } catch (err: unknown) {
       console.log(err);
-      setValidationError("Invalid email or password.");
+      setModalMessage(
+        "Invalid email or password. \nPlease check your credentials and try again.",
+      );
+      setModalVisible(true);
     }
   };
 
@@ -81,9 +87,30 @@ function TabLoginScreen() {
     validateFields();
   };
 
+  // Close modal
+  const onClosePress = () => {
+    setModalVisible(false);
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={onClosePress}
+        >
+          <TouchableWithoutFeedback onPress={onClosePress}>
+            <View style={styles.modalOverlay}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>{modalMessage}</Text>
+                {MainButton("Close", onClosePress)}
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+
         <ImageBackground
           source={require("../assets/images/boomerang.png")}
           style={{
@@ -277,5 +304,30 @@ const styles = StyleSheet.create({
   errorContainer: {
     flexDirection: "row",
     alignSelf: "center",
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
   },
 });

@@ -45,7 +45,10 @@ export default function TabSubmitScreen() {
         await onRequestReset();
         setModalMessage(`Email has been sent to ${emailAddress}`);
       } catch (err: unknown) {
-        setModalMessage((err as Error).message);
+        setModalMessage(
+          "Error occured, please try again. \nCheck if the email is asociated with an account.",
+        );
+        setModalVisible(true);
         /* console.error("Error caught in onSubmitPress:", err); */
       } finally {
         setModalVisible(true);
@@ -102,7 +105,9 @@ export default function TabSubmitScreen() {
       await setActive!({ session: result.createdSessionId });
     } catch (err: unknown) {
       /* console.error("Error in onReset:", err); */
-      setModalMessage((err as Error).message);
+      setModalMessage(
+        err instanceof Error ? err.message : "An unknown error occurred",
+      );
       setModalVisible(true);
     }
   };

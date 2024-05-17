@@ -7,6 +7,7 @@ import {
   View,
   Keyboard,
   TouchableWithoutFeedback,
+  ScrollView,
 } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
 import MainButton from "../components/Buttons";
@@ -128,77 +129,79 @@ export default function RegisterScreen() {
   };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Register</Text>
-        {!pendingVerification && (
-          <SafeAreaView style={styles.safeArea}>
-            <View style={{ flexDirection: "row" }}>
+      <ScrollView automaticallyAdjustKeyboardInsets={true}>
+        <View style={styles.container}>
+          <Text style={styles.title}>Register</Text>
+          {!pendingVerification && (
+            <SafeAreaView style={styles.safeArea}>
+              <View style={{ flexDirection: "row" }}>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={handleFirstNameChange}
+                  value={firstName}
+                  placeholder="First Name..."
+                  placeholderTextColor="#000"
+                />
+                <TextInput
+                  style={styles.input}
+                  onChangeText={handleLastNameChange}
+                  value={lastName}
+                  placeholder="Last Name..."
+                  placeholderTextColor="#000"
+                />
+              </View>
               <TextInput
-                style={styles.input}
-                onChangeText={handleFirstNameChange}
-                value={firstName}
-                placeholder="First Name..."
+                style={styles.inputLong}
+                onChangeText={handleEmailChange}
+                value={emailAddress}
+                placeholder="Email..."
                 placeholderTextColor="#000"
               />
-              <TextInput
-                style={styles.input}
-                onChangeText={handleLastNameChange}
-                value={lastName}
-                placeholder="Last Name..."
-                placeholderTextColor="#000"
-              />
-            </View>
-            <TextInput
-              style={styles.inputLong}
-              onChangeText={handleEmailChange}
-              value={emailAddress}
-              placeholder="Email..."
-              placeholderTextColor="#000"
-            />
-            {emailError ? (
-              <Text style={styles.errorText}>{emailError}</Text>
-            ) : null}
-            <PasswordStrengthMeter password={password} />
-            <PasswordInput
-              label=""
-              value={password}
-              onChangeText={handlePasswordChange}
-              placeholder="Password..."
-            />
-            <PasswordInput
-              label=""
-              value={confirmPassword}
-              onChangeText={handleConfirmPasswordChange}
-              placeholder="Confirm Password..."
-            />
-            <View style={styles.errorContainer}>
-              {!passwordMatch && (
-                <Text style={styles.errorText}>Passwords do not match</Text>
-              )}
-              {validationError ? (
-                <Text style={styles.errorText}>{validationError}</Text>
+              {emailError ? (
+                <Text style={styles.errorText}>{emailError}</Text>
               ) : null}
-            </View>
-            <View style={styles.fixToText}>
-              {MainButton("Sign Up", onSignUpPress)}
-            </View>
-          </SafeAreaView>
-        )}
-        {pendingVerification && (
-          <SafeAreaView style={styles.container}>
-            <View>
-              <TextInput
-                style={styles.input}
-                value={code}
-                placeholder="Code..."
-                placeholderTextColor={"#000"}
-                onChangeText={(code) => setCode(code)}
+              <PasswordStrengthMeter password={password} />
+              <PasswordInput
+                label=""
+                value={password}
+                onChangeText={handlePasswordChange}
+                placeholder="Password..."
               />
-            </View>
-            {MainButton("Verify Email", onPressVerify)}
-          </SafeAreaView>
-        )}
-      </View>
+              <PasswordInput
+                label=""
+                value={confirmPassword}
+                onChangeText={handleConfirmPasswordChange}
+                placeholder="Confirm Password..."
+              />
+              <View style={styles.errorContainer}>
+                {!passwordMatch && (
+                  <Text style={styles.errorText}>Passwords do not match</Text>
+                )}
+                {validationError ? (
+                  <Text style={styles.errorText}>{validationError}</Text>
+                ) : null}
+              </View>
+              <View style={styles.fixToText}>
+                {MainButton("Sign Up", onSignUpPress)}
+              </View>
+            </SafeAreaView>
+          )}
+          {pendingVerification && (
+            <SafeAreaView style={styles.container}>
+              <View>
+                <TextInput
+                  style={styles.input}
+                  value={code}
+                  placeholder="Code..."
+                  placeholderTextColor={"#000"}
+                  onChangeText={(code) => setCode(code)}
+                />
+              </View>
+              {MainButton("Verify Email", onPressVerify)}
+            </SafeAreaView>
+          )}
+        </View>
+      </ScrollView>
     </TouchableWithoutFeedback>
   );
 }
