@@ -53,7 +53,7 @@ export default function NavBar() {
             iconName = focused ? "person-circle" : "person-circle-outline";
           }
 
-          return <Ionicons name={iconName} size={size} color={color} />;
+          return <Ionicons name={iconName} size={size} color={"#C5D8DB"} />;
         },
       })}
     >
