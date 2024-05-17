@@ -11,7 +11,8 @@
     "format-check": "prettier . --check",
     "format": "prettier . --write",
     "lint": "eslint .",
-    "test": "jest"
+    "test": "jest",
+    "clean": "rm -rf node_modules && yarn install"
   },
   "dependencies": {
     "@clerk/clerk-expo": "^1.0.7",
