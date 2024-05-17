@@ -24,14 +24,11 @@ export default function MainScreen() {
       }
     })();
 
+    // fetching all bathroom facilities
     (async () => {
       try {
         const fetchBathrooms = await getAllBathrooms();
         setBathrooms(fetchBathrooms);
-        //console.log(bathrooms)
-        fetchBathrooms.map(bathroom => 
-          console.log(bathroom.coordinates)
-        )
       } catch (error) {
         console.error("Failed to fetch bathrooms", error);
       }
@@ -65,11 +62,11 @@ export default function MainScreen() {
           longitudeDelta: LON_DELT,
         }}
       >
-        {bathrooms.map(bathroom => (    
+        {bathrooms.map(bathroom => ( // render all facility locations as markers on map
           <Marker
           coordinate={{
-            latitude: bathroom.coordinates[0],
-            longitude: bathroom.coordinates[1],
+            latitude: bathroom.Coordinates[0],
+            longitude: bathroom.Coordinates[1],
           }}
           onPress={() => {
             nav.navigate("FacilityProfile", { bathroom });

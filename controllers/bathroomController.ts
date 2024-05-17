@@ -28,7 +28,7 @@ export async function getBathroomProfile(
 ): Promise<BathroomProfile> {
   try {
     const response = await axios.get<BathroomProfile>(
-      `http://${host}:${port}/facilities/${facilityId}`,
+      `https://${host}:${port}/facilities/${facilityId}`, // https for azure and http for running backend locally
     );
     return response.data;
   } catch (error) {
