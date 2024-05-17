@@ -28,6 +28,10 @@ export default function MainScreen() {
       try {
         const fetchBathrooms = await getAllBathrooms();
         setBathrooms(fetchBathrooms);
+        //console.log(bathrooms)
+        fetchBathrooms.map(bathroom => 
+          console.log(bathroom.coordinates)
+        )
       } catch (error) {
         console.error("Failed to fetch bathrooms", error);
       }
@@ -61,15 +65,14 @@ export default function MainScreen() {
           longitudeDelta: LON_DELT,
         }}
       >
-        {bathrooms.map(bathroom => (
+        {bathrooms.map(bathroom => (    
           <Marker
           coordinate={{
-            // ask what order the coordinates are stored in
-            latitude: bathroom.location.coordinates[1],
-            longitude: bathroom.location.coordinates[0],
+            latitude: bathroom.coordinates[0],
+            longitude: bathroom.coordinates[1],
           }}
           onPress={() => {
-            nav.navigate("FacilityProfile");
+            nav.navigate("FacilityProfile", { bathroom });
           }}
         />
         ))}

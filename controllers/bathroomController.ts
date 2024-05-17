@@ -9,7 +9,7 @@ import { port, host } from "./porthost";
 export async function getAllBathrooms(): Promise<BathroomProfile[]> {
   try {
     const response = await axios.get<BathroomProfile[]>(
-      `https://${host}:${port}/facilities/`,
+      `https://bathroom-finder.azurewebsites.net/facilities/`,
     );
     return response.data;
   } catch (error) {
