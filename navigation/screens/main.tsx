@@ -6,7 +6,7 @@ import * as Location from "expo-location";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../type";
 import { getAllBathrooms } from "../../controllers/bathroomController";
-import { Facility as BathroomProfile } from "../../types/facility"
+import { Facility as BathroomProfile } from "../../types/facility";
 
 const LAT_DELT = 0.0922;
 const LON_DELT = 0.0421;
@@ -16,7 +16,6 @@ export default function MainScreen() {
   const [bathrooms, setBathrooms] = useState<BathroomProfile[]>([]);
 
   useEffect(() => {
-
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status === "granted") {
@@ -33,7 +32,6 @@ export default function MainScreen() {
         console.error("Failed to fetch bathrooms", error);
       }
     })();
-
   }, []);
 
   const nav = useNavigation<ScreenNavigationProp>();
@@ -62,17 +60,21 @@ export default function MainScreen() {
           longitudeDelta: LON_DELT,
         }}
       >
-        {bathrooms.map(bathroom => ( // render all facility locations as markers on map
-          <Marker
-          coordinate={{
-            latitude: bathroom.Coordinates[0],
-            longitude: bathroom.Coordinates[1],
-          }}
-          onPress={() => {
-            nav.navigate("FacilityProfile", { bathroom });
-          }}
-        />
-        ))}
+        {bathrooms.map(
+          (
+            bathroom, // render all facility locations as markers on map
+          ) => (
+            <Marker
+              coordinate={{
+                latitude: bathroom.Coordinates[0],
+                longitude: bathroom.Coordinates[1],
+              }}
+              onPress={() => {
+                nav.navigate("FacilityProfile", { bathroom });
+              }}
+            />
+          ),
+        )}
       </MapView>
     );
   }
