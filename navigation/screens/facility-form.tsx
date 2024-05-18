@@ -135,8 +135,8 @@ export default function FacilityForm() {
             alignItems: "center",
             alignContent: "center",
             paddingTop: 60,
-            marginTop: 50,
-            paddingBottom: 200,
+            marginTop: 80,
+            paddingBottom: 250,
           }}
         >
           <Text style={styles.title}>Add a New Facility</Text>
@@ -318,7 +318,7 @@ export default function FacilityForm() {
             </Modal>
           )}
           {SecondaryButton("Submit Facility", () =>
-            navigation.navigate("Main"),
+            navigation.navigate("Main")
           )}
         </View>
       </ScrollView>
@@ -340,7 +340,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontFamily: "EudoxusSans-Bold",
-    marginTop: 10,
+    marginTop: 15,
     paddingTop: 20,
   },
   tagTitle: {
