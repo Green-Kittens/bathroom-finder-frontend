@@ -318,7 +318,7 @@ export default function FacilityForm() {
             </Modal>
           )}
           {SecondaryButton("Submit Facility", () =>
-            navigation.navigate("Main")
+            navigation.navigate("Main"),
           )}
         </View>
       </ScrollView>
