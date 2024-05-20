@@ -87,6 +87,16 @@ export default function FacilityForm() {
     }
   };
 
+  const initialOpenTime = "Open Time";
+  const initialCloseTime = "Close Time";
+
+  const resetForm = () => {
+    setOpenTime(initialOpenTime);
+    setClosedTime(initialCloseTime);
+    setDescription("");
+    
+  }
+
   useEffect(() => {
     const getLocation = async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
@@ -188,7 +198,7 @@ export default function FacilityForm() {
           <View style={styles.timeSelect}>
             <TouchableOpacity onPress={() => setOpenPickerVisibility(true)}>
               <Text style={styles.timeSelectButton}>
-                {openTime || "Open Time"}
+                {openTime || initialOpenTime}
               </Text>
             </TouchableOpacity>
             <DateTimePickerModal
@@ -200,7 +210,7 @@ export default function FacilityForm() {
             <Text> to </Text>
             <TouchableOpacity onPress={() => setClosedPickerVisibility(true)}>
               <Text style={styles.timeSelectButton}>
-                {closedTime || "Close Time"}
+                {closedTime || initialCloseTime}
               </Text>
             </TouchableOpacity>
             <DateTimePickerModal
@@ -241,7 +251,7 @@ export default function FacilityForm() {
           )}
 
           {SecondaryButton("Submit Facility", () =>
-            navigation.navigate("Main"),
+            {navigation.navigate("Main"); resetForm()},
           )}
         </View>
       </ScrollView>
