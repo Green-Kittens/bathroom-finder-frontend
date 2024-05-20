@@ -10,7 +10,6 @@ export default function MainButton(
   onpress: ((event: GestureResponderEvent) => void) | undefined,
   disabled?: boolean,
   styling?: StyleProp<ViewStyle>,
- 
 ) {
   return (
     <Button
@@ -33,6 +32,7 @@ export default function MainButton(
 export function LightButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
+  disabled?: boolean,
   styling?: StyleProp<ViewStyle>,
 ) {
   return (
@@ -55,6 +55,7 @@ export function LightButton(
 export function SecondaryButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
+  disabled?: boolean,
   styling?: StyleProp<ViewStyle>,
 ) {
   return (
@@ -77,6 +78,7 @@ export function SecondaryButton(
 export function CancelButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
+  disabled?: boolean,
   styling?: StyleProp<ViewStyle>,
 ) {
   return (
