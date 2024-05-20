@@ -8,7 +8,9 @@ import { ViewStyle } from "react-native";
 export default function MainButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
+  disabled?: boolean,
   styling?: StyleProp<ViewStyle>,
+ 
 ) {
   return (
     <Button
@@ -23,6 +25,7 @@ export default function MainButton(
       buttonStyle={[styles.button, styling]}
       containerStyle={styles.container}
       onPress={onpress}
+      disabled={disabled}
     />
   );
 }

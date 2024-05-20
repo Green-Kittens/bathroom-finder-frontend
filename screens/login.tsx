@@ -29,6 +29,8 @@ function TabLoginScreen() {
   const [validationError, setValidationError] = React.useState("");
   const [modalVisible, setModalVisible] = React.useState(false);
   const [modalMessage, setModalMessage] = React.useState("");
+  const [passwordError, setPasswordError] = React.useState("");
+  const [isButtonDisabled, setIsButtonDisabled] = React.useState(true);
 
   // Regular expression for validating email
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -57,15 +59,26 @@ function TabLoginScreen() {
       setModalVisible(true);
     }
   };
-
   // Validate fields
   const validateFields = () => {
+    let isValid = true;
+
     if (!emailAddress || !password) {
       setValidationError("Please fill out all fields.");
-      return false;
+      isValid = false;
+    } else {
+      setValidationError("");
     }
-    setValidationError("");
-    return true;
+
+    if (password && password.length < 8) {
+      setPasswordError("Password must be at least 8 characters long.");
+      isValid = false;
+    } else {
+      setPasswordError("");
+    }
+
+    setIsButtonDisabled(!isValid);
+    return isValid;
   };
 
   // Handle email change and validation
@@ -81,9 +94,16 @@ function TabLoginScreen() {
     validateFields();
   };
 
-  // Handle last name change and validate
+  // Handle password change and validate
   const handlePasswordChange = (input: string) => {
     setPassword(input);
+    if (input === "") {
+      setPasswordError("");
+    } else if (input.length < 8) {
+      setPasswordError("Password must be at least 8 characters long.");
+    } else {
+      setPasswordError("");
+    }
     validateFields();
   };
 
@@ -141,6 +161,9 @@ function TabLoginScreen() {
               placeholderTextColor="#000"
               onChangeText={handleEmailChange}
             />
+            {emailError ? (
+              <Text style={styles.errorText}>{emailError}</Text>
+            ) : null}
             <PasswordInput
               label=""
               value={password}
@@ -153,8 +176,8 @@ function TabLoginScreen() {
               {validationError ? (
                 <Text style={styles.errorText}>{validationError}</Text>
               ) : null}
-              {emailError ? (
-                <Text style={styles.errorText}>{emailError}</Text>
+              {passwordError ? (
+                <Text style={styles.errorText}>{passwordError}</Text>
               ) : null}
             </View>
           </View>
@@ -171,7 +194,7 @@ function TabLoginScreen() {
 
           {/* Login button */}
           <View style={[{ margin: 10 }]}>
-            {MainButton("Login", onSignInPress)}
+            {MainButton("Login", onSignInPress, isButtonDisabled)}
           </View>
 
           {/* Google Sign In */}
@@ -233,6 +256,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     backgroundColor: "#FFFFFF",
     minWidth: 200,
+    maxWidth: 200,
   },
   // Input Container Section
   inputContainer: {
@@ -303,8 +327,9 @@ const styles = StyleSheet.create({
   },
   // Error Container Section
   errorContainer: {
-    flexDirection: "row",
     alignSelf: "center",
+    marginTop: 10,
+    marginBottom: 10,
   },
   modalOverlay: {
     flex: 1,

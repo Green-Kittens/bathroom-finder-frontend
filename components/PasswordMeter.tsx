@@ -38,9 +38,12 @@ const PasswordStrengthMeter = ({ password }: { password: string }) => {
   };
 
   const getCustomFeedback = (result: ZXCVBNResult) => {
-    if (result.score === 0) return "Try adding more characters.";
-    if (result.score === 1) return "Try adding numbers or symbols.";
-    if (result.score === 2) return "Try adding more words or capital letters.";
+    if (result.score === 0)
+      return "Not Strong enough, Try adding more characters.";
+    if (result.score === 1)
+      return "Not Strong enough, Try adding numbers or symbols.";
+    if (result.score === 2)
+      return "Not Strong enough, Try adding more words or capital letters.";
     if (result.score === 3) return "Try adding more characters or symbols.";
     if (result.score === 4) return "Password is strong!";
     return "undefined";
