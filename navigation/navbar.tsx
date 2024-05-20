@@ -7,13 +7,11 @@ import { ScreensParamList } from "./type";
 
 // screens
 import Main from "./screens/main";
-import ReviewForm from "./screens/review-form";
 import UserProfile from "./screens/user-profile";
 import FacilityForm from "./screens/facility-form";
 
 // screen names
 const mainName = "Main";
-const reviewFormName = "ReviewForm";
 const userProfileName = "UserProfile";
 const facilityFormName = "FacilityForm";
 
@@ -40,8 +38,6 @@ export default function NavBar() {
 
           if (current === mainName) {
             iconName = focused ? "home" : "home-outline";
-          } else if (current === reviewFormName) {
-            iconName = focused ? "add-circle" : "add-circle-outline";
           } else if (current === userProfileName) {
             iconName = focused ? "person-circle" : "person-circle-outline";
           } else if (current === facilityFormName) {
@@ -51,11 +47,6 @@ export default function NavBar() {
         },
       })}
     >
-      <Tab.Screen
-        name={reviewFormName}
-        component={ReviewForm}
-        options={{ headerShown: false }}
-      />
       <Tab.Screen
         name={facilityFormName}
         component={FacilityForm}
