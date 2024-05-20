@@ -23,12 +23,12 @@ export async function registerUser(
 ): Promise<string> {
   try {
     await axios.post<UserProfile>(`${protocol}://${host}:${port}/users/`, {
-      email: email,
-      Favorites: favorites,
-      Reviews: reviews,
-      DateJoined: date,
-      pfpURL: pfpURL,
-      DisplayName: username,
+      email: Email,
+      Favorites: Favorites,
+      Reviews: Reviews,
+      DateJoined: Date,
+      pfpURL: PictureURL,
+      DisplayName: DisplayName,
     });
     const successsMsg = `${DisplayName} successfully created with ${Email}.`;
     return successsMsg;
@@ -46,7 +46,7 @@ export async function registerUser(
 export async function getUserProfile(UserID: string): Promise<UserProfile> {
   try {
     const response = await axios.get<UserProfile>(
-      `${protocol}://${host}:${port}/users/${userId}`,
+      `${protocol}://${host}:${port}/users/${UserID}`,
     );
     return response.data;
   } catch (error) {
@@ -87,21 +87,21 @@ export async function createBathroom(
       `${protocol}://${host}:${port}/facilities/`,
       {
         params: {
-          Name: name,
-          Location: location,
-          Category: category,
-          Tags: tags,
-          Operations: operations,
-          Reviews: reviews,
-          Date: date,
-          PictureURL: pictureURL,
-          RatingAVG: ratingAVG,
-          Favorites: favorites,
-          Reports: reports,
+          Name: Name,
+          Coordinates: Coordinates,
+          Category: Category,
+          Tags: Tags,
+          Operations: Operations,
+          Reviews: Reviews,
+          Date: Date,
+          PictureURL: PictureURL,
+          RatingAVG: RatingAVG,
+          Favorites: Favorites,
+          Reports: Reports,
         },
       },
     );
-    const successMsg = `Bathroom successfully created: hours of operation (${operations}), tags (${tags})).`;
+    const successMsg = `Bathroom successfully created: hours of operation (${Operations}), tags (${Tags})).`;
     return successMsg;
   } catch (error) {
     console.error("Error creating bathroom:", error);

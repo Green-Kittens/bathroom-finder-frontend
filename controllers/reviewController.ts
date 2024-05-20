@@ -46,14 +46,14 @@ export async function createReview(
 ): Promise<string> {
   try {
     await axios.post<Review>(`${protocol}://${host}:${port}/reviews/`, {
-      Rating: rating,
-      Likes: likes,
-      Dislikes: dislikes,
-      PictureURL: pictureURL,
-      FacilityID: facilityId,
-      UserId: userId,
-      Date: date,
-      Description: description,
+      Rating: Rating,
+      Likes: Likes,
+      Dislikes: Dislikes,
+      PictureURL: PictureURL,
+      FacilityID: FacilityID,
+      UserId: UserID,
+      Date: Date,
+      Description: Description,
     });
     const successMsg = `Review for bathroom (${FacilityID}) successfully created by ${UserID}: ${Description}`;
     return successMsg;
