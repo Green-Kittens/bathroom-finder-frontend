@@ -50,6 +50,12 @@ const ImageCarousel: React.FC<CarouselProps> = ({ componentId }) => {
     setModalVisible(false);
   };
 
+  const deleteImages = () => {
+    for (let i = 0; i < images.length; i++) { 
+      deleteImage(images[i].assets[0].uri)
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Uploaded Images</Text>
