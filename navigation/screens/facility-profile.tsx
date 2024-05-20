@@ -154,7 +154,7 @@ export default function TabFacilityProfileScreen() {
    useEffect(() => {
     (async () => {
       try {
-        const fetchReviews = await getAllReviews(bathroom.ID);
+        const fetchReviews = await getAllReviews(bathroom._id);
         setBathroomReviews(fetchReviews);
         console.log(fetchReviews);
       } catch (error) {

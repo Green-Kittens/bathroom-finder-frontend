@@ -28,7 +28,9 @@ export default function MainScreen() {
       try {
         const fetchBathrooms = await getAllBathrooms();
         setBathrooms(fetchBathrooms);
-        console.log(fetchBathrooms);
+        (fetchBathrooms.map((bathroom) => (
+          console.log(bathroom._id)
+        )));
       } catch (error) {
         console.error("Failed to fetch bathrooms", error);
       }
@@ -63,7 +65,7 @@ export default function MainScreen() {
       >
         {bathrooms.map((bathroom) => (
             <Marker
-              key={ bathroom.ID }
+              key={ bathroom._id }
               coordinate={{
                 latitude: bathroom.Coordinates[0],
                 longitude: bathroom.Coordinates[1],
