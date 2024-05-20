@@ -94,8 +94,7 @@ export default function FacilityForm() {
     setOpenTime(initialOpenTime);
     setClosedTime(initialCloseTime);
     setDescription("");
-    
-  }
+  };
 
   useEffect(() => {
     const getLocation = async () => {
@@ -250,9 +249,10 @@ export default function FacilityForm() {
             </Modal>
           )}
 
-          {SecondaryButton("Submit Facility", () =>
-            {navigation.navigate("Main"); resetForm()},
-          )}
+          {SecondaryButton("Submit Facility", () => {
+            navigation.navigate("Main");
+            resetForm();
+          })}
         </View>
       </ScrollView>
     </View>

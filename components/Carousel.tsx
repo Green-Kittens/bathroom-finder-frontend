@@ -51,8 +51,8 @@ const ImageCarousel: React.FC<CarouselProps> = ({ componentId }) => {
   };
 
   const deleteImages = () => {
-    for (let i = 0; i < images.length; i++) { 
-      deleteImage(images[i].assets[0].uri)
+    for (let i = 0; i < images.length; i++) {
+      deleteImage(images[i].assets[0].uri);
     }
   };
 
