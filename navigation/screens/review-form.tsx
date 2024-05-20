@@ -72,6 +72,11 @@ export default function ReviewForm() {
   // post rating (submit button)
   const navigation = useNavigation<ScreenNavigationProp>();
 
+  const resetForm = () => {
+    setDescription("");
+    setRating(0)
+  }
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -159,7 +164,7 @@ export default function ReviewForm() {
 
           {SecondaryButton("Post Rating", async () => {
             // make a check to make sure that all fields are filled out
-            navigation.navigate("Main");
+            navigation.navigate("Main"); resetForm()
           })}
         </View>
       </ScrollView>
