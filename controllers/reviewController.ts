@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Review } from "../types/review";
-import { port, host } from "./porthost";
+import { port, host, protocol } from "./env";
 
 /**
  * Function for retrieving reviews of a bathroom
@@ -10,7 +10,7 @@ import { port, host } from "./porthost";
 export async function getAllReviews(facilityId: string): Promise<Review[]> {
   try {
     const response = await axios.get<Review[]>(
-      `http://${host}:${port}/reviews/`,
+      `${protocol}://${host}:${port}/reviews/`,
     );
     return response.data;
   } catch (error) {
@@ -45,7 +45,7 @@ export async function createReview(
   description: string,
 ): Promise<string> {
   try {
-    await axios.post<Review>(`http://${host}:${port}/reviews/`, {
+    await axios.post<Review>(`${protocol}://${host}:${port}/reviews/`, {
       Rating: rating,
       Likes: likes,
       Dislikes: dislikes,

@@ -1,7 +1,7 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { getAllBathrooms, getBathroomProfile } from "../bathroomController";
-import { port, host } from "../porthost";
+import { port, host } from "../env";
 
 describe("getAllBathrooms", () => {
   it("should return all bathrooms", async () => {

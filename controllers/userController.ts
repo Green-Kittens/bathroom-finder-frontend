@@ -1,7 +1,7 @@
 import axios from "axios";
 import { User as UserProfile } from "../types/user";
 import { Facility as BathroomProfile } from "../types/facility";
-import { port, host } from "./porthost";
+import { port, host, protocol } from "./env";
 
 interface Location {
   coordinates: number[];
@@ -27,7 +27,7 @@ export async function registerUser(
   username: string,
 ): Promise<string> {
   try {
-    await axios.post<UserProfile>(`http://${host}:${port}/users/`, {
+    await axios.post<UserProfile>(`${protocol}://${host}:${port}/users/`, {
       email: email,
       Favorites: favorites,
       Reviews: reviews,
@@ -87,7 +87,7 @@ export async function forgotPassword(email: string): Promise<string> {
 export async function getUserProfile(userId: string): Promise<UserProfile> {
   try {
     const response = await axios.get<UserProfile>(
-      `http://${host}:${port}/users/${userId}`,
+      `${protocol}://${host}:${port}/users/${userId}`,
     );
     return response.data;
   } catch (error) {
@@ -124,7 +124,7 @@ export async function createBathroom(
   reports: number,
 ): Promise<string> {
   try {
-    await axios.post<BathroomProfile>(`http://${host}:${port}/facilities/`, {
+    await axios.post<BathroomProfile>(`${protocol}://${host}:${port}/facilities/`, {
       params: {
         Name: name,
         Location: location,
