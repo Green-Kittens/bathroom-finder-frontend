@@ -124,21 +124,24 @@ export async function createBathroom(
   reports: number,
 ): Promise<string> {
   try {
-    await axios.post<BathroomProfile>(`${protocol}://${host}:${port}/facilities/`, {
-      params: {
-        Name: name,
-        Location: location,
-        Category: category,
-        Tags: tags,
-        Operations: operations,
-        Reviews: reviews,
-        Date: date,
-        PictureURL: pictureURL,
-        RatingAVG: ratingAVG,
-        Favorites: favorites,
-        Reports: reports,
+    await axios.post<BathroomProfile>(
+      `${protocol}://${host}:${port}/facilities/`,
+      {
+        params: {
+          Name: name,
+          Location: location,
+          Category: category,
+          Tags: tags,
+          Operations: operations,
+          Reviews: reviews,
+          Date: date,
+          PictureURL: pictureURL,
+          RatingAVG: ratingAVG,
+          Favorites: favorites,
+          Reports: reports,
+        },
       },
-    });
+    );
     const successMsg = `Bathroom successfully created: hours of operation (${operations}), tags (${tags})).`;
     return successMsg;
   } catch (error) {

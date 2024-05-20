@@ -65,7 +65,7 @@ export default function MainScreen() {
             bathroom, // render all facility locations as markers on map
           ) => (
             <Marker
-              key={ bathroom._id }
+              key={bathroom._id}
               coordinate={{
                 latitude: bathroom.Coordinates[0],
                 longitude: bathroom.Coordinates[1],
