@@ -37,6 +37,8 @@ export default function FacilityForm() {
   const [modalVisible, setModalVisible] = useState(false);
   const { addImage } = useImages("facilityForm");
   const [description, setDescription] = useState("");
+  const btnInactive = "#6da798";
+  const btnActive = "#007AFF";
 
   const formatTime = (date: Date) => {
     let hours = date.getHours();
@@ -234,7 +236,9 @@ export default function FacilityForm() {
                 >
                   <Text
                     style={{
-                      color: tags.wheelchairAccessible ? "#007AFF" : "#6da798",
+                      color: tags.wheelchairAccessible
+                        ? btnActive
+                        : btnInactive,
                     }}
                   >
                     {tags.wheelchairAccessible
@@ -248,7 +252,9 @@ export default function FacilityForm() {
                   onPress={() => handleTagChange("babyChanging")}
                 >
                   <Text
-                    style={{ color: tags.babyChanging ? "#007AFF" : "#6da798" }}
+                    style={{
+                      color: tags.babyChanging ? btnActive : btnInactive,
+                    }}
                   >
                     {tags.babyChanging
                       ? "Baby Changing Station"
@@ -262,7 +268,7 @@ export default function FacilityForm() {
                 >
                   <Text
                     style={{
-                      color: tags.cleanedRegularly ? "#007AFF" : "#6da798",
+                      color: tags.cleanedRegularly ? btnActive : btnInactive,
                     }}
                   >
                     {tags.cleanedRegularly
@@ -277,7 +283,7 @@ export default function FacilityForm() {
                 >
                   <Text
                     style={{
-                      color: tags.genderNeutral ? "#007AFF" : "#6da798",
+                      color: tags.genderNeutral ? btnActive : btnInactive,
                     }}
                   >
                     {tags.genderNeutral
@@ -459,7 +465,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
     borderWidth: 1,
-    borderColor: "#6da798",
+    borderColor: "btnInactive",
     borderRadius: 20,
     padding: 10,
     marginRight: 5,
