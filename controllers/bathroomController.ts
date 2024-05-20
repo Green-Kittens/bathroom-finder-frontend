@@ -28,7 +28,7 @@ export async function getBathroomProfile(
 ): Promise<BathroomProfile> {
   try {
     const response = await axios.get<BathroomProfile>(
-      `${protocol}://${host}:${port}/facilities/${FacilityID}`, 
+      `${protocol}://${host}:${port}/facilities/${FacilityID}`,
     );
     return response.data;
   } catch (error) {
