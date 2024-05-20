@@ -10,7 +10,7 @@ import { port, host } from "./porthost";
 export async function getAllReviews(facilityId: string): Promise<Review[]> {
   try {
     const response = await axios.get<Review[]>(
-      `http://${host}:${port}/reviews/`,
+      `https://bathroom-finder.azurewebsites.net/reviews/`,
     );
     return response.data;
   } catch (error) {

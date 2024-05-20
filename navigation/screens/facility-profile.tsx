@@ -18,6 +18,8 @@ import { StarRatingDisplay } from "react-native-star-rating-widget";
 import { LinearGradient } from "expo-linear-gradient";
 import MainButton, { LightButton } from "../../components/Buttons";
 import { Facility as BathroomProfile } from "../../types/facility";
+import { getAllReviews } from "../../controllers/reviewController";
+import { Review as BathroomReview } from "../../types/review"
 
 const maxLineNumber = 5;
 const windowHeight = Dimensions.get("window").height;
@@ -27,7 +29,7 @@ const windowHeight = Dimensions.get("window").height;
 // collect all reviews for bathroom
 
 function CollapseView(
-  { hours, category, tags }: { hours: string, category: string, tags: string[] },
+  { hours, category, tags, reviews }: { hours: string, category: string, tags: string[], reviews: BathroomReview[] },
 ) {
   const [collapsed, setCollapsed] = useState(true);
   const [maxLines, setMaxLines] = useState(2);
@@ -125,7 +127,7 @@ function CollapseView(
             {Review()}
             <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
               {LightButton("See more", () => {
-                navigation.navigate("FacilityReviews");
+                navigation.navigate("FacilityReviews", { reviews });
               })}
             </View>
           </View>
@@ -146,6 +148,20 @@ export default function TabFacilityProfileScreen() {
   // route-- facility data
   const route = useRoute<FacilityProfileRouteProp>();
   const { bathroom } = route.params;
+
+   // fetching all bathroom reviews
+   const [bathroomReviews, setBathroomReviews] = useState<BathroomReview[]>([]);
+   useEffect(() => {
+    (async () => {
+      try {
+        const fetchReviews = await getAllReviews(bathroom.ID);
+        setBathroomReviews(fetchReviews);
+        console.log(fetchReviews);
+      } catch (error) {
+        console.error("Failed to fetch reviews", error);
+      }
+    })();
+   }, []);
 
   return (
     <View style={styles.container}>
@@ -205,6 +221,7 @@ export default function TabFacilityProfileScreen() {
         hours={ bathroom.Operations }
         category= {bathroom.Category }
         tags= { bathroom.Tags }
+        reviews={ bathroomReviews }
          />
       </ScrollView>
     </View>

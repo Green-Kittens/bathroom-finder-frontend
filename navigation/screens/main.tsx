@@ -61,11 +61,9 @@ export default function MainScreen() {
           longitudeDelta: LON_DELT,
         }}
       >
-        {bathrooms.map(
-          (
-            bathroom, // render all facility locations as markers on map
-          ) => (
+        {bathrooms.map((bathroom) => (
             <Marker
+              key={ bathroom.ID }
               coordinate={{
                 latitude: bathroom.Coordinates[0],
                 longitude: bathroom.Coordinates[1],
