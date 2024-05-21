@@ -301,7 +301,6 @@ const styles = StyleSheet.create({
   },
   // Error Container Section
   errorContainer: {
-    flexDirection: "row",
     alignSelf: "center",
   },
   // Icon Section

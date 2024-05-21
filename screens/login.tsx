@@ -61,24 +61,13 @@ function TabLoginScreen() {
   };
   // Validate fields
   const validateFields = () => {
-    let isValid = true;
-
     if (!emailAddress || !password) {
       setValidationError("Please fill out all fields.");
-      isValid = false;
+      return false;
     } else {
       setValidationError("");
+      return true;
     }
-
-    if (password && password.length < 8) {
-      setPasswordError("Password must be at least 8 characters long.");
-      isValid = false;
-    } else {
-      setPasswordError("");
-    }
-
-    setIsButtonDisabled(!isValid);
-    return isValid;
   };
 
   // Handle email change and validation
@@ -98,13 +87,15 @@ function TabLoginScreen() {
   const handlePasswordChange = (input: string) => {
     setPassword(input);
     if (input === "") {
-      setPasswordError("");
+      setPasswordError(""); // Clear the error message when input is empty
+      setIsButtonDisabled(true); // Disable button when there is no password input
     } else if (input.length < 8) {
       setPasswordError("Password must be at least 8 characters long.");
+      setIsButtonDisabled(true);
     } else {
       setPasswordError("");
+      setIsButtonDisabled(false);
     }
-    validateFields();
   };
 
   // Close modal

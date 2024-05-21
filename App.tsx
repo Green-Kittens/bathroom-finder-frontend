@@ -45,7 +45,7 @@ export default function App() {
     try {
       return atob(str);
     } catch (e) {
-      console.error("Decoding failed:", e);
+      // console.error("Decoding failed:", e);
       return null;
     }
   };
@@ -54,7 +54,7 @@ export default function App() {
     try {
       const parts = token.split(".");
       if (parts.length !== 3) {
-        console.error("Invalid JWT structure.");
+        // console.error("Invalid JWT structure.");
         return false;
       }
 
@@ -62,15 +62,15 @@ export default function App() {
       const payload = base64urlDecode(parts[1]);
 
       if (header && payload) {
-        console.log("Decoded header:", header);
-        console.log("Decoded payload:", payload);
+        // console.log("Decoded header:", header);
+        // console.log("Decoded payload:", payload);
         return true;
       } else {
-        console.error("Invalid base64url token parts.");
+        // console.error("Invalid base64url token parts.");
         return false;
       }
     } catch (e) {
-      console.error("Invalid base64 token:", token, e);
+      // console.error("Invalid base64 token:", token, e);
       return false;
     }
   };
@@ -80,35 +80,35 @@ export default function App() {
       try {
         const token = await SecureStore.getItemAsync(key);
         if (token) {
-          console.log(`Token retrieved for key: ${key}`);
+          // console.log(`Token retrieved for key: ${key}`);
           if (validateBase64Token(token)) {
-            console.log("Token is a valid base64url encoded string.");
+            // console.log("Token is a valid base64url encoded string.");
           } else {
-            console.error("Token is not a valid base64url encoded string.");
+            // console.error("Token is not a valid base64url encoded string.");
           }
         } else {
-          console.log(`No token found for key: ${key}`);
+          // console.log(`No token found for key: ${key}`);
         }
         return token;
       } catch (err) {
-        console.error(`Error retrieving token for key: ${key}`, err);
+        // console.error(`Error retrieving token for key: ${key}`, err);
         return null;
       }
     },
     async saveToken(key: string, value: string): Promise<void> {
       try {
         await SecureStore.setItemAsync(key, value);
-        console.log(`Token saved for key: ${key}`);
+        // console.log(`Token saved for key: ${key}`);
       } catch (err) {
-        console.error(`Error saving token for key: ${key}`, err);
+        // console.error(`Error saving token for key: ${key}`, err);
       }
     },
     async clearToken(key: string): Promise<void> {
       try {
         await SecureStore.deleteItemAsync(key);
-        console.log(`Token cleared for key: ${key}`);
+        // console.log(`Token cleared for key: ${key}`);
       } catch (err) {
-        console.error(`Error clearing token for key: ${key}`, err);
+        // console.error(`Error clearing token for key: ${key}`, err);
       }
     },
   };
