@@ -6,6 +6,7 @@ import NavBar from "./navbar";
 import { ScreensParamList } from "./type";
 
 // screens
+import ReviewForm from "./screens/review-form";
 import FacilityProfile from "../screens/facility-profile";
 import FacilityReviews from "../screens/facility-reviews";
 import Login from "../screens/login";
@@ -13,7 +14,8 @@ import Register from "../screens/register";
 import ForgotPassword from "../screens/forgot-password";
 
 // screen names
-const headName = "Back";
+const headName = "Head";
+const reviewFormName = "ReviewForm";
 const facilityProfileName = "FacilityProfile";
 const facilityReviewsName = "FacilityReviews";
 const loginName = "Login";
@@ -34,6 +36,16 @@ export default function StackNavigator() {
       <Stack.Screen
         name={facilityProfileName}
         component={FacilityProfile}
+        options={{
+          headerTitle: "",
+          headerBackTitle: "Back",
+          headerShadowVisible: false,
+          headerStyle: { backgroundColor: "#EEF8F7" },
+        }}
+      />
+      <Stack.Screen
+        name={reviewFormName}
+        component={ReviewForm}
         options={{
           headerTitle: "",
           headerBackTitle: "Back",
