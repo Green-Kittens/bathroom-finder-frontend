@@ -24,6 +24,9 @@ import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import axios from "axios";
 
+const btnInactive = "#6da798";
+const btnActive = "#007AFF";
+
 export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
   const [mapModal, setMapModal] = useState(false);
@@ -37,8 +40,6 @@ export default function FacilityForm() {
   const [modalVisible, setModalVisible] = useState(false);
   const { addImage } = useImages("facilityForm");
   const [description, setDescription] = useState("");
-  const btnInactive = "#6da798";
-  const btnActive = "#007AFF";
 
   const formatTime = (date: Date) => {
     let hours = date.getHours();
@@ -465,7 +466,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
     borderWidth: 1,
-    borderColor: "btnInactive",
+    borderColor: btnInactive,
     borderRadius: 20,
     padding: 10,
     marginRight: 5,
