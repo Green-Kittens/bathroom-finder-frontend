@@ -193,24 +193,24 @@ function TabLoginScreen() {
             <GoogleSignIn />
             <MicroSignIn />
           </View>
-        </SafeAreaView>
 
-        {/* Footer with Register Section */}
-        <View style={styles.footer}>
-          <View style={styles.registerContainer}>
-            <Text style={styles.text} disabled>
-              Don&apos;t have an account?
-            </Text>
-            <TouchableOpacity
-              onPress={() => {
-                nav.navigate("Register");
-              }}
-              style={styles.registerContainer}
-            >
-              <Text style={styles.registerText}>Register</Text>
-            </TouchableOpacity>
+          {/* Footer with Register Section */}
+          <View style={styles.footer}>
+            <View style={styles.registerContainer}>
+              <Text style={styles.text} disabled>
+                Don&apos;t have an account?
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  nav.navigate("Register");
+                }}
+                style={styles.registerContainer}
+              >
+                <Text style={styles.registerText}>Register</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        </SafeAreaView>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -272,11 +272,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
   },
-  // Footer Section
   footer: {
-    marginTop: 20,
-    paddingBottom: 20,
+    position: "absolute", // Positions the footer absolutely
+    bottom: 0, // Anchors it to the bottom
+    width: "100%", // Ensures it spans the width of the screen
     alignItems: "center",
+    padding: 20,
     backgroundColor: "none",
   },
   // Register Section
