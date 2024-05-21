@@ -6,7 +6,7 @@ import NavBar from "./navbar";
 import { ScreensParamList } from "./type";
 
 // screens
-import ReviewForm from "./screens/review-form";
+import ReviewForm from "../screens/review-form";
 import FacilityProfile from "../screens/facility-profile";
 import FacilityReviews from "../screens/facility-reviews";
 import Login from "../screens/login";
