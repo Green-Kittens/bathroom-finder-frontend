@@ -8,13 +8,15 @@ import { useRoute, RouteProp } from "@react-navigation/native";
 
 // route type
 type FacilityReviewsRouteParams = { reviews: BathroomReview[] };
-type FacilityReviewsRouteProp = RouteProp<{ FacilityReviews: FacilityReviewsRouteParams }, 'FacilityReviews'>;
+type FacilityReviewsRouteProp = RouteProp<
+  { FacilityReviews: FacilityReviewsRouteParams },
+  "FacilityReviews"
+>;
 
 export default function FacilityReviewsScreen() {
-
   // route-- review data
   const route = useRoute<FacilityReviewsRouteProp>();
-  const { reviews } = route.params; 
+  const { reviews } = route.params;
 
   return (
     <ScrollView style={{ width: "100%", height: 100 }}>

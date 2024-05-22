@@ -19,18 +19,26 @@ import { LinearGradient } from "expo-linear-gradient";
 import MainButton, { LightButton } from "../../components/Buttons";
 import { Facility as BathroomProfile } from "../../types/facility";
 import { getAllReviews } from "../../controllers/reviewController";
-import { Review as BathroomReview } from "../../types/review"
+import { Review as BathroomReview } from "../../types/review";
 
 const maxLineNumber = 5;
 const windowHeight = Dimensions.get("window").height;
 
 // ask why there is no description param for BathroomProfile
-// TODO: review button should navigate to bathroom's review page 
+// TODO: review button should navigate to bathroom's review page
 // collect all reviews for bathroom
 
-function CollapseView(
-  { hours, category, tags, reviews }: { hours: string, category: string, tags: string[], reviews: BathroomReview[] },
-) {
+function CollapseView({
+  hours,
+  category,
+  tags,
+  reviews,
+}: {
+  hours: string;
+  category: string;
+  tags: string[];
+  reviews: BathroomReview[];
+}) {
   const [collapsed, setCollapsed] = useState(true);
   const [maxLines, setMaxLines] = useState(2);
   const animationHeight = useRef(new Animated.Value(0)).current;
@@ -85,10 +93,10 @@ function CollapseView(
           ]}
           numberOfLines={maxLines}
         >
-          Hours: { hours } {"\n"} 
-          Category: { category } {"\n"}
-          Tags: { tags.join(', ') } {"\n"}
-          {/* { description } */} 
+          Hours: {hours} {"\n"}
+          Category: {category} {"\n"}
+          Tags: {tags.join(", ")} {"\n"}
+          {/* { description } */}
         </Text>
       </Animated.View>
       <LinearGradient
@@ -137,9 +145,12 @@ function CollapseView(
   );
 }
 
-// route type 
+// route type
 type FacilityProfileRouteParams = { bathroom: BathroomProfile };
-type FacilityProfileRouteProp = RouteProp<{ FacilityProfile: FacilityProfileRouteParams }, 'FacilityProfile'>;
+type FacilityProfileRouteProp = RouteProp<
+  { FacilityProfile: FacilityProfileRouteParams },
+  "FacilityProfile"
+>;
 
 export default function TabFacilityProfileScreen() {
   // navigation
@@ -149,9 +160,9 @@ export default function TabFacilityProfileScreen() {
   const route = useRoute<FacilityProfileRouteProp>();
   const { bathroom } = route.params;
 
-   // fetching all bathroom reviews
-   const [bathroomReviews, setBathroomReviews] = useState<BathroomReview[]>([]);
-   useEffect(() => {
+  // fetching all bathroom reviews
+  const [bathroomReviews, setBathroomReviews] = useState<BathroomReview[]>([]);
+  useEffect(() => {
     (async () => {
       try {
         const fetchReviews = await getAllReviews(bathroom._id);
@@ -161,7 +172,7 @@ export default function TabFacilityProfileScreen() {
         console.error("Failed to fetch reviews", error);
       }
     })();
-   }, []);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -183,7 +194,7 @@ export default function TabFacilityProfileScreen() {
               alignSelf: "flex-end",
             }}
           ></ImageBackground>
-          <Text style={styles.title}>{ bathroom.Name }</Text>
+          <Text style={styles.title}>{bathroom.Name}</Text>
           <Image
             source={{
               uri: bathroom.PictureURL, // not rendering-- check if image link is good
@@ -203,7 +214,7 @@ export default function TabFacilityProfileScreen() {
               },
             ]}
           >
-            <StarRatingDisplay rating={ bathroom.RatingAVG } color="black" />
+            <StarRatingDisplay rating={bathroom.RatingAVG} color="black" />
             <Text style={styles.body}> 5.0 stars</Text>
           </View>
         </View>
@@ -217,12 +228,12 @@ export default function TabFacilityProfileScreen() {
             })}
           </View>
         </View>
-        <CollapseView 
-        hours={ bathroom.Operations }
-        category= {bathroom.Category }
-        tags= { bathroom.Tags }
-        reviews={ bathroomReviews }
-         />
+        <CollapseView
+          hours={bathroom.Operations}
+          category={bathroom.Category}
+          tags={bathroom.Tags}
+          reviews={bathroomReviews}
+        />
       </ScrollView>
     </View>
   );
