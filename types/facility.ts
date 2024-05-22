@@ -1,5 +1,4 @@
 export type Facility = {
-  FacilityID: string;
   Name: string;
   Coordinates: [number, number];
   Category: string;
@@ -10,4 +9,5 @@ export type Facility = {
   RatingAVG: number;
   Favorites: number;
   Reports: number;
+  _id: string;
 };

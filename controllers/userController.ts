@@ -1,7 +1,7 @@
 import axios from "axios";
 import { User as UserProfile } from "../types/user";
 import { Facility as BathroomProfile } from "../types/facility";
-import { port, host } from "./porthost";
+import { port, host, protocol } from "./env";
 
 /**
  * Function to register a new user
@@ -22,12 +22,12 @@ export async function registerUser(
   DisplayName: string,
 ): Promise<string> {
   try {
-    await axios.post<UserProfile>(`http://${host}:${port}/users/`, {
-      Email: Email,
+    await axios.post<UserProfile>(`${protocol}://${host}:${port}/users/`, {
+      email: Email,
       Favorites: Favorites,
       Reviews: Reviews,
       DateJoined: Date,
-      PictureURL: PictureURL,
+      pfpURL: PictureURL,
       DisplayName: DisplayName,
     });
     const successsMsg = `${DisplayName} successfully created with ${Email}.`;
@@ -46,7 +46,7 @@ export async function registerUser(
 export async function getUserProfile(UserID: string): Promise<UserProfile> {
   try {
     const response = await axios.get<UserProfile>(
-      `http://${host}:${port}/users/${UserID}`,
+      `${protocol}://${host}:${port}/users/${UserID}`,
     );
     return response.data;
   } catch (error) {
@@ -83,21 +83,24 @@ export async function createBathroom(
   Reports: number,
 ): Promise<string> {
   try {
-    await axios.post<BathroomProfile>(`http://${host}:${port}/facilities/`, {
-      params: {
-        Name: Name,
-        Coordinates: Coordinates,
-        Category: Category,
-        Tags: Tags,
-        Operations: Operations,
-        Reviews: Reviews,
-        Date: Date,
-        PictureURL: PictureURL,
-        RatingAVG: RatingAVG,
-        Favorites: Favorites,
-        Reports: Reports,
+    await axios.post<BathroomProfile>(
+      `${protocol}://${host}:${port}/facilities/`,
+      {
+        params: {
+          Name: Name,
+          Coordinates: Coordinates,
+          Category: Category,
+          Tags: Tags,
+          Operations: Operations,
+          Reviews: Reviews,
+          Date: Date,
+          PictureURL: PictureURL,
+          RatingAVG: RatingAVG,
+          Favorites: Favorites,
+          Reports: Reports,
+        },
       },
-    });
+    );
     const successMsg = `Bathroom successfully created: hours of operation (${Operations}), tags (${Tags})).`;
     return successMsg;
   } catch (error) {
