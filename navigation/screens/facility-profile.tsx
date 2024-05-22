@@ -44,7 +44,7 @@ function CollapseView() {
     Animated.timing(animationHeight, {
       duration: 100,
       toValue: 80,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start();
   };
 
@@ -53,7 +53,7 @@ function CollapseView() {
     Animated.timing(animationHeight, {
       duration: 1000,
       toValue: 1000,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start();
   };
 
@@ -78,7 +78,7 @@ function CollapseView() {
 
   return (
     <View style={{ overflow: "hidden", backgroundColor: "none" }}>
-      <Animated.View style={{ maxHeight: animationHeight }}>
+      <Animated.View style={{ height: animationHeight }}>
         <Text
           style={[
             styles.paragraph,
