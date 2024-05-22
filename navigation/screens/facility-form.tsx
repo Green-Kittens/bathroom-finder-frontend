@@ -1,5 +1,5 @@
 //facility-form.tsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -36,6 +36,8 @@ export default function FacilityForm() {
   const [isClosedPickerVisible, setClosedPickerVisibility] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const { addImage } = useImages("facilityForm");
+  const { deleteImage } = useImages("facilityForm");
+  const { images } = useImages("facilityForm");
   const [description, setDescription] = useState("");
 
   const formatTime = (date: Date) => {
@@ -89,11 +91,16 @@ export default function FacilityForm() {
 
   const initialOpenTime = "Open Time";
   const initialCloseTime = "Close Time";
+  const scrollViewRef = useRef<ScrollView>();
 
   const resetForm = () => {
     setOpenTime(initialOpenTime);
     setClosedTime(initialCloseTime);
     setDescription("");
+    for (let i = 0; i < images.length; i++) {
+      deleteImage(images[i].assets[0].uri);
+    }
+    scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: false });
   };
 
   useEffect(() => {
@@ -123,7 +130,10 @@ export default function FacilityForm() {
           alignSelf: "flex-end",
         }}
       ></ImageBackground>
-      <ScrollView style={{ width: "100%" }}>
+      <ScrollView
+        ref={scrollViewRef /*ignore error here*/}
+        style={{ width: "100%" }}
+      >
         <View
           style={{
             justifyContent: "center",
