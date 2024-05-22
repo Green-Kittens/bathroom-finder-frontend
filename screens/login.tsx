@@ -19,6 +19,7 @@ import { useSignIn } from "@clerk/clerk-expo";
 import GoogleSignIn from "../components/GoogleSignIn";
 import MicroSignIn from "../components/MicroSignIn";
 import PasswordInput from "../components/Password";
+import EmailCodeSignIn from "../components/EmailSignIn";
 
 function TabLoginScreen() {
   // State management for text inputs
@@ -192,7 +193,11 @@ function TabLoginScreen() {
           <View style={[{ margin: 10, flexDirection: "row" }]}>
             <GoogleSignIn />
             <MicroSignIn />
+            
           </View>
+         <View style={styles.container}>
+         <EmailCodeSignIn />
+         </View>
 
           {/* Footer with Register Section */}
           <View style={styles.footer}>
