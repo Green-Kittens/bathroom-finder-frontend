@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import MainButton, {
   CancelButton,
   SecondaryButton,
@@ -35,6 +35,9 @@ export default function ReviewForm() {
 
   // image uploader and carousel
   const { addImage } = useImages("reviewForm");
+  const { deleteImage } = useImages("reviewForm");
+  const { images } = useImages("reviewForm");
+  const { setImages } = useImages("reviewForm");
   const [modalVisible, setModalVisible] = useState(false);
   const handleAddImage = async (source: "camera" | "gallery") => {
     let pickerResult;
@@ -71,10 +74,17 @@ export default function ReviewForm() {
 
   // post rating (submit button)
   const navigation = useNavigation<ScreenNavigationProp>();
+  
+  const scrollViewRef = useRef<ScrollView>();
 
   const resetForm = () => {
     setDescription("");
     setRating(0);
+    console.log(images)
+      for (let i = 0; i < images.length; i++) {
+      deleteImage(images[i].assets[0].uri);
+    }
+    scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: false });
   };
 
   return (
@@ -93,7 +103,9 @@ export default function ReviewForm() {
           alignSelf: "flex-end",
         }}
       ></ImageBackground>
-      <ScrollView style={{ width: "100%" }}>
+      <ScrollView 
+        ref={scrollViewRef /*ignore error here*/}
+        style={{ width: "100%" }}>
         <View
           style={{
             justifyContent: "center",
