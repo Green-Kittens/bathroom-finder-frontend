@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Facility as BathroomProfile } from "../types/facility";
-import { port, host } from "./porthost";
+import { port, host, protocol } from "./env";
 
 /**
  * Function for retrieving all bathrooms
@@ -9,7 +9,7 @@ import { port, host } from "./porthost";
 export async function getAllBathrooms(): Promise<BathroomProfile[]> {
   try {
     const response = await axios.get<BathroomProfile[]>(
-      `https://bathroom-finder.azurewebsites.net/facilities/`,
+      `${protocol}://${host}:${port}/facilities/`,
     );
     return response.data;
   } catch (error) {
@@ -20,15 +20,15 @@ export async function getAllBathrooms(): Promise<BathroomProfile[]> {
 
 /**
  * Function for retrieving a specific bathroom
- * @param {string} facilityId - The ID of the bathroom
+ * @param {string} FacilityID - The ID of the bathroom
  * @returns {Promise<BathroomProfile>} - Returns a promise with bathroom profile information
  */
 export async function getBathroomProfile(
-  facilityId: string,
+  FacilityID: string,
 ): Promise<BathroomProfile> {
   try {
     const response = await axios.get<BathroomProfile>(
-      `https://${host}:${port}/facilities/${facilityId}`, // https for azure and http for running backend locally
+      `${protocol}://${host}:${port}/facilities/${FacilityID}`,
     );
     return response.data;
   } catch (error) {

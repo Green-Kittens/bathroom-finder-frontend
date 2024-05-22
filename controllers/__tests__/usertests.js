@@ -5,7 +5,7 @@ import {
   getUserProfile,
   createBathroom,
 } from "../userController";
-import { port, host } from "../porthost";
+import { port, host } from "../env";
 
 describe("registerUser", () => {
   it("should return success msg upon successful user registration", async () => {
