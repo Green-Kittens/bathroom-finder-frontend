@@ -41,7 +41,7 @@ function CollapseView() {
       style={{
         overflow: "hidden",
         backgroundColor: "none",
-        marginHorizontal: "3%",
+        marginHorizontal: "6%",
       }}
     >
       <ViewMoreText
