@@ -10,17 +10,19 @@ import {
 } from "react-native";
 import MainButton from "../components/Buttons";
 import { useSignIn } from "@clerk/clerk-react"; // Import the appropriate hook
+import { SignInFirstFactor, EmailCodeFactor } from "@clerk/types";
+import { useNavigation } from "@react-navigation/native";
+import { ScreenNavigationProp } from "../navigation/type";
 
 const EmailCodeSignIn = () => {
-  const { signIn } = useSignIn(); // This might need to be adapted based on how you initialize Clerk
+  const { signIn, setActive, isLoaded } = useSignIn(); // This might need to be adapted based on how you initialize Clerk
   const [email, setEmail] = useState("");
-  const [emailAddressId, setEmailAddressId] = useState("");
   const [code, setCode] = useState("");
   const [showCodeInput, setShowCodeInput] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [error, setError] = useState("");
-  
 
+  const nav = useNavigation<ScreenNavigationProp>();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const handleEmailSubmit = async () => {
@@ -34,27 +36,43 @@ const EmailCodeSignIn = () => {
       return;
     }
 
+    if (!isLoaded) {
+      return;
+    }
+
     try {
       // Create a sign-in attempt with the user's email
       if (signIn) {
-        const attempt = await signIn.create({
+        // Start the Sign Up process using the email number method
+        const { supportedFirstFactors } = await signIn.create({
           identifier: email,
         });
-        
-        if (attempt.status === "needs_first_factor") {
-          await attempt.prepareFirstFactor({
-            emailAddressId: email, // Corrected the misspelled property
+
+        // Filter the returned array to find the 'phone_code' entry
+        const isEmailCodeFactor = (
+          factor: SignInFirstFactor,
+        ): factor is EmailCodeFactor => {
+          return factor.strategy === "email_code";
+        };
+        const emailCodeFactor = supportedFirstFactors?.find(isEmailCodeFactor);
+
+        if (emailCodeFactor) {
+          // Grab the emailNumberId
+          const { emailAddressId } = emailCodeFactor;
+
+          // Send the OTP code to the user
+          await signIn.prepareFirstFactor({
             strategy: "email_code",
+            emailAddressId,
           });
-          setError("");
-          setShowCodeInput(true); // Open modal for code input
+          setShowCodeInput(true);
         }
       }
     } catch (err) {
       if (err instanceof Error) {
         setError("Failed to send email: " + err.message);
-        console.log("Failed to send email: " + err);
-      } else console.error("An unknown error occurred", err);
+        // console.log("Failed to send email: " + err);
+      } //else console.error("An unknown error occurred", err);
     }
   };
 
@@ -72,18 +90,20 @@ const EmailCodeSignIn = () => {
           code,
         });
         if (result.status === "complete") {
-          console.log("Email verification successful, user is signed in.");
+          //console.log("Email verification successful, user is signed in.");
+          await setActive({ session: result.createdSessionId });
           setModalVisible(false); // Close modal on successful verification
           setEmail("");
           setCode("");
           setShowCodeInput(false);
+          nav.navigate("Main");
         } else {
           setError("Invalid code. Please try again.");
         }
       }
     } catch (err) {
       if (err instanceof Error) setError("Verification failed: " + err.message);
-      else console.error("An unknown error occurred", err);
+      // else console.error("An unknown error occurred", err);
     }
   };
 

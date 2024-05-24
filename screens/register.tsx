@@ -72,7 +72,9 @@ export default function RegisterScreen() {
 
       await setActive({ session: completeSignUp.createdSessionId });
     } catch (err: unknown) {
-      console.error(JSON.stringify(err, null, 2));
+      setValidationError(
+        "Invalid code or account already exists. Please try again.",
+      );
     }
   };
 
@@ -197,6 +199,9 @@ export default function RegisterScreen() {
                   onChangeText={(code) => setCode(code)}
                 />
               </View>
+              {validationError ? (
+                <Text style={styles.errorText}>{validationError}</Text>
+              ) : null}
               {MainButton("Verify Email", onPressVerify)}
             </SafeAreaView>
           )}
