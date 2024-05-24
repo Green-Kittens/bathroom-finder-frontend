@@ -1,7 +1,7 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { getAllReviews, createReview } from "../reviewController";
-import { port, host } from "../porthost";
+import { port, host } from "../env";
 
 describe("getAllReviews", () => {
   it("should return all reviews for a specified bathroom", async () => {
