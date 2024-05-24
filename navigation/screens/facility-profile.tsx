@@ -1,16 +1,13 @@
 import React from "react";
 import {
   StyleSheet,
-  Animated,
   Image,
   Text,
   View,
   ImageBackground,
-  Pressable,
   ScrollView,
   Dimensions,
 } from "react-native";
-import { useEffect, useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../type";
 import Review from "../../components/Review";
@@ -19,125 +16,53 @@ import { StarRatingDisplay } from "react-native-star-rating-widget";
 import { LinearGradient } from "expo-linear-gradient";
 import MainButton, { LightButton } from "../../components/Buttons";
 
-const maxLineNumber = 5;
+import ViewMoreText from "react-native-view-more-text";
+
 const windowHeight = Dimensions.get("window").height;
 
 function CollapseView() {
-  const [collapsed, setCollapsed] = useState(true);
-  const [maxLines, setMaxLines] = useState(2);
-  const animationHeight = useRef(new Animated.Value(0)).current;
-
-  /**get all reviews*/
-  // const handleReviews = async () => {
-  //   try {
-  //     const reviews = await getAllReviews(bathroomID);
-  //   } catch (error) {
-  //     console.error("Error retrieving reviews:", error);
-  //   }
-  // };
-
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
-
-  const collapseView = () => {
-    Animated.timing(animationHeight, {
-      duration: 100,
-      toValue: 80,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const expandView = () => {
-    setMaxLines(maxLineNumber);
-    Animated.timing(animationHeight, {
-      duration: 1000,
-      toValue: 1000,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  useEffect(() => {
-    if (collapsed) {
-      collapseView();
-    } else {
-      expandView();
-    }
-  }, [collapsed]);
-
-  const changeText = () => {
-    if (collapsed) {
-      return "Expand";
-    } else {
-      return "Collapse";
-    }
-  };
-
-  // navigation
-  const navigation = useNavigation<ScreenNavigationProp>();
+  type onPressCallback = () => void;
+  function renderViewMore(onPress: onPressCallback) {
+    return renderPressableText("View more", onPress);
+  }
+  function renderViewLess(onPress: onPressCallback) {
+    return renderPressableText("View less", onPress);
+  }
+  function renderPressableText(content: string, onPress: onPressCallback) {
+    return (
+      <Text onPress={onPress} style={{ color: "#6da798" }}>
+        {content}
+      </Text>
+    );
+  }
 
   return (
-    <View style={{ overflow: "hidden", backgroundColor: "none" }}>
-      <Animated.View style={{ maxHeight: animationHeight }}>
-        <Text
-          style={[
-            styles.paragraph,
-            { backgroundColor: "#CDEEEA", padding: 20 },
-          ]}
-          numberOfLines={maxLines}
-        >
-          Hours: ##:## - ##:## {"\n"}
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </Text>
-      </Animated.View>
-      <LinearGradient
-        // Button Linear Gradient
-        colors={["#6da798", "#40a4a9"]}
-        end={{ x: 0.1, y: 0.2 }}
-        style={styles.button}
+    <View
+      style={{
+        overflow: "hidden",
+        backgroundColor: "none",
+        marginHorizontal: "3%",
+      }}
+    >
+      <ViewMoreText
+        numberOfLines={3}
+        renderViewMore={renderViewMore}
+        renderViewLess={renderViewLess}
       >
-        <Pressable
-          style={[{ width: "100%", alignItems: "center" }]}
-          onPress={toggleCollapsed}
-        >
-          <Text style={[styles.body, { fontWeight: "bold" }]}>
-            {changeText()}
-          </Text>
-        </Pressable>
-      </LinearGradient>
-
-      <View style={{}}>
-        <View style={styles.separator} />
-        <LinearGradient
-          colors={["#6da798", "#40a4a9"]}
-          end={{ x: 0.1, y: 0.2 }}
-          style={[{ padding: 20, borderRadius: 15 }]}
-        >
-          <View
-            style={[
-              {
-                flex: 1,
-                padding: 10,
-                alignItems: "center",
-                backgroundColor: "none",
-              },
-            ]}
-          >
-            {Review()}
-            <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
-              {LightButton("See more", () => {
-                navigation.navigate("FacilityReviews");
-              })}
-            </View>
-          </View>
-        </LinearGradient>
-      </View>
+        <Text>
+          Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit
+          enim labore culpa sint ad nisi Lorem pariatur mollit ex esse
+          exercitation amet. Nisi anim cupidatat excepteur officia.
+          Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate
+          voluptate dolor minim nulla est proident. Nostrud officia pariatur ut
+          officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit
+          commodo officia dolor Lorem duis laboris cupidatat officia voluptate.
+          Culpa proident adipisicing id nulla nisi laboris ex in Lorem sunt duis
+          officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis
+          sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea
+          consectetur et est culpa et culpa duis.
+        </Text>
+      </ViewMoreText>
     </View>
   );
 }
@@ -199,6 +124,33 @@ export default function TabFacilityProfileScreen() {
           </View>
         </View>
         <CollapseView />
+
+        <View style={{}}>
+          <View style={styles.separator} />
+          <LinearGradient
+            colors={["#6da798", "#40a4a9"]}
+            end={{ x: 0.1, y: 0.2 }}
+            style={[{ padding: 20, borderRadius: 15 }]}
+          >
+            <View
+              style={[
+                {
+                  flex: 1,
+                  padding: 10,
+                  alignItems: "center",
+                  backgroundColor: "none",
+                },
+              ]}
+            >
+              {Review()}
+              <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
+                {LightButton("See more", () => {
+                  navigation.navigate("FacilityReviews");
+                })}
+              </View>
+            </View>
+          </LinearGradient>
+        </View>
       </ScrollView>
     </View>
   );
