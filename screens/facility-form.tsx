@@ -24,6 +24,9 @@ import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import axios from "axios";
 
+const btnInactive = "#6da798";
+const btnActive = "#007AFF";
+
 export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
   const [mapModal, setMapModal] = useState(false);
@@ -47,6 +50,13 @@ export default function FacilityForm() {
     return `${hours}:${minutes} ${ampm}`;
   };
 
+  const [tags, setTags] = useState({
+    wheelchairAccessible: false,
+    babyChanging: false,
+    cleanedRegularly: false,
+    genderNeutral: false,
+  });
+
   const handleOpenConfirm = (date: Date) => {
     setOpenTime(formatTime(date));
     setOpenPickerVisibility(false);
@@ -55,6 +65,13 @@ export default function FacilityForm() {
   const handleClosedConfirm = (date: Date) => {
     setClosedTime(formatTime(date));
     setClosedPickerVisibility(false);
+  };
+
+  const handleTagChange = (tag) => {
+    setTags((prevTags) => ({
+      ...prevTags,
+      [tag]: !prevTags[tag],
+    }));
   };
 
   const handleAddImage = async (source: "camera" | "gallery") => {
@@ -121,8 +138,8 @@ export default function FacilityForm() {
             alignItems: "center",
             alignContent: "center",
             paddingTop: 60,
-            marginTop: 50,
-            paddingBottom: 200,
+            marginTop: 80,
+            paddingBottom: 250,
           }}
         >
           <Text style={styles.title}>Add a New Facility</Text>
@@ -211,6 +228,74 @@ export default function FacilityForm() {
             />
           </View>
 
+          <View style={styles.tagSelectionContainer}>
+            <Text style={styles.tagTitle}>Select Tags</Text>
+            <View style={styles.tags}>
+              <View style={styles.tagCheckbox}>
+                <TouchableOpacity
+                  onPress={() => handleTagChange("wheelchairAccessible")}
+                >
+                  <Text
+                    style={{
+                      color: tags.wheelchairAccessible
+                        ? btnActive
+                        : btnInactive,
+                    }}
+                  >
+                    {tags.wheelchairAccessible
+                      ? "Wheelchair Accessible"
+                      : "Not Wheelchair Accessible"}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.tagCheckbox}>
+                <TouchableOpacity
+                  onPress={() => handleTagChange("babyChanging")}
+                >
+                  <Text
+                    style={{
+                      color: tags.babyChanging ? btnActive : btnInactive,
+                    }}
+                  >
+                    {tags.babyChanging
+                      ? "Baby Changing Station"
+                      : "No Baby Changing Station"}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.tagCheckbox}>
+                <TouchableOpacity
+                  onPress={() => handleTagChange("cleanedRegularly")}
+                >
+                  <Text
+                    style={{
+                      color: tags.cleanedRegularly ? btnActive : btnInactive,
+                    }}
+                  >
+                    {tags.cleanedRegularly
+                      ? "Cleaned Regularly"
+                      : "Not Cleaned Regularly"}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.tagCheckbox}>
+                <TouchableOpacity
+                  onPress={() => handleTagChange("genderNeutral")}
+                >
+                  <Text
+                    style={{
+                      color: tags.genderNeutral ? btnActive : btnInactive,
+                    }}
+                  >
+                    {tags.genderNeutral
+                      ? "Gender Neutral"
+                      : "Not Gender Neutral"}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+
           <ImageCarousel componentId="facilityForm" />
 
           <TextInput
@@ -239,7 +324,6 @@ export default function FacilityForm() {
               </View>
             </Modal>
           )}
-
           {SecondaryButton("Submit Facility", () =>
             navigation.navigate("Main"),
           )}
@@ -263,6 +347,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontFamily: "EudoxusSans-Bold",
+    marginTop: 15,
+    paddingTop: 20,
+  },
+  tagTitle: {
+    fontSize: 15,
+    fontFamily: "EudoxusSans-Bold",
+    marginBottom: 25,
+    textAlign: "center",
   },
   icon: {
     marginLeft: "auto",
@@ -358,5 +450,25 @@ const styles = StyleSheet.create({
     margin: 10,
     flexShrink: 1,
     flex: 1,
+  },
+  tagSelectionContainer: {
+    width: "85%",
+    marginVertical: 20,
+  },
+  tags: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    flexWrap: "wrap",
+  },
+  tagCheckbox: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: btnInactive,
+    borderRadius: 20,
+    padding: 10,
+    marginRight: 5,
   },
 });
