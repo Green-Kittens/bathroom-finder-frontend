@@ -37,33 +37,25 @@ function CollapseView() {
   }
 
   return (
-    <View
-      style={{
-        overflow: "hidden",
-        backgroundColor: "none",
-        marginHorizontal: "6%",
-      }}
+    <ViewMoreText
+      numberOfLines={3}
+      renderViewMore={renderViewMore}
+      renderViewLess={renderViewLess}
     >
-      <ViewMoreText
-        numberOfLines={3}
-        renderViewMore={renderViewMore}
-        renderViewLess={renderViewLess}
-      >
-        <Text>
-          Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit
-          enim labore culpa sint ad nisi Lorem pariatur mollit ex esse
-          exercitation amet. Nisi anim cupidatat excepteur officia.
-          Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate
-          voluptate dolor minim nulla est proident. Nostrud officia pariatur ut
-          officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit
-          commodo officia dolor Lorem duis laboris cupidatat officia voluptate.
-          Culpa proident adipisicing id nulla nisi laboris ex in Lorem sunt duis
-          officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis
-          sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea
-          consectetur et est culpa et culpa duis.
-        </Text>
-      </ViewMoreText>
-    </View>
+      <Text>
+        Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit
+        enim labore culpa sint ad nisi Lorem pariatur mollit ex esse
+        exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit
+        nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor
+        minim nulla est proident. Nostrud officia pariatur ut officia. Sit irure
+        elit esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor
+        Lorem duis laboris cupidatat officia voluptate. Culpa proident
+        adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod.
+        Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim.
+        Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa
+        et culpa duis.
+      </Text>
+    </ViewMoreText>
   );
 }
 
@@ -79,11 +71,11 @@ export default function TabFacilityProfileScreen() {
           <ImageBackground
             source={require("../../assets/images/blob.png")}
             style={{
-              width: 953,
+              width: 500,
               height: windowHeight,
               position: "absolute",
-              top: 100,
-              left: -200,
+              top: 300,
+              left: -100,
             }}
             imageStyle={{
               resizeMode: "cover",
@@ -123,33 +115,42 @@ export default function TabFacilityProfileScreen() {
             })}
           </View>
         </View>
-        <CollapseView />
 
-        <View style={{}}>
-          <View style={styles.separator} />
-          <LinearGradient
-            colors={["#6da798", "#40a4a9"]}
-            end={{ x: 0.1, y: 0.2 }}
-            style={[{ padding: 20, borderRadius: 15 }]}
-          >
-            <View
-              style={[
-                {
-                  flex: 1,
-                  padding: 10,
-                  alignItems: "center",
-                  backgroundColor: "none",
-                },
-              ]}
+        <View
+          style={{
+            overflow: "hidden",
+            backgroundColor: "none",
+            marginHorizontal: "6%",
+          }}
+        >
+          <CollapseView />
+
+          <View style={{}}>
+            <View style={styles.separator} />
+            <LinearGradient
+              colors={["#6da798", "#40a4a9"]}
+              end={{ x: 0.1, y: 0.2 }}
+              style={[{ padding: 20, borderRadius: 15 }]}
             >
-              {Review()}
-              <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
-                {LightButton("See more", () => {
-                  navigation.navigate("FacilityReviews");
-                })}
+              <View
+                style={[
+                  {
+                    flex: 1,
+                    padding: 10,
+                    alignItems: "center",
+                    backgroundColor: "none",
+                  },
+                ]}
+              >
+                {Review()}
+                <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
+                  {LightButton("See more", () => {
+                    navigation.navigate("FacilityReviews");
+                  })}
+                </View>
               </View>
-            </View>
-          </LinearGradient>
+            </LinearGradient>
+          </View>
         </View>
       </ScrollView>
     </View>
