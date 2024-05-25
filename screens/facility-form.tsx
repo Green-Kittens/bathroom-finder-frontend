@@ -67,7 +67,7 @@ export default function FacilityForm() {
     setClosedPickerVisibility(false);
   };
 
-  const handleTagChange = (tag) => {
+  const handleTagChange = (tag: string) => {
     setTags((prevTags) => ({
       ...prevTags,
       [tag]: !prevTags[tag],
