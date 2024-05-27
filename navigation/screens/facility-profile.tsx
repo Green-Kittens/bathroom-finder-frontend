@@ -29,11 +29,7 @@ function CollapseView() {
     return renderPressableText("View less", onPress);
   }
   function renderPressableText(content: string, onPress: onPressCallback) {
-    return (
-      <Text onPress={onPress} style={{ color: "#6da798" }}>
-        {content}
-      </Text>
-    );
+    return MainButton(content, onPress, { width: "50%" }, { fontSize: 12 });
   }
 
   return (
