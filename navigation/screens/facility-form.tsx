@@ -110,6 +110,21 @@ export default function FacilityForm() {
   const initialCloseTime = "Close Time";
   const scrollViewRef = useRef<ScrollView>();
 
+  const resetTags = () => {
+    if (tags.babyChanging) {
+      handleTagChange("babyChanging");
+    }
+    if (tags.wheelchairAccessible) {
+      handleTagChange("wheelchairAccessible");
+    }
+    if (tags.cleanedRegularly) {
+      handleTagChange("cleanedRegularly");
+    }
+    if (tags.genderNeutral) {
+      handleTagChange("genderNeutral");
+    }
+  };
+
   const resetForm = () => {
     setOpenTime(initialOpenTime);
     setClosedTime(initialCloseTime);
@@ -117,6 +132,7 @@ export default function FacilityForm() {
     for (let i = 0; i < images.length; i++) {
       deleteImage(images[i].assets[0].uri);
     }
+    resetTags();
     scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: false });
   };
 
