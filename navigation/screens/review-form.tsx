@@ -80,7 +80,6 @@ export default function ReviewForm() {
   const resetForm = () => {
     setDescription("");
     setRating(0);
-    console.log(images)
       for (let i = 0; i < images.length; i++) {
       deleteImage(images[i].assets[0].uri);
     }
