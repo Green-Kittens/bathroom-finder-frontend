@@ -1,5 +1,5 @@
 //facility-form.tsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -39,6 +39,8 @@ export default function FacilityForm() {
   const [isClosedPickerVisible, setClosedPickerVisibility] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const { addImage } = useImages("facilityForm");
+  const { deleteImage } = useImages("facilityForm");
+  const { images } = useImages("facilityForm");
   const [description, setDescription] = useState("");
 
   const formatTime = (date: Date) => {
@@ -104,6 +106,36 @@ export default function FacilityForm() {
     }
   };
 
+  const initialOpenTime = "Open Time";
+  const initialCloseTime = "Close Time";
+  const scrollViewRef = useRef<ScrollView>();
+
+  const resetTags = () => {
+    if (tags.babyChanging) {
+      handleTagChange("babyChanging");
+    }
+    if (tags.wheelchairAccessible) {
+      handleTagChange("wheelchairAccessible");
+    }
+    if (tags.cleanedRegularly) {
+      handleTagChange("cleanedRegularly");
+    }
+    if (tags.genderNeutral) {
+      handleTagChange("genderNeutral");
+    }
+  };
+
+  const resetForm = () => {
+    setOpenTime(initialOpenTime);
+    setClosedTime(initialCloseTime);
+    setDescription("");
+    for (let i = 0; i < images.length; i++) {
+      deleteImage(images[i].assets[0].uri);
+    }
+    resetTags();
+    scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: false });
+  };
+
   useEffect(() => {
     const getLocation = async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
@@ -131,7 +163,10 @@ export default function FacilityForm() {
           alignSelf: "flex-end",
         }}
       ></ImageBackground>
-      <ScrollView style={{ width: "100%" }}>
+      <ScrollView
+        ref={scrollViewRef /*ignore error here*/}
+        style={{ width: "100%" }}
+      >
         <View
           style={{
             justifyContent: "center",
@@ -205,7 +240,7 @@ export default function FacilityForm() {
           <View style={styles.timeSelect}>
             <TouchableOpacity onPress={() => setOpenPickerVisibility(true)}>
               <Text style={styles.timeSelectButton}>
-                {openTime || "Open Time"}
+                {openTime || initialOpenTime}
               </Text>
             </TouchableOpacity>
             <DateTimePickerModal
@@ -217,7 +252,7 @@ export default function FacilityForm() {
             <Text> to </Text>
             <TouchableOpacity onPress={() => setClosedPickerVisibility(true)}>
               <Text style={styles.timeSelectButton}>
-                {closedTime || "Close Time"}
+                {closedTime || initialCloseTime}
               </Text>
             </TouchableOpacity>
             <DateTimePickerModal
@@ -324,9 +359,11 @@ export default function FacilityForm() {
               </View>
             </Modal>
           )}
-          {SecondaryButton("Submit Facility", () =>
-            navigation.navigate("Main"),
-          )}
+
+          {SecondaryButton("Submit Facility", () => {
+            navigation.navigate("Main");
+            resetForm();
+          })}
         </View>
       </ScrollView>
     </View>
