@@ -1,5 +1,5 @@
 //facility-form.tsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -24,6 +24,9 @@ import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import axios from "axios";
 
+const btnInactive = "#6da798";
+const btnActive = "#007AFF";
+
 export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
   const [mapModal, setMapModal] = useState(false);
@@ -36,6 +39,8 @@ export default function FacilityForm() {
   const [isClosedPickerVisible, setClosedPickerVisibility] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const { addImage } = useImages("facilityForm");
+  const { deleteImage } = useImages("facilityForm");
+  const { images } = useImages("facilityForm");
   const [description, setDescription] = useState("");
 
   const formatTime = (date: Date) => {
@@ -47,6 +52,13 @@ export default function FacilityForm() {
     return `${hours}:${minutes} ${ampm}`;
   };
 
+  const [tags, setTags] = useState({
+    wheelchairAccessible: false,
+    babyChanging: false,
+    cleanedRegularly: false,
+    genderNeutral: false,
+  });
+
   const handleOpenConfirm = (date: Date) => {
     setOpenTime(formatTime(date));
     setOpenPickerVisibility(false);
@@ -55,6 +67,13 @@ export default function FacilityForm() {
   const handleClosedConfirm = (date: Date) => {
     setClosedTime(formatTime(date));
     setClosedPickerVisibility(false);
+  };
+
+  const handleTagChange = (tag) => {
+    setTags((prevTags) => ({
+      ...prevTags,
+      [tag]: !prevTags[tag],
+    }));
   };
 
   const handleAddImage = async (source: "camera" | "gallery") => {
@@ -87,6 +106,36 @@ export default function FacilityForm() {
     }
   };
 
+  const initialOpenTime = "Open Time";
+  const initialCloseTime = "Close Time";
+  const scrollViewRef = useRef<ScrollView>();
+
+  const resetTags = () => {
+    if (tags.babyChanging) {
+      handleTagChange("babyChanging");
+    }
+    if (tags.wheelchairAccessible) {
+      handleTagChange("wheelchairAccessible");
+    }
+    if (tags.cleanedRegularly) {
+      handleTagChange("cleanedRegularly");
+    }
+    if (tags.genderNeutral) {
+      handleTagChange("genderNeutral");
+    }
+  };
+
+  const resetForm = () => {
+    setOpenTime(initialOpenTime);
+    setClosedTime(initialCloseTime);
+    setDescription("");
+    for (let i = 0; i < images.length; i++) {
+      deleteImage(images[i].assets[0].uri);
+    }
+    resetTags();
+    scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: false });
+  };
+
   useEffect(() => {
     const getLocation = async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
@@ -114,15 +163,18 @@ export default function FacilityForm() {
           alignSelf: "flex-end",
         }}
       ></ImageBackground>
-      <ScrollView style={{ width: "100%" }}>
+      <ScrollView
+        ref={scrollViewRef /*ignore error here*/}
+        style={{ width: "100%" }}
+      >
         <View
           style={{
             justifyContent: "center",
             alignItems: "center",
             alignContent: "center",
             paddingTop: 60,
-            marginTop: 50,
-            paddingBottom: 200,
+            marginTop: 80,
+            paddingBottom: 250,
           }}
         >
           <Text style={styles.title}>Add a New Facility</Text>
@@ -188,7 +240,7 @@ export default function FacilityForm() {
           <View style={styles.timeSelect}>
             <TouchableOpacity onPress={() => setOpenPickerVisibility(true)}>
               <Text style={styles.timeSelectButton}>
-                {openTime || "Open Time"}
+                {openTime || initialOpenTime}
               </Text>
             </TouchableOpacity>
             <DateTimePickerModal
@@ -200,7 +252,7 @@ export default function FacilityForm() {
             <Text> to </Text>
             <TouchableOpacity onPress={() => setClosedPickerVisibility(true)}>
               <Text style={styles.timeSelectButton}>
-                {closedTime || "Close Time"}
+                {closedTime || initialCloseTime}
               </Text>
             </TouchableOpacity>
             <DateTimePickerModal
@@ -209,6 +261,74 @@ export default function FacilityForm() {
               onConfirm={handleClosedConfirm}
               onCancel={() => setClosedPickerVisibility(false)}
             />
+          </View>
+
+          <View style={styles.tagSelectionContainer}>
+            <Text style={styles.tagTitle}>Select Tags</Text>
+            <View style={styles.tags}>
+              <View style={styles.tagCheckbox}>
+                <TouchableOpacity
+                  onPress={() => handleTagChange("wheelchairAccessible")}
+                >
+                  <Text
+                    style={{
+                      color: tags.wheelchairAccessible
+                        ? btnActive
+                        : btnInactive,
+                    }}
+                  >
+                    {tags.wheelchairAccessible
+                      ? "Wheelchair Accessible"
+                      : "Not Wheelchair Accessible"}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.tagCheckbox}>
+                <TouchableOpacity
+                  onPress={() => handleTagChange("babyChanging")}
+                >
+                  <Text
+                    style={{
+                      color: tags.babyChanging ? btnActive : btnInactive,
+                    }}
+                  >
+                    {tags.babyChanging
+                      ? "Baby Changing Station"
+                      : "No Baby Changing Station"}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.tagCheckbox}>
+                <TouchableOpacity
+                  onPress={() => handleTagChange("cleanedRegularly")}
+                >
+                  <Text
+                    style={{
+                      color: tags.cleanedRegularly ? btnActive : btnInactive,
+                    }}
+                  >
+                    {tags.cleanedRegularly
+                      ? "Cleaned Regularly"
+                      : "Not Cleaned Regularly"}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.tagCheckbox}>
+                <TouchableOpacity
+                  onPress={() => handleTagChange("genderNeutral")}
+                >
+                  <Text
+                    style={{
+                      color: tags.genderNeutral ? btnActive : btnInactive,
+                    }}
+                  >
+                    {tags.genderNeutral
+                      ? "Gender Neutral"
+                      : "Not Gender Neutral"}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
 
           <ImageCarousel componentId="facilityForm" />
@@ -240,9 +360,10 @@ export default function FacilityForm() {
             </Modal>
           )}
 
-          {SecondaryButton("Submit Facility", () =>
-            navigation.navigate("Main"),
-          )}
+          {SecondaryButton("Submit Facility", () => {
+            navigation.navigate("Main");
+            resetForm();
+          })}
         </View>
       </ScrollView>
     </View>
@@ -263,6 +384,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontFamily: "EudoxusSans-Bold",
+    marginTop: 15,
+    paddingTop: 20,
+  },
+  tagTitle: {
+    fontSize: 15,
+    fontFamily: "EudoxusSans-Bold",
+    marginBottom: 25,
+    textAlign: "center",
   },
   icon: {
     marginLeft: "auto",
@@ -358,5 +487,25 @@ const styles = StyleSheet.create({
     margin: 10,
     flexShrink: 1,
     flex: 1,
+  },
+  tagSelectionContainer: {
+    width: "85%",
+    marginVertical: 20,
+  },
+  tags: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    flexWrap: "wrap",
+  },
+  tagCheckbox: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: btnInactive,
+    borderRadius: 20,
+    padding: 10,
+    marginRight: 5,
   },
 });
