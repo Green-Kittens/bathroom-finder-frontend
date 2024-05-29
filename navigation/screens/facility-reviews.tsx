@@ -16,7 +16,7 @@ type FacilityReviewsRouteProp = RouteProp<
 export default function FacilityReviewsScreen() {
   // route-- review data
   const route = useRoute<FacilityReviewsRouteProp>();
-  const { reviews } = route.params;
+  // const { reviews } = route.params;
 
   return (
     <ScrollView style={{ width: "100%", height: 100 }}>
