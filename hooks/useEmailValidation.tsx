@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 
 const useEmailValidation = () => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,63}$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const validateEmail = useCallback((email: string) => {
     return emailRegex.test(email);
