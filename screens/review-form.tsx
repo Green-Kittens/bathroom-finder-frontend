@@ -1,8 +1,3 @@
-import React, { useRef } from "react";
-import MainButton, {
-  CancelButton,
-  SecondaryButton,
-} from "../components/Buttons";
 import {
   StyleSheet,
   TextInput,
@@ -12,8 +7,12 @@ import {
   ScrollView,
   Modal,
 } from "react-native";
-import { useState } from "react";
+import React, { useState, useRef } from "react";
 import StarRating from "react-native-star-rating-widget";
+import MainButton, {
+  CancelButton,
+  SecondaryButton,
+} from "../components/Buttons";
 
 // screens
 import { useNavigation } from "@react-navigation/native";
@@ -77,8 +76,8 @@ export default function ReviewForm() {
   const resetForm = () => {
     setDescription("");
     setRating(0);
-    for (let i = 0; i < images.length; i++) {
-      deleteImage(images[i].assets[0].uri);
+    for (const image of images) {
+      deleteImage(image.assets[0].uri);
     }
     scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: false });
   };

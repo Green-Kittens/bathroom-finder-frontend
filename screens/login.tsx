@@ -75,7 +75,7 @@ function TabLoginScreen() {
     setEmailAddress(input);
     if (input === "") {
       setEmailError("");
-    } else if (!!validateEmail(input)) {
+    } else if (!validateEmail(input)) {
       setEmailError("Please enter a valid email address.");
     } else {
       setEmailError("");

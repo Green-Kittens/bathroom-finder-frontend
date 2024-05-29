@@ -16,7 +16,7 @@ const GoogleSignIn = () => {
       const { createdSessionId, setActive } = await startOAuthFlow();
 
       if (createdSessionId) {
-        setActive && setActive({ session: createdSessionId });
+        setActive?.({ session: createdSessionId });
       } else {
         // Use signIn or signUp for next steps such as MFA
       }

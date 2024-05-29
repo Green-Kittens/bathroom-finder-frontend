@@ -13,6 +13,7 @@ import { useSignIn } from "@clerk/clerk-react"; // Import the appropriate hook
 import { SignInFirstFactor, EmailCodeFactor } from "@clerk/types";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../navigation/type";
+import useEmailValidation from "../hooks/useEmailValidation";
 
 const EmailCodeSignIn = () => {
   const { signIn, setActive, isLoaded } = useSignIn(); // This might need to be adapted based on how you initialize Clerk
@@ -21,9 +22,8 @@ const EmailCodeSignIn = () => {
   const [showCodeInput, setShowCodeInput] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [error, setError] = useState("");
-
+  const { validateEmail } = useEmailValidation();
   const nav = useNavigation<ScreenNavigationProp>();
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const handleEmailSubmit = async () => {
     if (!email) {
@@ -31,7 +31,7 @@ const EmailCodeSignIn = () => {
       return;
     }
 
-    if (!emailRegex.test(email)) {
+    if (!validateEmail(email)) {
       setError("Please enter a valid email address.");
       return;
     }
@@ -71,7 +71,7 @@ const EmailCodeSignIn = () => {
     } catch (err) {
       if (err instanceof Error) {
         setError("Failed to send email: " + err.message);
-      } 
+      }
     }
   };
 

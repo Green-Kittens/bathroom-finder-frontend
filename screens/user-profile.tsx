@@ -1,7 +1,3 @@
-import React, { useState } from "react";
-import horizontalCards from "../components/HorizontalCards";
-import MainButton from "../components/Buttons";
-import { CancelButton } from "../components/Buttons";
 import {
   Text,
   View,
@@ -12,9 +8,45 @@ import {
   ImageBackground,
   StyleSheet,
 } from "react-native";
+import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { SignedIn, SignedOut } from "@clerk/clerk-expo";
 import { useSignOut } from "../hooks/useSignOut";
+import horizontalCards from "../components/HorizontalCards";
+import MainButton, { CancelButton } from "../components/Buttons";
+
+// Define ImageUploader as a separate component
+const ImageUploader = ({
+  isVisible,
+  onClose,
+  addUsingCamera,
+  addFromGallery,
+  deleteImage,
+}: {
+  isVisible: boolean;
+  onClose: () => void;
+  addUsingCamera: () => void;
+  addFromGallery: () => void;
+  deleteImage: () => void;
+}) => {
+  return (
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={isVisible}
+      onRequestClose={onClose}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          {MainButton("Take Photo", addUsingCamera)}
+          {MainButton("Choose from Gallery", addFromGallery)}
+          {MainButton("Remove Current Image", deleteImage)}
+          {CancelButton("Cancel", onClose)}
+        </View>
+      </View>
+    </Modal>
+  );
+};
 
 export default function UserProfileScreen() {
   // navigation
@@ -22,36 +54,9 @@ export default function UserProfileScreen() {
 
   // add photo modal
   const [modalVisible, setModalVisible] = useState(false);
-  const ImageUploader = ({
-    isVisible,
-    onClose,
-  }: {
-    isVisible: boolean;
-    onClose: () => void;
-  }) => {
-    return (
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={isVisible}
-        onRequestClose={onClose}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            {MainButton("Take Photo", addUsingCamera)}
-            {MainButton("Choose from Gallery", addFromGallery)}
-            {MainButton("Remove Current Image", deleteImage)}
-            {CancelButton("Cancel", () => {
-              onClose();
-            })}
-          </View>
-        </View>
-      </Modal>
-    );
-  };
 
   // images uploaded for review
-  const [pfp, setImage] = useState(
+  const [picture, setPicture] = useState(
     "https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png",
   );
 
@@ -76,7 +81,7 @@ export default function UserProfileScreen() {
       quality: 1,
     });
     if (!_image.canceled) {
-      setImage(_image.assets[0].uri);
+      setPicture(_image.assets[0].uri);
       setModalVisible(false);
     }
   };
@@ -96,14 +101,14 @@ export default function UserProfileScreen() {
       quality: 1,
     });
     if (!_image.canceled) {
-      setImage(_image.assets[0].uri);
+      setPicture(_image.assets[0].uri);
       setModalVisible(false);
     }
   };
 
   // delete uploaded image
   const deleteImage = () => {
-    setImage(
+    setPicture(
       "https://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png",
     );
     setModalVisible(false);
@@ -136,7 +141,7 @@ export default function UserProfileScreen() {
             <Image
               style={styles.profilePicture}
               source={{
-                uri: pfp,
+                uri: picture,
               }}
             />
             <Text>Your Name</Text>
@@ -145,6 +150,9 @@ export default function UserProfileScreen() {
           <ImageUploader
             isVisible={modalVisible}
             onClose={() => setModalVisible(false)}
+            addUsingCamera={addUsingCamera}
+            addFromGallery={addFromGallery}
+            deleteImage={deleteImage}
           />
 
           {horizontalCards("Your Reviews")}
