@@ -6,7 +6,7 @@ import { useWarmUpBrowser } from "../hooks/useWarmUpBrowser";
 
 WebBrowser.maybeCompleteAuthSession();
 
-const googleSignIn = () => {
+const GoogleSignIn = () => {
   useWarmUpBrowser();
 
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
@@ -27,4 +27,4 @@ const googleSignIn = () => {
 
   return <Button title="Sign in with Google" onPress={onPress} />;
 };
-export default googleSignIn;
+export default GoogleSignIn;

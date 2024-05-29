@@ -71,8 +71,7 @@ const EmailCodeSignIn = () => {
     } catch (err) {
       if (err instanceof Error) {
         setError("Failed to send email: " + err.message);
-        // console.log("Failed to send email: " + err);
-      } //else console.error("An unknown error occurred", err);
+      } 
     }
   };
 
@@ -90,7 +89,6 @@ const EmailCodeSignIn = () => {
           code,
         });
         if (result.status === "complete") {
-          //console.log("Email verification successful, user is signed in.");
           await setActive({ session: result.createdSessionId });
           setModalVisible(false); // Close modal on successful verification
           setEmail("");
@@ -103,7 +101,6 @@ const EmailCodeSignIn = () => {
       }
     } catch (err) {
       if (err instanceof Error) setError("Verification failed: " + err.message);
-      // else console.error("An unknown error occurred", err);
     }
   };
 

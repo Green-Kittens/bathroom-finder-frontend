@@ -15,16 +15,15 @@ const PasswordInput = ({
   placeholder,
   style,
 }: {
-  label: string;
   value: string;
   onChangeText: (text: string) => void;
   placeholder: string;
   style?: ViewStyle;
 }) => {
-  const [isPasswordVisible, setPasswordVisible] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
-    setPasswordVisible(!isPasswordVisible);
+    setPasswordVisible(!passwordVisible);
   };
 
   return (
@@ -35,7 +34,7 @@ const PasswordInput = ({
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholder}
-          secureTextEntry={!isPasswordVisible}
+          secureTextEntry={!passwordVisible}
           placeholderTextColor="#000"
         />
         <TouchableOpacity
@@ -43,7 +42,7 @@ const PasswordInput = ({
           style={styles.toggleButton}
         >
           <Text style={styles.toggleButtonText}>
-            {isPasswordVisible ? "Hide" : "Show"}
+            {passwordVisible ? "Hide" : "Show"}
           </Text>
         </TouchableOpacity>
       </View>

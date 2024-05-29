@@ -6,7 +6,7 @@ import { useWarmUpBrowser } from "../hooks/useWarmUpBrowser";
 
 WebBrowser.maybeCompleteAuthSession();
 
-const microSignIn = () => {
+const MicroSignIn = () => {
   useWarmUpBrowser();
 
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_microsoft" });
@@ -27,4 +27,4 @@ const microSignIn = () => {
 
   return <Button title="Sign in with Microsoft" onPress={onPress} />;
 };
-export default microSignIn;
+export default MicroSignIn;

@@ -48,6 +48,7 @@ export function LightButton(
       buttonStyle={[styles.button, styling]}
       containerStyle={styles.container}
       onPress={onpress}
+      disabled={disabled}
     />
   );
 }
@@ -71,6 +72,7 @@ export function SecondaryButton(
       buttonStyle={[styles.button, styling]}
       containerStyle={styles.container}
       onPress={onpress}
+      disabled={disabled}
     />
   );
 }
@@ -89,6 +91,7 @@ export function CancelButton(
       buttonStyle={[styles.button, styling]}
       containerStyle={styles.container}
       onPress={onpress}
+      disabled={disabled}
     />
   );
 }
