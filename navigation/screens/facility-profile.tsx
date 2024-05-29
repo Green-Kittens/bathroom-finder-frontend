@@ -14,7 +14,10 @@ import Review from "../../components/Review";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
 
 import { LinearGradient } from "expo-linear-gradient";
-import MainButton, { LightButton } from "../../components/Buttons";
+import MainButton, {
+  LightButton,
+  SecondaryButton,
+} from "../../components/Buttons";
 
 import ViewMoreText from "react-native-view-more-text";
 
@@ -105,7 +108,7 @@ export default function TabFacilityProfileScreen() {
           style={[{ flex: 1, marginHorizontal: 40, backgroundColor: "none" }]}
         >
           <View style={{ marginTop: 10 }}>
-            {MainButton("Add Review", () => {
+            {SecondaryButton("Add Review", () => {
               // figure out how to make it so that dropdown renders current facility as location
               navigation.navigate("ReviewForm");
             })}
