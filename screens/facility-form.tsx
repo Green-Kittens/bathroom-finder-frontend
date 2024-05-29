@@ -35,8 +35,8 @@ export default function FacilityForm() {
     useState<Location.LocationObject | null>(null);
   const [openTime, setOpenTime] = useState("");
   const [closedTime, setClosedTime] = useState("");
-  const [isOpenPickerVisible, setOpenPickerVisibility] = useState(false);
-  const [isClosedPickerVisible, setClosedPickerVisibility] = useState(false);
+  const [openPickerVisible, setOpenPickerVisibility] = useState(false);
+  const [closedPickerVisible, setClosedPickerVisibility] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const { addImage } = useImages("facilityForm");
   const [description, setDescription] = useState("");
@@ -46,7 +46,7 @@ export default function FacilityForm() {
     const minutes = ("0" + date.getMinutes()).slice(-2);
     const ampm = hours >= 12 ? "PM" : "AM";
     hours = hours % 12;
-    hours = hours ? hours : 12; // for when hours = 0
+    hours = hours || 12; // for when hours = 0
     return `${hours}:${minutes} ${ampm}`;
   };
 
@@ -169,7 +169,7 @@ export default function FacilityForm() {
                     );
                     const addressDetails = response.data.address;
                     let buildingName = "";
-                    if (addressDetails && addressDetails.building) {
+                    if (addressDetails?.building) {
                       buildingName = addressDetails.building;
                     }
                     setMarkerAddress(
@@ -209,7 +209,7 @@ export default function FacilityForm() {
               </Text>
             </TouchableOpacity>
             <DateTimePickerModal
-              isVisible={isOpenPickerVisible}
+              isVisible={openPickerVisible}
               mode="time"
               onConfirm={handleOpenConfirm}
               onCancel={() => setOpenPickerVisibility(false)}
@@ -221,7 +221,7 @@ export default function FacilityForm() {
               </Text>
             </TouchableOpacity>
             <DateTimePickerModal
-              isVisible={isClosedPickerVisible}
+              isVisible={closedPickerVisible}
               mode="time"
               onConfirm={handleClosedConfirm}
               onCancel={() => setClosedPickerVisibility(false)}

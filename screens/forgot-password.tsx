@@ -104,7 +104,6 @@ export default function TabSubmitScreen() {
       // Set the user session active, which will log in the user automatically
       await setActive!({ session: result.createdSessionId });
     } catch (err: unknown) {
-      /* console.error("Error in onReset:", err); */
       setModalMessage(
         err instanceof Error ? err.message : "An unknown error occurred",
       );
@@ -199,7 +198,6 @@ export default function TabSubmitScreen() {
                 />
                 <PasswordStrengthMeter password={password} />
                 <PasswordInput
-                  label=""
                   value={password}
                   onChangeText={handlePasswordChange}
                   placeholder="New Password..."

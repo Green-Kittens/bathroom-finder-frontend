@@ -1,4 +1,3 @@
-import React from "react";
 import {
   StyleSheet,
   Animated,
@@ -10,13 +9,12 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../navigation/type";
 import Review from "../components/Review";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
 import { SignedIn } from "@clerk/clerk-expo";
-
 import { LinearGradient } from "expo-linear-gradient";
 import MainButton, { LightButton } from "../components/Buttons";
 
@@ -27,15 +25,6 @@ function CollapseView() {
   const [collapsed, setCollapsed] = useState(true);
   const [maxLines, setMaxLines] = useState(2);
   const animationHeight = useRef(new Animated.Value(0)).current;
-
-  /**get all reviews*/
-  // const handleReviews = async () => {
-  //   try {
-  //     const reviews = await getAllReviews(bathroomID);
-  //   } catch (error) {
-  //     console.error("Error retrieving reviews:", error);
-  //   }
-  // };
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
