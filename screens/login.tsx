@@ -20,6 +20,7 @@ import GoogleSignIn from "../components/GoogleSignIn";
 import MicroSignIn from "../components/MicroSignIn";
 import PasswordInput from "../components/Password";
 import EmailCodeSignIn from "../components/EmailSignIn";
+import useEmailValidation from "../hooks/useEmailValidation";
 
 function TabLoginScreen() {
   // State management for text inputs
@@ -31,10 +32,8 @@ function TabLoginScreen() {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [modalMessage, setModalMessage] = React.useState("");
   const [passwordError, setPasswordError] = React.useState("");
-  const [isButtonDisabled, setIsButtonDisabled] = React.useState(true);
-
-  // Regular expression for validating email
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const [buttonDisabled, setButtonDisabled] = React.useState(true);
+  const { validateEmail } = useEmailValidation();
 
   // navigation
   const nav = useNavigation<ScreenNavigationProp>();
@@ -76,7 +75,7 @@ function TabLoginScreen() {
     setEmailAddress(input);
     if (input === "") {
       setEmailError("");
-    } else if (!emailRegex.test(input)) {
+    } else if (!!validateEmail(input)) {
       setEmailError("Please enter a valid email address.");
     } else {
       setEmailError("");
@@ -89,13 +88,13 @@ function TabLoginScreen() {
     setPassword(input);
     if (input === "") {
       setPasswordError(""); // Clear the error message when input is empty
-      setIsButtonDisabled(true); // Disable button when there is no password input
+      setButtonDisabled(true); // Disable button when there is no password input
     } else if (input.length < 8) {
       setPasswordError("Password must be at least 8 characters long.");
-      setIsButtonDisabled(true);
+      setButtonDisabled(true);
     } else {
       setPasswordError("");
-      setIsButtonDisabled(false);
+      setButtonDisabled(false);
     }
   };
 
@@ -157,7 +156,6 @@ function TabLoginScreen() {
               <Text style={styles.errorText}>{emailError}</Text>
             ) : null}
             <PasswordInput
-              label=""
               value={password}
               onChangeText={handlePasswordChange}
               placeholder="Password..."
@@ -186,7 +184,7 @@ function TabLoginScreen() {
 
           {/* Login button */}
           <View style={[{ margin: 10 }]}>
-            {MainButton("Login", onSignInPress, isButtonDisabled)}
+            {MainButton("Login", onSignInPress, buttonDisabled)}
           </View>
 
           {/* Google Sign In */}
@@ -244,7 +242,6 @@ const styles = StyleSheet.create({
   // Input Section
   input: {
     height: 40,
-    width: "30%", // Control the width of the input size
     margin: 12,
     borderWidth: 1,
     padding: 10,

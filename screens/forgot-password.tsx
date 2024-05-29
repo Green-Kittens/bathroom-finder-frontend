@@ -18,6 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../navigation/type";
 import PasswordInput from "../components/Password";
 import PasswordStrengthMeter from "../components/PasswordMeter";
+import useEmailValidation from "../hooks/useEmailValidation";
 
 // Enable native screens for better performance
 enableScreens();
@@ -34,12 +35,10 @@ export default function TabSubmitScreen() {
   const { signIn, setActive } = useSignIn();
   const [modalMessage, setModalMessage] = useState("");
   const navigation = useNavigation<ScreenNavigationProp>();
-
-  // Regular expression for validating email
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const { validateEmail } = useEmailValidation();
 
   const onSubmitPress = async () => {
-    if (emailRegex.test(emailAddress)) {
+    if (validateEmail(emailAddress)) {
       setEmailError("");
       try {
         await onRequestReset();
@@ -49,7 +48,6 @@ export default function TabSubmitScreen() {
           "Error occured, please try again. \nCheck if the email is asociated with an account.",
         );
         setModalVisible(true);
-        /* console.error("Error caught in onSubmitPress:", err); */
       } finally {
         setModalVisible(true);
       }
@@ -69,7 +67,7 @@ export default function TabSubmitScreen() {
     setEmailAddress(input);
     if (input === "") {
       setEmailError("");
-    } else if (!emailRegex.test(input)) {
+    } else if (!validateEmail(input)) {
       setEmailError("Please enter a valid email address.");
     } else {
       setEmailError("");

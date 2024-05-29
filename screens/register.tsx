@@ -13,6 +13,7 @@ import { useSignUp } from "@clerk/clerk-expo";
 import MainButton from "../components/Buttons";
 import PasswordStrengthMeter from "../components/PasswordMeter";
 import PasswordInput from "../components/Password";
+import useEmailValidation from "../hooks/useEmailValidation";
 
 export default function RegisterScreen() {
   // State management for text inputs
@@ -26,12 +27,10 @@ export default function RegisterScreen() {
   const [code, setCode] = React.useState("");
   const [validationError, setValidationError] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
+  const { validateEmail } = useEmailValidation();
 
   // start the sign up process.
   const { isLoaded, signUp, setActive } = useSignUp();
-
-  // Regular expression for validating email
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   // This function is called when the user presses the sign up button.
   const onSignUpPress = async () => {
@@ -110,7 +109,7 @@ export default function RegisterScreen() {
     setEmailAddress(input);
     if (input === "") {
       setEmailError("");
-    } else if (!emailRegex.test(input)) {
+    } else if (!validateEmail(input)) {
       setEmailError("Please enter a valid email address.");
     } else {
       setEmailError("");
@@ -164,13 +163,11 @@ export default function RegisterScreen() {
               ) : null}
               <PasswordStrengthMeter password={password} />
               <PasswordInput
-                label=""
                 value={password}
                 onChangeText={handlePasswordChange}
                 placeholder="Password..."
               />
               <PasswordInput
-                label=""
                 value={confirmPassword}
                 onChangeText={handleConfirmPasswordChange}
                 placeholder="Confirm Password..."
