@@ -32,7 +32,7 @@ function CollapseView() {
     return renderPressableText("View less", onPress);
   }
   function renderPressableText(content: string, onPress: onPressCallback) {
-    return MainButton(content, onPress, { width: "50%" }, { fontSize: 12 });
+    return MainButton(content, onPress, {}, { fontSize: 12 });
   }
 
   return (
