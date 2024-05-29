@@ -122,10 +122,11 @@ export default function TabFacilityProfileScreen() {
             marginHorizontal: "6%",
           }}
         >
-          <CollapseView />
+          <View style={{ paddingVertical: "5%" }}>
+            <CollapseView />
+          </View>
 
-          <View style={{}}>
-            <View style={styles.separator} />
+          <View>
             <LinearGradient
               colors={["#6da798", "#40a4a9"]}
               end={{ x: 0.1, y: 0.2 }}
