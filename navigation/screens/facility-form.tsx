@@ -25,7 +25,7 @@ import MapView, { Marker } from "react-native-maps";
 import axios from "axios";
 
 const btnInactive = "#6da798";
-const btnActive = "#007AFF";
+const btnActive = "#044962";
 
 export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
@@ -266,7 +266,10 @@ export default function FacilityForm() {
           <View style={styles.tagSelectionContainer}>
             <Text style={styles.tagTitle}>Select Tags</Text>
             <View style={styles.tags}>
-              <View style={styles.tagCheckbox}>
+              <View style={tags.wheelchairAccessible
+                ? styles.tagCheckboxSelected
+                : styles.tagCheckbox
+              }>
                 <TouchableOpacity
                   onPress={() => handleTagChange("wheelchairAccessible")}
                 >
@@ -277,9 +280,7 @@ export default function FacilityForm() {
                         : btnInactive,
                     }}
                   >
-                    {tags.wheelchairAccessible
-                      ? "Wheelchair Accessible"
-                      : "Not Wheelchair Accessible"}
+                    Wheelchair Accessible
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -504,6 +505,17 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderWidth: 1,
     borderColor: btnInactive,
+    borderRadius: 20,
+    padding: 10,
+    marginRight: 5,
+  },
+  tagCheckboxSelected: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: btnActive,
+    backgroundColor: "#74C9C0",
     borderRadius: 20,
     padding: 10,
     marginRight: 5,
