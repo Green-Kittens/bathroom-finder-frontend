@@ -21,6 +21,7 @@ import MicroSignIn from "../components/MicroSignIn";
 import PasswordInput from "../components/Password";
 import EmailCodeSignIn from "../components/EmailSignIn";
 import useEmailValidation from "../hooks/useEmailValidation";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function TabLoginScreen() {
   // State management for text inputs
@@ -28,10 +29,10 @@ function TabLoginScreen() {
   const [emailAddress, setEmailAddress] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
+  const [passwordError, setPasswordError] = React.useState("");
   const [validationError, setValidationError] = React.useState("");
   const [modalVisible, setModalVisible] = React.useState(false);
   const [modalMessage, setModalMessage] = React.useState("");
-  const [passwordError, setPasswordError] = React.useState("");
   const [buttonDisabled, setButtonDisabled] = React.useState(true);
   const { validateEmail } = useEmailValidation();
 
@@ -104,117 +105,123 @@ function TabLoginScreen() {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={onClosePress}
-        >
-          <TouchableWithoutFeedback onPress={onClosePress}>
-            <View style={styles.modalOverlay}>
-              <View style={styles.modalView}>
-                <Text style={styles.modalText}>{modalMessage}</Text>
-                {MainButton("Close", onClosePress)}
+    <KeyboardAwareScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={{ flexGrow: 1 }}
+      keyboardShouldPersistTaps="handled"
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={onClosePress}
+          >
+            <TouchableWithoutFeedback onPress={onClosePress}>
+              <View style={styles.modalOverlay}>
+                <View style={styles.modalView}>
+                  <Text style={styles.modalText}>{modalMessage}</Text>
+                  {MainButton("Close", onClosePress)}
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          </Modal>
+
+          <ImageBackground
+            source={require("../assets/images/boomerang.png")}
+            style={{
+              width: 753,
+              height: 499,
+              position: "absolute",
+              top: 0,
+              left: -200,
+            }}
+            imageStyle={{
+              resizeMode: "cover",
+              alignSelf: "flex-end",
+            }}
+          ></ImageBackground>
+          <SafeAreaView style={styles.safeArea}>
+            <Image
+              source={require("../assets/images/icon.png")}
+              style={styles.logo}
+            />
+            <Text style={styles.title}>Login</Text>
+
+            <View style={styles.inputContainer}>
+              <TextInput
+                autoCapitalize="none"
+                style={styles.input}
+                value={emailAddress}
+                placeholder="Email..."
+                placeholderTextColor="#000"
+                onChangeText={handleEmailChange}
+              />
+              {emailError ? (
+                <Text style={styles.errorText}>{emailError}</Text>
+              ) : null}
+              <PasswordInput
+                value={password}
+                onChangeText={handlePasswordChange}
+                placeholder="Password..."
+                style={{ width: 200 }}
+              />
+
+              <View style={styles.errorContainer}>
+                {validationError ? (
+                  <Text style={styles.errorText}>{validationError}</Text>
+                ) : null}
+                {passwordError ? (
+                  <Text style={styles.errorText}>{passwordError}</Text>
+                ) : null}
               </View>
             </View>
-          </TouchableWithoutFeedback>
-        </Modal>
 
-        <ImageBackground
-          source={require("../assets/images/boomerang.png")}
-          style={{
-            width: 753,
-            height: 499,
-            position: "absolute",
-            top: 0,
-            left: -200,
-          }}
-          imageStyle={{
-            resizeMode: "cover",
-            alignSelf: "flex-end",
-          }}
-        ></ImageBackground>
-        <SafeAreaView style={styles.safeArea}>
-          <Image
-            source={require("../assets/images/icon.png")}
-            style={styles.logo}
-          />
-          <Text style={styles.title}>Login</Text>
+            {/* Forgot Password Section */}
+            <TouchableOpacity
+              onPress={() => {
+                nav.navigate("ForgotPassword");
+              }}
+              style={styles.forgotContainer}
+            >
+              <Text style={styles.text}>Forgot Password</Text>
+            </TouchableOpacity>
 
-          <View style={styles.inputContainer}>
-            <TextInput
-              autoCapitalize="none"
-              style={styles.input}
-              value={emailAddress}
-              placeholder="Email..."
-              placeholderTextColor="#000"
-              onChangeText={handleEmailChange}
-            />
-            {emailError ? (
-              <Text style={styles.errorText}>{emailError}</Text>
-            ) : null}
-            <PasswordInput
-              value={password}
-              onChangeText={handlePasswordChange}
-              placeholder="Password..."
-              style={{ width: 200 }}
-            />
-
-            <View style={styles.errorContainer}>
-              {validationError ? (
-                <Text style={styles.errorText}>{validationError}</Text>
-              ) : null}
-              {passwordError ? (
-                <Text style={styles.errorText}>{passwordError}</Text>
-              ) : null}
+            {/* Login button */}
+            <View style={[{ margin: 10 }]}>
+              {MainButton("Login", onSignInPress, buttonDisabled)}
             </View>
-          </View>
 
-          {/* Forgot Password Section */}
-          <TouchableOpacity
-            onPress={() => {
-              nav.navigate("ForgotPassword");
-            }}
-            style={styles.forgotContainer}
-          >
-            <Text style={styles.text}>Forgot Password</Text>
-          </TouchableOpacity>
-
-          {/* Login button */}
-          <View style={[{ margin: 10 }]}>
-            {MainButton("Login", onSignInPress, buttonDisabled)}
-          </View>
-
-          {/* Google Sign In */}
-          <View style={[{ margin: 10, flexDirection: "row" }]}>
-            <GoogleSignIn />
-            <MicroSignIn />
-          </View>
-          <View style={styles.container}>
-            <EmailCodeSignIn />
-          </View>
-
-          {/* Footer with Register Section */}
-          <View style={styles.footer}>
-            <View style={styles.registerContainer}>
-              <Text style={styles.text} disabled>
-                Don&apos;t have an account?
-              </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  nav.navigate("Register");
-                }}
-                style={styles.registerContainer}
-              >
-                <Text style={styles.registerText}>Register</Text>
-              </TouchableOpacity>
+            {/* Google Sign In */}
+            <View style={[{ margin: 10, flexDirection: "row" }]}>
+              <GoogleSignIn />
+              <MicroSignIn />
             </View>
-          </View>
-        </SafeAreaView>
-      </View>
-    </TouchableWithoutFeedback>
+            <View style={styles.container}>
+              <EmailCodeSignIn />
+            </View>
+
+            {/* Footer with Register Section */}
+            <View style={styles.footer}>
+              <View style={styles.registerContainer}>
+                <Text style={styles.text} disabled>
+                  Don&apos;t have an account?
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    nav.navigate("Register");
+                  }}
+                  style={styles.registerContainer}
+                >
+                  <Text style={styles.registerText}>Register</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </SafeAreaView>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 }
 

@@ -14,6 +14,7 @@ import { SignInFirstFactor, EmailCodeFactor } from "@clerk/types";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../navigation/type";
 import useEmailValidation from "../hooks/useEmailValidation";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const EmailCodeSignIn = () => {
   const { signIn, setActive, isLoaded } = useSignIn(); // This might need to be adapted based on how you initialize Clerk
@@ -23,15 +24,11 @@ const EmailCodeSignIn = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [error, setError] = useState("");
   const { validateEmail } = useEmailValidation();
+  const [buttonDisabled, setButtonDisabled] = React.useState(true);
   const nav = useNavigation<ScreenNavigationProp>();
 
   const handleEmailSubmit = async () => {
     if (!email) {
-      setError("Please enter a valid email address.");
-      return;
-    }
-
-    if (!validateEmail(email)) {
       setError("Please enter a valid email address.");
       return;
     }
@@ -70,8 +67,23 @@ const EmailCodeSignIn = () => {
       }
     } catch (err) {
       if (err instanceof Error) {
-        setError("Failed to send email: " + err.message);
+        setError("Failed to send email check email matches associated account");
       }
+    }
+  };
+
+  const handleEmailChange = (input: string) => {
+    setEmail(input);
+
+    if (input === "") {
+      setError("");
+      setButtonDisabled(true);
+    } else if (!validateEmail(input)) {
+      setError("Please enter a valid email address.");
+      setButtonDisabled(true);
+    } else {
+      setError("");
+      setButtonDisabled(false);
     }
   };
 
@@ -100,7 +112,7 @@ const EmailCodeSignIn = () => {
         }
       }
     } catch (err) {
-      if (err instanceof Error) setError("Verification failed: " + err.message);
+      if (err instanceof Error) setError("Verification failed, try again.");
     }
   };
 
@@ -113,47 +125,61 @@ const EmailCodeSignIn = () => {
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.centeredView}>
-            <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-              <View style={styles.overlay} />
-            </TouchableWithoutFeedback>
-            <View style={styles.modalView}>
-              <TouchableWithoutFeedback onPress={() => {}}>
-                <View>
-                  {!showCodeInput ? (
-                    <>
-                      <TextInput
-                        style={styles.input}
-                        placeholder="Email..."
-                        placeholderTextColor={"#000"}
-                        value={email}
-                        onChangeText={setEmail}
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                      />
-                      {error ? <Text style={styles.error}>{error}</Text> : null}
-                      {MainButton("Submit Email", handleEmailSubmit)}
-                    </>
-                  ) : (
-                    <>
-                      <TextInput
-                        style={styles.input}
-                        placeholder="Code..."
-                        placeholderTextColor={"#000"}
-                        value={code}
-                        onChangeText={setCode}
-                        keyboardType="numeric"
-                      />
-                      {error ? <Text style={styles.error}>{error}</Text> : null}
-                      {MainButton("Verify Code", handleCodeSubmit)}
-                    </>
-                  )}
-                </View>
+        <KeyboardAwareScrollView
+          style={{ flex: 1 }}
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+        >
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={styles.centeredView}>
+              <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+                <View style={styles.overlay} />
               </TouchableWithoutFeedback>
+              <View style={styles.modalView}>
+                <TouchableWithoutFeedback onPress={() => {}}>
+                  <View style={styles.inputContainer}>
+                    {!showCodeInput ? (
+                      <>
+                        <TextInput
+                          style={styles.input}
+                          placeholder="Email..."
+                          placeholderTextColor={"#000"}
+                          value={email}
+                          onChangeText={handleEmailChange}
+                          keyboardType="email-address"
+                          autoCapitalize="none"
+                        />
+                        {error ? (
+                          <Text style={styles.error}>{error}</Text>
+                        ) : null}
+                        {MainButton(
+                          "Submit Email",
+                          handleEmailSubmit,
+                          buttonDisabled,
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <TextInput
+                          style={styles.input}
+                          placeholder="Code..."
+                          placeholderTextColor={"#000"}
+                          value={code}
+                          onChangeText={setCode}
+                          keyboardType="numeric"
+                        />
+                        {error ? (
+                          <Text style={styles.error}>{error}</Text>
+                        ) : null}
+                        {MainButton("Verify Code", handleCodeSubmit)}
+                      </>
+                    )}
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
             </View>
-          </View>
-        </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback>
+        </KeyboardAwareScrollView>
       </Modal>
     </View>
   );
@@ -162,6 +188,10 @@ const EmailCodeSignIn = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  inputContainer: {
     justifyContent: "center",
     alignItems: "center",
   },
@@ -175,6 +205,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   error: {
+    alignSelf: "center",
     color: "red",
     fontSize: 14,
   },

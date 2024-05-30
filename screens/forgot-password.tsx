@@ -16,9 +16,11 @@ import { useSignIn } from "@clerk/clerk-expo";
 import { enableScreens } from "react-native-screens";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../navigation/type";
+import MainButton from "../components/Buttons";
 import PasswordInput from "../components/Password";
 import PasswordStrengthMeter from "../components/PasswordMeter";
 import useEmailValidation from "../hooks/useEmailValidation";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 // Enable native screens for better performance
 enableScreens();
@@ -27,14 +29,16 @@ export default function TabSubmitScreen() {
   // State management for text inputs
   const [emailAddress, setEmailAddress] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  const [emailError, setEmailError] = React.useState("");
+  const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
-  const [validationError, setValidationError] = React.useState("");
+  const [isPasswordStrong, setIsPasswordStrong] = useState(false);
+  const [validationError, setValidationError] = useState("");
   const [code, setCode] = useState("");
   const [successfulCreation, setSuccessfulCreation] = useState(false);
   const { signIn, setActive } = useSignIn();
   const [modalMessage, setModalMessage] = useState("");
   const navigation = useNavigation<ScreenNavigationProp>();
+  const [buttonDisabled, setButtonDisabled] = useState(true);
   const { validateEmail } = useEmailValidation();
 
   const onSubmitPress = async () => {
@@ -62,19 +66,6 @@ export default function TabSubmitScreen() {
     setModalVisible(false);
   };
 
-  // Handle email change and validation
-  const handleEmailChange = (input: string) => {
-    setEmailAddress(input);
-    if (input === "") {
-      setEmailError("");
-    } else if (!validateEmail(input)) {
-      setEmailError("Please enter a valid email address.");
-    } else {
-      setEmailError("");
-    }
-    validateFields();
-  };
-
   // Request a password reset code by email
   const onRequestReset = async () => {
     if (signIn) {
@@ -94,7 +85,6 @@ export default function TabSubmitScreen() {
         code,
         password,
       });
-      console.log(result);
       setModalMessage("Password reset successfully");
       setModalVisible(true);
       navigation.navigate("Main");
@@ -103,7 +93,7 @@ export default function TabSubmitScreen() {
       await setActive!({ session: result.createdSessionId });
     } catch (err: unknown) {
       setModalMessage(
-        err instanceof Error ? err.message : "An unknown error occurred",
+        "An unknown error occurred try again, with another password",
       );
       setModalVisible(true);
     }
@@ -111,16 +101,53 @@ export default function TabSubmitScreen() {
 
   // Validate fields
   const validateFields = () => {
-    if (!password) {
-      setValidationError("Please complete the form.");
-      return false;
+    if (
+      password.length >= 8 &&
+      validateEmail(emailAddress) &&
+      code &&
+      isPasswordStrong
+    ) {
+      setButtonDisabled(false);
+      setValidationError("");
+      return true;
     }
-    setValidationError("");
-    return true;
+    setButtonDisabled(true);
+    return false;
   };
 
   const handlePasswordChange = (input: string) => {
     setPassword(input);
+    if (input === "") {
+      setValidationError("");
+      setButtonDisabled(true);
+    } else if (input.length < 8) {
+      setValidationError("Password must be at least 8 characters long.");
+      setButtonDisabled(true);
+    } else {
+      setButtonDisabled(false);
+      setValidationError("");
+    }
+    validateFields();
+  };
+
+  const handlePasswordStrengthChange = (isStrong: boolean) => {
+    setIsPasswordStrong(isStrong);
+    validateFields();
+  };
+
+  // Handle email change and validation
+  const handleEmailChange = (input: string) => {
+    setEmailAddress(input);
+    if (input === "") {
+      setEmailError("");
+      setButtonDisabled(true);
+    } else if (!validateEmail(input)) {
+      setButtonDisabled(true);
+      setEmailError("Please enter a valid email address.");
+    } else {
+      setButtonDisabled(false);
+      setEmailError("");
+    }
     validateFields();
   };
 
@@ -130,93 +157,94 @@ export default function TabSubmitScreen() {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <SafeAreaView style={styles.safeArea}>
-          <Modal
-            animationType="fade"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-              setModalVisible(!modalVisible);
-            }}
-          >
-            <TouchableWithoutFeedback onPress={handleOutsidePress}>
-              <View style={styles.modalOverlay}>
-                <TouchableOpacity activeOpacity={1} style={styles.modalView}>
-                  <Text style={styles.text}>{modalMessage}</Text>
-                  <Button
-                    title="Close"
-                    color={"#000000"}
-                    onPress={onClosePress}
-                  />
-                </TouchableOpacity>
-              </View>
-            </TouchableWithoutFeedback>
-          </Modal>
-          <Image
-            source={require("../assets/images/icon.png")}
-            style={styles.logo}
-          />
-          <Text style={styles.title}>Forgot-Password</Text>
-          {!successfulCreation && (
-            <>
-              {/* Text input fields */}
-              <TextInput
-                style={styles.input}
-                onChangeText={handleEmailChange}
-                value={emailAddress}
-                placeholderTextColor={"#000000"}
-                placeholder="Email..."
-              />
-              <View style={styles.errorContainer}>
-                {emailError ? (
-                  <Text style={styles.errorText}>{emailError}</Text>
-                ) : null}
-              </View>
-              {/* Submit button */}
-              <View style={styles.fixToText}>
-                <Button
-                  title="Submit"
-                  color={"#000000"}
-                  onPress={onSubmitPress}
-                />
-              </View>
-            </>
-          )}
-          {successfulCreation && (
-            <>
-              <View>
+    <KeyboardAwareScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={{ flexGrow: 1 }}
+      keyboardShouldPersistTaps="handled"
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <SafeAreaView style={styles.safeArea}>
+            <Modal
+              animationType="fade"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <TouchableWithoutFeedback onPress={handleOutsidePress}>
+                <View style={styles.modalOverlay}>
+                  <TouchableOpacity activeOpacity={1} style={styles.modalView}>
+                    <Text style={styles.text}>{modalMessage}</Text>
+                    <Button
+                      title="Close"
+                      color={"#000000"}
+                      onPress={onClosePress}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </TouchableWithoutFeedback>
+            </Modal>
+            <Image
+              source={require("../assets/images/icon.png")}
+              style={styles.logo}
+            />
+            <Text style={styles.title}>Forgot-Password</Text>
+            {!successfulCreation && (
+              <>
+                {/* Text input fields */}
                 <TextInput
-                  value={code}
-                  placeholder="Code..."
                   style={styles.input}
-                  onChangeText={setCode}
+                  onChangeText={handleEmailChange}
+                  value={emailAddress}
                   placeholderTextColor={"#000000"}
+                  placeholder="Email..."
                 />
-                <PasswordStrengthMeter password={password} />
-                <PasswordInput
-                  value={password}
-                  onChangeText={handlePasswordChange}
-                  placeholder="New Password..."
-                  style={{ width: 200 }}
-                />
-              </View>
-              <View style={styles.errorContainer}>
-                {validationError ? (
-                  <Text style={styles.errorText}>{validationError}</Text>
-                ) : null}
-              </View>
-              <Button
-                onPress={onReset}
-                title="Set new Password"
-                color={"#6c47ff"}
-              ></Button>
-            </>
-          )}
-        </SafeAreaView>
-      </View>
-    </TouchableWithoutFeedback>
+                <View style={styles.errorContainer}>
+                  {emailError ? (
+                    <Text style={styles.errorText}>{emailError}</Text>
+                  ) : null}
+                </View>
+                {/* Submit button */}
+                <View style={styles.fixToText}>
+                  {MainButton("Submit", onSubmitPress, buttonDisabled)}
+                </View>
+              </>
+            )}
+            {successfulCreation && (
+              <>
+                <View>
+                  <TextInput
+                    value={code}
+                    placeholder="Code..."
+                    style={styles.input}
+                    onChangeText={setCode}
+                    placeholderTextColor={"#000000"}
+                  />
+                  <PasswordStrengthMeter
+                    password={password}
+                    onPasswordStrengthChange={handlePasswordStrengthChange}
+                  />
+                  <PasswordInput
+                    value={password}
+                    onChangeText={handlePasswordChange}
+                    placeholder="New Password..."
+                    style={{ width: 200 }}
+                  />
+                </View>
+                <View style={styles.errorContainer}>
+                  {validationError ? (
+                    <Text style={styles.errorText}>{validationError}</Text>
+                  ) : null}
+                </View>
+                {MainButton("Submit", onReset, buttonDisabled)}
+              </>
+            )}
+          </SafeAreaView>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 }
 

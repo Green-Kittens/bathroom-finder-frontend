@@ -1,12 +1,22 @@
 // components/PasswordStrengthMeter.js
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import zxcvbn, { ZXCVBNResult } from "zxcvbn";
 
-const PasswordStrengthMeter = ({ password }: { password: string }) => {
+const PasswordStrengthMeter = ({
+  password,
+  onPasswordStrengthChange,
+}: {
+  password: string;
+  onPasswordStrengthChange: (isStrongEnough: boolean) => void;
+}) => {
   if (password === "") return null;
   const strength = zxcvbn(password);
+
+  useEffect(() => {
+    onPasswordStrengthChange(strength.score >= 3); // Assuming score >= 3 is strong enough
+  }, [password]);
 
   const getStrengthFeedback = (score: number) => {
     switch (score) {

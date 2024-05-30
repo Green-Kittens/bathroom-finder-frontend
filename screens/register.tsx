@@ -14,6 +14,7 @@ import MainButton from "../components/Buttons";
 import PasswordStrengthMeter from "../components/PasswordMeter";
 import PasswordInput from "../components/Password";
 import useEmailValidation from "../hooks/useEmailValidation";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function RegisterScreen() {
   // State management for text inputs
@@ -23,10 +24,13 @@ export default function RegisterScreen() {
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [passwordMatch, setPasswordMatch] = React.useState(true);
+  const [isPasswordStrong, setIsPasswordStrong] = React.useState(false);
   const [pendingVerification, setPendingVerification] = React.useState(false);
   const [code, setCode] = React.useState("");
   const [validationError, setValidationError] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
+  const [passwordError, setPasswordError] = React.useState("");
+  const [buttonDisabled, setButtonDisabled] = React.useState(true);
   const { validateEmail } = useEmailValidation();
 
   // start the sign up process.
@@ -54,7 +58,7 @@ export default function RegisterScreen() {
       // change the UI to our pending section.
       setPendingVerification(true);
     } catch (err: unknown) {
-      console.error(JSON.stringify(err, null, 2));
+      setValidationError(JSON.stringify(err, null, 2));
     }
   };
 
@@ -79,6 +83,8 @@ export default function RegisterScreen() {
 
   // Validate fields
   const validateFields = () => {
+    let valid = true;
+
     if (
       !firstName ||
       !lastName ||
@@ -87,10 +93,29 @@ export default function RegisterScreen() {
       !confirmPassword
     ) {
       setValidationError("Please fill out all fields.");
-      return false;
+      valid = false;
+    } else {
+      setValidationError("");
     }
-    setValidationError("");
-    return true;
+
+    if (!isPasswordStrong) {
+      if (password === "") {
+        setPasswordError("");
+      } else {
+        setPasswordError("Password is not strong enough.");
+        valid = false;
+      }
+    } else {
+      setPasswordError("");
+    }
+
+    if (confirmPassword !== password) {
+      setValidationError("Passwords do not match.");
+      valid = false;
+    }
+
+    setButtonDisabled(!valid);
+    return valid;
   };
 
   // Handle field value changes and validate
@@ -101,6 +126,11 @@ export default function RegisterScreen() {
   // Handle last name change and validate
   const handleLastNameChange = (input: string) => {
     setLastName(input);
+    validateFields();
+  };
+
+  const handlePasswordStrengthChange = (isStrong: boolean) => {
+    setIsPasswordStrong(isStrong);
     validateFields();
   };
 
@@ -119,8 +149,14 @@ export default function RegisterScreen() {
 
   const handlePasswordChange = (input: string) => {
     setPassword(input);
-    setPasswordMatch(input === confirmPassword);
-    validateFields();
+    if (input.length < 8) {
+      setPasswordError("Password must be at least 8 characters long.");
+      setButtonDisabled(true);
+    } else {
+      setValidationError("");
+      setPasswordMatch(input === confirmPassword);
+      validateFields();
+    }
   };
 
   const handleConfirmPasswordChange = (input: string) => {
@@ -129,82 +165,89 @@ export default function RegisterScreen() {
     validateFields();
   };
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <ScrollView automaticallyAdjustKeyboardInsets={true}>
-        <View style={styles.container}>
-          <Text style={styles.title}>Register</Text>
-          {!pendingVerification && (
-            <SafeAreaView style={styles.safeArea}>
-              <View style={{ flexDirection: "row" }}>
+    <KeyboardAwareScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={{ flexGrow: 1 }}
+      keyboardShouldPersistTaps="handled"
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView automaticallyAdjustKeyboardInsets={true}>
+          <View style={styles.container}>
+            <Text style={styles.title}>Register</Text>
+            {!pendingVerification && (
+              <SafeAreaView style={styles.safeArea}>
+                <View style={{ flexDirection: "row" }}>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={handleFirstNameChange}
+                    value={firstName}
+                    placeholder="First Name..."
+                    placeholderTextColor="#000"
+                  />
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={handleLastNameChange}
+                    value={lastName}
+                    placeholder="Last Name..."
+                    placeholderTextColor="#000"
+                  />
+                </View>
                 <TextInput
-                  style={styles.input}
-                  onChangeText={handleFirstNameChange}
-                  value={firstName}
-                  placeholder="First Name..."
+                  style={styles.inputLong}
+                  onChangeText={handleEmailChange}
+                  value={emailAddress}
+                  placeholder="Email..."
                   placeholderTextColor="#000"
                 />
-                <TextInput
-                  style={styles.input}
-                  onChangeText={handleLastNameChange}
-                  value={lastName}
-                  placeholder="Last Name..."
-                  placeholderTextColor="#000"
+                {emailError ? (
+                  <Text style={styles.errorText}>{emailError}</Text>
+                ) : null}
+                <PasswordStrengthMeter
+                  password={password}
+                  onPasswordStrengthChange={handlePasswordStrengthChange}
                 />
-              </View>
-              <TextInput
-                style={styles.inputLong}
-                onChangeText={handleEmailChange}
-                value={emailAddress}
-                placeholder="Email..."
-                placeholderTextColor="#000"
-              />
-              {emailError ? (
-                <Text style={styles.errorText}>{emailError}</Text>
-              ) : null}
-              <PasswordStrengthMeter password={password} />
-              <PasswordInput
-                value={password}
-                onChangeText={handlePasswordChange}
-                placeholder="Password..."
-              />
-              <PasswordInput
-                value={confirmPassword}
-                onChangeText={handleConfirmPasswordChange}
-                placeholder="Confirm Password..."
-              />
-              <View style={styles.errorContainer}>
-                {!passwordMatch && (
-                  <Text style={styles.errorText}>Passwords do not match</Text>
-                )}
+                <PasswordInput
+                  value={password}
+                  onChangeText={handlePasswordChange}
+                  placeholder="Password..."
+                />
+                <PasswordInput
+                  value={confirmPassword}
+                  onChangeText={handleConfirmPasswordChange}
+                  placeholder="Confirm Password..."
+                />
+                <View style={styles.errorContainer}>
+                  <Text style={styles.errorText}>{passwordError}</Text>
+                  {validationError ? (
+                    <Text style={styles.errorText}>{validationError}</Text>
+                  ) : null}
+                </View>
+                <View style={styles.fixToText}>
+                  {MainButton("Sign Up", onSignUpPress, buttonDisabled)}
+                </View>
+              </SafeAreaView>
+            )}
+            {pendingVerification && (
+              <SafeAreaView style={styles.container}>
+                <View>
+                  <TextInput
+                    style={styles.input}
+                    value={code}
+                    placeholder="Code..."
+                    placeholderTextColor={"#000"}
+                    onChangeText={(code) => setCode(code)}
+                  />
+                </View>
                 {validationError ? (
                   <Text style={styles.errorText}>{validationError}</Text>
                 ) : null}
-              </View>
-              <View style={styles.fixToText}>
-                {MainButton("Sign Up", onSignUpPress)}
-              </View>
-            </SafeAreaView>
-          )}
-          {pendingVerification && (
-            <SafeAreaView style={styles.container}>
-              <View>
-                <TextInput
-                  style={styles.input}
-                  value={code}
-                  placeholder="Code..."
-                  placeholderTextColor={"#000"}
-                  onChangeText={(code) => setCode(code)}
-                />
-              </View>
-              {validationError ? (
-                <Text style={styles.errorText}>{validationError}</Text>
-              ) : null}
-              {MainButton("Verify Email", onPressVerify)}
-            </SafeAreaView>
-          )}
-        </View>
-      </ScrollView>
-    </TouchableWithoutFeedback>
+                {MainButton("Verify Email", onPressVerify)}
+              </SafeAreaView>
+            )}
+          </View>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 }
 
