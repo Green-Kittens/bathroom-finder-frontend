@@ -53,7 +53,6 @@ function TabLoginScreen() {
       // This indicates the user is signed in
       await setActive({ session: completeSignIn.createdSessionId });
     } catch (err: unknown) {
-      console.log(err);
       setModalMessage(
         "Invalid email or password. \nPlease check your credentials and try again.",
       );
@@ -62,7 +61,7 @@ function TabLoginScreen() {
   };
   // Validate fields
   const validateFields = () => {
-    if (!emailAddress || !password) {
+    if (emailAddress === "" || password === "") {
       setValidationError("Please fill out all fields.");
       return false;
     } else {
@@ -97,6 +96,7 @@ function TabLoginScreen() {
       setPasswordError("");
       setButtonDisabled(false);
     }
+    validateFields();
   };
 
   // Close modal
