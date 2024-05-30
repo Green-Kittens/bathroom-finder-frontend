@@ -11,11 +11,11 @@ const PasswordStrengthMeter = ({
   password: string;
   onPasswordStrengthChange: (isStrongEnough: boolean) => void;
 }) => {
+  const strength = zxcvbn(password);
   useEffect(() => {
     onPasswordStrengthChange(strength.score >= 3); // Assuming score >= 3 is strong enough
   }, [password]);
   if (password === "") return null;
-  const strength = zxcvbn(password);
 
   const getStrengthFeedback = (score: number) => {
     switch (score) {
