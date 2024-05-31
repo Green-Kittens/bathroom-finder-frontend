@@ -1,11 +1,9 @@
 import {
   StyleSheet,
-  Animated,
   Image,
   Text,
   View,
   ImageBackground,
-  Pressable,
   ScrollView,
   Dimensions,
 } from "react-native";
@@ -16,132 +14,52 @@ import Review from "../components/Review";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
 import { SignedIn } from "@clerk/clerk-expo";
 import { LinearGradient } from "expo-linear-gradient";
-import MainButton, { LightButton } from "../components/Buttons";
-import { Facility as BathroomProfile } from "../../types/facility";
+import MainButton, {
+  LightButton,
+  SecondaryButton,
+} from "../components/Buttons";
+
+import ViewMoreText from "react-native-view-more-text";
 import { getAllReviews } from "../../controllers/reviewController";
+
+import { Facility as BathroomProfile } from "../../types/facility";
 import { Review as BathroomReview } from "../../types/review";
 
-const maxLineNumber = 5;
 const windowHeight = Dimensions.get("window").height;
-
-// ask why there is no description param for BathroomProfile
-// TODO: review button should navigate to bathroom's review page
-// collect all reviews for bathroom
 
 function CollapseView({
   hours,
   category,
   tags,
-  reviews,
 }: {
   hours: string;
   category: string;
   tags: string[];
-  reviews: BathroomReview[];
 }) {
-  const [collapsed, setCollapsed] = useState(true);
-  const [maxLines, setMaxLines] = useState(2);
-  const animationHeight = useRef(new Animated.Value(0)).current;
-
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
-
-  const collapseView = () => {
-    Animated.timing(animationHeight, {
-      duration: 100,
-      toValue: 80,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const expandView = () => {
-    setMaxLines(maxLineNumber);
-    Animated.timing(animationHeight, {
-      duration: 1000,
-      toValue: 1000,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  useEffect(() => {
-    if (collapsed) {
-      collapseView();
-    } else {
-      expandView();
-    }
-  }, [collapsed]);
-
-  const changeText = () => {
-    if (collapsed) {
-      return "Expand";
-    } else {
-      return "Collapse";
-    }
-  };
-
-  // navigation
-  const navigation = useNavigation<ScreenNavigationProp>();
+  type onPressCallback = () => void;
+  function renderViewMore(onPress: onPressCallback) {
+    return renderPressableText("View more", onPress);
+  }
+  function renderViewLess(onPress: onPressCallback) {
+    return renderPressableText("View less", onPress);
+  }
+  function renderPressableText(content: string, onPress: onPressCallback) {
+    return MainButton(content, onPress, {}, { fontSize: 12 });
+  }
 
   return (
-    <View style={{ overflow: "hidden", backgroundColor: "none" }}>
-      <Animated.View style={{ maxHeight: animationHeight }}>
-        <Text
-          style={[
-            styles.paragraph,
-            { backgroundColor: "#CDEEEA", padding: 20 },
-          ]}
-          numberOfLines={maxLines}
-        >
-          Hours: {hours} {"\n"}
-          Category: {category} {"\n"}
-          Tags: {tags.join(", ")} {"\n"}
-          {/* { description } */}
-        </Text>
-      </Animated.View>
-      <LinearGradient
-        // Button Linear Gradient
-        colors={["#6da798", "#40a4a9"]}
-        end={{ x: 0.1, y: 0.2 }}
-        style={styles.button}
-      >
-        <Pressable
-          style={[{ width: "100%", alignItems: "center" }]}
-          onPress={toggleCollapsed}
-        >
-          <Text style={[styles.body, { fontWeight: "bold" }]}>
-            {changeText()}
-          </Text>
-        </Pressable>
-      </LinearGradient>
-
-      <View style={{}}>
-        <View style={styles.separator} />
-        <LinearGradient
-          colors={["#6da798", "#40a4a9"]}
-          end={{ x: 0.1, y: 0.2 }}
-          style={[{ padding: 20, borderRadius: 15 }]}
-        >
-          <View
-            style={[
-              {
-                flex: 1,
-                padding: 10,
-                alignItems: "center",
-                backgroundColor: "none",
-              },
-            ]}
-          >
-            {Review()}
-            <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
-              {LightButton("See more", () => {
-                navigation.navigate("FacilityReviews", { reviews });
-              })}
-            </View>
-          </View>
-        </LinearGradient>
-      </View>
-    </View>
+    <ViewMoreText
+      numberOfLines={3}
+      renderViewMore={renderViewMore}
+      renderViewLess={renderViewLess}
+    >
+      <Text>
+        Hours: {hours} {"\n"}
+        Category: {category} {"\n"}
+        Tags: {tags.join(", ")} {"\n"}
+        Description: {/* { description } */}
+      </Text>
+    </ViewMoreText>
   );
 }
 
@@ -183,11 +101,11 @@ export default function TabFacilityProfileScreen() {
           <ImageBackground
             source={require("../assets/images/blob.png")}
             style={{
-              width: 953,
+              width: 500,
               height: windowHeight,
               position: "absolute",
-              top: 100,
-              left: -200,
+              top: 300,
+              left: -100,
             }}
             imageStyle={{
               resizeMode: "cover",
@@ -223,19 +141,55 @@ export default function TabFacilityProfileScreen() {
         >
           <SignedIn>
             <View style={{ marginTop: 10 }}>
-              {MainButton("Add Review", () => {
+              {SecondaryButton("Add Review", () => {
                 // figure out how to make it so that dropdown renders current facility as location
                 navigation.navigate("ReviewForm");
               })}
             </View>
           </SignedIn>
         </View>
-        <CollapseView
-          hours={bathroom.Operations}
-          category={bathroom.Category}
-          tags={bathroom.Tags}
-          reviews={bathroomReviews}
-        />
+
+        <View
+          style={{
+            overflow: "hidden",
+            backgroundColor: "none",
+            marginHorizontal: "6%",
+          }}
+        >
+          <View style={{ paddingVertical: "5%" }}>
+            <CollapseView
+              hours={bathroom.Operations}
+              category={bathroom.Category}
+              tags={bathroom.Tags}
+            />
+          </View>
+
+          <View>
+            <LinearGradient
+              colors={["#6da798", "#40a4a9"]}
+              end={{ x: 0.1, y: 0.2 }}
+              style={[{ padding: 20, borderRadius: 15 }]}
+            >
+              <View
+                style={[
+                  {
+                    flex: 1,
+                    padding: 10,
+                    alignItems: "center",
+                    backgroundColor: "none",
+                  },
+                ]}
+              >
+                {Review()}
+                <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
+                  {LightButton("See more", () => {
+                    navigation.navigate("FacilityReviews", { bathroomReviews });
+                  })}
+                </View>
+              </View>
+            </LinearGradient>
+          </View>
+        </View>
       </ScrollView>
     </View>
   );
