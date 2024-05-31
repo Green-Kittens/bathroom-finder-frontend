@@ -2,8 +2,21 @@ import React from "react";
 import { View } from "../components/Themed";
 import { ScrollView, ImageBackground, StyleSheet } from "react-native";
 import ReviewButtons from "../components/ReviewButtons";
+// import { Review as BathroomReview } from "../../types/review";
+// import { useRoute, RouteProp } from "@react-navigation/native";
+
+// route type
+// type FacilityReviewsRouteParams = { reviews: BathroomReview[] };
+// type FacilityReviewsRouteProp = RouteProp<
+//   { FacilityReviews: FacilityReviewsRouteParams },
+//   "FacilityReviews"
+// >;
 
 export default function FacilityReviewsScreen() {
+  // route-- review data
+  // const route = useRoute<FacilityReviewsRouteProp>();
+  // const { reviews } = route.params;
+
   return (
     <ScrollView style={{ width: "100%", height: 100 }}>
       <View style={styles.container}>
@@ -25,6 +38,9 @@ export default function FacilityReviewsScreen() {
           <View
             style={{ justifyContent: "space-evenly", backgroundColor: "none" }}
           >
+            {/* {reviews.map((review) => (
+              // figure out how to change component to pass in necessary data
+            ))} */}
             {ReviewButtons()}
             {ReviewButtons()}
             {ReviewButtons()}
