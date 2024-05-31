@@ -12,7 +12,6 @@ import { useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../type";
 import Review from "../../components/Review";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
-
 import { LinearGradient } from "expo-linear-gradient";
 import MainButton, {
   LightButton,
@@ -58,9 +57,35 @@ function CollapseView() {
   );
 }
 
+// route type
+type FacilityProfileRouteParams = { bathroom: BathroomProfile };
+type FacilityProfileRouteProp = RouteProp<
+  { FacilityProfile: FacilityProfileRouteParams },
+  "FacilityProfile"
+>;
+
 export default function TabFacilityProfileScreen() {
   // navigation
   const navigation = useNavigation<ScreenNavigationProp>();
+
+  // route-- facility data
+  const route = useRoute<FacilityProfileRouteProp>();
+  const { bathroom } = route.params;
+
+  // fetching all bathroom reviews
+  const [bathroomReviews, setBathroomReviews] = useState<BathroomReview[]>([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const fetchReviews = await getAllReviews(bathroom._id);
+        setBathroomReviews(fetchReviews);
+        console.log(fetchReviews);
+      } catch (error) {
+        console.error("Failed to fetch reviews", error);
+      }
+    })();
+  }, []);
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -81,10 +106,11 @@ export default function TabFacilityProfileScreen() {
               alignSelf: "flex-end",
             }}
           ></ImageBackground>
-          <Text style={styles.title}>Facility Name</Text>
+          <Text style={styles.title}>{bathroom.Name}</Text>
           <Image
             source={{
-              uri: "https://images.adsttc.com/media/images/6179/94c7/f91c/81a4/f700/00c2/newsletter/WMC-Expo-2---Architectural-Photographer-Michael-Tessler---11.jpg?1635357877",
+              uri: bathroom.PictureURL, // not rendering-- check if image link is good
+              // uri: "https://images.adsttc.com/media/images/6179/94c7/f91c/81a4/f700/00c2/newsletter/WMC-Expo-2---Architectural-Photographer-Michael-Tessler---11.jpg?1635357877",
             }}
             style={{ height: 250, width: 250 }}
           />
@@ -100,7 +126,7 @@ export default function TabFacilityProfileScreen() {
               },
             ]}
           >
-            <StarRatingDisplay rating={5} color="black" />
+            <StarRatingDisplay rating={bathroom.RatingAVG} color="black" />
             <Text style={styles.body}> 5.0 stars</Text>
           </View>
         </View>
