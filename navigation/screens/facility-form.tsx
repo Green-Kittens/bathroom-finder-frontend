@@ -76,6 +76,29 @@ export default function FacilityForm() {
     }));
   };
 
+  const Tag = (tag: any, tagname: any, text: string) => {
+    return (
+      <View style={tag
+        ? styles.tagCheckboxSelected
+        : styles.tagCheckbox
+      }>
+        <TouchableOpacity
+          onPress={() => handleTagChange(tagname)}
+        >
+          <Text
+            style={{
+              color: tag
+                ? btnActive
+                : btnInactive,
+            }}
+          >
+            {text}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
   const handleAddImage = async (source: "camera" | "gallery") => {
     let pickerResult;
     if (source === "camera") {
@@ -266,69 +289,10 @@ export default function FacilityForm() {
           <View style={styles.tagSelectionContainer}>
             <Text style={styles.tagTitle}>Select Tags</Text>
             <View style={styles.tags}>
-              <View style={tags.wheelchairAccessible
-                ? styles.tagCheckboxSelected
-                : styles.tagCheckbox
-              }>
-                <TouchableOpacity
-                  onPress={() => handleTagChange("wheelchairAccessible")}
-                >
-                  <Text
-                    style={{
-                      color: tags.wheelchairAccessible
-                        ? btnActive
-                        : btnInactive,
-                    }}
-                  >
-                    Wheelchair Accessible
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.tagCheckbox}>
-                <TouchableOpacity
-                  onPress={() => handleTagChange("babyChanging")}
-                >
-                  <Text
-                    style={{
-                      color: tags.babyChanging ? btnActive : btnInactive,
-                    }}
-                  >
-                    {tags.babyChanging
-                      ? "Baby Changing Station"
-                      : "No Baby Changing Station"}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.tagCheckbox}>
-                <TouchableOpacity
-                  onPress={() => handleTagChange("cleanedRegularly")}
-                >
-                  <Text
-                    style={{
-                      color: tags.cleanedRegularly ? btnActive : btnInactive,
-                    }}
-                  >
-                    {tags.cleanedRegularly
-                      ? "Cleaned Regularly"
-                      : "Not Cleaned Regularly"}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.tagCheckbox}>
-                <TouchableOpacity
-                  onPress={() => handleTagChange("genderNeutral")}
-                >
-                  <Text
-                    style={{
-                      color: tags.genderNeutral ? btnActive : btnInactive,
-                    }}
-                  >
-                    {tags.genderNeutral
-                      ? "Gender Neutral"
-                      : "Not Gender Neutral"}
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              {Tag(tags.wheelchairAccessible, "wheelchairAccessible", "Wheelchair Accessible")}
+              {Tag(tags.babyChanging, "babyChanging", "Baby Changing Station")}
+              {Tag(tags.cleanedRegularly, "cleanedRegularly", "Cleaned Regularly")}
+              {Tag(tags.genderNeutral, "genderNeutral", "Gender Neutral")}
             </View>
           </View>
 
