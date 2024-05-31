@@ -18,12 +18,10 @@ import MainButton, {
   LightButton,
   SecondaryButton,
 } from "../components/Buttons";
-
 import ViewMoreText from "react-native-view-more-text";
-import { getAllReviews } from "../../controllers/reviewController";
-
-import { Facility as BathroomProfile } from "../../types/facility";
-import { Review as BathroomReview } from "../../types/review";
+import { getAllReviews } from "../controllers/reviewController";
+import { Facility as BathroomProfile } from "../types/facility";
+import { Review as BathroomReview } from "../types/review";
 
 const windowHeight = Dimensions.get("window").height;
 
