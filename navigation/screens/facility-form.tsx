@@ -76,28 +76,21 @@ export default function FacilityForm() {
     }));
   };
 
-  const Tag = (tag: any, tagname: any, text: string) => {
+  const Tag = (tag, tagname, text: string) => {
     return (
-      <View style={tag
-        ? styles.tagCheckboxSelected
-        : styles.tagCheckbox
-      }>
-        <TouchableOpacity
-          onPress={() => handleTagChange(tagname)}
-        >
+      <View style={tag ? styles.tagCheckboxSelected : styles.tagCheckbox}>
+        <TouchableOpacity onPress={() => handleTagChange(tagname)}>
           <Text
             style={{
-              color: tag
-                ? btnActive
-                : btnInactive,
+              color: tag ? btnActive : btnInactive,
             }}
           >
             {text}
           </Text>
         </TouchableOpacity>
       </View>
-    )
-  }
+    );
+  };
 
   const handleAddImage = async (source: "camera" | "gallery") => {
     let pickerResult;
@@ -289,9 +282,17 @@ export default function FacilityForm() {
           <View style={styles.tagSelectionContainer}>
             <Text style={styles.tagTitle}>Select Tags</Text>
             <View style={styles.tags}>
-              {Tag(tags.wheelchairAccessible, "wheelchairAccessible", "Wheelchair Accessible")}
+              {Tag(
+                tags.wheelchairAccessible,
+                "wheelchairAccessible",
+                "Wheelchair Accessible",
+              )}
               {Tag(tags.babyChanging, "babyChanging", "Baby Changing Station")}
-              {Tag(tags.cleanedRegularly, "cleanedRegularly", "Cleaned Regularly")}
+              {Tag(
+                tags.cleanedRegularly,
+                "cleanedRegularly",
+                "Cleaned Regularly",
+              )}
               {Tag(tags.genderNeutral, "genderNeutral", "Gender Neutral")}
             </View>
           </View>
