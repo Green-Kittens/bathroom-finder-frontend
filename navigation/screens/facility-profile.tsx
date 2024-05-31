@@ -56,7 +56,7 @@ function CollapseView({
         Hours: {hours} {"\n"}
         Category: {category} {"\n"}
         Tags: {tags.join(", ")} {"\n"}
-        {/* { description } */}
+        Description: {/* { description } */}
       </Text>
     </ViewMoreText>
   );
