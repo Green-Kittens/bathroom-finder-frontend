@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -8,7 +8,7 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../type";
 import Review from "../../components/Review";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
@@ -19,6 +19,9 @@ import MainButton, {
 } from "../../components/Buttons";
 
 import ViewMoreText from "react-native-view-more-text";
+import { getAllReviews } from "../../controllers/reviewController";
+import { Facility as BathroomProfile } from "../../types/facility";
+import { Review as BathroomReview } from "../../types/review";
 
 const windowHeight = Dimensions.get("window").height;
 
@@ -73,7 +76,7 @@ export default function TabFacilityProfileScreen() {
   const { bathroom } = route.params;
 
   // fetching all bathroom reviews
-  const [bathroomReviews, setBathroomReviews] = useState<BathroomReview[]>([]);
+  const [, setBathroomReviews] = useState<BathroomReview[]>([]);
   useEffect(() => {
     (async () => {
       try {
