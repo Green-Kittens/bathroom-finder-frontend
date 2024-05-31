@@ -11,30 +11,37 @@ import {
   Dimensions,
 } from "react-native";
 import { useEffect, useState, useRef } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../type";
 import Review from "../../components/Review";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
-
 import { LinearGradient } from "expo-linear-gradient";
 import MainButton, { LightButton } from "../../components/Buttons";
+import { Facility as BathroomProfile } from "../../types/facility";
+import { getAllReviews } from "../../controllers/reviewController";
+import { Review as BathroomReview } from "../../types/review";
 
 const maxLineNumber = 5;
 const windowHeight = Dimensions.get("window").height;
 
-function CollapseView() {
+// ask why there is no description param for BathroomProfile
+// TODO: review button should navigate to bathroom's review page
+// collect all reviews for bathroom
+
+function CollapseView({
+  hours,
+  category,
+  tags,
+  reviews,
+}: {
+  hours: string;
+  category: string;
+  tags: string[];
+  reviews: BathroomReview[];
+}) {
   const [collapsed, setCollapsed] = useState(true);
   const [maxLines, setMaxLines] = useState(2);
   const animationHeight = useRef(new Animated.Value(0)).current;
-
-  /**get all reviews*/
-  // const handleReviews = async () => {
-  //   try {
-  //     const reviews = await getAllReviews(bathroomID);
-  //   } catch (error) {
-  //     console.error("Error retrieving reviews:", error);
-  //   }
-  // };
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -86,14 +93,10 @@ function CollapseView() {
           ]}
           numberOfLines={maxLines}
         >
-          Hours: ##:## - ##:## {"\n"}
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          Hours: {hours} {"\n"}
+          Category: {category} {"\n"}
+          Tags: {tags.join(", ")} {"\n"}
+          {/* { description } */}
         </Text>
       </Animated.View>
       <LinearGradient
@@ -132,7 +135,7 @@ function CollapseView() {
             {Review()}
             <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
               {LightButton("See more", () => {
-                navigation.navigate("FacilityReviews");
+                navigation.navigate("FacilityReviews", { reviews });
               })}
             </View>
           </View>
@@ -142,9 +145,35 @@ function CollapseView() {
   );
 }
 
+// route type
+type FacilityProfileRouteParams = { bathroom: BathroomProfile };
+type FacilityProfileRouteProp = RouteProp<
+  { FacilityProfile: FacilityProfileRouteParams },
+  "FacilityProfile"
+>;
+
 export default function TabFacilityProfileScreen() {
   // navigation
   const navigation = useNavigation<ScreenNavigationProp>();
+
+  // route-- facility data
+  const route = useRoute<FacilityProfileRouteProp>();
+  const { bathroom } = route.params;
+
+  // fetching all bathroom reviews
+  const [bathroomReviews, setBathroomReviews] = useState<BathroomReview[]>([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const fetchReviews = await getAllReviews(bathroom._id);
+        setBathroomReviews(fetchReviews);
+        console.log(fetchReviews);
+      } catch (error) {
+        console.error("Failed to fetch reviews", error);
+      }
+    })();
+  }, []);
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -165,10 +194,11 @@ export default function TabFacilityProfileScreen() {
               alignSelf: "flex-end",
             }}
           ></ImageBackground>
-          <Text style={styles.title}>Facility Name</Text>
+          <Text style={styles.title}>{bathroom.Name}</Text>
           <Image
             source={{
-              uri: "https://images.adsttc.com/media/images/6179/94c7/f91c/81a4/f700/00c2/newsletter/WMC-Expo-2---Architectural-Photographer-Michael-Tessler---11.jpg?1635357877",
+              uri: bathroom.PictureURL, // not rendering-- check if image link is good
+              // uri: "https://images.adsttc.com/media/images/6179/94c7/f91c/81a4/f700/00c2/newsletter/WMC-Expo-2---Architectural-Photographer-Michael-Tessler---11.jpg?1635357877",
             }}
             style={{ height: 250, width: 250 }}
           />
@@ -184,7 +214,7 @@ export default function TabFacilityProfileScreen() {
               },
             ]}
           >
-            <StarRatingDisplay rating={5} color="black" />
+            <StarRatingDisplay rating={bathroom.RatingAVG} color="black" />
             <Text style={styles.body}> 5.0 stars</Text>
           </View>
         </View>
@@ -198,7 +228,12 @@ export default function TabFacilityProfileScreen() {
             })}
           </View>
         </View>
-        <CollapseView />
+        <CollapseView
+          hours={bathroom.Operations}
+          category={bathroom.Category}
+          tags={bathroom.Tags}
+          reviews={bathroomReviews}
+        />
       </ScrollView>
     </View>
   );
