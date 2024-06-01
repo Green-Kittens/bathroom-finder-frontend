@@ -1,4 +1,4 @@
-import { GestureResponderEvent, StyleProp } from "react-native";
+import { GestureResponderEvent, StyleProp, TextStyle } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet } from "react-native";
 import React from "react";
@@ -9,11 +9,12 @@ export default function MainButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
   styling?: StyleProp<ViewStyle>,
+  textStyling?: StyleProp<TextStyle>,
 ) {
   return (
     <Button
       title={words}
-      titleStyle={styles.text}
+      titleStyle={[styles.text, textStyling]}
       ViewComponent={LinearGradient}
       linearGradientProps={{
         colors: ["#7FC6B3", "#74C9C0"],
