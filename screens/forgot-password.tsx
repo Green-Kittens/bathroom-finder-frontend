@@ -49,9 +49,9 @@ export default function TabSubmitScreen() {
         setModalMessage(`Email has been sent to ${emailAddress}`);
         setSuccessfulCreation(true);
       } catch (err: unknown) {
-        setModalMessage(
-          "Error occured, please try again. \nCheck if the email is asociated with an account.",
-        );
+        const errorMessage = JSON.parse(JSON.stringify(err, null, 2)).errors[0]
+          .message;
+        setModalMessage(errorMessage);
         setModalVisible(true);
       } finally {
         setModalVisible(true);
@@ -93,9 +93,9 @@ export default function TabSubmitScreen() {
       // Set the user session active, which will log in the user automatically
       await setActive!({ session: result.createdSessionId });
     } catch (err: unknown) {
-      setModalMessage(
-        "An unknown error occurred try again, with another password",
-      );
+      const errorMessage = JSON.parse(JSON.stringify(err, null, 2)).errors[0]
+        .message;
+      setModalMessage(errorMessage);
       setModalVisible(true);
     }
   };

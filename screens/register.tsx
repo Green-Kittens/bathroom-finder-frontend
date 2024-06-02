@@ -58,7 +58,9 @@ export default function RegisterScreen() {
       // change the UI to our pending section.
       setPendingVerification(true);
     } catch (err: unknown) {
-      setValidationError(JSON.stringify(err, null, 2));
+      const errorMessage = JSON.parse(JSON.stringify(err, null, 2)).errors[0]
+        .message;
+      setValidationError(errorMessage);
     }
   };
 
@@ -75,9 +77,9 @@ export default function RegisterScreen() {
 
       await setActive({ session: completeSignUp.createdSessionId });
     } catch (err: unknown) {
-      setValidationError(
-        "Invalid code or account already exists. Please try again.",
-      );
+      const errorMessage = JSON.parse(JSON.stringify(err, null, 2)).errors[0]
+        .message;
+      setValidationError(errorMessage);
     }
   };
 
@@ -110,8 +112,11 @@ export default function RegisterScreen() {
     }
 
     if (confirmPassword !== password) {
+      setPasswordMatch(false);
       setValidationError("Passwords do not match.");
       valid = false;
+    } else {
+      setPasswordMatch(true);
     }
 
     setButtonDisabled(!valid);
@@ -149,11 +154,12 @@ export default function RegisterScreen() {
 
   const handlePasswordChange = (input: string) => {
     setPassword(input);
+    setPasswordMatch(input === confirmPassword);
     if (input.length < 8) {
       setPasswordError("Password must be at least 8 characters long.");
       setButtonDisabled(true);
     } else {
-      setValidationError("");
+      setPasswordError("");
       setPasswordMatch(input === confirmPassword);
       validateFields();
     }
@@ -164,6 +170,7 @@ export default function RegisterScreen() {
     setPasswordMatch(input === password);
     validateFields();
   };
+
   return (
     <KeyboardAwareScrollView
       style={{ flex: 1 }}

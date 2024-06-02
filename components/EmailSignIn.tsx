@@ -66,9 +66,9 @@ const EmailCodeSignIn = () => {
         }
       }
     } catch (err) {
-      if (err instanceof Error) {
-        setError("Failed to send email check email matches associated account");
-      }
+      const errorMessage = JSON.parse(JSON.stringify(err, null, 2)).errors[0]
+        .message;
+      setError(errorMessage);
     }
   };
 
@@ -112,7 +112,9 @@ const EmailCodeSignIn = () => {
         }
       }
     } catch (err) {
-      if (err instanceof Error) setError("Verification failed, try again.");
+      const errorMessage = JSON.parse(JSON.stringify(err, null, 2)).errors[0]
+        .message;
+      setError(errorMessage);
     }
   };
 

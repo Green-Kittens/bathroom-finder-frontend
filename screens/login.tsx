@@ -53,9 +53,9 @@ function TabLoginScreen() {
       // This indicates the user is signed in
       await setActive({ session: completeSignIn.createdSessionId });
     } catch (err: unknown) {
-      setModalMessage(
-        "Invalid email or password. \nPlease check your credentials and try again.",
-      );
+      const errorMessage = JSON.parse(JSON.stringify(err, null, 2)).errors[0]
+        .message;
+      setModalMessage(errorMessage);
       setModalVisible(true);
     }
   };
