@@ -6,6 +6,7 @@ import {
   ImageBackground,
   ScrollView,
   Dimensions,
+  TextStyle,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
@@ -42,9 +43,7 @@ function CollapseView({
     return renderPressableText("View less", onPress);
   }
   function renderPressableText(content: string, onPress: onPressCallback) {
-    return MainButton(content, onPress, false, {
-      style: { fontSize: 12 },
-    } as any);
+    return MainButton(content, onPress, false, { fontSize: 12 } as TextStyle);
   }
 
   return (
