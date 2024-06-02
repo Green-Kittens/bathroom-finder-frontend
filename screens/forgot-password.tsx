@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Image,
@@ -47,6 +47,7 @@ export default function TabSubmitScreen() {
       try {
         await onRequestReset();
         setModalMessage(`Email has been sent to ${emailAddress}`);
+        setSuccessfulCreation(true);
       } catch (err: unknown) {
         setModalMessage(
           "Error occured, please try again. \nCheck if the email is asociated with an account.",
@@ -138,23 +139,29 @@ export default function TabSubmitScreen() {
   // Handle email change and validation
   const handleEmailChange = (input: string) => {
     setEmailAddress(input);
-    if (input === "") {
-      setEmailError("");
-      setButtonDisabled(true);
-    } else if (!validateEmail(input)) {
-      setButtonDisabled(true);
-      setEmailError("Please enter a valid email address.");
+    if (!successfulCreation) {
+      if (validateEmail(input)) {
+        setEmailError("");
+        setButtonDisabled(false);
+      } else {
+        setEmailError("Please enter a valid email address.");
+        setButtonDisabled(true);
+      }
     } else {
-      setButtonDisabled(false);
-      setEmailError("");
+      validateFields();
     }
-    validateFields();
   };
 
   const handleOutsidePress = () => {
     Keyboard.dismiss();
     setModalVisible(false);
   };
+
+  useEffect(() => {
+    if (successfulCreation) {
+      validateFields();
+    }
+  }, [emailAddress, password, code, isPasswordStrong]);
 
   return (
     <KeyboardAwareScrollView

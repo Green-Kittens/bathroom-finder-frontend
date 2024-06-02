@@ -117,18 +117,18 @@ const EmailCodeSignIn = () => {
   };
 
   return (
-    <View style={styles.container}>
-      {MainButton("Email Code Login", () => setModalVisible(true))}
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <KeyboardAwareScrollView
-          style={{ flex: 1 }}
-          contentContainerStyle={{ flexGrow: 1 }}
-          keyboardShouldPersistTaps="handled"
+    <KeyboardAwareScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={{ flexGrow: 1 }}
+      keyboardShouldPersistTaps="handled"
+    >
+      <View style={styles.container}>
+        {MainButton("Email Code Login", () => setModalVisible(true))}
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
         >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.centeredView}>
@@ -179,9 +179,9 @@ const EmailCodeSignIn = () => {
               </View>
             </View>
           </TouchableWithoutFeedback>
-        </KeyboardAwareScrollView>
-      </Modal>
-    </View>
+        </Modal>
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 
