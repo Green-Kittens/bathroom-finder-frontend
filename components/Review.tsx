@@ -35,7 +35,7 @@ export function notReview() {
         >
           Review Title
         </Text>
-        <Text style={[{ padding: 10 }]}>{review.description}</Text>
+        <Text style={[{ padding: 10 }]}>{Review.description}</Text>
       </View>
     </View>
   );
