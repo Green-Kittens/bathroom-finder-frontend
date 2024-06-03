@@ -59,11 +59,12 @@ export function SecondaryButton(
   onpress: ((event: GestureResponderEvent) => void) | undefined,
   disabled?: boolean,
   styling?: StyleProp<ViewStyle>,
+  textStyling?: StyleProp<TextStyle>,
 ) {
   return (
     <Button
       title={words}
-      titleStyle={[styles.text, { color: "white" }]}
+      titleStyle={[styles.text, { color: "white" }, textStyling]}
       ViewComponent={LinearGradient}
       linearGradientProps={{
         colors: ["#044962", "#254A5E"],
@@ -71,7 +72,13 @@ export function SecondaryButton(
         end: [0.2, 0],
       }}
       buttonStyle={[styles.button, styling]}
-      containerStyle={styles.container}
+      containerStyle={{
+        justifyContent: "center",
+        alignSelf: "center",
+        alignItems: "center",
+        marginHorizontal: 10,
+        marginVertical: 10,
+      }}
       onPress={onpress}
       disabled={disabled}
     />

@@ -1,8 +1,9 @@
 import React from "react";
 import * as WebBrowser from "expo-web-browser";
-import { Button } from "react-native";
 import { useOAuth } from "@clerk/clerk-expo";
 import { useWarmUpBrowser } from "../hooks/useWarmUpBrowser";
+import { SecondaryButton } from "./Buttons";
+import { TextStyle } from "react-native";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -25,6 +26,8 @@ const MicroSignIn = () => {
     }
   }, []);
 
-  return <Button title="Sign in with Microsoft" onPress={onPress} />;
+  return SecondaryButton("Sign in with Microsoft", onPress, false, undefined, {
+    fontSize: 14,
+  } as TextStyle);
 };
 export default MicroSignIn;
