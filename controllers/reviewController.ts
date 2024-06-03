@@ -38,7 +38,7 @@ export async function createReview(
   Rating: number,
   Likes: number,
   Dislikes: number,
-  PictureURL: string,
+  PictureURL: string[],
   FacilityID: string,
   UserID: string,
   Date: Date,
