@@ -1,24 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, StyleSheet } from "react-native";
-
 import { Text, View } from "../components/Themed";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
+import { getUserProfile } from "../controllers/userController";
+import { User } from "../types/user";
 
-export function notReview() {
+const Review = ({ review }) => {
+  const [userData, setUserData] = useState<User | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const data = await getUserProfile(review.UserID);
+      setUserData(data);
+    }) ();
+  }, [review.UserID]);
+
+  if(!userData){
+    return <Text>Loading...</Text>;
+  }
+
   return (
     <View style={styles.review}>
       <View style={[styles.toprow, { flexWrap: "wrap", alignItems: "center" }]}>
         <Image
           style={{ height: 60, width: 60, borderRadius: 50 }}
           source={{
-            uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
+            uri: userData.PictureURL,
           }}
         />
         <Text style={[styles.paragraph, { fontFamily: "EudoxusSans-Bold" }]}>
-          Username
+          {userData.DisplayName}
         </Text>
         <View style={[styles.toprow]}>
-          <StarRatingDisplay rating={5} color="black" />
+          <StarRatingDisplay rating={review.rating} color="black" />
         </View>
       </View>
 
@@ -30,29 +44,21 @@ export function notReview() {
           width: "100%",
         }}
       >
+        /*review.subject*/
         <Text
           style={{ fontSize: 24, marginVertical: 10, marginHorizontal: 10 }}
         >
-          Review Title
+          None yet
         </Text>
         <Text style={[{ padding: 10 }]}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis
-          luctus metus. Morbi semper sollicitudin efficitur. Curabitur placerat
-          ante maximus, posuere tortor vulputate, fermentum arcu. Sed sit amet
-          mi vitae erat lacinia congue. Donec euismod eros quis leo venenatis,
-          eu commodo leo ullamcorper. Maecenas in leo at dolor placerat
-          tincidunt vitae ut ipsum. Curabitur maximus ut metus vel convallis.
-          Aliquam ac molestie turpis. Mauris at leo pellentesque, aliquam purus
-          ac, dapibus nibh.
+          {review.description}
         </Text>
       </View>
     </View>
   );
 }
 
-export default function Review() {
-  return notReview();
-}
+export default Review;
 
 const styles = StyleSheet.create({
   container: {
