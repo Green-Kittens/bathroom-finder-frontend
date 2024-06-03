@@ -183,9 +183,7 @@ export default function TabFacilityProfileScreen() {
                   return <Review key={review._id} review={review} />;
                 })}
                 <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
-                  {LightButton("See more", () => {
-                    navigation.navigate("FacilityReviews", { bathroomReviews });
-                  })}
+                  {LightButton("See more", () => navigation.navigate("FacilityReviews", { reviews: bathroomReviews }))}
                 </View>
               </View>
             </LinearGradient>
