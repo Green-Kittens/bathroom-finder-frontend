@@ -177,7 +177,9 @@ export default function TabFacilityProfileScreen() {
                   },
                 ]}
               >
-                {Review()}
+                {bathroomReviews.map((review, index) => (
+                  <Review key={index} review={review} />
+                ))}
                 <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
                   {LightButton("See more", () => {
                     navigation.navigate("FacilityReviews", { bathroomReviews });
