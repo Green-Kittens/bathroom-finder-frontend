@@ -12,10 +12,10 @@ const Review = ({ review }) => {
     (async () => {
       const data = await getUserProfile(review.UserID);
       setUserData(data);
-    }) ();
+    })();
   }, [review.UserID]);
 
-  if(!userData){
+  if (!userData) {
     return <Text>Loading...</Text>;
   }
 
@@ -50,13 +50,11 @@ const Review = ({ review }) => {
         >
           None yet
         </Text>
-        <Text style={[{ padding: 10 }]}>
-          {review.description}
-        </Text>
+        <Text style={[{ padding: 10 }]}>{review.description}</Text>
       </View>
     </View>
   );
-}
+};
 
 export default Review;
 
