@@ -25,7 +25,7 @@ import MapView, { Marker } from "react-native-maps";
 import axios from "axios";
 
 const btnInactive = "#6da798";
-const btnActive = "#007AFF";
+const btnActive = "#044962";
 
 export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
@@ -74,6 +74,22 @@ export default function FacilityForm() {
       ...prevTags,
       [tag]: !prevTags[tag],
     }));
+  };
+
+  const Tag = (tag, tagname, text: string) => {
+    return (
+      <View style={tag ? styles.tagCheckboxSelected : styles.tagCheckbox}>
+        <TouchableOpacity onPress={() => handleTagChange(tagname)}>
+          <Text
+            style={{
+              color: tag ? btnActive : btnInactive,
+            }}
+          >
+            {text}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
   };
 
   const handleAddImage = async (source: "camera" | "gallery") => {
@@ -174,7 +190,7 @@ export default function FacilityForm() {
             alignContent: "center",
             paddingTop: 60,
             marginTop: 80,
-            paddingBottom: 250,
+            paddingBottom: 300,
           }}
         >
           <Text style={styles.title}>Add a New Facility</Text>
@@ -266,68 +282,18 @@ export default function FacilityForm() {
           <View style={styles.tagSelectionContainer}>
             <Text style={styles.tagTitle}>Select Tags</Text>
             <View style={styles.tags}>
-              <View style={styles.tagCheckbox}>
-                <TouchableOpacity
-                  onPress={() => handleTagChange("wheelchairAccessible")}
-                >
-                  <Text
-                    style={{
-                      color: tags.wheelchairAccessible
-                        ? btnActive
-                        : btnInactive,
-                    }}
-                  >
-                    {tags.wheelchairAccessible
-                      ? "Wheelchair Accessible"
-                      : "Not Wheelchair Accessible"}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.tagCheckbox}>
-                <TouchableOpacity
-                  onPress={() => handleTagChange("babyChanging")}
-                >
-                  <Text
-                    style={{
-                      color: tags.babyChanging ? btnActive : btnInactive,
-                    }}
-                  >
-                    {tags.babyChanging
-                      ? "Baby Changing Station"
-                      : "No Baby Changing Station"}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.tagCheckbox}>
-                <TouchableOpacity
-                  onPress={() => handleTagChange("cleanedRegularly")}
-                >
-                  <Text
-                    style={{
-                      color: tags.cleanedRegularly ? btnActive : btnInactive,
-                    }}
-                  >
-                    {tags.cleanedRegularly
-                      ? "Cleaned Regularly"
-                      : "Not Cleaned Regularly"}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.tagCheckbox}>
-                <TouchableOpacity
-                  onPress={() => handleTagChange("genderNeutral")}
-                >
-                  <Text
-                    style={{
-                      color: tags.genderNeutral ? btnActive : btnInactive,
-                    }}
-                  >
-                    {tags.genderNeutral
-                      ? "Gender Neutral"
-                      : "Not Gender Neutral"}
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              {Tag(
+                tags.wheelchairAccessible,
+                "wheelchairAccessible",
+                "Wheelchair Accessible",
+              )}
+              {Tag(tags.babyChanging, "babyChanging", "Baby Changing Station")}
+              {Tag(
+                tags.cleanedRegularly,
+                "cleanedRegularly",
+                "Cleaned Regularly",
+              )}
+              {Tag(tags.genderNeutral, "genderNeutral", "Gender Neutral")}
             </View>
           </View>
 
@@ -504,6 +470,17 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderWidth: 1,
     borderColor: btnInactive,
+    borderRadius: 20,
+    padding: 10,
+    marginRight: 5,
+  },
+  tagCheckboxSelected: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: btnActive,
+    backgroundColor: "#74C9C0",
     borderRadius: 20,
     padding: 10,
     marginRight: 5,
