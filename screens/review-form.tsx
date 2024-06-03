@@ -113,8 +113,6 @@ export default function ReviewForm() {
           <Text style={styles.title}>New Bathroom Rating</Text>
           <Text style={styles.header}>Facility Name</Text>
 
-          <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
-
           <ImageCarousel componentId="reviewForm" />
 
           <TextInput
