@@ -40,7 +40,7 @@ export default function FacilityReviewsScreen() {
               console.log("review!!!");
               console.log(review);
               return <Review key={review._id} review={review} />;
-})}
+            })}
           </View>
         </View>
       </View>
