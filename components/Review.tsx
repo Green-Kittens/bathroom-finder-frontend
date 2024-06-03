@@ -4,16 +4,22 @@ import { Text, View } from "../components/Themed";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
 import { getUserProfile } from "../controllers/userController";
 import { User } from "../types/user";
+import { Review as ReviewType} from "../types/review";
 
-const Review = ({ review }) => {
+interface ReviewProps {
+  review: ReviewType;
+}
+
+const Review: React.FC<ReviewProps> = ({ review })  => {
   const [userData, setUserData] = useState<User | null>(null);
 
   useEffect(() => {
+    console.log('Review prop:', review); 
     (async () => {
-      const data = await getUserProfile(review.UserID);
+      const data = await getUserProfile(review.UserId);
       setUserData(data);
     }) ();
-  }, [review.UserID]);
+  }, [review.UserId]);
 
   if(!userData){
     return <Text>Loading...</Text>;
@@ -32,7 +38,7 @@ const Review = ({ review }) => {
           {userData.DisplayName}
         </Text>
         <View style={[styles.toprow]}>
-          <StarRatingDisplay rating={review.rating} color="black" />
+          <StarRatingDisplay rating={review.Rating} color="black" />
         </View>
       </View>
 
@@ -44,14 +50,8 @@ const Review = ({ review }) => {
           width: "100%",
         }}
       >
-        /*review.subject*/
-        <Text
-          style={{ fontSize: 24, marginVertical: 10, marginHorizontal: 10 }}
-        >
-          None yet
-        </Text>
         <Text style={[{ padding: 10 }]}>
-          {review.description}
+          {review.Description}
         </Text>
       </View>
     </View>
