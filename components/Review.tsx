@@ -36,19 +36,12 @@ export function notReview() {
           Review Title
         </Text>
         <Text style={[{ padding: 10 }]}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis
-          luctus metus. Morbi semper sollicitudin efficitur. Curabitur placerat
-          ante maximus, posuere tortor vulputate, fermentum arcu. Sed sit amet
-          mi vitae erat lacinia congue. Donec euismod eros quis leo venenatis,
-          eu commodo leo ullamcorper. Maecenas in leo at dolor placerat
-          tincidunt vitae ut ipsum. Curabitur maximus ut metus vel convallis.
-          Aliquam ac molestie turpis. Mauris at leo pellentesque, aliquam purus
-          ac, dapibus nibh.
+          {review.description}
         </Text>
       </View>
     </View>
   );
-}
+};
 
 export default function Review() {
   return notReview();
