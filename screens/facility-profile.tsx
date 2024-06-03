@@ -84,7 +84,6 @@ export default function TabFacilityProfileScreen() {
       try {
         const fetchReviews = await getAllReviews(bathroom._id);
         setBathroomReviews(fetchReviews);
-        console.log(fetchReviews);
       } catch (error) {
         console.error("Failed to fetch reviews", error);
       }
@@ -114,8 +113,7 @@ export default function TabFacilityProfileScreen() {
           <Text style={styles.title}>{bathroom.Name}</Text>
           <Image
             source={{
-              uri: bathroom.PictureURL, // not rendering-- check if image link is good
-              // uri: "https://images.adsttc.com/media/images/6179/94c7/f91c/81a4/f700/00c2/newsletter/WMC-Expo-2---Architectural-Photographer-Michael-Tessler---11.jpg?1635357877",
+              uri: "https://images.adsttc.com/media/images/6179/94c7/f91c/81a4/f700/00c2/newsletter/WMC-Expo-2---Architectural-Photographer-Michael-Tessler---11.jpg?1635357877",
             }}
             style={{ height: 250, width: 250 }}
           />
