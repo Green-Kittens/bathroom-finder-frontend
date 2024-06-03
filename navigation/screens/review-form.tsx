@@ -22,7 +22,7 @@ import { useImages } from "../../contexts/ImageContext";
 import { ImageCarousel } from "../../components/Carousel";
 import { ScreenNavigationProp } from "../type";
 import { Facility as BathroomProfile } from "../../types/facility";
-
+import { createReview } from "../../controllers/reviewController";
 
 // route type
 type FacilityProfileRouteParams = { bathroom: BathroomProfile };
@@ -93,6 +93,34 @@ export default function ReviewForm() {
       deleteImage(images[i].assets[0].uri);
     }
     scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: false });
+  };
+
+  const handleSubmit = async () => {
+    const Likes = 0;
+    const Dislikes = 0;
+    const PictureURL = ""; // wait till type is updated
+    const FacilityID = bathroom._id;
+    const UserID = ""; // ask how to get user id
+    const Date = currentDate; 
+    const Description = description; 
+
+    try {
+      const successMsg = await createReview(
+        rating, 
+        Likes,
+        Dislikes,
+        PictureURL,
+        FacilityID,
+        UserID, 
+        Date,
+        Description,
+      );
+      console.log(successMsg);
+      navigation.navigate("Main");
+      resetForm();
+    } catch (error) {
+      console.error("Error creating review", error);
+    }
   };
 
   return (
@@ -170,11 +198,7 @@ export default function ReviewForm() {
             color="black"
           />
 
-          {SecondaryButton("Post Rating", async () => {
-            // make a check to make sure that all fields are filled out
-            navigation.navigate("Main");
-            resetForm();
-          })}
+          {SecondaryButton("Post Rating", handleSubmit)}
         </View>
       </ScrollView>
     </View>
