@@ -5,7 +5,7 @@ export type Review = {
   Dislikes: number;
   PictureURL: string[];
   FacilityId: string;
-  UserId: string;
+  UserID: string;
   Date: Date;
   Description: string;
 };
