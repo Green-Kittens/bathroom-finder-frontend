@@ -1,24 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, StyleSheet } from "react-native";
-
 import { Text, View } from "../components/Themed";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
+import { getUserProfile } from "../controllers/userController";
+import { User } from "../types/user";
+import { Review as ReviewType } from "../types/review";
 
-export function notReview() {
+interface ReviewProps {
+  review: ReviewType;
+}
+
+const Review: React.FC<ReviewProps> = ({ review }) => {
+  const [userData, setUserData] = useState<User | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const data = await getUserProfile(review.UserId);
+      setUserData(data);
+    })();
+  }, [review.UserId]);
+
+  if (!userData) {
+    return <Text>Loading...</Text>;
+  }
+
   return (
     <View style={styles.review}>
       <View style={[styles.toprow, { flexWrap: "wrap", alignItems: "center" }]}>
         <Image
           style={{ height: 60, width: 60, borderRadius: 50 }}
           source={{
-            uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
+            uri: userData.PictureURL,
           }}
         />
         <Text style={[styles.paragraph, { fontFamily: "EudoxusSans-Bold" }]}>
-          Username
+          {userData.DisplayName}
         </Text>
         <View style={[styles.toprow]}>
-          <StarRatingDisplay rating={5} color="black" />
+          <StarRatingDisplay rating={review.Rating} color="black" />
         </View>
       </View>
 
@@ -30,20 +49,13 @@ export function notReview() {
           width: "100%",
         }}
       >
-        <Text
-          style={{ fontSize: 24, marginVertical: 10, marginHorizontal: 10 }}
-        >
-          Review Title
-        </Text>
-        <Text style={[{ padding: 10 }]}>{review.description}</Text>
+        <Text style={[{ padding: 10 }]}>{review.Description}</Text>
       </View>
     </View>
   );
-}
+};
 
-export default function Review() {
-  return notReview();
-}
+export default Review;
 
 const styles = StyleSheet.create({
   container: {
