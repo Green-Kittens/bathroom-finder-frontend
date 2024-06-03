@@ -31,14 +31,14 @@ export async function getAllReviews(FacilityID: string): Promise<Review[]> {
  * @param {int} Likes - the number of likes a reivew has; starts at 0
  * @param {int} Dislikes - The number of dislikes a review has; starts at 0
  * @param {Date} Date - The date and time the review was uploaded
- * @param {string} PictureURL - User's uploaded images of the bathroom
+ * @param {string[]} PictureURL - User's uploaded images of the bathroom
  * @returns {Promise<string>} - Returns a promise with a success message upon successfully creating a new review
  */
 export async function createReview(
   Rating: number,
   Likes: number,
   Dislikes: number,
-  PictureURL: string,
+  PictureURL: string[],
   FacilityID: string,
   UserID: string,
   Date: Date,

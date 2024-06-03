@@ -13,13 +13,13 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { ImageCarousel } from "../../components/Carousel";
-import { useImages } from "../../contexts/ImageContext"; // Ensure the import path is correct
-import { ScreenNavigationProp } from "../type";
+import { ImageCarousel } from "../components/Carousel";
+import { useImages } from "../contexts/ImageContext"; // Ensure the import path is correct
+import { ScreenNavigationProp } from "../navigation/type";
 import MainButton, {
   CancelButton,
   SecondaryButton,
-} from "../../components/Buttons";
+} from "../components/Buttons";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import axios from "axios";
@@ -35,8 +35,8 @@ export default function FacilityForm() {
     useState<Location.LocationObject | null>(null);
   const [openTime, setOpenTime] = useState("");
   const [closedTime, setClosedTime] = useState("");
-  const [isOpenPickerVisible, setOpenPickerVisibility] = useState(false);
-  const [isClosedPickerVisible, setClosedPickerVisibility] = useState(false);
+  const [openPickerVisible, setOpenPickerVisible] = useState(false);
+  const [closedPickerVisible, setClosedPickerVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const { addImage } = useImages("facilityForm");
   const { deleteImage } = useImages("facilityForm");
@@ -48,7 +48,7 @@ export default function FacilityForm() {
     const minutes = ("0" + date.getMinutes()).slice(-2);
     const ampm = hours >= 12 ? "PM" : "AM";
     hours = hours % 12;
-    hours = hours ? hours : 12; // for when hours = 0
+    hours = hours || 12; // for when hours = 0
     return `${hours}:${minutes} ${ampm}`;
   };
 
@@ -61,15 +61,15 @@ export default function FacilityForm() {
 
   const handleOpenConfirm = (date: Date) => {
     setOpenTime(formatTime(date));
-    setOpenPickerVisibility(false);
+    setOpenPickerVisible(false);
   };
 
   const handleClosedConfirm = (date: Date) => {
     setClosedTime(formatTime(date));
-    setClosedPickerVisibility(false);
+    setClosedPickerVisible(false);
   };
 
-  const handleTagChange = (tag) => {
+  const handleTagChange = (tag: string) => {
     setTags((prevTags) => ({
       ...prevTags,
       [tag]: !prevTags[tag],
@@ -145,8 +145,8 @@ export default function FacilityForm() {
     setOpenTime(initialOpenTime);
     setClosedTime(initialCloseTime);
     setDescription("");
-    for (let i = 0; i < images.length; i++) {
-      deleteImage(images[i].assets[0].uri);
+    for (const image of images) {
+      deleteImage(image.assets[0].uri);
     }
     resetTags();
     scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: false });
@@ -166,7 +166,7 @@ export default function FacilityForm() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../../assets/images/boomerang.png")}
+        source={require("../assets/images/boomerang.png")}
         style={{
           width: 1000,
           height: 500,
@@ -220,7 +220,7 @@ export default function FacilityForm() {
                     );
                     const addressDetails = response.data.address;
                     let buildingName = "";
-                    if (addressDetails && addressDetails.building) {
+                    if (addressDetails?.building) {
                       buildingName = addressDetails.building;
                     }
                     setMarkerAddress(
@@ -254,28 +254,28 @@ export default function FacilityForm() {
           </Modal>
 
           <View style={styles.timeSelect}>
-            <TouchableOpacity onPress={() => setOpenPickerVisibility(true)}>
+            <TouchableOpacity onPress={() => setOpenPickerVisible(true)}>
               <Text style={styles.timeSelectButton}>
                 {openTime || initialOpenTime}
               </Text>
             </TouchableOpacity>
             <DateTimePickerModal
-              isVisible={isOpenPickerVisible}
+              isVisible={openPickerVisible}
               mode="time"
               onConfirm={handleOpenConfirm}
-              onCancel={() => setOpenPickerVisibility(false)}
+              onCancel={() => setOpenPickerVisible(false)}
             />
             <Text> to </Text>
-            <TouchableOpacity onPress={() => setClosedPickerVisibility(true)}>
+            <TouchableOpacity onPress={() => setClosedPickerVisible(true)}>
               <Text style={styles.timeSelectButton}>
                 {closedTime || initialCloseTime}
               </Text>
             </TouchableOpacity>
             <DateTimePickerModal
-              isVisible={isClosedPickerVisible}
+              isVisible={closedPickerVisible}
               mode="time"
               onConfirm={handleClosedConfirm}
-              onCancel={() => setClosedPickerVisibility(false)}
+              onCancel={() => setClosedPickerVisible(false)}
             />
           </View>
 

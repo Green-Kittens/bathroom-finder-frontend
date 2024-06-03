@@ -2,5 +2,8 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true
+  },
+  "devDependencies": {
+    "validator": "^13.6.0"
   }
 }

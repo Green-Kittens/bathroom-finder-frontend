@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -7,22 +6,23 @@ import {
   ImageBackground,
   ScrollView,
   Dimensions,
+  TextStyle,
 } from "react-native";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { ScreenNavigationProp } from "../type";
-import Review from "../../components/Review";
+import React, { useEffect, useState } from "react";
+import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
+import { ScreenNavigationProp } from "../navigation/type";
+import Review from "../components/Review";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
+import { SignedIn } from "@clerk/clerk-expo";
 import { LinearGradient } from "expo-linear-gradient";
 import MainButton, {
   LightButton,
   SecondaryButton,
-} from "../../components/Buttons";
-
+} from "../components/Buttons";
 import ViewMoreText from "react-native-view-more-text";
-import { getAllReviews } from "../../controllers/reviewController";
-
-import { Facility as BathroomProfile } from "../../types/facility";
-import { Review as BathroomReview } from "../../types/review";
+import { getAllReviews } from "../controllers/reviewController";
+import { Facility as BathroomProfile } from "../types/facility";
+import { Review as BathroomReview } from "../types/review";
 
 const windowHeight = Dimensions.get("window").height;
 
@@ -43,7 +43,7 @@ function CollapseView({
     return renderPressableText("View less", onPress);
   }
   function renderPressableText(content: string, onPress: onPressCallback) {
-    return MainButton(content, onPress, {}, { fontSize: 12 });
+    return MainButton(content, onPress, false, { fontSize: 12 } as TextStyle);
   }
 
   return (
@@ -98,7 +98,7 @@ export default function TabFacilityProfileScreen() {
           style={[{ flex: 0.9, alignItems: "center", backgroundColor: "none" }]}
         >
           <ImageBackground
-            source={require("../../assets/images/blob.png")}
+            source={require("../assets/images/blob.png")}
             style={{
               width: 500,
               height: windowHeight,
@@ -138,12 +138,14 @@ export default function TabFacilityProfileScreen() {
         <View
           style={[{ flex: 1, marginHorizontal: 40, backgroundColor: "none" }]}
         >
-          <View style={{ marginTop: 10 }}>
-            {SecondaryButton("Add Review", () => {
-              // figure out how to make it so that dropdown renders current facility as location
-              navigation.navigate("ReviewForm");
-            })}
-          </View>
+          <SignedIn>
+            <View style={{ marginTop: 10 }}>
+              {SecondaryButton("Add Review", () => {
+                // figure out how to make it so that dropdown renders current facility as location
+                navigation.navigate("ReviewForm");
+              })}
+            </View>
+          </SignedIn>
         </View>
 
         <View
