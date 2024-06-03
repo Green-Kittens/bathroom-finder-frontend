@@ -16,14 +16,26 @@ import { useState } from "react";
 import StarRating from "react-native-star-rating-widget";
 
 // screens
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { useImages } from "../../contexts/ImageContext";
 import { ImageCarousel } from "../../components/Carousel";
 import { ScreenNavigationProp } from "../type";
+import { Facility as BathroomProfile } from "../../types/facility";
+
+
+// route type
+type FacilityProfileRouteParams = { bathroom: BathroomProfile };
+type FacilityProfileRouteProp = RouteProp<
+  { FacilityProfile: FacilityProfileRouteParams },
+  "FacilityProfile"
+>;
 
 export default function ReviewForm() {
-  // location
+
+  // route-- facility data
+  const route = useRoute<FacilityProfileRouteProp>();
+  const { bathroom } = route.params;
 
   // getting current date and time
   const currentDate = new Date();
@@ -112,7 +124,7 @@ export default function ReviewForm() {
           }}
         >
           <Text style={styles.title}>New Bathroom Rating</Text>
-          <Text style={styles.header}>Facility Name</Text>
+          <Text style={styles.header}>{ bathroom.Name }</Text>
 
           <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
 
