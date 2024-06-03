@@ -63,7 +63,7 @@ export async function getUserProfile(UserID: string): Promise<UserProfile> {
  * @param {string} Operations - Bathroom's hours of operation
  * @param {string[]} Reviews - Reviews on bathroom
  * @param {Date} Date - Date the bathroom was created/posted
- * @param {string} PictureURL - Picture(s) of the bathroom
+ * @param {string[]} PictureURL - Picture(s) of the bathroom
  * @param {number} RatingAVG - The rating average of the bathroom
  * @param {number} Favorites - The number of favorites the bathroom has
  * @param {number} Reports - The number of reports on the bathroom
@@ -77,7 +77,7 @@ export async function createBathroom(
   Operations: string,
   Reviews: string[],
   Date: Date,
-  PictureURL: string,
+  PictureURL: string[],
   RatingAVG: number,
   Favorites: number,
   Reports: number,
