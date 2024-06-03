@@ -8,6 +8,7 @@ import { ViewStyle } from "react-native";
 export default function MainButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
+  disabled?: boolean,
   styling?: StyleProp<ViewStyle>,
   textStyling?: StyleProp<TextStyle>,
 ) {
@@ -24,6 +25,7 @@ export default function MainButton(
       buttonStyle={[styles.button, styling]}
       containerStyle={styles.container}
       onPress={onpress}
+      disabled={disabled}
     />
   );
 }
@@ -31,6 +33,7 @@ export default function MainButton(
 export function LightButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
+  disabled?: boolean,
   styling?: StyleProp<ViewStyle>,
 ) {
   return (
@@ -46,6 +49,7 @@ export function LightButton(
       buttonStyle={[styles.button, styling]}
       containerStyle={styles.container}
       onPress={onpress}
+      disabled={disabled}
     />
   );
 }
@@ -53,6 +57,7 @@ export function LightButton(
 export function SecondaryButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
+  disabled?: boolean,
   styling?: StyleProp<ViewStyle>,
 ) {
   return (
@@ -68,6 +73,7 @@ export function SecondaryButton(
       buttonStyle={[styles.button, styling]}
       containerStyle={styles.container}
       onPress={onpress}
+      disabled={disabled}
     />
   );
 }
@@ -75,6 +81,7 @@ export function SecondaryButton(
 export function CancelButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
+  disabled?: boolean,
   styling?: StyleProp<ViewStyle>,
 ) {
   return (
@@ -85,6 +92,7 @@ export function CancelButton(
       buttonStyle={[styles.button, styling]}
       containerStyle={styles.container}
       onPress={onpress}
+      disabled={disabled}
     />
   );
 }

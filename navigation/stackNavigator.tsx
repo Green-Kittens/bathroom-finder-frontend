@@ -6,10 +6,12 @@ import NavBar from "./navbar";
 import { ScreensParamList } from "./type";
 
 // screens
-import ReviewForm from "./screens/review-form";
-import FacilityProfile from "./screens/facility-profile";
-import FacilityReviews from "./screens/facility-reviews";
-import Login from "./screens/login";
+import ReviewForm from "../screens/review-form";
+import FacilityProfile from "../screens/facility-profile";
+import FacilityReviews from "../screens/facility-reviews";
+import Login from "../screens/login";
+import Register from "../screens/register";
+import ForgotPassword from "../screens/forgot-password";
 
 // screen names
 const headName = "Head";
@@ -17,6 +19,8 @@ const reviewFormName = "ReviewForm";
 const facilityProfileName = "FacilityProfile";
 const facilityReviewsName = "FacilityReviews";
 const loginName = "Login";
+const registerName = "Register";
+const forgotPasswordName = "ForgotPassword";
 
 // navigation
 const Stack = createStackNavigator<ScreensParamList>();
@@ -64,6 +68,8 @@ export default function StackNavigator() {
         component={Login}
         options={{ headerShown: false }}
       />
+      <Stack.Screen name={registerName} component={Register} />
+      <Stack.Screen name={forgotPasswordName} component={ForgotPassword} />
     </Stack.Navigator>
   );
 }
