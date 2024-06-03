@@ -1,8 +1,7 @@
 import React from "react";
-
-import { View } from "../../components/Themed";
+import { View } from "../components/Themed";
 import { ScrollView, ImageBackground, StyleSheet } from "react-native";
-import ReviewButtons from "../../components/ReviewButtons";
+import ReviewButtons from "../components/ReviewButtons";
 // import { Review as BathroomReview } from "../../types/review";
 // import { useRoute, RouteProp } from "@react-navigation/native";
 
@@ -23,7 +22,7 @@ export default function FacilityReviewsScreen() {
       <View style={styles.container}>
         <View style={styles.subcontainer}>
           <ImageBackground
-            source={require("../../assets/images/blob.png")}
+            source={require("../assets/images/blob.png")}
             style={{
               width: 953,
               height: 1069,
