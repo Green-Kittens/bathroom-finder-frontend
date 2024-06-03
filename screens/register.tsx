@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -126,20 +126,16 @@ export default function RegisterScreen() {
   // Handle field value changes and validate
   const handleFirstNameChange = (input: string) => {
     setFirstName(input);
-    validateFields();
   };
-  // Handle last name change and validate
+
   const handleLastNameChange = (input: string) => {
     setLastName(input);
-    validateFields();
   };
 
   const handlePasswordStrengthChange = (isStrong: boolean) => {
     setIsPasswordStrong(isStrong);
-    validateFields();
   };
 
-  // Handle email change and validation
   const handleEmailChange = (input: string) => {
     setEmailAddress(input);
     if (input === "") {
@@ -149,7 +145,6 @@ export default function RegisterScreen() {
     } else {
       setEmailError("");
     }
-    validateFields();
   };
 
   const handlePasswordChange = (input: string) => {
@@ -157,19 +152,27 @@ export default function RegisterScreen() {
     setPasswordMatch(input === confirmPassword);
     if (input.length < 8) {
       setPasswordError("Password must be at least 8 characters long.");
-      setButtonDisabled(true);
     } else {
       setPasswordError("");
       setPasswordMatch(input === confirmPassword);
-      validateFields();
     }
   };
 
   const handleConfirmPasswordChange = (input: string) => {
     setConfirmPassword(input);
     setPasswordMatch(input === password);
-    validateFields();
   };
+
+  useEffect(() => {
+    validateFields();
+  }, [
+    password,
+    confirmPassword,
+    firstName,
+    lastName,
+    emailAddress,
+    isPasswordStrong,
+  ]);
 
   return (
     <KeyboardAwareScrollView
