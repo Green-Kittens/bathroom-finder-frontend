@@ -1,4 +1,4 @@
-import { GestureResponderEvent, StyleProp } from "react-native";
+import { GestureResponderEvent, StyleProp, TextStyle } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet } from "react-native";
 import React from "react";
@@ -8,12 +8,14 @@ import { ViewStyle } from "react-native";
 export default function MainButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
+  disabled?: boolean,
   styling?: StyleProp<ViewStyle>,
+  textStyling?: StyleProp<TextStyle>,
 ) {
   return (
     <Button
       title={words}
-      titleStyle={styles.text}
+      titleStyle={[styles.text, textStyling]}
       ViewComponent={LinearGradient}
       linearGradientProps={{
         colors: ["#7FC6B3", "#74C9C0"],
@@ -23,6 +25,7 @@ export default function MainButton(
       buttonStyle={[styles.button, styling]}
       containerStyle={styles.container}
       onPress={onpress}
+      disabled={disabled}
     />
   );
 }
@@ -30,6 +33,7 @@ export default function MainButton(
 export function LightButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
+  disabled?: boolean,
   styling?: StyleProp<ViewStyle>,
 ) {
   return (
@@ -45,6 +49,7 @@ export function LightButton(
       buttonStyle={[styles.button, styling]}
       containerStyle={styles.container}
       onPress={onpress}
+      disabled={disabled}
     />
   );
 }
@@ -52,6 +57,7 @@ export function LightButton(
 export function SecondaryButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
+  disabled?: boolean,
   styling?: StyleProp<ViewStyle>,
 ) {
   return (
@@ -67,6 +73,7 @@ export function SecondaryButton(
       buttonStyle={[styles.button, styling]}
       containerStyle={styles.container}
       onPress={onpress}
+      disabled={disabled}
     />
   );
 }
@@ -74,6 +81,7 @@ export function SecondaryButton(
 export function CancelButton(
   words: string,
   onpress: ((event: GestureResponderEvent) => void) | undefined,
+  disabled?: boolean,
   styling?: StyleProp<ViewStyle>,
 ) {
   return (
@@ -84,6 +92,7 @@ export function CancelButton(
       buttonStyle={[styles.button, styling]}
       containerStyle={styles.container}
       onPress={onpress}
+      disabled={disabled}
     />
   );
 }

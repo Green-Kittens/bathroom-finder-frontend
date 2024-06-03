@@ -2,6 +2,7 @@ import React from "react";
 import { Image, StyleSheet } from "react-native";
 
 import { Text, View } from "../components/Themed";
+import { StarRatingDisplay } from "react-native-star-rating-widget";
 
 export function notReview() {
   return (
@@ -17,11 +18,7 @@ export function notReview() {
           Username
         </Text>
         <View style={[styles.toprow]}>
-          {star()}
-          {star()}
-          {star()}
-          {star()}
-          {star()}
+          <StarRatingDisplay rating={5} color="black" />
         </View>
       </View>
 
@@ -38,16 +35,7 @@ export function notReview() {
         >
           Review Title
         </Text>
-        <Text style={[{ padding: 10 }]}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis
-          luctus metus. Morbi semper sollicitudin efficitur. Curabitur placerat
-          ante maximus, posuere tortor vulputate, fermentum arcu. Sed sit amet
-          mi vitae erat lacinia congue. Donec euismod eros quis leo venenatis,
-          eu commodo leo ullamcorper. Maecenas in leo at dolor placerat
-          tincidunt vitae ut ipsum. Curabitur maximus ut metus vel convallis.
-          Aliquam ac molestie turpis. Mauris at leo pellentesque, aliquam purus
-          ac, dapibus nibh.
-        </Text>
+        <Text style={[{ padding: 10 }]}>{review.description}</Text>
       </View>
     </View>
   );
@@ -55,15 +43,6 @@ export function notReview() {
 
 export default function Review() {
   return notReview();
-}
-
-function star() {
-  return (
-    <Image
-      style={{ width: 30, height: 30 }}
-      source={require("../assets/images/star_filled.png")}
-    />
-  );
 }
 
 const styles = StyleSheet.create({
