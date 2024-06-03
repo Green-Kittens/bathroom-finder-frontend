@@ -14,7 +14,6 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
   const [userData, setUserData] = useState<User | null>(null);
 
   useEffect(() => {
-    console.log("Review prop:", review);
     (async () => {
       const data = await getUserProfile(review.UserId);
       setUserData(data);

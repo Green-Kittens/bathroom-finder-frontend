@@ -132,7 +132,7 @@ export default function TabFacilityProfileScreen() {
             ]}
           >
             <StarRatingDisplay rating={bathroom.RatingAVG} color="black" />
-            <Text style={styles.body}> 5.0 stars</Text>
+            <Text style={styles.body}>{bathroom.RatingAVG}</Text>
           </View>
         </View>
         <View
@@ -179,8 +179,8 @@ export default function TabFacilityProfileScreen() {
                   },
                 ]}
               >
-                {bathroomReviews.map((review, index) => (
-                  <Review key={index} review={review} />
+                {bathroomReviews.map((review) => (
+                  <Review key={review.ReviewID} review={review} />
                 ))}
                 <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
                   {LightButton("See more", () => {
