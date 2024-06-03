@@ -5,7 +5,7 @@ export type Facility = {
   Tags: string[];
   Operations: string;
   Date: string;
-  PictureURL: string;
+  PictureURL: string[];
   RatingAVG: number;
   Favorites: number;
   Reports: number;
