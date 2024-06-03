@@ -194,17 +194,17 @@ function TabLoginScreen() {
             </View>
 
             {/* Google Sign In */}
-            <View style={[{ margin: 10, flexDirection: "row" }]}>
+            <View style={[{ margin: 10, flexDirection: "row",  }]}>
               <GoogleSignIn />
               <MicroSignIn />
             </View>
-            <View style={styles.container}>
+            <View style={[styles.container, {flex: .1, paddingBottom: 30}]}>
               <EmailCodeSignIn />
             </View>
 
             {/* Footer with Register Section */}
             <View style={styles.footer}>
-              <View style={styles.registerContainer}>
+              <View style={[styles.registerContainer]}>
                 <Text style={styles.text} disabled>
                   Don&apos;t have an account?
                 </Text>
