@@ -37,9 +37,6 @@ export default function ReviewForm() {
   const route = useRoute<FacilityProfileRouteProp>();
   const { bathroom } = route.params;
 
-  // getting current date and time
-  const currentDate = new Date();
-
   // description
   const [description, setDescription] = useState("");
 
