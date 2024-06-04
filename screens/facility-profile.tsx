@@ -7,6 +7,8 @@ import {
   ScrollView,
   Dimensions,
   TextStyle,
+  TouchableOpacity,
+  Modal,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
@@ -30,12 +32,10 @@ function CollapseView({
   hours,
   category,
   tags,
-  description,
 }: {
   hours: string;
   category: string;
   tags: string[];
-  description: string;
 }) {
   type onPressCallback = () => void;
   function renderViewMore(onPress: onPressCallback) {
@@ -58,7 +58,7 @@ function CollapseView({
         Hours: {hours} {"\n"}
         Category: {category} {"\n"}
         Tags: {tags.join(", ")} {"\n"}
-        Description: {description} {"\n"}
+        Description: {/* { description } */}
       </Text>
     </ViewMoreText>
   );
@@ -70,6 +70,83 @@ type FacilityProfileRouteProp = RouteProp<
   { FacilityProfile: FacilityProfileRouteParams },
   "FacilityProfile"
 >;
+
+const imageUrls = [
+  "https://via.placeholder.com/600x400.png?text=Image+1",
+  "https://via.placeholder.com/600x400.png?text=Image+2",
+  "https://via.placeholder.com/600x400.png?text=Image+3",
+  "https://via.placeholder.com/600x400.png?text=Image+4",
+  "https://via.placeholder.com/600x400.png?text=Image+5",
+];
+
+interface CardProps {
+  imageSource: string;
+  onPress: () => void;
+}
+
+const Card: React.FC<CardProps> = ({ imageSource, onPress }) => {
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.card}>
+        <Image source={{ uri: imageSource }} style={styles.cardImage} />
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+interface ImageCarouselProps {
+  images: string[];
+}
+
+const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedImageUri, setSelectedImageUri] = useState("");
+
+  const screenWidth = Dimensions.get("window").width;
+  const cardWidth = 100;
+  const margin = 10;
+  const totalCardWidth = imageUrls.length * (cardWidth + margin);
+  const shouldScroll = totalCardWidth > screenWidth;
+
+  const openImageModal = (uri: string) => {
+    setSelectedImageUri(uri);
+    setModalVisible(true);
+  };
+
+  const closeImageModal = () => {
+    setModalVisible(false);
+  };
+
+  return (
+    <View style={styles.container}>
+      <ScrollView
+        horizontal={true}
+        style={styles.horizontalScroll}
+        scrollEnabled={shouldScroll} // Enable or disable scrolling based on the width of images
+        showsHorizontalScrollIndicator={false}
+      >
+        {images.map((img, index) => (
+          <Card
+            key={index.toString()}
+            imageSource={img}
+            onPress={() => openImageModal(img)}
+          />
+        ))}
+      </ScrollView>
+      <Modal visible={modalVisible} transparent={true}>
+        <View style={styles.modalContainer}>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={closeImageModal}
+          >
+            <Text style={styles.closeButtonText}>X</Text>
+          </TouchableOpacity>
+          <Image source={{ uri: selectedImageUri }} style={styles.modalImage} />
+        </View>
+      </Modal>
+    </View>
+  );
+};
 
 export default function TabFacilityProfileScreen() {
   // navigation
@@ -113,12 +190,7 @@ export default function TabFacilityProfileScreen() {
             }}
           ></ImageBackground>
           <Text style={styles.title}>{bathroom.Name}</Text>
-          <Image
-            source={{
-              uri: "https://images.adsttc.com/media/images/6179/94c7/f91c/81a4/f700/00c2/newsletter/WMC-Expo-2---Architectural-Photographer-Michael-Tessler---11.jpg?1635357877",
-            }}
-            style={{ height: 250, width: 250 }}
-          />
+          <ImageCarousel images={bathroom.PictureURL} />
           <View
             style={[
               {
@@ -160,7 +232,6 @@ export default function TabFacilityProfileScreen() {
               hours={bathroom.Operations}
               category={bathroom.Category}
               tags={bathroom.Tags}
-              description={bathroom.Description}
             />
           </View>
 
@@ -272,5 +343,47 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
     borderRadius: 4,
+  },
+  horizontalScroll: {
+    marginVertical: 10,
+  },
+  card: {
+    width: 100,
+    height: 150,
+    borderRadius: 10,
+    borderColor: "black",
+    backgroundColor: "grey",
+    marginHorizontal: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardImage: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 10,
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  closeButton: {
+    position: "absolute",
+    top: 50,
+    right: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 10,
+    zIndex: 1,
+  },
+  closeButtonText: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  modalImage: {
+    width: "90%",
+    height: "70%",
+    resizeMode: "contain",
   },
 });
