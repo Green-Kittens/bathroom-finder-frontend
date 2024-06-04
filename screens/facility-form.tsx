@@ -188,21 +188,39 @@ export default function FacilityForm() {
   const handleSubmit = async () => {
     const tagsArray = Object.keys(tags).filter(tag => tags[tag]);
     const pictures = images.map(image => image.assets[0].uri);
+    const currentDate = new Date().toISOString();
+
+    const bathroomData = {
+      Name: markerAddress, // Using marker address as the bathroom name
+      Coordinates: [markerCoordinates.latitude, markerCoordinates.longitude],
+      Category: description, // Using the description text as the category
+      Tags: tagsArray,
+      Operations: `${openTime} - ${closedTime}`,
+      Reviews: [], // No reviews initially
+      Date: currentDate,
+      PictureURL: pictures,
+      RatingAVG: 0, // No average rating initially
+      Favorites: 0, // No favorites initially
+      Reports: 0, // No reports initially
+    };
+  
+    console.log("Bathroom Data:", bathroomData);  
 
     try {
-      await createBathroom(
+      const response = await createBathroom(
         markerAddress, 
         [markerCoordinates.latitude, markerCoordinates.longitude],
         description, // Replace category with text in description text box
-        tagsArray.join(", "),
+        tagsArray,
         `${openTime} - ${closedTime}`,
         [], // No reviews initially
-        new Date(),
+        currentDate,
         pictures,
         0, // not avg ratings 
         0, // No favorites 
         0, // No reports 
       );
+      console.log("Response:", response);
       resetForm();
       navigation.navigate("Main");
     } catch (error) {
