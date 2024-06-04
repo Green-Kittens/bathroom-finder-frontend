@@ -11,4 +11,5 @@ export type Facility = {
   Reports: number;
   Description: string;
   _id: string;
+  Description: string;
 };
