@@ -26,7 +26,7 @@ export default function MainScreen() {
   useFocusEffect(
     React.useCallback(() => {
       fetchBathrooms();
-    }, []),
+    }, [fetchBathrooms]),
   );
 
   useEffect(() => {
