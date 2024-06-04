@@ -165,6 +165,7 @@ export default function TabFacilityProfileScreen() {
       try {
         const fetchReviews = await getAllReviews(bathroom._id);
         setBathroomReviews(fetchReviews);
+        console.log(fetchReviews);
       } catch (error) {
         console.error("Failed to fetch reviews", error);
       }
@@ -216,7 +217,7 @@ export default function TabFacilityProfileScreen() {
             <View style={{ marginTop: 10 }}>
               {SecondaryButton("Add Review", () => {
                 // figure out how to make it so that dropdown renders current facility as location
-                navigation.navigate("ReviewForm");
+                navigation.navigate("ReviewForm", { bathroom });
               })}
             </View>
           </SignedIn>

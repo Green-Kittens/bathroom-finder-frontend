@@ -1,6 +1,7 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Review } from "../types/review";
 import { port, host, protocol } from "./env";
+import { Alert } from "react-native";
 
 /**
  * Function for retrieving reviews of a bathroom
@@ -35,30 +36,36 @@ export async function getAllReviews(FacilityID: string): Promise<Review[]> {
  * @returns {Promise<string>} - Returns a promise with a success message upon successfully creating a new review
  */
 export async function createReview(
-  Rating: number,
-  Likes: number,
-  Dislikes: number,
-  PictureURL: string[],
-  FacilityID: string,
-  UserID: string,
-  Date: Date,
-  Description: string,
+  rating: number,
+  likes: number,
+  dislikes: number,
+  pictureURL: string[],
+  facilityID: string,
+  userID: string,
+  date: string,
+  description: string,
 ): Promise<string> {
   try {
     await axios.post<Review>(`${protocol}://${host}:${port}/reviews/`, {
-      Rating: Rating,
-      Likes: Likes,
-      Dislikes: Dislikes,
-      PictureURL: PictureURL,
-      FacilityID: FacilityID,
-      UserId: UserID,
-      Date: Date,
-      Description: Description,
-    });
-    const successMsg = `Review for bathroom (${FacilityID}) successfully created by ${UserID}: ${Description}`;
+      Rating: rating,
+      Likes: likes,
+      Dislikes: dislikes,
+      PictureURL: pictureURL,
+      FacilityID: facilityID,
+      UserID: userID,
+      Date: date,
+      Description: description,
+    },
+  );
+    const successMsg = `Review for bathroom (${facilityID}) successfully created by ${userID}: ${description}`;
     return successMsg;
   } catch (error) {
-    console.error("Error creating review:", error);
+    if (error instanceof AxiosError) {
+      Alert.alert("AxiosError", JSON.stringify(error.toJSON()));
+      console.error(error.toJSON());
+    } else {
+      console.error("Error creating bathroom:", error);
+    }
     throw error;
   }
 }

@@ -6,6 +6,7 @@ import {
   ImageBackground,
   ScrollView,
   Modal,
+  Alert,
 } from "react-native";
 import React, { useState, useRef } from "react";
 import StarRating from "react-native-star-rating-widget";
@@ -15,14 +16,26 @@ import MainButton, {
 } from "../components/Buttons";
 
 // screens
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { useImages } from "../contexts/ImageContext";
 import { ImageCarousel } from "../components/Carousel";
 import { ScreenNavigationProp } from "../navigation/type";
+import { Facility as BathroomProfile } from "../types/facility";
+import { createReview } from "../controllers/reviewController";
+
+// route type
+type FacilityProfileRouteParams = { bathroom: BathroomProfile };
+type FacilityProfileRouteProp = RouteProp<
+  { FacilityProfile: FacilityProfileRouteParams },
+  "FacilityProfile"
+>;
 
 export default function ReviewForm() {
-  // location
+  
+  // route-- facility data
+  const route = useRoute<FacilityProfileRouteProp>();
+  const { bathroom } = route.params;
 
   // getting current date and time
   const currentDate = new Date();
@@ -111,7 +124,7 @@ export default function ReviewForm() {
           }}
         >
           <Text style={styles.title}>New Bathroom Rating</Text>
-          <Text style={styles.header}>Facility Name</Text>
+          <Text style={styles.header}>{ bathroom.Name }</Text>
 
           <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
 
@@ -157,8 +170,28 @@ export default function ReviewForm() {
             color="black"
           />
 
-          {SecondaryButton("Post Rating", async () => {
-            // make a check to make sure that all fields are filled out
+          {SecondaryButton("Post Rating", () => {
+            if (rating > 0) {
+              const pictures = images.map((image) => image.assets[0].uri);
+              try {
+                createReview(
+                  rating,
+                  0, // no initial likes 
+                  0, // no initial dislikes 
+                  pictures, 
+                  bathroom._id, 
+                  "randomUser", // ask how to get userID
+                  Date.now().toString(),
+                  description,
+                );
+              } catch (error) {
+                if (error instanceof Error) {
+                  Alert.alert("Error", error.message);
+                } else {
+                  Alert.alert("Error", "couldn't create bathroom");
+                }
+              }
+            }
             navigation.navigate("Main");
             resetForm();
           })}
