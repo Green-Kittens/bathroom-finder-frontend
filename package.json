@@ -15,6 +15,7 @@
     "clean": "rm -rf node_modules && yarn install"
   },
   "dependencies": {
+    "@azure/storage-blob": "^12.23.0",
     "@clerk/clerk-expo": "^1.0.7",
     "@expo/config-plugins": "^8.0.4",
     "@expo/metro-config": "^0.18.3",
