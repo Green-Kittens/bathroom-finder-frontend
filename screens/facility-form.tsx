@@ -23,6 +23,7 @@ import MainButton, {
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import axios from "axios";
+import { createBathroom } from "../controllers/userController";
 
 const btnInactive = "#6da798";
 const btnActive = "#044962";
@@ -183,6 +184,31 @@ export default function FacilityForm() {
     };
     getLocation();
   }, []);
+
+  const handleSubmit = async () => {
+    const tagsArray = Object.keys(tags).filter(tag => tags[tag]);
+    const pictures = images.map(image => image.assets[0].uri);
+
+    try {
+      await createBathroom(
+        markerAddress, 
+        [markerCoordinates.latitude, markerCoordinates.longitude],
+        description, // Replace category with text in description text box
+        tagsArray.join(", "),
+        `${openTime} - ${closedTime}`,
+        [], // No reviews initially
+        new Date(),
+        pictures,
+        0, // not avg ratings 
+        0, // No favorites 
+        0, // No reports 
+      );
+      resetForm();
+      navigation.navigate("Main");
+    } catch (error) {
+      console.error("Error creating bathroom:", error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -345,10 +371,7 @@ export default function FacilityForm() {
             </Modal>
           )}
 
-          {SecondaryButton("Submit Facility", () => {
-            navigation.navigate("Main");
-            resetForm();
-          })}
+          {SecondaryButton("Submit Facility", handleSubmit)}
         </View>
       </ScrollView>
     </View>
