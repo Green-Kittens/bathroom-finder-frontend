@@ -177,7 +177,6 @@ function TabLoginScreen() {
                 ) : null}
               </View>
             </View>
-
             {/* Forgot Password Section */}
             <TouchableOpacity
               onPress={() => {
@@ -194,17 +193,27 @@ function TabLoginScreen() {
             </View>
 
             {/* Google Sign In */}
-            <View style={[{ margin: 10, flexDirection: "row" }]}>
+            <View
+              style={[
+                {
+                  margin: 10,
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  width: "50%",
+                  alignContent: "center",
+                },
+              ]}
+            >
               <GoogleSignIn />
               <MicroSignIn />
             </View>
-            <View style={styles.container}>
+            <View style={[styles.container, { flex: 0.1, paddingBottom: 30 }]}>
               <EmailCodeSignIn />
             </View>
 
             {/* Footer with Register Section */}
             <View style={styles.footer}>
-              <View style={styles.registerContainer}>
+              <View style={[styles.registerContainer]}>
                 <Text style={styles.text} disabled>
                   Don&apos;t have an account?
                 </Text>
@@ -214,7 +223,7 @@ function TabLoginScreen() {
                   }}
                   style={styles.registerContainer}
                 >
-                  <Text style={styles.registerText}>Register</Text>
+                  <Text style={styles.registerText}> Register</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -242,8 +251,8 @@ const styles = StyleSheet.create({
   // Title Section
   title: {
     fontSize: 20,
-    marginBottom: 50,
-    marginTop: 20,
+    marginTop: 10,
+    marginBottom: 20,
     fontFamily: "EudoxusSans-Bold",
   },
   // Input Section
