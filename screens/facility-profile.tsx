@@ -77,7 +77,7 @@ const imageUrls = [
   "https://via.placeholder.com/600x400.png?text=Image+2",
   "https://via.placeholder.com/600x400.png?text=Image+3",
   "https://via.placeholder.com/600x400.png?text=Image+4",
-  "https://via.placeholder.com/600x400.png?text=Image+5"
+  "https://via.placeholder.com/600x400.png?text=Image+5",
 ];
 
 interface CardProps {
@@ -96,7 +96,7 @@ const Card: React.FC<CardProps> = ({ imageSource, onPress }) => {
 };
 
 interface ImageCarouselProps {
-  images: string[]
+  images: string[];
 }
 
 const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
@@ -136,7 +136,10 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
       </ScrollView>
       <Modal visible={modalVisible} transparent={true}>
         <View style={styles.modalContainer}>
-          <TouchableOpacity style={styles.closeButton} onPress={closeImageModal}>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={closeImageModal}
+          >
             <Text style={styles.closeButtonText}>X</Text>
           </TouchableOpacity>
           <Image source={{ uri: selectedImageUri }} style={styles.modalImage} />
@@ -145,7 +148,6 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
     </View>
   );
 };
-
 
 export default function TabFacilityProfileScreen() {
   // navigation
@@ -189,7 +191,7 @@ export default function TabFacilityProfileScreen() {
             }}
           ></ImageBackground>
           <Text style={styles.title}>{bathroom.Name}</Text>
-          <ImageCarousel images={ bathroom.PictureURL }/> 
+          <ImageCarousel images={bathroom.PictureURL} />
           <View
             style={[
               {
