@@ -4,10 +4,10 @@ import {
   Image,
   SafeAreaView,
   TextInput,
-  Button,
   Text,
   View,
   Modal,
+  ImageBackground,
   Keyboard,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -164,13 +164,29 @@ export default function TabSubmitScreen() {
   }, [emailAddress, password, code, isPasswordStrong]);
 
   return (
-    <KeyboardAwareScrollView
-      style={{ flex: 1 }}
-      contentContainerStyle={{ flexGrow: 1 }}
-      keyboardShouldPersistTaps="handled"
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
+    <View style={styles.container}>
+      <ImageBackground
+        source={require("../assets/images/circle.png")}
+        style={{
+          top: 300,
+          left: -200,
+          flex: 1,
+          justifyContent: "center",
+          width: 500,
+          height: 466,
+          position: "absolute",
+        }}
+        imageStyle={{
+          resizeMode: "cover",
+          alignSelf: "flex-end",
+        }}
+      ></ImageBackground>
+      <KeyboardAwareScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <SafeAreaView style={styles.safeArea}>
             <Modal
               animationType="fade"
@@ -184,11 +200,7 @@ export default function TabSubmitScreen() {
                 <View style={styles.modalOverlay}>
                   <TouchableOpacity activeOpacity={1} style={styles.modalView}>
                     <Text style={styles.text}>{modalMessage}</Text>
-                    <Button
-                      title="Close"
-                      color={"#000000"}
-                      onPress={onClosePress}
-                    />
+                    {MainButton("Close", onClosePress)}
                   </TouchableOpacity>
                 </View>
               </TouchableWithoutFeedback>
@@ -197,7 +209,10 @@ export default function TabSubmitScreen() {
               source={require("../assets/images/icon.png")}
               style={styles.logo}
             />
-            <Text style={styles.title}>Forgot-Password</Text>
+            <Text style={styles.title}>Forgot Password?</Text>
+            <Text style={styles.text}>
+              Enter your email below for a password reset link.
+            </Text>
             {!successfulCreation && (
               <>
                 {/* Text input fields */}
@@ -249,9 +264,9 @@ export default function TabSubmitScreen() {
               </>
             )}
           </SafeAreaView>
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAwareScrollView>
+        </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
+    </View>
   );
 }
 
@@ -260,29 +275,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
+    backgroundColor: "#EEF8F7",
   },
   // Safe Area Section
   safeArea: {
     flex: 1,
     alignItems: "center",
-    marginTop: "25%",
+    justifyContent: "center",
   },
   // Title Section
   title: {
     fontSize: 20,
-    fontWeight: "bold",
-    marginTop: 20,
     marginBottom: 50,
+    fontFamily: "EudoxusSans-Bold",
   },
   // Input Section
   input: {
     height: 40,
-    width: 200, // Control the width of the input size
+    width: "30%", // Control the width of the input size
     margin: 12,
     borderWidth: 1,
     padding: 10,
-    backgroundColor: "#FFFFFF",
     alignSelf: "center",
+    backgroundColor: "#FFFFFF",
+    minWidth: 200,
   },
   // Text Section
   text: {
@@ -301,6 +317,7 @@ const styles = StyleSheet.create({
     height: 100,
     alignSelf: "center",
     marginBottom: 5,
+    borderRadius: 50,
   },
   modalView: {
     marginTop: "10%",
