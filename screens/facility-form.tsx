@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Modal,
   ImageBackground,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
@@ -22,8 +23,8 @@ import MainButton, {
 } from "../components/Buttons";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
-import axios from "axios";
-import { createBathroom } from "../controllers/userController";
+import axios, { AxiosError } from "axios";
+import { createBathroom } from "../controllers/bathroomController";
 
 const btnInactive = "#6da798";
 const btnActive = "#044962";
@@ -185,50 +186,50 @@ export default function FacilityForm() {
     getLocation();
   }, []);
 
-  const handleSubmit = async () => {
-    const tagsArray = Object.keys(tags).filter(tag => tags[tag]);
-    const pictures = images.map(image => image.assets[0].uri);
-    const currentDate = new Date().toISOString();
+  // const handleSubmit = async () => {
+  //   const tagsArray = Object.keys(tags).filter(tag => tags[tag]);
+  //   const pictures = images.map(image => image.assets[0].uri);
+  //   const currentDate = new Date().toISOString();
 
-    const bathroomData = {
-      Name: markerAddress, // Using marker address as the bathroom name
-      Coordinates: [markerCoordinates.latitude, markerCoordinates.longitude],
-      Category: " ", // Using the description text as the category
-      Tags: tagsArray,
-      Operations: `${openTime} - ${closedTime}`,
-      Reviews: [], // No reviews initially
-      Date: currentDate,
-      PictureURL: pictures,
-      RatingAVG: 0, // No average rating initially
-      Favorites: 0, // No favorites initially
-      Reports: 0, // No reports initially
-      Description: description,
-    };
+  //   const bathroomData = {
+  //     Name: markerAddress, // Using marker address as the bathroom name
+  //     Coordinates: [markerCoordinates.latitude, markerCoordinates.longitude],
+  //     Category: " ", // Using the description text as the category
+  //     Tags: tagsArray,
+  //     Operations: `${openTime} - ${closedTime}`,
+  //     Reviews: [], // No reviews initially
+  //     Date: currentDate,
+  //     PictureURL: pictures,
+  //     RatingAVG: 0, // No average rating initially
+  //     Favorites: 0, // No favorites initially
+  //     Reports: "", // No reports initially
+  //     Description: description,
+  //   };
   
-    console.log("Bathroom Data:", bathroomData);  
+  //   console.log("Bathroom Data:", bathroomData);  
 
-    try {
-      const response = await createBathroom(
-        markerAddress, 
-        [markerCoordinates.latitude, markerCoordinates.longitude],
-        " ", // Replace category with text in description text box
-        tagsArray,
-        `${openTime} - ${closedTime}`,
-        [], // No reviews initially
-        currentDate,
-        pictures,
-        0, // not avg ratings 
-        0, // No favorites 
-        0, // No reports 
-        description,
-      );
-      console.log("Response:", response);
-      resetForm();
-      navigation.navigate("Main");
-    } catch (error) {
-      console.error("Error creating bathroom:", error);
-    }
-  };
+  //   try {
+  //     const response = await createBathroom(
+  //       markerAddress, 
+  //       [markerCoordinates.latitude, markerCoordinates.longitude],
+  //       " ", // Replace category with text in description text box
+  //       tagsArray,
+  //       `${openTime} - ${closedTime}`,
+  //       [], // No reviews initially
+  //       currentDate,
+  //       pictures,
+  //       0, // not avg ratings 
+  //       0, // No favorites 
+  //       "", // No reports 
+  //       description,
+  //     );
+  //     console.log("Response:", response);
+  //     resetForm();
+  //     navigation.navigate("Main");
+  //   } catch (error) {
+  //     console.error("Error creating bathroom:", error);
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
@@ -391,7 +392,38 @@ export default function FacilityForm() {
             </Modal>
           )}
 
-          {SecondaryButton("Submit Facility", handleSubmit)}
+          {SecondaryButton("Submit Facility", () => {
+            if (markerAddress != "") {
+              const tagsArray = Object.keys(tags).filter(tag => tags[tag]);
+              const pictures = images.map(image => image.assets[0].uri);
+
+              try {
+                const newBathroom = createBathroom(
+                  markerAddress, 
+                  [markerCoordinates.latitude, markerCoordinates.longitude],
+                  "None",
+                  `${tagsArray.join(', ')}`,
+                  `${openTime} to ${closedTime}`,
+                  [], // now initial reviews
+                  Date.now().toString(),
+                  pictures,
+                  5, // initial star rating is full score out of 5 (will not ruin average)
+                  0, // no initial favorites
+                  0, // no initial reports
+                  description,
+                );
+                console.log(newBathroom);
+              } catch (error) {
+                if (error instanceof Error) {
+                  Alert.alert("Error", error.message);
+                } else {
+                  Alert.alert("Error", "couldn't create bathroom");
+                }
+              }
+            }
+            navigation.navigate("Main");
+            resetForm();
+          })}
         </View>
       </ScrollView>
     </View>
