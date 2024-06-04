@@ -89,7 +89,7 @@ const Card: React.FC<CardProps> = ({ imageSource, onPress }) => {
 };
 
 interface ImageCarouselProps {
-  images: string[];
+  images: { uri: string; id: string }[];
 }
 
 const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
@@ -121,9 +121,9 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
       >
         {images.map((img, index) => (
           <Card
-            key={index.toString()}
-            imageSource={img}
-            onPress={() => openImageModal(img)}
+            key={img.id}
+            imageSource={img.uri}
+            onPress={() => openImageModal(img.uri)}
           />
         ))}
       </ScrollView>
@@ -163,6 +163,12 @@ export default function TabFacilityProfileScreen() {
     })();
   }, []);
 
+  // unique ids for images
+  const imagesWithIds = bathroom.PictureURL.map((url, index) => ({
+    uri: url,
+    id: `${bathroom._id}-${index}`,
+  }));
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -184,7 +190,7 @@ export default function TabFacilityProfileScreen() {
             }}
           ></ImageBackground>
           <Text style={styles.title}>{bathroom.Name}</Text>
-          <ImageCarousel images={bathroom.PictureURL} />
+          <ImageCarousel images={imagesWithIds} />
           <View
             style={[
               {
