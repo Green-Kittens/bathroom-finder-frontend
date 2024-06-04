@@ -73,14 +73,6 @@ type FacilityProfileRouteProp = RouteProp<
   "FacilityProfile"
 >;
 
-const imageUrls = [
-  "https://via.placeholder.com/600x400.png?text=Image+1",
-  "https://via.placeholder.com/600x400.png?text=Image+2",
-  "https://via.placeholder.com/600x400.png?text=Image+3",
-  "https://via.placeholder.com/600x400.png?text=Image+4",
-  "https://via.placeholder.com/600x400.png?text=Image+5",
-];
-
 interface CardProps {
   imageSource: string;
   onPress: () => void;
@@ -107,7 +99,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
   const screenWidth = Dimensions.get("window").width;
   const cardWidth = 100;
   const margin = 10;
-  const totalCardWidth = imageUrls.length * (cardWidth + margin);
+  const totalCardWidth = images.length * (cardWidth + margin);
   const shouldScroll = totalCardWidth > screenWidth;
 
   const openImageModal = (uri: string) => {

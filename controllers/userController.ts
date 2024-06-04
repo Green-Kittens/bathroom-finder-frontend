@@ -1,6 +1,5 @@
 import axios from "axios";
 import { User as UserProfile } from "../types/user";
-// import { Facility as BathroomProfile } from "../types/facility";
 import { port, host, protocol } from "./env";
 
 /**
@@ -54,59 +53,3 @@ export async function getUserProfile(UserID: string): Promise<UserProfile> {
     throw error;
   }
 }
-
-// /**
-//  * Function for creating a bathroom
-//  * @param {string} Name - Name of the bathroom
-//  * @param {number[]} Coordinates - Location of bathroom
-//  * @param {string} Tags - Tags on the bathroom
-//  * @param {string} Operations - Bathroom's hours of operation
-//  * @param {string[]} Reviews - Reviews on bathroom
-//  * @param {Date} Date - Date the bathroom was created/posted
-//  * @param {string[]} PictureURL - Picture(s) of the bathroom
-//  * @param {number} RatingAVG - The rating average of the bathroom
-//  * @param {number} Favorites - The number of favorites the bathroom has
-//  * @param {number} Reports - The number of reports on the bathroom
-//  * @returns {Promise<string>} - Returns a promise with a success message upon successfully creating a new bathroom
-//  */
-// export async function createBathroom(
-//   Name: string,
-//   Coordinates: [number, number],
-//   Category: string,
-//   Tags: string[],
-//   Operations: string,
-//   Reviews: string[],
-//   Date: string,
-//   PictureURL: string[],
-//   RatingAVG: number,
-//   Favorites: number,
-//   Reports: string,
-//   Description: string,
-// ): Promise<string> {
-//   try {
-//     await axios.post<BathroomProfile>(
-//       `${protocol}://${host}:${port}/facilities/`,
-//       {
-//         params: {
-//           Name: Name,
-//           Coordinates: Coordinates,
-//           Category: Category,
-//           Tags: Tags,
-//           Operations: Operations,
-//           Reviews: Reviews,
-//           Date: Date,
-//           PictureURL: PictureURL,
-//           RatingAVG: RatingAVG,
-//           Favorites: Favorites,
-//           Reports: Reports,
-//           Description: Description,
-//         },
-//       },
-//     );
-//     const successMsg = `Bathroom successfully created: hours of operation (${Operations}), tags (${Tags})).`;
-//     return successMsg;
-//   } catch (error) {
-//     console.error("Error creating bathroom:", error);
-//     throw error;
-//   }
-// }
