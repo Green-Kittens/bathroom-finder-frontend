@@ -33,7 +33,7 @@ export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
   const [mapModal, setMapModal] = useState(false);
   const [markerCoordinates, setMarkerCoordinates] = useState({
-    latitude: 0, 
+    latitude: 0,
     longitude: 0,
   });
   const [markerAddress, setMarkerAddress] = useState("");
@@ -171,13 +171,13 @@ export default function FacilityForm() {
         try {
           const response = await axios.get(
             `https://nominatim.openstreetmap.org/reverse?lat=${markerCoordinates.latitude}&lon=${markerCoordinates.longitude}&format=json`,
-         );
-         const addressDetails = response.data.address;
-         let buildingName = "";
-         if (addressDetails && addressDetails.building) {
-          buildingName = addressDetails.building;
-         }
-         setMarkerAddress(buildingName || response.data.display_name);
+          );
+          const addressDetails = response.data.address;
+          let buildingName = "";
+          if (addressDetails && addressDetails.building) {
+            buildingName = addressDetails.building;
+          }
+          setMarkerAddress(buildingName || response.data.display_name);
         } catch (error) {
           console.error("Error fetching address:", error);
         }
@@ -185,51 +185,6 @@ export default function FacilityForm() {
     };
     getLocation();
   }, []);
-
-  // const handleSubmit = async () => {
-  //   const tagsArray = Object.keys(tags).filter(tag => tags[tag]);
-  //   const pictures = images.map(image => image.assets[0].uri);
-  //   const currentDate = new Date().toISOString();
-
-  //   const bathroomData = {
-  //     Name: markerAddress, // Using marker address as the bathroom name
-  //     Coordinates: [markerCoordinates.latitude, markerCoordinates.longitude],
-  //     Category: " ", // Using the description text as the category
-  //     Tags: tagsArray,
-  //     Operations: `${openTime} - ${closedTime}`,
-  //     Reviews: [], // No reviews initially
-  //     Date: currentDate,
-  //     PictureURL: pictures,
-  //     RatingAVG: 0, // No average rating initially
-  //     Favorites: 0, // No favorites initially
-  //     Reports: "", // No reports initially
-  //     Description: description,
-  //   };
-  
-  //   console.log("Bathroom Data:", bathroomData);  
-
-  //   try {
-  //     const response = await createBathroom(
-  //       markerAddress, 
-  //       [markerCoordinates.latitude, markerCoordinates.longitude],
-  //       " ", // Replace category with text in description text box
-  //       tagsArray,
-  //       `${openTime} - ${closedTime}`,
-  //       [], // No reviews initially
-  //       currentDate,
-  //       pictures,
-  //       0, // not avg ratings 
-  //       0, // No favorites 
-  //       "", // No reports 
-  //       description,
-  //     );
-  //     console.log("Response:", response);
-  //     resetForm();
-  //     navigation.navigate("Main");
-  //   } catch (error) {
-  //     console.error("Error creating bathroom:", error);
-  //   }
-  // };
 
   return (
     <View style={styles.container}>
@@ -394,15 +349,15 @@ export default function FacilityForm() {
 
           {SecondaryButton("Submit Facility", () => {
             if (markerAddress != "") {
-              const tagsArray = Object.keys(tags).filter(tag => tags[tag]);
-              const pictures = images.map(image => image.assets[0].uri);
+              const tagsArray = Object.keys(tags).filter((tag) => tags[tag]);
+              const pictures = images.map((image) => image.assets[0].uri);
 
               try {
                 const newBathroom = createBathroom(
-                  markerAddress, 
+                  markerAddress,
                   [markerCoordinates.latitude, markerCoordinates.longitude],
                   "None",
-                  `${tagsArray.join(', ')}`,
+                  `${tagsArray.join(", ")}`,
                   `${openTime} to ${closedTime}`,
                   [], // now initial reviews
                   Date.now().toString(),
