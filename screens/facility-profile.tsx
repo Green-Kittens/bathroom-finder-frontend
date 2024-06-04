@@ -119,7 +119,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
         scrollEnabled={shouldScroll} // Enable or disable scrolling based on the width of images
         showsHorizontalScrollIndicator={false}
       >
-        {images.map((img, index) => (
+        {images.map((img) => (
           <Card
             key={img.id}
             imageSource={img.uri}
