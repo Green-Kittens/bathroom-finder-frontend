@@ -81,6 +81,7 @@ export async function createBathroom(
   RatingAVG: number,
   Favorites: number,
   Reports: number,
+  Description: string,
 ): Promise<string> {
   try {
     await axios.post<BathroomProfile>(
@@ -98,6 +99,7 @@ export async function createBathroom(
           RatingAVG: RatingAVG,
           Favorites: Favorites,
           Reports: Reports,
+          Description: Description,
         },
       },
     );

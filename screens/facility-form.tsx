@@ -193,7 +193,7 @@ export default function FacilityForm() {
     const bathroomData = {
       Name: markerAddress, // Using marker address as the bathroom name
       Coordinates: [markerCoordinates.latitude, markerCoordinates.longitude],
-      Category: description, // Using the description text as the category
+      Category: " ", // Using the description text as the category
       Tags: tagsArray,
       Operations: `${openTime} - ${closedTime}`,
       Reviews: [], // No reviews initially
@@ -202,6 +202,7 @@ export default function FacilityForm() {
       RatingAVG: 0, // No average rating initially
       Favorites: 0, // No favorites initially
       Reports: 0, // No reports initially
+      Description: description,
     };
   
     console.log("Bathroom Data:", bathroomData);  
@@ -210,7 +211,7 @@ export default function FacilityForm() {
       const response = await createBathroom(
         markerAddress, 
         [markerCoordinates.latitude, markerCoordinates.longitude],
-        description, // Replace category with text in description text box
+        " ", // Replace category with text in description text box
         tagsArray,
         `${openTime} - ${closedTime}`,
         [], // No reviews initially
@@ -219,6 +220,7 @@ export default function FacilityForm() {
         0, // not avg ratings 
         0, // No favorites 
         0, // No reports 
+        description,
       );
       console.log("Response:", response);
       resetForm();
