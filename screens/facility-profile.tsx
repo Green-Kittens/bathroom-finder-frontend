@@ -32,10 +32,12 @@ function CollapseView({
   hours,
   category,
   tags,
+  description,
 }: {
   hours: string;
   category: string;
   tags: string[];
+  description: string;
 }) {
   type onPressCallback = () => void;
   function renderViewMore(onPress: onPressCallback) {
@@ -58,7 +60,7 @@ function CollapseView({
         Hours: {hours} {"\n"}
         Category: {category} {"\n"}
         Tags: {tags.join(", ")} {"\n"}
-        Description: {/* { description } */}
+        Description: {description} {"\n"}
       </Text>
     </ViewMoreText>
   );
@@ -232,6 +234,7 @@ export default function TabFacilityProfileScreen() {
               hours={bathroom.Operations}
               category={bathroom.Category}
               tags={bathroom.Tags}
+              description={bathroom.Description}
             />
           </View>
 

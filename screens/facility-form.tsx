@@ -23,7 +23,7 @@ import MainButton, {
 } from "../components/Buttons";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { createBathroom } from "../controllers/bathroomController";
 
 const btnInactive = "#6da798";
@@ -353,7 +353,7 @@ export default function FacilityForm() {
               const pictures = images.map((image) => image.assets[0].uri);
 
               try {
-                const newBathroom = createBathroom(
+                createBathroom(
                   markerAddress,
                   [markerCoordinates.latitude, markerCoordinates.longitude],
                   "None",
@@ -367,7 +367,6 @@ export default function FacilityForm() {
                   0, // no initial reports
                   description,
                 );
-                console.log(newBathroom);
               } catch (error) {
                 if (error instanceof Error) {
                   Alert.alert("Error", error.message);
