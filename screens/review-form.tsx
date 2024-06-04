@@ -22,11 +22,6 @@ import { ImageCarousel } from "../components/Carousel";
 import { ScreenNavigationProp } from "../navigation/type";
 
 export default function ReviewForm() {
-  // location
-
-  // getting current date and time
-  const currentDate = new Date();
-
   // description
   const [description, setDescription] = useState("");
 
@@ -112,8 +107,6 @@ export default function ReviewForm() {
         >
           <Text style={styles.title}>New Bathroom Rating</Text>
           <Text style={styles.header}>Facility Name</Text>
-
-          <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
 
           <ImageCarousel componentId="reviewForm" />
 
