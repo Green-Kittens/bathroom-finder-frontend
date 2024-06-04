@@ -30,6 +30,7 @@ import ViewMoreText from "react-native-view-more-text";
 import { getAllReviews } from "../controllers/reviewController";
 import { Facility as BathroomProfile } from "../types/facility";
 import { Review as BathroomReview } from "../types/review";
+import { getBathroomProfile } from "../controllers/bathroomController";
 
 const windowHeight = Dimensions.get("window").height;
 
@@ -178,6 +179,9 @@ export default function TabFacilityProfileScreen() {
 
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);
+
+  console.log(`Fetched Bathroom Reviews: ${bathroomReviews}`);
+  console.log(`Current facility ID: ${bathroom._id}`);
 
   return (
     <View style={styles.container}>
