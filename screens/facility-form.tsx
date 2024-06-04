@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Modal,
   ImageBackground,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
@@ -22,7 +23,8 @@ import MainButton, {
 } from "../components/Buttons";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { createBathroom } from "../controllers/bathroomController";
 
 const btnInactive = "#6da798";
 const btnActive = "#044962";
@@ -327,6 +329,32 @@ export default function FacilityForm() {
           )}
 
           {SecondaryButton("Submit Facility", () => {
+            if (currentLocation != null) {
+              try {
+                createBathroom(
+                  "name",
+                  [
+                    currentLocation.coords.latitude,
+                    currentLocation.coords.longitude,
+                  ],
+                  "category",
+                  `${tags.babyChanging} ${tags.genderNeutral} ${tags.cleanedRegularly} ${tags.wheelchairAccessible}`,
+                  `${openTime} to ${closedTime}`,
+                  [],
+                  Date.now().toString(),
+                  [],
+                  7.5,
+                  8,
+                  8.5,
+                );
+              } catch (error) {
+                if (error instanceof Error) {
+                  Alert.alert("Error", error.message);
+                } else {
+                  Alert.alert("Error", "couldn't create bathroom");
+                }
+              }
+            }
             navigation.navigate("Main");
             resetForm();
           })}
