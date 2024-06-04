@@ -11,7 +11,12 @@ import {
   Modal,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
+import {
+  useNavigation,
+  useRoute,
+  RouteProp,
+  useFocusEffect,
+} from "@react-navigation/native";
 import { ScreenNavigationProp } from "../navigation/type";
 import Review from "../components/Review";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
@@ -73,14 +78,6 @@ type FacilityProfileRouteProp = RouteProp<
   "FacilityProfile"
 >;
 
-const imageUrls = [
-  "https://via.placeholder.com/600x400.png?text=Image+1",
-  "https://via.placeholder.com/600x400.png?text=Image+2",
-  "https://via.placeholder.com/600x400.png?text=Image+3",
-  "https://via.placeholder.com/600x400.png?text=Image+4",
-  "https://via.placeholder.com/600x400.png?text=Image+5",
-];
-
 interface CardProps {
   imageSource: string;
   onPress: () => void;
@@ -107,7 +104,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
   const screenWidth = Dimensions.get("window").width;
   const cardWidth = 100;
   const margin = 10;
-  const totalCardWidth = imageUrls.length * (cardWidth + margin);
+  const totalCardWidth = images.length * (cardWidth + margin);
   const shouldScroll = totalCardWidth > screenWidth;
 
   const openImageModal = (uri: string) => {
@@ -160,16 +157,26 @@ export default function TabFacilityProfileScreen() {
 
   // fetching all bathroom reviews
   const [bathroomReviews, setBathroomReviews] = useState<BathroomReview[]>([]);
+  const fetchReviews = async () => {
+    try {
+      const fetchReviews = await getAllReviews(bathroom._id);
+      setBathroomReviews(fetchReviews);
+    } catch (error) {
+      console.error("Failed to fetch reviews", error);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchReviews();
+    }, []),
+  );
+
   useEffect(() => {
-    (async () => {
-      try {
-        const fetchReviews = await getAllReviews(bathroom._id);
-        setBathroomReviews(fetchReviews);
-        console.log(fetchReviews);
-      } catch (error) {
-        console.error("Failed to fetch reviews", error);
-      }
-    })();
+    fetchReviews();
+    const interval = setInterval(fetchReviews, 30000); // Fetch reviews every 30 seconds
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);
 
   return (

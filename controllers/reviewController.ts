@@ -55,8 +55,7 @@ export async function createReview(
       UserID: userID,
       Date: date,
       Description: description,
-    },
-  );
+    });
     const successMsg = `Review for bathroom (${facilityID}) successfully created by ${userID}: ${description}`;
     return successMsg;
   } catch (error) {

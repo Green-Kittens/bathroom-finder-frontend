@@ -14,6 +14,7 @@ import MainButton, {
   CancelButton,
   SecondaryButton,
 } from "../components/Buttons";
+import { useAuth } from "@clerk/clerk-expo";
 
 // screens
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
@@ -32,7 +33,6 @@ type FacilityProfileRouteProp = RouteProp<
 >;
 
 export default function ReviewForm() {
-  
   // route-- facility data
   const route = useRoute<FacilityProfileRouteProp>();
   const { bathroom } = route.params;
@@ -95,6 +95,9 @@ export default function ReviewForm() {
     scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: false });
   };
 
+  // get current user signed in
+  const { userId } = useAuth();
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -124,7 +127,7 @@ export default function ReviewForm() {
           }}
         >
           <Text style={styles.title}>New Bathroom Rating</Text>
-          <Text style={styles.header}>{ bathroom.Name }</Text>
+          <Text style={styles.header}>{bathroom.Name}</Text>
 
           <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
 
@@ -171,16 +174,16 @@ export default function ReviewForm() {
           />
 
           {SecondaryButton("Post Rating", () => {
-            if (rating > 0) {
+            if (rating > 0 && userId != null) {
               const pictures = images.map((image) => image.assets[0].uri);
               try {
                 createReview(
                   rating,
-                  0, // no initial likes 
-                  0, // no initial dislikes 
-                  pictures, 
-                  bathroom._id, 
-                  "randomUser", // ask how to get userID
+                  0, // no initial likes
+                  0, // no initial dislikes
+                  pictures,
+                  bathroom._id,
+                  userId,
                   Date.now().toString(),
                   description,
                 );
