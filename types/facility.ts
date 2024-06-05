@@ -1,15 +1,14 @@
 export type Facility = {
-  name: string;
-  location: {
-    coordinates: number[];
-    type: string;
-  };
-  category: string;
-  tags: string[];
-  operations: string;
-  date: string;
-  pictureURL?: string;
-  ratingAVG: number;
-  favorites: number;
-  reports: number;
+  Name: string;
+  Coordinates: [number, number];
+  Category: string;
+  Tags: string[];
+  Operations: string;
+  Date: string;
+  PictureURL: string[];
+  RatingAVG: number;
+  Favorites: number;
+  Reports: number;
+  _id: string;
+  Description: string;
 };

@@ -1,8 +1,3 @@
-import React from "react";
-import MainButton, {
-  CancelButton,
-  SecondaryButton,
-} from "../../components/Buttons";
 import {
   StyleSheet,
   TextInput,
@@ -12,29 +7,28 @@ import {
   ScrollView,
   Modal,
 } from "react-native";
-import { useState } from "react";
-import RNPickerSelect from "react-native-picker-select";
+import React, { useState, useRef } from "react";
 import StarRating from "react-native-star-rating-widget";
+import MainButton, {
+  CancelButton,
+  SecondaryButton,
+} from "../components/Buttons";
 
 // screens
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
-import { useImages } from "../../contexts/ImageContext";
-import { ImageCarousel } from "../../components/Carousel";
-import { ScreenNavigationProp } from "../type";
+import { useImages } from "../contexts/ImageContext";
+import { ImageCarousel } from "../components/Carousel";
+import { ScreenNavigationProp } from "../navigation/type";
 
 export default function ReviewForm() {
-  // location
-  const [, setLocation] = useState("");
-
-  // getting current date and time
-  const currentDate = new Date();
-
   // description
   const [description, setDescription] = useState("");
 
   // image uploader and carousel
   const { addImage } = useImages("reviewForm");
+  const { deleteImage } = useImages("reviewForm");
+  const { images } = useImages("reviewForm");
   const [modalVisible, setModalVisible] = useState(false);
   const handleAddImage = async (source: "camera" | "gallery") => {
     let pickerResult;
@@ -72,10 +66,21 @@ export default function ReviewForm() {
   // post rating (submit button)
   const navigation = useNavigation<ScreenNavigationProp>();
 
+  const scrollViewRef = useRef<ScrollView>();
+
+  const resetForm = () => {
+    setDescription("");
+    setRating(0);
+    for (const image of images) {
+      deleteImage(image.assets[0].uri);
+    }
+    scrollViewRef.current?.scrollTo({ x: 0, y: 0, animated: false });
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../../assets/images/circle.png")}
+        source={require("../assets/images/circle.png")}
         style={{
           width: 1070,
           height: 1000,
@@ -88,31 +93,20 @@ export default function ReviewForm() {
           alignSelf: "flex-end",
         }}
       ></ImageBackground>
-      <ScrollView style={{ width: "100%" }}>
+      <ScrollView
+        ref={scrollViewRef /*ignore error here*/}
+        style={{ width: "100%" }}
+      >
         <View
           style={{
             justifyContent: "center",
             alignItems: "center",
             alignContent: "center",
+            marginTop: 50,
           }}
         >
           <Text style={styles.title}>New Bathroom Rating</Text>
-
-          <View style={styles.dropdown}>
-            <RNPickerSelect
-              placeholder={{
-                label: "select a location",
-                value: null,
-              }}
-              onValueChange={(newLocation) => setLocation(newLocation)}
-              items={[
-                { label: "Location 1", value: "location1" },
-                { label: "Location 2", value: "location2" },
-              ]}
-            />
-          </View>
-
-          <Text style={styles.subtext}>{currentDate.toLocaleString()}</Text>
+          <Text style={styles.header}>Facility Name</Text>
 
           <ImageCarousel componentId="reviewForm" />
 
@@ -159,6 +153,7 @@ export default function ReviewForm() {
           {SecondaryButton("Post Rating", async () => {
             // make a check to make sure that all fields are filled out
             navigation.navigate("Main");
+            resetForm();
           })}
         </View>
       </ScrollView>
@@ -264,5 +259,10 @@ const styles = StyleSheet.create({
   },
   horizontalScroll: {
     marginVertical: 10,
+  },
+  header: {
+    margin: 10,
+    fontSize: 24,
+    fontWeight: "bold",
   },
 });

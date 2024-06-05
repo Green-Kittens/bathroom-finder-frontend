@@ -34,14 +34,14 @@ const styles = StyleSheet.create({
   horizontalScroll: { width: "100%" },
   card: {
     width: 120,
-    height: 200,
+    height: 170,
     borderRadius: 10,
     backgroundColor: "grey",
     marginHorizontal: 5,
   },
   buffercard: {
     width: 30,
-    height: 200,
+    height: 150,
     borderRadius: 10,
     backgroundColor: "none",
     marginHorizontal: 5,
