@@ -179,7 +179,7 @@ export default function TabFacilityProfileScreen() {
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);
 
-  console.log(`Fetched Bathroom Reviews: ${bathroomReviews}`);
+  console.log(bathroomReviews);
   console.log(`Current facility ID: ${bathroom._id}`);
 
   // unique ids for images
