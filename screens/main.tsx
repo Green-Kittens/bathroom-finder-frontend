@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../navigation/type";
 import { getAllBathrooms } from "../controllers/bathroomController";
 import { Facility as BathroomProfile } from "../types/facility";
+import { useUser } from "@clerk/clerk-expo";
+import { registerUser, getUserProfile } from "../controllers/userController";
 
 const LAT_DELT = 0.0922;
 const LON_DELT = 0.0421;
@@ -13,6 +15,48 @@ const LON_DELT = 0.0421;
 export default function MainScreen() {
   const [location, setLocation] = useState<Location.LocationObject>();
   const [bathrooms, setBathrooms] = useState<BathroomProfile[]>([]);
+  const { isLoaded, isSignedIn, user } = useUser();
+  const nav = useNavigation<ScreenNavigationProp>();
+
+  const checkAndCreateUserData = async () => {
+    if (!isLoaded || !isSignedIn || !user) return;
+
+    try {
+      const userProfile = await getUserProfile(user.id);
+      if (!userProfile) {
+        const emailAddress = user.primaryEmailAddress?.emailAddress;
+
+        if (emailAddress) {
+          await registerUser(
+            user.id,
+            emailAddress,
+            [],
+            [],
+            new Date(),
+            "", // No profile image URL
+            `${user.firstName} ${user.lastName}`,
+          );
+        }
+      }
+    } catch (error) {
+      console.error("Failed to check or create user data,", error);
+    }
+  };
+
+  const fetchBathrooms = async () => {
+    try {
+      const fetchedBathrooms = await getAllBathrooms();
+      setBathrooms(fetchedBathrooms);
+    } catch (error) {
+      console.error("Failed to fetch bathrooms,", error);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchBathrooms();
+    }, []),
+  );
 
   useEffect(() => {
     (async () => {
@@ -21,19 +65,11 @@ export default function MainScreen() {
         setLocation(await Location.getCurrentPositionAsync());
       }
     })();
-
-    // fetching all bathroom facilities
-    (async () => {
-      try {
-        const fetchBathrooms = await getAllBathrooms();
-        setBathrooms(fetchBathrooms);
-      } catch (error) {
-        console.error("Failed to fetch bathrooms", error);
-      }
-    })();
   }, []);
 
-  const nav = useNavigation<ScreenNavigationProp>();
+  useEffect(() => {
+    checkAndCreateUserData();
+  }, [isLoaded, isSignedIn, user]);
 
   if (location === undefined) {
     return (
