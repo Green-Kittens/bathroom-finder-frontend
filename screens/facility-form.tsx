@@ -107,7 +107,7 @@ export default function FacilityForm() {
         pickerResult = await ImagePicker.launchCameraAsync({
           allowsEditing: true,
           aspect: [4, 3],
-          quality: 1,
+          quality: 0.5,
         });
       }
     } else {
@@ -118,7 +118,7 @@ export default function FacilityForm() {
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: true,
           aspect: [4, 3],
-          quality: 1,
+          quality: 0.5,
         });
       }
     }
