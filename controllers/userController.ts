@@ -57,4 +57,3 @@ export async function getUserProfile(UserID: string): Promise<UserProfile> {
     throw error;
   }
 }
-
