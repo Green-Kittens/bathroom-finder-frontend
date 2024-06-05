@@ -22,7 +22,6 @@ export async function uploadImage(image: ImagePickerAsset): Promise<string> {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(res.data);
     return res.data;
   } catch (error) {
     if (error instanceof AxiosError) {
