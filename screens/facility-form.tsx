@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Modal,
   ImageBackground,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
@@ -23,6 +24,7 @@ import MainButton, {
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import axios from "axios";
+import { createBathroom } from "../controllers/bathroomController";
 
 const btnInactive = "#6da798";
 const btnActive = "#044962";
@@ -30,6 +32,10 @@ const btnActive = "#044962";
 export default function FacilityForm() {
   const navigation = useNavigation<ScreenNavigationProp>();
   const [mapModal, setMapModal] = useState(false);
+  const [markerCoordinates, setMarkerCoordinates] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
   const [markerAddress, setMarkerAddress] = useState("");
   const [currentLocation, setCurrentLocation] =
     useState<Location.LocationObject | null>(null);
@@ -158,6 +164,23 @@ export default function FacilityForm() {
       if (status === "granted") {
         const location = await Location.getCurrentPositionAsync();
         setCurrentLocation(location);
+        setMarkerCoordinates({
+          latitude: location.coords.latitude + 0.000001,
+          longitude: location.coords.longitude + 0.000001,
+        });
+        try {
+          const response = await axios.get(
+            `https://nominatim.openstreetmap.org/reverse?lat=${markerCoordinates.latitude}&lon=${markerCoordinates.longitude}&format=json`,
+          );
+          const addressDetails = response.data.address;
+          let buildingName = "";
+          if (addressDetails?.building) {
+            buildingName = addressDetails.building;
+          }
+          setMarkerAddress(buildingName || response.data.display_name);
+        } catch (error) {
+          console.error("Error fetching address:", error);
+        }
       }
     };
     getLocation();
@@ -208,15 +231,13 @@ export default function FacilityForm() {
               <Marker
                 draggable // enables user to drag to desired location
                 tappable // enables user to tap the marker and trigger modal
-                coordinate={{
-                  latitude: currentLocation.coords.latitude + 0.000001,
-                  longitude: currentLocation.coords.longitude + 0.000001,
-                }}
-                onPress={async (e) => {
+                coordinate={markerCoordinates}
+                onDragEnd={async (e) => {
                   const { latitude, longitude } = e.nativeEvent.coordinate;
+                  setMarkerCoordinates({ latitude, longitude });
                   try {
                     const response = await axios.get(
-                      `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`,
+                      `https://nominatim.openstreetmap.org/reverse?lat=${markerCoordinates.latitude}&lon=${markerCoordinates.longitude}&format=json`,
                     );
                     const addressDetails = response.data.address;
                     let buildingName = "";
@@ -226,11 +247,11 @@ export default function FacilityForm() {
                     setMarkerAddress(
                       buildingName || response.data.display_name,
                     );
-                    setMapModal(true);
                   } catch (error) {
                     console.error("Error fetching address:", error);
                   }
                 }}
+                onPress={() => setMapModal(true)}
               ></Marker>
             </MapView>
           ) : (
@@ -327,6 +348,33 @@ export default function FacilityForm() {
           )}
 
           {SecondaryButton("Submit Facility", () => {
+            if (markerAddress != "") {
+              const tagsArray = Object.keys(tags).filter((tag) => tags[tag]);
+              const pictures = images.map((image) => image.assets[0].uri);
+
+              try {
+                createBathroom(
+                  markerAddress,
+                  [markerCoordinates.latitude, markerCoordinates.longitude],
+                  "None",
+                  `${tagsArray.join(", ")}`,
+                  `${openTime} to ${closedTime}`,
+                  [], // now initial reviews
+                  Date.now().toString(),
+                  pictures,
+                  5, // initial star rating is full score out of 5 (will not ruin average)
+                  0, // no initial favorites
+                  0, // no initial reports
+                  description,
+                );
+              } catch (error) {
+                if (error instanceof Error) {
+                  Alert.alert("Error", error.message);
+                } else {
+                  Alert.alert("Error", "couldn't create bathroom");
+                }
+              }
+            }
             navigation.navigate("Main");
             resetForm();
           })}
