@@ -191,89 +191,89 @@ export default function RegisterScreen() {
           alignSelf: "flex-end",
         }}
       ></ImageBackground>
-    <KeyboardAwareScrollView
-      style={{ flex: 1 }}
-      contentContainerStyle={{ flexGrow: 1 }}
-      keyboardShouldPersistTaps="handled"
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView automaticallyAdjustKeyboardInsets={true}>
-          <View>
-            <Text style={styles.title}>Register</Text>
-            {!pendingVerification && (
-              <SafeAreaView style={styles.safeArea}>
-                <View style={{ flexDirection: "row" }}>
+      <KeyboardAwareScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <ScrollView automaticallyAdjustKeyboardInsets={true}>
+            <View>
+              <Text style={styles.title}>Register</Text>
+              {!pendingVerification && (
+                <SafeAreaView style={styles.safeArea}>
+                  <View style={{ flexDirection: "row" }}>
+                    <TextInput
+                      style={styles.input}
+                      onChangeText={handleFirstNameChange}
+                      value={firstName}
+                      placeholder="First Name..."
+                      placeholderTextColor="#000"
+                    />
+                    <TextInput
+                      style={styles.input}
+                      onChangeText={handleLastNameChange}
+                      value={lastName}
+                      placeholder="Last Name..."
+                      placeholderTextColor="#000"
+                    />
+                  </View>
                   <TextInput
-                    style={styles.input}
-                    onChangeText={handleFirstNameChange}
-                    value={firstName}
-                    placeholder="First Name..."
+                    style={styles.inputLong}
+                    onChangeText={handleEmailChange}
+                    value={emailAddress}
+                    placeholder="Email..."
                     placeholderTextColor="#000"
                   />
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={handleLastNameChange}
-                    value={lastName}
-                    placeholder="Last Name..."
-                    placeholderTextColor="#000"
+                  {emailError ? (
+                    <Text style={styles.errorText}>{emailError}</Text>
+                  ) : null}
+                  <PasswordStrengthMeter
+                    password={password}
+                    onPasswordStrengthChange={handlePasswordStrengthChange}
                   />
-                </View>
-                <TextInput
-                  style={styles.inputLong}
-                  onChangeText={handleEmailChange}
-                  value={emailAddress}
-                  placeholder="Email..."
-                  placeholderTextColor="#000"
-                />
-                {emailError ? (
-                  <Text style={styles.errorText}>{emailError}</Text>
-                ) : null}
-                <PasswordStrengthMeter
-                  password={password}
-                  onPasswordStrengthChange={handlePasswordStrengthChange}
-                />
-                <PasswordInput
-                  value={password}
-                  onChangeText={handlePasswordChange}
-                  placeholder="Password..."
-                />
-                <PasswordInput
-                  value={confirmPassword}
-                  onChangeText={handleConfirmPasswordChange}
-                  placeholder="Confirm Password..."
-                />
-                <View style={styles.errorContainer}>
-                  <Text style={styles.errorText}>{passwordError}</Text>
+                  <PasswordInput
+                    value={password}
+                    onChangeText={handlePasswordChange}
+                    placeholder="Password..."
+                  />
+                  <PasswordInput
+                    value={confirmPassword}
+                    onChangeText={handleConfirmPasswordChange}
+                    placeholder="Confirm Password..."
+                  />
+                  <View style={styles.errorContainer}>
+                    <Text style={styles.errorText}>{passwordError}</Text>
+                    {validationError ? (
+                      <Text style={styles.errorText}>{validationError}</Text>
+                    ) : null}
+                  </View>
+                  <View style={styles.fixToText}>
+                    {MainButton("Sign Up", onSignUpPress, buttonDisabled)}
+                  </View>
+                </SafeAreaView>
+              )}
+              {pendingVerification && (
+                <SafeAreaView style={styles.container}>
+                  <View>
+                    <TextInput
+                      style={styles.input}
+                      value={code}
+                      placeholder="Code..."
+                      placeholderTextColor={"#000"}
+                      onChangeText={(code) => setCode(code)}
+                    />
+                  </View>
                   {validationError ? (
                     <Text style={styles.errorText}>{validationError}</Text>
                   ) : null}
-                </View>
-                <View style={styles.fixToText}>
-                  {MainButton("Sign Up", onSignUpPress, buttonDisabled)}
-                </View>
-              </SafeAreaView>
-            )}
-            {pendingVerification && (
-              <SafeAreaView style={styles.container}>
-                <View>
-                  <TextInput
-                    style={styles.input}
-                    value={code}
-                    placeholder="Code..."
-                    placeholderTextColor={"#000"}
-                    onChangeText={(code) => setCode(code)}
-                  />
-                </View>
-                {validationError ? (
-                  <Text style={styles.errorText}>{validationError}</Text>
-                ) : null}
-                {MainButton("Verify Email", onPressVerify)}
-              </SafeAreaView>
-            )}
-          </View>
-        </ScrollView>
-      </TouchableWithoutFeedback>
-    </KeyboardAwareScrollView>
+                  {MainButton("Verify Email", onPressVerify)}
+                </SafeAreaView>
+              )}
+            </View>
+          </ScrollView>
+        </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
     </View>
   );
 }
