@@ -10,4 +10,5 @@ export type Facility = {
   Favorites: number;
   Reports: number;
   _id: string;
+  Description: string;
 };

@@ -68,8 +68,26 @@ export default function StackNavigator() {
         component={Login}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name={registerName} component={Register} />
-      <Stack.Screen name={forgotPasswordName} component={ForgotPassword} />
+      <Stack.Screen
+        name={registerName}
+        component={Register}
+        options={{
+          headerTitle: "",
+          headerBackTitle: "Back",
+          headerShadowVisible: false,
+          headerStyle: { backgroundColor: "#EEF8F7" },
+        }}
+      />
+      <Stack.Screen
+        name={forgotPasswordName}
+        component={ForgotPassword}
+        options={{
+          headerTitle: "",
+          headerBackTitle: "Back",
+          headerShadowVisible: false,
+          headerStyle: { backgroundColor: "#EEF8F7" },
+        }}
+      />
     </Stack.Navigator>
   );
 }
