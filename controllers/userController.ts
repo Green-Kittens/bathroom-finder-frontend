@@ -1,6 +1,5 @@
 import axios from "axios";
 import { User as UserProfile } from "../types/user";
-import { Facility as BathroomProfile } from "../types/facility";
 import { port, host, protocol } from "./env";
 
 /**
