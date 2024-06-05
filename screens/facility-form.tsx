@@ -174,7 +174,7 @@ export default function FacilityForm() {
           );
           const addressDetails = response.data.address;
           let buildingName = "";
-          if (addressDetails && addressDetails.building) {
+          if (addressDetails?.building) {
             buildingName = addressDetails.building;
           }
           setMarkerAddress(buildingName || response.data.display_name);
