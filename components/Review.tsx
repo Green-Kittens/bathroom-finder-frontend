@@ -4,7 +4,7 @@ import { Image, StyleSheet } from "react-native";
 import { Text, View } from "../components/Themed";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
 
-export function notReview() {
+export default function Review() {
   return (
     <View style={styles.review}>
       <View style={[styles.toprow, { flexWrap: "wrap", alignItems: "center" }]}>
@@ -30,19 +30,10 @@ export function notReview() {
           width: "100%",
         }}
       >
-        <Text
-          style={{ fontSize: 24, marginVertical: 10, marginHorizontal: 10 }}
-        >
-          Review Title
-        </Text>
         <Text style={[{ padding: 10 }]}>{Review.description}</Text>
       </View>
     </View>
   );
-}
-
-export default function Review() {
-  return notReview();
 }
 
 const styles = StyleSheet.create({
@@ -95,6 +86,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
     backgroundColor: "none",
+    width: "100%",
   },
   toprow: {
     flexDirection: "row",
