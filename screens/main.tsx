@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { ScreenNavigationProp } from "../navigation/type";
 import { getAllBathrooms } from "../controllers/bathroomController";
 import { Facility as BathroomProfile } from "../types/facility";
@@ -14,21 +14,26 @@ export default function MainScreen() {
   const [location, setLocation] = useState<Location.LocationObject>();
   const [bathrooms, setBathrooms] = useState<BathroomProfile[]>([]);
 
+  const fetchBathrooms = async () => {
+    try {
+      const fetchBathrooms = await getAllBathrooms();
+      setBathrooms(fetchBathrooms);
+    } catch (error) {
+      console.error("Failed to fetch bathrooms,", error);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchBathrooms();
+    }, []),
+  );
+
   useEffect(() => {
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status === "granted") {
         setLocation(await Location.getCurrentPositionAsync());
-      }
-    })();
-
-    // fetching all bathroom facilities
-    (async () => {
-      try {
-        const fetchBathrooms = await getAllBathrooms();
-        setBathrooms(fetchBathrooms);
-      } catch (error) {
-        console.error("Failed to fetch bathrooms", error);
       }
     })();
   }, []);

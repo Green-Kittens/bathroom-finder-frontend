@@ -9,6 +9,6 @@ export type Facility = {
   RatingAVG: number;
   Favorites: number;
   Reports: number;
-  _id: string;
   Description: string;
+  _id: string;
 };

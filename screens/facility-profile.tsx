@@ -11,7 +11,12 @@ import {
   Modal,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
+import {
+  useNavigation,
+  useRoute,
+  RouteProp,
+  useFocusEffect,
+} from "@react-navigation/native";
 import { ScreenNavigationProp } from "../navigation/type";
 import Review from "../components/Review";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
@@ -152,16 +157,30 @@ export default function TabFacilityProfileScreen() {
 
   // fetching all bathroom reviews
   const [bathroomReviews, setBathroomReviews] = useState<BathroomReview[]>([]);
+  const fetchReviews = async () => {
+    try {
+      const fetchReviews = await getAllReviews(bathroom._id);
+      setBathroomReviews(fetchReviews);
+    } catch (error) {
+      console.error("Failed to fetch reviews", error);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchReviews();
+    }, []),
+  );
+
   useEffect(() => {
-    (async () => {
-      try {
-        const fetchReviews = await getAllReviews(bathroom._id);
-        setBathroomReviews(fetchReviews);
-      } catch (error) {
-        console.error("Failed to fetch reviews", error);
-      }
-    })();
+    fetchReviews();
+    const interval = setInterval(fetchReviews, 30000); // Fetch reviews every 30 seconds
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);
+
+  console.log(bathroomReviews);
+  console.log(`Current facility ID: ${bathroom._id}`);
 
   // unique ids for images
   const imagesWithIds = bathroom.PictureURL.map((url, index) => ({
@@ -190,6 +209,7 @@ export default function TabFacilityProfileScreen() {
             }}
           ></ImageBackground>
           <Text style={styles.title}>{bathroom.Name}</Text>
+
           <ImageCarousel images={imagesWithIds} />
           <View
             style={[
@@ -214,7 +234,7 @@ export default function TabFacilityProfileScreen() {
             <View style={{ marginTop: 10 }}>
               {SecondaryButton("Add Review", () => {
                 // figure out how to make it so that dropdown renders current facility as location
-                navigation.navigate("ReviewForm");
+                navigation.navigate("ReviewForm", { bathroom });
               })}
             </View>
           </SignedIn>
