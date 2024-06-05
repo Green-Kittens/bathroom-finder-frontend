@@ -36,7 +36,7 @@ export default function MainScreen() {
             `${user.firstName} ${user.lastName}`,
           );
         }
-      } 
+      }
     } catch (error) {
       console.error(error);
     }
