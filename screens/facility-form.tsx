@@ -25,6 +25,7 @@ import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import axios from "axios";
 import { createBathroom } from "../controllers/bathroomController";
+import { uploadImage } from "../controllers/imagesController";
 
 const btnInactive = "#6da798";
 const btnActive = "#044962";
@@ -106,7 +107,7 @@ export default function FacilityForm() {
         pickerResult = await ImagePicker.launchCameraAsync({
           allowsEditing: true,
           aspect: [4, 3],
-          quality: 1,
+          quality: 0.5,
         });
       }
     } else {
@@ -117,7 +118,7 @@ export default function FacilityForm() {
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: true,
           aspect: [4, 3],
-          quality: 1,
+          quality: 0.5,
         });
       }
     }
@@ -348,9 +349,15 @@ export default function FacilityForm() {
           )}
 
           {SecondaryButton("Submit Facility", () => {
+            if (description === "") {
+              Alert.alert("Invalid Form", "You must provide a description.");
+              return;
+            }
             if (markerAddress != "") {
               const tagsArray = Object.keys(tags).filter((tag) => tags[tag]);
-              const pictures = images.map((image) => image.assets[0].uri);
+              const pictures = images
+                .map((image) => image.assets[0])
+                .map(uploadImage);
 
               try {
                 createBathroom(
