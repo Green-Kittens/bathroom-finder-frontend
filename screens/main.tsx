@@ -58,21 +58,6 @@ export default function MainScreen() {
     }, []),
   );
 
-  const fetchBathrooms = async () => {
-    try {
-      const fetchBathrooms = await getAllBathrooms();
-      setBathrooms(fetchBathrooms);
-    } catch (error) {
-      console.error("Failed to fetch bathrooms,", error);
-    }
-  };
-
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchBathrooms();
-    }, [fetchBathrooms]),
-  );
-
   useEffect(() => {
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
