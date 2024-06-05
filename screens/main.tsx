@@ -25,7 +25,6 @@ export default function MainScreen() {
       const userProfile = await getUserProfile(user.id);
       if (!userProfile) {
         const emailAddress = user.primaryEmailAddress?.emailAddress;
-
         if (emailAddress) {
           await registerUser(
             user.id,
@@ -37,9 +36,9 @@ export default function MainScreen() {
             `${user.firstName} ${user.lastName}`,
           );
         }
-      }
+      } 
     } catch (error) {
-      console.error("Failed to check or create user data,", error);
+      console.error(error);
     }
   };
 
