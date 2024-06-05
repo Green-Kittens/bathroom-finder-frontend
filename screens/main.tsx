@@ -16,7 +16,6 @@ export default function MainScreen() {
   const [location, setLocation] = useState<Location.LocationObject>();
   const [bathrooms, setBathrooms] = useState<BathroomProfile[]>([]);
   const { isLoaded, isSignedIn, user } = useUser();
-
   const nav = useNavigation<ScreenNavigationProp>();
 
   const checkAndCreateUserData = async () => {
@@ -46,8 +45,8 @@ export default function MainScreen() {
 
   const fetchBathrooms = async () => {
     try {
-      const fetchBathrooms = await getAllBathrooms();
-      setBathrooms(fetchBathrooms);
+      const fetchedBathrooms = await getAllBathrooms();
+      setBathrooms(fetchedBathrooms);
     } catch (error) {
       console.error("Failed to fetch bathrooms,", error);
     }
@@ -56,7 +55,7 @@ export default function MainScreen() {
   useFocusEffect(
     React.useCallback(() => {
       fetchBathrooms();
-    }, [fetchBathrooms]),
+    }, []),
   );
 
   useEffect(() => {
@@ -68,6 +67,7 @@ export default function MainScreen() {
     })();
   }, []);
 
+  useEffect(() => {
     checkAndCreateUserData();
   }, [isLoaded, isSignedIn, user]);
 
