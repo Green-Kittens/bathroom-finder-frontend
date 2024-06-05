@@ -295,6 +295,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 20,
+    marginHorizontal: 10,
     fontFamily: "EudoxusSans-Bold",
   },
   body: {
