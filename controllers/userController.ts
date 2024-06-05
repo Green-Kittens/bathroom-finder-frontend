@@ -4,7 +4,6 @@ import { port, host, protocol } from "./env";
 
 /**
  * Function to register a new user
- * @param {string} UserID - The user's ID
  * @param {string} DisplayName - The user's display name
  * @param {string} Email - The email address of the user
  * @param {string} PictureURL - Profile display image
@@ -14,7 +13,6 @@ import { port, host, protocol } from "./env";
  * @returns {Promise<string>} - Returns a promise with a success message upon successful registration
  */
 export async function registerUser(
-  UserID: string,
   Email: string,
   Favorites: string[],
   Reviews: string[],
@@ -24,13 +22,12 @@ export async function registerUser(
 ): Promise<string> {
   try {
     await axios.post<UserProfile>(`${protocol}://${host}:${port}/users/`, {
-      UserID,
-      Email,
-      Favorites,
-      Reviews,
-      Date,
-      PictureURL,
-      DisplayName,
+      email: Email,
+      Favorites: Favorites,
+      Reviews: Reviews,
+      DateJoined: Date,
+      pfpURL: PictureURL,
+      DisplayName: DisplayName,
     });
     const successsMsg = `${DisplayName} successfully created with ${Email}.`;
     return successsMsg;
