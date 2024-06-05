@@ -349,6 +349,10 @@ export default function FacilityForm() {
           )}
 
           {SecondaryButton("Submit Facility", () => {
+            if (description === "") {
+              Alert.alert("Invalid Form", "You must provide a description.");
+              return;
+            }
             if (markerAddress != "") {
               const tagsArray = Object.keys(tags).filter((tag) => tags[tag]);
               const pictures = images

@@ -89,7 +89,10 @@ export async function createBathroom(
     return successMsg;
   } catch (error) {
     if (error instanceof AxiosError) {
-      Alert.alert("AxiosError", JSON.stringify(error.toJSON()));
+      Alert.alert(
+        "AxiosError in createBathroom",
+        JSON.stringify(error.toJSON()),
+      );
       console.error(error.toJSON());
     } else {
       console.error("Error creating bathroom:", error);

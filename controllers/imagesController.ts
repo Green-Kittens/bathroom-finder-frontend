@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { port, host, protocol } from "./env";
-import { Alert } from "react-native";
+import { Alert, Platform } from "react-native";
 import { ImagePickerAsset } from "expo-image-picker";
 
 /**
@@ -10,15 +10,28 @@ import { ImagePickerAsset } from "expo-image-picker";
 export async function uploadImage(image: ImagePickerAsset): Promise<string> {
   try {
     const form = new FormData();
-    if (image.base64 === undefined || image.base64 === null)
-      throw "image null or undefined";
 
-    form.append("image", image.base64);
+    form.append("image", {
+      name: image.fileName || "photo.jpg",
+      type: image.type || "image/jpg",
+      uri: Platform.OS === "ios" ? image.uri.replace("file://", "") : image.uri,
+    } as any);
 
-    const res = await axios.put(`${protocol}://${host}:${port}/images/`, form);
+    const res = await axios.put(`${protocol}://${host}:${port}/images/`, form, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log(res.data);
     return res.data;
   } catch (error) {
-    Alert.alert("Error uploading image", JSON.stringify(error));
-    throw error;
+    if (error instanceof AxiosError) {
+      Alert.alert("AxiosError uploadImage", JSON.stringify(error.response));
+      console.error(error.response);
+      console.error(error.response?.request);
+    } else {
+      Alert.alert("Error uploading image", JSON.stringify(error));
+    }
+    return Promise.reject();
   }
 }
