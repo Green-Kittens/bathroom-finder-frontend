@@ -33,13 +33,11 @@ export async function registerUser(
       DisplayName,
     };
 
-    console.error("Preparing to send user data:", userData);
-
     const response = await axios.post<UserProfile>(
       `${protocol}://${host}:${port}/users/`,
       userData,
     );
-    console.error("User data sent successfully:", response.data);
+    console.log("User data sent successfully:", response.data);
 
     const successMsg = `${DisplayName} successfully created with ${Email}.`;
     return successMsg;
