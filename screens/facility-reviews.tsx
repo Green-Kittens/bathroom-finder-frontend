@@ -34,7 +34,11 @@ export default function FacilityReviewsScreen() {
             }}
           ></ImageBackground>
           <View
-            style={{ justifyContent: "space-evenly", backgroundColor: "none" }}
+            style={{
+              justifyContent: "space-evenly",
+              backgroundColor: "none",
+              width: "100%",
+            }}
           >
             {reviews.map((review) => {
               console.log("review!!!");

@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
     backgroundColor: "none",
+    width: "100%",
   },
   toprow: {
     flexDirection: "row",

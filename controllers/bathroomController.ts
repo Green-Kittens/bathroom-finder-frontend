@@ -60,13 +60,14 @@ export async function createBathroom(
   operations: string,
   reviews: string[],
   date: string,
-  pictureURL: string[],
+  pictureURL: Promise<string>[],
   ratingAVG: number,
   favorites: number,
   reports: number,
   description: string,
 ): Promise<string> {
   try {
+    const pictures = await Promise.all(pictureURL);
     await axios.post<BathroomProfile>(
       `${protocol}://${host}:${port}/facilities/`,
       {
@@ -76,7 +77,7 @@ export async function createBathroom(
         Tags: tags,
         Operations: operations,
         Date: date,
-        PictureURL: pictureURL,
+        PictureURL: pictures,
         RatingAVG: ratingAVG,
         Favorites: favorites,
         Reports: reports,
@@ -88,7 +89,10 @@ export async function createBathroom(
     return successMsg;
   } catch (error) {
     if (error instanceof AxiosError) {
-      Alert.alert("AxiosError", JSON.stringify(error.toJSON()));
+      Alert.alert(
+        "AxiosError in createBathroom",
+        JSON.stringify(error.toJSON()),
+      );
       console.error(error.toJSON());
     } else {
       console.error("Error creating bathroom:", error);
