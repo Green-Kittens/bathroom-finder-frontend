@@ -1,3 +1,5 @@
+const { init, cleanup } = require('detox');
+
 /* eslint-disable no-undef */
 describe("Map Markers Tests", () => {
   beforeAll(async () => {
