@@ -12,9 +12,12 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "bathroomfinder"
     },
     "android": {
       "package": "com.yourappname",
@@ -31,10 +34,15 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/EudoxusSans-Regular.ttf"]
+          "fonts": [
+            "./assets/fonts/EudoxusSans-Regular.ttf"
+          ]
         }
       ]
     ],
-    "platforms": ["ios", "android"]
+    "platforms": [
+      "ios",
+      "android"
+    ]
   }
 }
