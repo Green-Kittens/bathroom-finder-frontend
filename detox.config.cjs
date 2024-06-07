@@ -4,7 +4,7 @@ module.exports = {
   testRunner: {
     runner: "jest",
     options: {
-      config: "e2e/jest.config.js",
+      config: "e2e/jest.config.cjs",
       setupTimeout: 120000,
     },
   },
@@ -16,24 +16,12 @@ module.exports = {
       build:
         "xcodebuild -workspace ios/bathroomfinderfrontend.xcworkspace -scheme bathroomfinderfrontend -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
     },
-    "android.debug": {
-      type: "android.apk",
-      binaryPath: "android/app/build/outputs/apk/debug/app-debug.apk",
-      build:
-        "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ..",
-    },
   },
   devices: {
     "ios.simulator": {
       type: "ios.simulator",
       device: {
-        type: "iPhone 11", // specify the device name within the ios.simulator type
-      },
-    },
-    "android.emulator": {
-      type: "android.emulator",
-      device: {
-        avdName: "Pixel_3a_API_30_x86",
+        name: "iPhone 15 Pro Max", // Use the name of the device
       },
     },
   },
@@ -41,10 +29,6 @@ module.exports = {
     "ios.sim.debug": {
       device: "ios.simulator",
       app: "ios.debug",
-    },
-    "android.emu.debug": {
-      device: "android.emulator",
-      app: "android.debug",
     },
   },
 };

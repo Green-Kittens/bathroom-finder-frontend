@@ -84,33 +84,36 @@ export default function MainScreen() {
     );
   } else {
     return (
-      <MapView
-        style={styles.map}
-        showsUserLocation={true}
-        initialRegion={{
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          latitudeDelta: LAT_DELT,
-          longitudeDelta: LON_DELT,
-        }}
-      >
-        {bathrooms.map(
-          (
-            bathroom, // render all facility locations as markers on map
-          ) => (
-            <Marker
-              key={bathroom._id}
-              coordinate={{
-                latitude: bathroom.Coordinates[0],
-                longitude: bathroom.Coordinates[1],
-              }}
-              onPress={() => {
-                nav.navigate("FacilityProfile", { bathroom });
-              }}
-            />
-          ),
-        )}
-      </MapView>
+      <View testID="homeScreen">
+        <MapView
+          style={styles.map}
+          showsUserLocation={true}
+          initialRegion={{
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+            latitudeDelta: LAT_DELT,
+            longitudeDelta: LON_DELT,
+          }}
+        >
+          {bathrooms.map(
+            (
+              bathroom, // render all facility locations as markers on map
+            ) => (
+              <Marker
+                key={bathroom._id}
+                coordinate={{
+                  latitude: bathroom.Coordinates[0],
+                  longitude: bathroom.Coordinates[1],
+                }}
+                onPress={() => {
+                  nav.navigate("FacilityProfile", { bathroom });
+                }}
+                testID={`marker-${bathroom._id}`}
+              />
+            ),
+          )}
+        </MapView>
+      </View>
     );
   }
 }

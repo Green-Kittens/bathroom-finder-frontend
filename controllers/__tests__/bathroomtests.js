@@ -10,7 +10,7 @@ describe("getAllBathrooms", () => {
       {
         id: "1",
         name: "bathroom1",
-        location: { coordinates: [1], type: "" },
+        location: { coordinates: [1,1], type: "" },
         category: "",
         tags: [""],
         operations: "",

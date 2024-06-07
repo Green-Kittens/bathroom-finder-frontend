@@ -15,9 +15,13 @@
     "detox:build:ios": "detox build --configuration ios.sim.debug",
     "detox:test:ios": "detox test --configuration ios.sim.debug",
     "detox:build:android": "detox build --configuration android.emu.debug",
-    "detox:test:android": "detox test --configuration android.emu.debug"
+    "detox:test:android": "detox test --configuration android.emu.debug",
+    "test:detox": "detox test --configuration ios.sim.debug --config e2e/jest.config.cjs"
   },
   "dependencies": {
+    "@babel/preset-env": "^7.24.7",
+    "@babel/preset-react": "^7.24.7",
+    "@babel/preset-typescript": "^7.24.7",
     "@clerk/clerk-expo": "^1.0.7",
     "@expo/config-plugins": "^8.0.4",
     "@expo/metro-config": "^0.18.3",
@@ -40,6 +44,7 @@
     "auth-session": "^0.0.7",
     "axios": "^1.6.8",
     "axios-mock-adapter": "^1.22.0",
+    "babel-jest": "^29.7.0",
     "detox": "^20.22.2",
     "detox-expo-helpers": "^0.6.0",
     "eslint-plugin-detox": "^1.0.0",
@@ -56,6 +61,7 @@
     "expo-status-bar": "~1.12.1",
     "expo-web-browser": "~13.0.3",
     "global": "^4.4.0",
+    "jest-circus": "^29.7.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.74.2",
@@ -80,7 +86,7 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
+    "@babel/core": "^7.24.7",
     "@types/react": "~18.2.79",
     "@types/react-native-global-props": "^1.1.6",
     "@typescript-eslint/eslint-plugin": "^7.12.0",

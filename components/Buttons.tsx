@@ -11,9 +11,11 @@ export default function MainButton(
   disabled?: boolean,
   styling?: StyleProp<ViewStyle>,
   textStyling?: StyleProp<TextStyle>,
+  testID?: string,
 ) {
   return (
     <Button
+      testID={testID}
       title={words}
       titleStyle={[styles.text, textStyling]}
       ViewComponent={LinearGradient}
@@ -35,9 +37,11 @@ export function LightButton(
   onpress: ((event: GestureResponderEvent) => void) | undefined,
   disabled?: boolean,
   styling?: StyleProp<ViewStyle>,
+  testID?: string,
 ) {
   return (
     <Button
+      testID={testID}
       title={words}
       titleStyle={styles.text}
       ViewComponent={LinearGradient}
@@ -60,9 +64,11 @@ export function SecondaryButton(
   disabled?: boolean,
   styling?: StyleProp<ViewStyle>,
   textStyling?: StyleProp<TextStyle>,
+  testID?: string,
 ) {
   return (
     <Button
+      testID={testID}
       title={words}
       titleStyle={[styles.text, { color: "white" }, textStyling]}
       ViewComponent={LinearGradient}
@@ -90,9 +96,11 @@ export function CancelButton(
   onpress: ((event: GestureResponderEvent) => void) | undefined,
   disabled?: boolean,
   styling?: StyleProp<ViewStyle>,
+  testID?: string,
 ) {
   return (
     <Button
+      testID={testID}
       title={words}
       titleStyle={styles.text}
       color={"#FC6769"}
