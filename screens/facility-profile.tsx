@@ -136,7 +136,10 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
             <Text style={styles.closeButtonText}>X</Text>
           </TouchableOpacity>
           {selectedImageUri ? (
-            <Image source={{ uri: selectedImageUri }} style={styles.modalImage} />
+            <Image
+              source={{ uri: selectedImageUri }}
+              style={styles.modalImage}
+            />
           ) : (
             <Text>No Image</Text>
           )}
@@ -160,7 +163,9 @@ export default function TabFacilityProfileScreen() {
     (async () => {
       try {
         const fetchReviews = await getAllReviews(bathroom._id);
-        const facilityReviews = fetchReviews.filter(review => review.FacilityID === bathroom._id); 
+        const facilityReviews = fetchReviews.filter(
+          (review) => review.FacilityID === bathroom._id,
+        );
         setBathroomReviews(facilityReviews);
       } catch (error) {
         console.error("Failed to fetch reviews", error);
