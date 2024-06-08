@@ -12,9 +12,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "bathroomfinder"
@@ -34,15 +32,10 @@
       [
         "expo-font",
         {
-          "fonts": [
-            "./assets/fonts/EudoxusSans-Regular.ttf"
-          ]
+          "fonts": ["./assets/fonts/EudoxusSans-Regular.ttf"]
         }
       ]
     ],
-    "platforms": [
-      "ios",
-      "android"
-    ]
+    "platforms": ["ios", "android"]
   }
 }
