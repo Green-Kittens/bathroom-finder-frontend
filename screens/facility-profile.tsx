@@ -135,7 +135,14 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
           >
             <Text style={styles.closeButtonText}>X</Text>
           </TouchableOpacity>
-          <Image source={{ uri: selectedImageUri }} style={styles.modalImage} />
+          {selectedImageUri ? (
+            <Image
+              source={{ uri: selectedImageUri }}
+              style={styles.modalImage}
+            />
+          ) : (
+            <Text>No Image</Text>
+          )}
         </View>
       </Modal>
     </View>
@@ -156,18 +163,26 @@ export default function TabFacilityProfileScreen() {
     (async () => {
       try {
         const fetchReviews = await getAllReviews(bathroom._id);
-        setBathroomReviews(fetchReviews);
+        const facilityReviews = fetchReviews.filter(
+          (review) => review.FacilityID === bathroom._id,
+        );
+        setBathroomReviews(facilityReviews);
       } catch (error) {
         console.error("Failed to fetch reviews", error);
       }
     })();
-  }, []);
+  }, [bathroom._id]);
 
   // unique ids for images
-  const imagesWithIds = bathroom.PictureURL.map((url, index) => ({
-    uri: `https://bathfindimages.blob.core.windows.net/images/${url}?sp=r&st=2024-06-04T23:21:06Z&se=2024-06-30T07:21:06Z&spr=https&sv=2022-11-02&sr=c&sig=VTQ5xAtqNieEq%2B0oILqF5W0V8%2FvwUBQhrOCyGrADD3Q%3D`,
-    id: `${bathroom._id}-${index}`,
-  }));
+  const imagesWithIds = bathroom.PictureURL.map((url, index) => {
+    const uri = url
+      ? `https://bathfindimages.blob.core.windows.net/images/${url}?sp=r&st=2024-06-04T23:21:06Z&se=2024-06-30T07:21:06Z&spr=https&sv=2022-11-02&sr=c&sig=VTQ5xAtqNieEq%2B0oILqF5W0V8%2FvwUBQhrOCyGrADD3Q%3D`
+      : "";
+    return {
+      uri,
+      id: `${bathroom._id}-${index}`,
+    };
+  });
 
   return (
     <View style={styles.container}>
@@ -204,7 +219,7 @@ export default function TabFacilityProfileScreen() {
             ]}
           >
             <StarRatingDisplay rating={bathroom.RatingAVG} color="black" />
-            <Text style={styles.body}> 5.0 stars</Text>
+            <Text style={styles.body}>{bathroom.RatingAVG}</Text>
           </View>
         </View>
         <View
@@ -252,12 +267,22 @@ export default function TabFacilityProfileScreen() {
                   },
                 ]}
               >
-                {Review()}
-                <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
-                  {LightButton("See more", () => {
-                    navigation.navigate("FacilityReviews", { bathroomReviews });
-                  })}
-                </View>
+                {bathroomReviews.length > 0 ? (
+                  bathroomReviews.map((review) => (
+                    <Review key={review._id} review={review} />
+                  ))
+                ) : (
+                  <Text>No Reviews Yet</Text>
+                )}
+                {bathroomReviews.length > 0 && (
+                  <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
+                    {LightButton("See more", () =>
+                      navigation.navigate("FacilityReviews", {
+                        reviews: bathroomReviews,
+                      }),
+                    )}
+                  </View>
+                )}
               </View>
             </LinearGradient>
           </View>

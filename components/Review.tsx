@@ -1,24 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, StyleSheet } from "react-native";
-
 import { Text, View } from "../components/Themed";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
+import { getUserProfile } from "../controllers/userController";
+import { User } from "../types/user";
+import { Review as ReviewType } from "../types/review";
 
-export default function Review() {
+interface ReviewProps {
+  review: ReviewType;
+}
+
+const Review: React.FC<ReviewProps> = ({ review }) => {
+  const [userData, setUserData] = useState<User | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const data = await getUserProfile(review.UserID);
+      setUserData(data);
+    })();
+  }, [review.UserID]);
+
+  if (!userData) {
+    return <Text>Loading...</Text>;
+  }
+
+  const isValidURL = (url: string) => {
+    try {
+      new URL(url);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  };
+
   return (
     <View style={styles.review}>
       <View style={[styles.toprow, { flexWrap: "wrap", alignItems: "center" }]}>
-        <Image
-          style={{ height: 60, width: 60, borderRadius: 50 }}
-          source={{
-            uri: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",
-          }}
-        />
+        {isValidURL(userData.PictureURL) && (
+          <Image
+            style={{ height: 60, width: 60, borderRadius: 50 }}
+            source={{
+              uri: userData.PictureURL,
+            }}
+          />
+        )}
         <Text style={[styles.paragraph, { fontFamily: "EudoxusSans-Bold" }]}>
-          Username
+          {userData.DisplayName}
         </Text>
         <View style={[styles.toprow]}>
-          <StarRatingDisplay rating={5} color="black" />
+          <StarRatingDisplay rating={review.Rating} color="black" />
         </View>
       </View>
 
@@ -30,11 +60,13 @@ export default function Review() {
           width: "100%",
         }}
       >
-        <Text style={[{ padding: 10 }]}>{Review.description}</Text>
+        <Text style={[{ padding: 10 }]}>{review.Description}</Text>
       </View>
     </View>
   );
-}
+};
+
+export default Review;
 
 const styles = StyleSheet.create({
   container: {

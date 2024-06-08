@@ -1,21 +1,19 @@
 import React from "react";
 import { View } from "../components/Themed";
 import { ScrollView, ImageBackground, StyleSheet } from "react-native";
-import ReviewButtons from "../components/ReviewButtons";
-// import { Review as BathroomReview } from "../../types/review";
-// import { useRoute, RouteProp } from "@react-navigation/native";
+import { Review as BathroomReview } from "../types/review";
+import Review from "../components/Review";
+import { useRoute, RouteProp } from "@react-navigation/native";
 
-// route type
-// type FacilityReviewsRouteParams = { reviews: BathroomReview[] };
-// type FacilityReviewsRouteProp = RouteProp<
-//   { FacilityReviews: FacilityReviewsRouteParams },
-//   "FacilityReviews"
-// >;
+type FacilityReviewsRouteParams = { reviews: BathroomReview[] };
+type FacilityReviewsRouteProp = RouteProp<
+  { FacilityReviews: FacilityReviewsRouteParams },
+  "FacilityReviews"
+>;
 
 export default function FacilityReviewsScreen() {
-  // route-- review data
-  // const route = useRoute<FacilityReviewsRouteProp>();
-  // const { reviews } = route.params;
+  const route = useRoute<FacilityReviewsRouteProp>();
+  const { reviews } = route.params;
 
   return (
     <ScrollView style={{ width: "100%", height: 100 }}>
@@ -42,14 +40,11 @@ export default function FacilityReviewsScreen() {
               width: "100%",
             }}
           >
-            {/* {reviews.map((review) => (
-              // figure out how to change component to pass in necessary data
-            ))} */}
-            {ReviewButtons()}
-            {ReviewButtons()}
-            {ReviewButtons()}
-            {ReviewButtons()}
-            {ReviewButtons()}
+            {reviews.map((review) => {
+              console.log("review!!!");
+              console.log(review);
+              return <Review key={review._id} review={review} />;
+            })}
           </View>
         </View>
       </View>
