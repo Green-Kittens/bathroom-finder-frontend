@@ -20,7 +20,7 @@ export default function MainScreen() {
 
   const checkAndCreateUserData = async () => {
     if (!isLoaded || !isSignedIn || !user) return;
-
+    console.log("user!!:", user);
     try {
       const userProfile = await getUserProfile(user.id);
       if (!userProfile) {

@@ -135,7 +135,11 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
           >
             <Text style={styles.closeButtonText}>X</Text>
           </TouchableOpacity>
-          <Image source={{ uri: selectedImageUri }} style={styles.modalImage} />
+          {selectedImageUri ? (
+            <Image source={{ uri: selectedImageUri }} style={styles.modalImage} />
+          ) : (
+            <Text>No Image</Text>
+          )}
         </View>
       </Modal>
     </View>
@@ -155,17 +159,21 @@ export default function TabFacilityProfileScreen() {
   useEffect(() => {
     (async () => {
       try {
+        console.log("BATHROOM!!: ", bathroom);
         const fetchReviews = await getAllReviews(bathroom._id);
-        setBathroomReviews(fetchReviews);
+        const facilityReviews = fetchReviews.filter(review => review.FacilityID === bathroom._id); 
+        setBathroomReviews(facilityReviews);
       } catch (error) {
         console.error("Failed to fetch reviews", error);
       }
     })();
-  }, []);
+  }, [bathroom._id]);
 
   // unique ids for images
   const imagesWithIds = bathroom.PictureURL.map((url, index) => ({
-    uri: `https://bathfindimages.blob.core.windows.net/images/${url}?sp=r&st=2024-06-04T23:21:06Z&se=2024-06-30T07:21:06Z&spr=https&sv=2022-11-02&sr=c&sig=VTQ5xAtqNieEq%2B0oILqF5W0V8%2FvwUBQhrOCyGrADD3Q%3D`,
+    uri: url
+      ? `https://bathfindimages.blob.core.windows.net/images/${url}?sp=r&st=2024-06-04T23:21:06Z&se=2024-06-30T07:21:06Z&spr=https&sv=2022-11-02&sr=c&sig=VTQ5xAtqNieEq%2B0oILqF5W0V8%2FvwUBQhrOCyGrADD3Q%3D`
+      : "",
     id: `${bathroom._id}-${index}`,
   }));
 

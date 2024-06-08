@@ -15,10 +15,13 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
 
   useEffect(() => {
     (async () => {
-      const data = await getUserProfile(review.UserId);
+      console.log("review!!: ",review);
+      console.log("userID:", review.UserID);
+      const data = await getUserProfile(review.UserID);
       setUserData(data);
+      console.log("DATA!!:", data);
     })();
-  }, [review.UserId]);
+  }, [review.UserID]);
 
   if (!userData) {
     return <Text>Loading...</Text>;
