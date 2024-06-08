@@ -267,16 +267,22 @@ export default function TabFacilityProfileScreen() {
                   },
                 ]}
               >
-                {bathroomReviews.map((review) => {
-                  return <Review key={review._id} review={review} />;
-                })}
-                <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
-                  {LightButton("See more", () =>
-                    navigation.navigate("FacilityReviews", {
-                      reviews: bathroomReviews,
-                    }),
-                  )}
-                </View>
+                {bathroomReviews.length > 0 ? (
+                  bathroomReviews.map((review) => (
+                    <Review key={review._id} review={review} />
+                  ))
+                ) : (
+                  <Text>No Reviews Yet</Text>
+                )}
+                {bathroomReviews.length > 0 && (
+                  <View style={[{ backgroundColor: "none", minWidth: 200 }]}>
+                    {LightButton("See more", () =>
+                      navigation.navigate("FacilityReviews", {
+                        reviews: bathroomReviews,
+                      }),
+                    )}
+                  </View>
+                )}
               </View>
             </LinearGradient>
           </View>
