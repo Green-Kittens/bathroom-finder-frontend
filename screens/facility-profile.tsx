@@ -112,7 +112,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID={"facilityProfileScreen"}>
       <ScrollView
         horizontal={true}
         style={styles.horizontalScroll}
