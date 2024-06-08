@@ -15,11 +15,8 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
 
   useEffect(() => {
     (async () => {
-      console.log("review!!: ",review);
-      console.log("userID:", review.UserID);
       const data = await getUserProfile(review.UserID);
       setUserData(data);
-      console.log("DATA!!:", data);
     })();
   }, [review.UserID]);
 
@@ -27,15 +24,26 @@ const Review: React.FC<ReviewProps> = ({ review }) => {
     return <Text>Loading...</Text>;
   }
 
+  const isValidURL = (url: string) => {
+    try {
+      new URL(url);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  };
+
   return (
     <View style={styles.review}>
       <View style={[styles.toprow, { flexWrap: "wrap", alignItems: "center" }]}>
-        <Image
-          style={{ height: 60, width: 60, borderRadius: 50 }}
-          source={{
-            uri: userData.PictureURL,
-          }}
-        />
+        {isValidURL(userData.PictureURL) && (
+          <Image
+            style={{ height: 60, width: 60, borderRadius: 50 }}
+            source={{
+              uri: userData.PictureURL,
+            }}
+          />
+        )}
         <Text style={[styles.paragraph, { fontFamily: "EudoxusSans-Bold" }]}>
           {userData.DisplayName}
         </Text>

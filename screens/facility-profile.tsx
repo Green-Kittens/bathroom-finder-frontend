@@ -159,7 +159,6 @@ export default function TabFacilityProfileScreen() {
   useEffect(() => {
     (async () => {
       try {
-        console.log("BATHROOM!!: ", bathroom);
         const fetchReviews = await getAllReviews(bathroom._id);
         const facilityReviews = fetchReviews.filter(review => review.FacilityID === bathroom._id); 
         setBathroomReviews(facilityReviews);
@@ -170,12 +169,15 @@ export default function TabFacilityProfileScreen() {
   }, [bathroom._id]);
 
   // unique ids for images
-  const imagesWithIds = bathroom.PictureURL.map((url, index) => ({
-    uri: url
+  const imagesWithIds = bathroom.PictureURL.map((url, index) => {
+    const uri = url
       ? `https://bathfindimages.blob.core.windows.net/images/${url}?sp=r&st=2024-06-04T23:21:06Z&se=2024-06-30T07:21:06Z&spr=https&sv=2022-11-02&sr=c&sig=VTQ5xAtqNieEq%2B0oILqF5W0V8%2FvwUBQhrOCyGrADD3Q%3D`
-      : "",
-    id: `${bathroom._id}-${index}`,
-  }));
+      : "";
+    return {
+      uri,
+      id: `${bathroom._id}-${index}`,
+    };
+  });
 
   return (
     <View style={styles.container}>
